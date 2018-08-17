@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Tab from '../components/UI/Tab/Tab';
 
 /**
  * @brief   Sets the state of the selected tab to the tab the user click on.
@@ -26,4 +27,16 @@ export const getTabComponent = (activeTab, tabConfig) => {
     return item.id === activeTab;
   });
   return component[0].component;
+}
+
+export const getTabRow = (activeTab, tabConfig, tabPos, _this) => {
+  const tabRow = tabConfig.map((item) => {
+    return <Tab
+      key={item.id}
+      tabItem={item}
+      activeTab={activeTab}
+      clicked={() => clickHandlerTab(tabPos, activeTab, item.id, _this)}
+    />
+  });
+  return tabRow;
 }
