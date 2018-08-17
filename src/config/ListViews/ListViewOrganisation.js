@@ -1,0 +1,98 @@
+const listViewConfig = {
+	url: 'organisations',
+	batch: 50,
+	title: 'organisaties',
+	searchbar: true,
+	actions: {
+		delete: {
+			labelIcon: 'trash-alt', /* kan ook labelText zijn */
+			multiDoc: true,
+			zeroDoc: false,
+			showOnHover: true,
+			showInBarPrimary: true,
+			showInBarMenu: true,
+			showInRowMenu: true,
+			callback: () => { alert("Delete selected!") },
+		},
+		createOrganisation: {
+			labelIcon: 'building',
+			multiDoc: true,
+			zeroDoc: true,
+			showOnHover: false,
+			showInBarPrimary: true,
+			showInBarMenu: true,
+			showInRowMenu: true,
+			callback: () => { alert("Create organisation!") },
+		},
+		create: {
+			labelIcon: 'plus-square',
+			multiDoc: true,
+			zeroDoc: true,
+			showOnHover: false,
+			showInBarPrimary: true,
+			showInBarMenu: true,
+			subActions: {
+				createPerson: {
+					labelIcon: 'user-circle',
+					multiDoc: false,
+					zeroDoc: true,
+					showOnHover: false,
+					showInBarPrimary: true,
+					showInBarMenu: true,
+					showInRowMenu: true,
+					callback: () => { alert("Create person!") },
+				},
+				createTask: {
+					labelIcon: 'check-square',
+					multiDoc: false,
+					zeroDoc: true,
+					showOnHover: false,
+					showInBarPrimary: true,
+					showInBarMenu: true,
+					showInRowMenu: true,
+					callback: () => { alert("Create task!") },
+				}
+			}
+		}
+	},
+	columnsConfigurator: true,
+	columns: {
+		name: {
+			label: 'naam',
+			sort: true,
+			data: 'name',
+			displayOn: 'small'
+		},
+		street: {
+			label: 'straat',
+			sort: false,
+			data: 'street',
+			displayOn: 'medium'
+		},
+		zip: {
+			label: 'postcode',
+			sort: true,
+			data: 'zip',
+			displayOn: 'large'
+		},
+		country: {
+			label: 'land',
+			sort: true,
+			data: 'country',
+			displayOn: 'small'
+		},
+		email: {
+			label: 'email',
+			sort: false,
+			data: 'email',
+			displayOn: 'none'
+		}
+	},
+	rowSelectAll: true,
+	row: {
+		selectable: true,
+		menu: true
+	}
+}
+
+export default listViewConfig;

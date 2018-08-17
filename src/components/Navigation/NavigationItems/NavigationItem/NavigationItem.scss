@@ -1,0 +1,63 @@
+.NavigationItem {
+	padding: 6px;
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	border-bottom: 1px solid white;
+}
+
+.NavigationItem:hover {
+	background-color: lightgrey;
+}
+
+.NavigationItem a {
+	color: white;
+	text-decoration: none;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	display: block;
+}
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {
+	/*border-right: 10px solid black;*/
+}
+
+.NavigationItem .IconLabel {
+	display: flex;
+	align-items: center;
+}
+
+.NavigationItem .IconLabel>div:first-child {
+	margin-right: 10px;
+	width: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+@media (min-width: 1920px) {
+	.NavigationItem {
+		margin: 10px 0;
+		padding: 0;
+		display: flex;
+		height: 100%;
+		width: auto;
+		align-items: center;
+	}
+
+	.NavigationItem a {
+		height: 100%;
+		padding: 16px 10px;
+		border-bottom: 4px solid transparent;
+	}
+
+	.NavigationItem a:hover,
+	.NavigationItem a:active,
+	.NavigationItem a.active {
+		background-color: lightgray;
+		border-bottom: 4px solid black;
+		border-right: none;
+	}
+}

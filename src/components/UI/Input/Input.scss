@@ -1,0 +1,36 @@
+.Input:not(:last-child) {
+	width: 100%;
+	padding-bottom: 10px;
+	box-sizing: border-box;
+}
+
+.Label {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 0px;
+}
+
+.InputElement {
+	outline: none;
+	border: 1px solid #ccc;
+	background-color: white;
+	font: inherit;
+	padding: 6px 10px;
+	display: block;
+	width: 100%;
+}
+
+.InputElement:focus {
+	outline: none;
+	background-color: #eee;
+}
+
+.Invalid {
+	border: 1px solid red;
+	background-color: #ffc3b4;
+}
+
+.ValidationError {
+	color: red;
+	margin: 5px 0;
+} 

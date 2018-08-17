@@ -1,0 +1,39 @@
+<article class="portal_block w-full h-full" id="widget_facturen_facturen" data-page="invoices">
+	<div>
+		<header>
+			<div class="header-wrapper">
+				<div class="title"><?=_HF(_("factuur"))?></div>
+				<div class="bar-wrapper">
+					<div class="bar-action">
+<!-- 						<div class="dropmenu"><div class="action action-menu" hint="<?=_HF(_("display more actions"))?>"><?=icon('dropdown')?></div></div> -->
+					</div>
+					<div class="bar-search"></div>
+				</div>
+			</div>
+		</header>
+		<div class="e100 column">
+			<ul class="table_list e100">
+				<li class="head">
+					<a>
+						<div class="row">
+							<span class="col-checkbox"><input type="checkbox" name="toggle_all"></span>
+							<span class="col-actions">
+								<span class="col-action expand dropmenu">
+									<div class="box-button box-button-dropdown icon action-menu">
+										<?=icon('select_v')?>
+									</div>
+								</span>
+							</span>
+							<span class="col-name ellipsis"><?=_HF(_("naam"))?></span>
+							<span class="col-date ellipsis"><?=_HF(_("datum"))?></span>
+						</div>
+					</a>
+				</li>
+				<li class="body">
+					<ul></ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</article>
+

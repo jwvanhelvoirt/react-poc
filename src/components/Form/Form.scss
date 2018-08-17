@@ -1,0 +1,22 @@
+.TitleBar {
+	color: #fff;
+	background-color: #5a6268;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 48px;
+	padding: 0 10px;
+	position: sticky;
+	top: 0;
+	left: 0;
+}
+
+.Title {
+	text-transform: capitalize;
+}
+
+.Fields {
+	padding: 10px;
+	max-height: 500px;
+}

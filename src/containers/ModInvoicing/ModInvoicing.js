@@ -1,0 +1,26 @@
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxiliary';
+import Content from '../../components/Content/Content';
+import ListViewTabs from '../../components/GeneralUI/ListviewTabs/ListviewTabs';
+
+class ModInvoicing extends Component {
+	tabs = [
+		{ key: '0', label: 'Factureren', url: '/1' },
+		{ key: '1', label: 'Concept', url: '/2' },
+		{ key: '2', label: 'Verwerken', url: '/3' },
+		{ key: '3', label: 'Facturen', url: '/4' }
+	];
+
+    render () {
+        return (
+            <Aux>
+                <div>Facturering</div>
+                <ListViewTabs tabs={this.tabs}/>
+                <Content/>
+            </Aux>
+        );
+    }
+}
+
+export default ModInvoicing;

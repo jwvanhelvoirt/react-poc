@@ -1,0 +1,6 @@
+#widget_facturen_facturen .col-name { <?=class_e(70)?>; }
+#widget_facturen_facturen .col-date { <?=class_e(30)?>; text-align: right; }
+
+/* These should be moved to central level */
+/* #widget_facturen_facturen .box-button.icon { display: none; } */
+/* #widget_facturen_facturen .col-action { padding-right: 4px; } */
