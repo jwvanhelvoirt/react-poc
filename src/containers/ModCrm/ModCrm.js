@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Nav } from 'reactstrap';
 import { tabsConfigLeft, tabsConfigRight } from '../../config/Tabs/TabsCrm';
 import { getTabComponent, getTabRow } from '../../classes/tabs.js';
+import Screen from '../../components/Content/Screen/Screen';
 
 class ModCrm extends Component {
   state = {
@@ -19,21 +20,25 @@ class ModCrm extends Component {
     const linksRight = getTabRow(this.state.activeTabRight, tabsConfigRight, 'activeTabRight', this);
 
     return (
-    <div className="ContentWindow">
-      <div>
-        <Nav tabs>
-          {linksLeft}
-        </Nav>
-        {contentLeft}
+      <div className="ContentWindow">
+        <div>
+          <Nav tabs>
+            {linksLeft}
+          </Nav>
+          {contentLeft}
+        </div>
+        <div>
+          <Nav tabs>
+            {linksRight}
+          </Nav>
+          {contentRight}
+        </div>
       </div>
-      <div>
-        <Nav tabs>
-          {linksRight}
-        </Nav>
-        {contentRight}
-      </div>
-    </div>
     );
+
+    // return (
+    //   <Screen />
+    // );
   }
 
 }
