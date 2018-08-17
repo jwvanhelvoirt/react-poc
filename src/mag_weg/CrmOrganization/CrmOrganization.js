@@ -12,8 +12,6 @@ class CrmOrganization extends Component {
         return (
             <Aux>
                 <div>CRM</div>
-                <ListViewTabs tabs={this.tabs}/>
-                <Content list={list}/>
             </Aux>
         );
     }

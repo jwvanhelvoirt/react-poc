@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import Aux from '../../hoc/Auxiliary';
-import Content from '../../components/Content/Content';
-import ListViewTabs from '../../components/GeneralUI/ListviewTabs/ListviewTabs';
 
 class ModInvoicing extends Component {
 	tabs = [
@@ -16,8 +14,6 @@ class ModInvoicing extends Component {
         return (
             <Aux>
                 <div>Facturering</div>
-                <ListViewTabs tabs={this.tabs}/>
-                <Content/>
             </Aux>
         );
     }

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import Aux from '../../hoc/Auxiliary';
 import { Nav } from 'reactstrap';
-import Tab from '../../components/Tab/Tab';
+import Tab from '../../components/Content/Tab/Tab';
 import { tabsConfigLeft, tabsConfigRight } from '../../config/Tabs/TabsCrm';
-import TabContentOrganisation from '../../components/TabContent/Organisation/Organisation';
+import TabContentOrganisation from '../../components/Content/TabContent/Organisation/Organisation';
 import { clickHandlerTab } from '../../classes/tabs.js';
 
 class ModCrm extends Component {

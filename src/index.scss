@@ -1,7 +1,15 @@
-body {
+html, body {
+	height: 100%;
 	margin: 0;
-	padding: 0;
+	// background-color: lightgray;
+	box-sizing: border-box;
 	font-family: 'Open Sans', sans-serif;
+}
+
+#wrapper {
+	min-height: 100%;
+	display: flex;
+	box-sizing: border-box;
 }
 
 :global .ContentWindow {
@@ -12,4 +20,3 @@ body {
 :global .TabContent {
 	padding: 10px;
 }
-

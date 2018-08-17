@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import Aux from '../../hoc/Auxiliary';
-import Content from '../../components/Content/Content';
-import ListViewTabs from '../../components/GeneralUI/ListviewTabs/ListviewTabs';
 
 class ModBookings extends Component {
 	tabs = [
@@ -14,8 +12,6 @@ class ModBookings extends Component {
         return (
             <Aux>
                 <div>Urenregistratie</div>
-                <ListViewTabs tabs={this.tabs}/>
-                <Content/>
             </Aux>
         );
     }
