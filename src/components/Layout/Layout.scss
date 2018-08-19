@@ -3,3 +3,14 @@
   margin-top: 56px;
   box-sizing: border-box;
 }
+.Content>* {
+	display: flex;
+	min-height: 100%;
+	height: 1px;
+}
+
+@media(max-width: 767px) {
+	.Content>* {
+		flex-direction: column;
+	}
+}

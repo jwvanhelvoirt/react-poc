@@ -1,0 +1,42 @@
+.ListviewWrapper {
+	width: 100%;
+	overflow-y: auto;
+	// background-color: #eee;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+  padding-top: 10px;
+	display: flex;
+	flex-direction: column;
+  border-right: 2px solid #eee;
+}
+
+.ListviewWrapper:not(:last-child) {
+	margin-right: 10px;
+}
+
+.Listview {
+	margin: 0;
+	box-sizing: border-box;
+	// overflow-y: scroll;
+}
+
+.Listview:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+.Listview .ListviewBar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.Listview .ListviewContent {
+    padding: 20px;
+}
+
+@media(max-width: 767px) {
+	.ListviewWrapper:not(:last-child) {
+		margin-right: 0;
+	}
+}

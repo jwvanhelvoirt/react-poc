@@ -61,7 +61,7 @@ class Organisation extends Component {
       // Append the object of the new entry to the state.
       updatedOrganisations = [
         ...this.state.organisations,
-        response.data
+        editedResponse
       ];
     }
 
@@ -205,13 +205,13 @@ class Organisation extends Component {
           <Button
             color="primary"
             id="Button-New"
-            labelText="Organisatie toevoegen"
+            labelText="Org+"
             clicked={() => this.addOrganistion()}
             />
           <Button
             color="primary"
             id="Button-New"
-            labelText="Persoon toevoegen"
+            labelText="Pers+"
             clicked={() => this.addPerson()}
             />
           <Button
