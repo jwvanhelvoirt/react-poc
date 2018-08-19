@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Responsive from 'react-responsive';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../classes/tabs.js';
+import Button from '../../UI/Button/Button';
 import classes from './ScreenParser.scss';
+// import Aux from '../../../hoc/Auxiliary';
 
 class Screen extends Component {
   Large = props => <Responsive {...props} minWidth={1280} />;
@@ -12,35 +14,89 @@ class Screen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-    this.props.tabsConfig.forEach((pane) => {
+    this.state = { tabsConfig: [...this.props.tabsConfig] };
+    this.state.tabsConfig.forEach((pane) => {
       pane.blocks.forEach((block) => {
         this.state[block.id] = block.activeTab;
       });
     });
   }
 
+  togglePane = (id) => {
+    // Clone the state.
+    const updatedTabsConfig = [
+      ...this.state.tabsConfig
+    ]
+
+    const arrayRecords = Object.keys(updatedTabsConfig);
+    for (let index in arrayRecords) {
+      let updatedTabsConfigElement = {
+        ...updatedTabsConfig[arrayRecords[index]]
+      }
+
+      if (updatedTabsConfigElement.id === id) {
+        updatedTabsConfigElement.show = !updatedTabsConfigElement.show;
+        updatedTabsConfig[arrayRecords[index]] = updatedTabsConfigElement;
+      }
+    }
+
+    // Modify the state.
+    this.setState({
+      tabsConfig: updatedTabsConfig
+    });
+  }
+
   getHtml = (display) => {
-    const tabsConfig = this.props.tabsConfig.filter((pane) => {
+    const tabsConfig = this.state.tabsConfig.filter((pane) => {
       return pane[display];
     });
 
     const result = tabsConfig.map((pane, indexPane) => {
-      const html = pane.blocks.map((block, indexBlock) => {
-        const links = getTabRow(this.state[block.id], block.tabs, block.id, this);
-        const content = getTabComponent(this.state[block.id], block.tabs);
-        return (
-          <div key={indexBlock} className={classes.Listview}>
-            <div className={classes.ListviewBar}>
-              <Nav tabs>{links}</Nav>
+      const buttonShow = <Button
+        color="secondary"
+        dataTip="React-tooltip"
+        id="Pane-Expand"
+        labelIcon="plus"
+        tooltip="Venster tonen"
+        clicked={() => this.togglePane(pane.id)}
+      />
+
+    const buttonHide = <Button
+        color="secondary"
+        dataTip="React-tooltip"
+        id="Pane-Collapse"
+        labelIcon="minus"
+        tooltip="Venster verbergen"
+        clicked={() => this.togglePane(pane.id)}
+      />
+
+      let html = "";
+      if (pane.show) {
+        html = pane.blocks.map((block, indexBlock) => {
+          const links = getTabRow(this.state[block.id], block.tabs, block.id, this);
+          const content = getTabComponent(this.state[block.id], block.tabs);
+
+          const toggle = pane.toggle ? (pane.show ? buttonHide : "") : "";
+
+          return (
+            <div key={indexBlock} className={classes.Listview}>
+              <div className={classes.ListviewBar}>
+                {toggle}
+                <Nav tabs>{links}</Nav>
+              </div>
+              <div className={classes.ListviewContent}>
+                {content}
+              </div>
             </div>
-            <div className={classes.ListviewContent}>
-              {content}
-            </div>
-          </div>
-        );
-      });
-      return <div key={indexPane} className={classes.ListviewWrapper}>{html}</div>;
+          );
+        });
+      }
+
+      const listviewWrapper = <div key={indexPane} className={classes.ListviewWrapper}>{html}</div>
+
+      html = html === '' ? (pane.toggle ? buttonShow : '') : listviewWrapper;
+
+      return html;
     });
 
     return result;

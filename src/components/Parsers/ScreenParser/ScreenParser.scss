@@ -11,14 +11,10 @@
   border-right: 2px solid #eee;
 }
 
-.ListviewWrapper:not(:last-child) {
-	margin-right: 10px;
-}
-
 .Listview {
 	margin: 0;
 	box-sizing: border-box;
-	// overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 .Listview:not(:last-child) {
@@ -26,17 +22,13 @@
 }
 
 .Listview .ListviewBar {
+    display: flex;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+    margin-left: 10px;
 }
 
 .Listview .ListviewContent {
     padding: 20px;
-}
-
-@media(max-width: 767px) {
-	.ListviewWrapper:not(:last-child) {
-		margin-right: 0;
-	}
 }

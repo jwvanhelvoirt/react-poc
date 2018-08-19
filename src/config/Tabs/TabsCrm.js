@@ -4,8 +4,11 @@ import TabContentPerson from '../../components/Content/TabContent/Person/Person'
 
 export const tabsConfig = [
   {
+    id: 'panes1',
     displaySmall: true,
     displayMedium: true,
+    toggle: true,
+    show: true,
     blocks: [
       {
         id: 'pane1',
@@ -20,7 +23,10 @@ export const tabsConfig = [
     ]
   },
   {
+    id: 'panes2',
     displayLarge: true,
+    show: true,
+    toggle: true,
     blocks: [
       {
         id: 'pane2',
@@ -32,7 +38,10 @@ export const tabsConfig = [
     ]
   },
   {
+    id: 'panes3',
     displayLarge: true,
+    show: true,
+    toggle: true,
     blocks: [
       {
         id: 'pane3',
@@ -46,9 +55,12 @@ export const tabsConfig = [
     ]
   },
   {
+    id: 'panes4',
     displaySmall: true,
     displayMedium: true,
     displayLarge: true,
+    show: true,
+    toggle: true,
     blocks: [
       {
         id: 'pane4',
