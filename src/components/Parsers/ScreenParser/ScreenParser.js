@@ -23,27 +23,29 @@ class Screen extends Component {
   }
 
   togglePane = (id) => {
-    // Clone the state.
-    const updatedTabsConfig = [
-      ...this.state.tabsConfig
-    ]
+    setTimeout(() => {
+      // Clone the state.
+      const updatedTabsConfig = [
+        ...this.state.tabsConfig
+      ]
 
-    const arrayRecords = Object.keys(updatedTabsConfig);
-    for (let index in arrayRecords) {
-      let updatedTabsConfigElement = {
-        ...updatedTabsConfig[arrayRecords[index]]
+      const arrayRecords = Object.keys(updatedTabsConfig);
+      for (let index in arrayRecords) {
+        let updatedTabsConfigElement = {
+          ...updatedTabsConfig[arrayRecords[index]]
+        }
+
+        if (updatedTabsConfigElement.id === id) {
+          updatedTabsConfigElement.show = !updatedTabsConfigElement.show;
+          updatedTabsConfig[arrayRecords[index]] = updatedTabsConfigElement;
+        }
       }
 
-      if (updatedTabsConfigElement.id === id) {
-        updatedTabsConfigElement.show = !updatedTabsConfigElement.show;
-        updatedTabsConfig[arrayRecords[index]] = updatedTabsConfigElement;
-      }
-    }
-
-    // Modify the state.
-    this.setState({
-      tabsConfig: updatedTabsConfig
-    });
+      // Modify the state.
+      this.setState({
+        tabsConfig: updatedTabsConfig
+      });
+    }, 100);
   }
 
   getHtml = (display) => {
