@@ -3,6 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import {
 	faAddressCard,
+	faBars,
 	faBuilding,
 	faCalendarAlt,
 	faCheckCircle,
@@ -27,6 +28,7 @@ import {
 
 export default library.add(
 	faAddressCard,
+	faBars,
 	faBuilding,
 	faCalendarAlt,
 	faCheckCircle,

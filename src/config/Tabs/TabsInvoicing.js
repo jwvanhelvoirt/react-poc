@@ -3,9 +3,11 @@ import React from 'react';
 
 export const tabsConfig = [
   {
+    id: 'panes1',
     displayLarge: true,
     displayMedium: true,
     displaySmall: true,
+    show: true,
     blocks: [
       {
         id: 'pane1',
@@ -20,9 +22,12 @@ export const tabsConfig = [
     ]
   },
   {
+    id: 'panes2',
     displayLarge: true,
     displayMedium: true,
     displaySmall: true,
+    show: true,
+    toggle: true,
     blocks: [
       {
         id: 'pane2',

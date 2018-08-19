@@ -25,7 +25,6 @@ class Layout extends Component {
 			<Aux>
 				<Toolbar
 					drawerToggleClicked={this.sideDrawerToggleHandler}
-					navItems={this.props.navItems}
 					navIcons={this.props.navIcons} />
 				<SideDrawer
 					open={this.state.showSideDrawer}

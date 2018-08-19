@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './ToolbarIcons.css';
+import classes from './ToolbarIcons.scss';
 import ToolbarIcon from './ToolbarIcon/ToolbarIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

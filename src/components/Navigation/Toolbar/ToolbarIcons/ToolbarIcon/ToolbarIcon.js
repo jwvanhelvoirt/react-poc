@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
-import classes from './ToolbarIcon.css';
+import classes from './ToolbarIcon.scss';
 
 const toolbarIcon = (props) => {
 	const tooltipId = "tb_icon_" + props.id;
@@ -23,7 +23,7 @@ const toolbarIcon = (props) => {
 				<span>{props.label}</span>
 			</ReactTooltip>
 		</li>
-	);	
+	);
 }
 
 export default toolbarIcon;
