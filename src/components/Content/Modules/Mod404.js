@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Auxiliary';
+import Aux from '../../../hoc/Auxiliary';
 
 class Mod404 extends Component {
     render () {

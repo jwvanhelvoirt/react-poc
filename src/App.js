@@ -12,24 +12,24 @@ import asynchComponent from './hoc/asynchComponent';
 //});
 
 // Import components for all navigation item routes.
-import ModInvoicing from './containers/ModInvoicing/ModInvoicing';
-import ModPlanning from './containers/ModPlanning/ModPlanning';
-import ModBookings from './containers/ModBookings/ModBookings';
-import ModCrm from './containers/ModCrm/ModCrm';
-import ModGdpr from './containers/ModGdpr/ModGdpr';
-import ModAcquisition from './containers/ModAcquisition/ModAcquisition';
-import ModRecruitment from './containers/ModRecruitment/ModRecruitment';
-import ModInspection from './containers/ModInspection/ModInspection';
+import ModInvoicing from './components/Content/Modules/ModInvoicing';
+import ModPlanning from './components/Content/Modules/ModPlanning';
+import ModBookings from './components/Content/Modules/ModBookings';
+import ModCrm from './components/Content/Modules/ModCrm';
+import ModGdpr from './components/Content/Modules/ModGdpr';
+import ModAcquisition from './components/Content/Modules/ModAcquisition';
+import ModRecruitment from './components/Content/Modules/ModRecruitment';
+import ModInspection from './components/Content/Modules/ModInspection';
 
 // Import components for all navigation icon routes.
-import ModSearch from './containers/ModSearch/ModSearch';
-import ModHelp from './containers/ModHelp/ModHelp';
-import ModRelease from './containers/ModRelease/ModRelease';
-import ModReports from './containers/ModReports/ModReports';
-import ModPersonal from './containers/ModPersonal/ModPersonal';
-import ModAdmin from './containers/ModAdmin/ModAdmin';
+import ModSearch from './components/Content/Modules/ModSearch';
+import ModHelp from './components/Content/Modules/ModHelp';
+import ModRelease from './components/Content/Modules/ModRelease';
+import ModReports from './components/Content/Modules/ModReports';
+import ModPersonal from './components/Content/Modules/ModPersonal';
+import ModAdmin from './components/Content/Modules/ModAdmin';
 
-import Mod404 from './containers/Mod404/Mod404';
+import Mod404 from './components/Content/Modules/Mod404';
 
 import { isAuthNavItems, navItems } from './config/Navigation/NavigationItems';
 import { isAuthNavIcons, navIcons } from './config/Navigation/NavigationIcons';
