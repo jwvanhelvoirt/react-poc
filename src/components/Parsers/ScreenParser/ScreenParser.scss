@@ -1,4 +1,4 @@
-.ListviewWrapper {
+.PaneWrapper {
 	width: 100%;
 	overflow-y: auto;
 	// background-color: #eee;
@@ -11,24 +11,25 @@
   border-right: 2px solid #eee;
 }
 
-.Listview {
+.Pane {
 	margin: 0;
 	box-sizing: border-box;
 	overflow-y: scroll;
 }
 
-.Listview:not(:last-child) {
+.Pane:not(:last-child) {
 	margin-bottom: 10px;
 }
 
-.Listview .ListviewBar {
+.Pane .TabBar {
     display: flex;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     margin-left: 10px;
+		background-color: white;
 }
 
-.Listview .ListviewContent {
+.Pane .ListviewContainer {
     padding: 20px;
 }

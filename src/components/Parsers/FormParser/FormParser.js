@@ -152,14 +152,14 @@ class Form extends Component {
               clicked={this.submitHandler}
               color="success"
               id="Button-Save"
-              labelText="Opslaan"
+              labelIcon="save"
               disabled={!this.state.formIsValid}
               />
             <Button
               clicked={this.props.onCancel}
               color="danger"
               id="Button-Cancel"
-              labelText="Annuleren"
+              labelIcon="window-close"
               />
           </div>
         </div>

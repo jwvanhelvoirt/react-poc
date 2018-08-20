@@ -3,6 +3,13 @@ const listViewConfig = {
 	batch: 50,
 	title: 'organisaties',
 	searchbar: true,
+	rowSelectAll: true,
+	columnsConfigurator: true,
+	row: {
+		selectable: true,
+		menu: true
+	}
+	defaulSort: 'name'
 	actions: {
 		delete: {
 			labelIcon: 'trash-alt', /* kan ook labelText zijn */
@@ -55,7 +62,6 @@ const listViewConfig = {
 			}
 		}
 	},
-	columnsConfigurator: true,
 	columns: {
 		name: {
 			label: 'naam',
@@ -88,11 +94,6 @@ const listViewConfig = {
 			displayOn: 'none'
 		}
 	},
-	rowSelectAll: true,
-	row: {
-		selectable: true,
-		menu: true
-	}
 }
 
 export default listViewConfig;

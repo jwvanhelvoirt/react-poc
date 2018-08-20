@@ -69,12 +69,12 @@ class Screen extends Component {
           const toggle = pane.toggle ? (pane.show ? buttonHide : "") : "";
 
           return (
-            <div key={indexBlock} className={classes.Listview}>
-              <div className={classes.ListviewBar}>
+            <div key={indexBlock} className={classes.Pane}>
+              <div className={classes.TabBar}>
                 {toggle}
                 <Nav tabs>{links}</Nav>
               </div>
-              <div className={classes.ListviewContent}>
+              <div className={classes.ListviewContainer}>
                 {content}
               </div>
             </div>
@@ -82,9 +82,9 @@ class Screen extends Component {
         });
       }
 
-      const listviewWrapper = <div key={indexPane} className={classes.ListviewWrapper}>{html}</div>
+      const PaneWrapper = <div key={indexPane} className={classes.PaneWrapper}>{html}</div>
 
-      html = html === '' ? (pane.toggle ? buttonShow : '') : listviewWrapper;
+      html = html === '' ? (pane.toggle ? buttonShow : '') : PaneWrapper;
 
       return html;
     });

@@ -18,6 +18,7 @@ import {
 	faPlus,
 	faPlusSquare,
 	faQuestion,
+	faSave,
 	faSearch,
 	faShoppingCart,
 	faTimesCircle,
@@ -25,7 +26,8 @@ import {
 	faUser,
 	faUserCircle,
 	faUsers,
-	faUserShield} from '@fortawesome/free-solid-svg-icons';
+	faUserShield,
+	faWindowClose} from '@fortawesome/free-solid-svg-icons';
 
 export default library.add(
 	faAddressCard,
@@ -44,6 +46,7 @@ export default library.add(
 	faPlus,
 	faPlusSquare,
 	faQuestion,
+	faSave,
 	faSearch,
 	faShoppingCart,
 	faTimesCircle,
@@ -51,4 +54,6 @@ export default library.add(
 	faUser,
 	faUserCircle,
 	faUsers,
-	faUserShield);
+	faUserShield,
+	faWindowClose
+);
