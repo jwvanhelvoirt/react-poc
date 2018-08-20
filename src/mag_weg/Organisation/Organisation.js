@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import formConfigPerson from '../../../../config/Forms/FormPerson';
-import formConfigOrganisation from '../../../../config/Forms/FormOrganisation';
+import formConfigPerson from '../../../../config/Forms/ConfigFormPerson';
+import formConfigOrganisation from '../../../../config/Forms/ConfigFormOrganisation';
 import FormParser from '../../../Parsers/FormParser/FormParser';
 import Button from '../../../UI/Button/Button';
 import Spinner from '../../../UI/Spinner/Spinner';

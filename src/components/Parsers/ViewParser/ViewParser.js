@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import formConfigPerson from '../../../config/Forms/FormPerson';
+import formConfigPerson from '../../../config/Forms/ConfigFormPerson';
 import FormParser from '../FormParser/FormParser';
 import Button from '../../UI/Button/Button';
 import Spinner from '../../UI/Spinner/Spinner';

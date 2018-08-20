@@ -31,8 +31,8 @@ import ModAdmin from './components/Content/Modules/ModAdmin';
 
 import Mod404 from './components/Content/Modules/Mod404';
 
-import { isAuthNavItems, navItems } from './config/Navigation/NavigationItems';
-import { isAuthNavIcons, navIcons } from './config/Navigation/NavigationIcons';
+import { isAuthNavItems, navItems } from './config/Navigation/ConfigNavigationItems';
+import { isAuthNavIcons, navIcons } from './config/Navigation/ConfigNavigationIcons';
 
 class App extends Component {
   startModule = 'crm';

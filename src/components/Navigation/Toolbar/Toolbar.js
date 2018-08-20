@@ -8,10 +8,11 @@ import { Large, Medium, Small } from '../../../classes/responsive';
 import classes from './Toolbar.scss';
 
 const toolbar = (props) => {
+  const classesDynamicSearchbar = [classes.GrowMedium, classes.Searchbar].join(' ');
   return (
     <header className={classes.Toolbar}>
       <DrawerToggle clicked={props.drawerToggleClicked} />
-      <div className={classes.GrowMedium}><ToolbarSearch /></div>
+      <div className={classesDynamicSearchbar}><ToolbarSearch /></div>
       <Large><ToolbarIcons navIcons={props.navIcons} /></Large>
       <Medium><ToolbarIcons navIcons={props.navIcons} /></Medium>
       <Small><DrawerToggleIcons clicked={props.drawerToggleClickedIcons} /></Small>
