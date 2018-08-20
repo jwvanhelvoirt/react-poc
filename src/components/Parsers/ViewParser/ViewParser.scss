@@ -1,17 +1,213 @@
 /*DIT MOET STRAKS NAAR EEN HOGER NIVO, VOOR ALLE LISTS!!!*/
 
 .ListRow {
-	display: flex;
-	align-items: center;
-	width: 100%;
-	height: 40px;
-	border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #ccc;
 
-	.ListRowCheckbox {
-		margin-right: 6px;
-	}
+  .ListRowCheckbox {
+    margin-right: 6px;
+  }
 }
 
 .ListRowEdit {
-	background-color: #eee;
+  background-color: #eee;
+}
+
+
+
+
+
+// NIEUWE classes
+.ListviewContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+  // overflow-y: auto;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.ListviewContainer>* {
+  font-size: 13px;
+}
+
+.ListviewHeader {
+  background-color: #eee;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 51px;
+  background-color: #eee;
+}
+
+.ListviewHeader>* {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.TitleRow {
+  border-top: 2px solid #aaa;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  min-height: 100%;
+  justify-content: space-between;
+}
+
+.Title {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.Navigation {
+  display: flex;
+  min-height: 100%;
+}
+
+.Navigation>* {
+  border-right: 1px solid #ccc;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Navigation>*:last-child {
+  border-right: none;
+}
+
+.Counter {
+  padding-right: 10px;
+}
+
+.PreviousNext, .ColumnConfigurator {
+  width: 36px;
+}
+.PreviousNext:hover, .ColumnConfigurator:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.ActionRow {
+  min-height: 100%;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  padding-left: 0;
+  justify-content: space-between;
+}
+
+.ActionRowActions, .FilterSort {
+  display: flex;
+  min-height: 100%;
+}
+.ActionRowActions>*, .FilterSort>* {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+}
+.ActionRowActions>*  {
+  border-right: 1px solid #ccc;
+}
+.FilterSort>*  {
+  border-left: 1px solid #ccc;
+}
+.ActionRowActions>*:hover, .FilterSort>*:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.HeaderRow {
+  background-color: #ddd;
+  // font-weight: bold;
+  border-bottom: 2px solid #aaa;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+
+
+
+
+
+.Headers>* {
+  display: flex;
+}
+
+.Sort {
+  margin-left: 5px;
+}
+
+.Row {
+  padding: 8px 10px;
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.Fixed {
+  display: flex;
+}
+
+.Flex {
+  width: 100%;
+  display: flex;
+}
+
+.Fixed1 {
+  width: 26px;
+  min-width: 26px;
+}
+
+.Flex10 {
+  width: 10%;
+}
+.Flex20 {
+  width: 20%;
+}
+.Flex30 {
+  width: 30%;
+}
+.Flex40 {
+  width: 40%;
+}
+.Flex50 {
+  width: 50%;
+}
+.Flex60 {
+  width: 60%;
+}
+.Flex70 {
+  width: 70%;
+}
+.Flex80 {
+  width: 80%;
+}
+.Flex90 {
+  width: 90%;
+}
+.Flex100 {
+  width: 100%;
+}
+
+.ShowOnHover {
+  display: none;
+}
+
+.Small {
+  flex-grow: 1;
+}
+
+.Medium {
+  flex-grow: 2;
 }

@@ -1,14 +1,17 @@
 const listViewConfig = {
 	batch: 50,
 	columnsConfigurator: true,
-	defaulSort: 'name',
+	defaultSort: 'name',
 	row: {
 		selectable: true,
 		menu: true
 	},
+	rowTitle: true,
+	rowActions: true,
+	rowHeader: true,
 	rowSelectAll: true,
 	searchbar: true,
-	title: 'organisaties',
+	title: 'Organisaties',
 	url: 'organisations',
 	actions: {
 		delete: {
@@ -64,31 +67,31 @@ const listViewConfig = {
 	},
 	columns: {
 		name: {
-			label: 'naam',
+			label: 'Naam',
 			sort: true,
 			data: 'name',
 			displayOn: 'small'
 		},
 		street: {
-			label: 'straat',
+			label: 'Straat',
 			sort: false,
 			data: 'street',
 			displayOn: 'medium'
 		},
 		zip: {
-			label: 'postcode',
+			label: 'Postcode',
 			sort: true,
 			data: 'zip',
 			displayOn: 'large'
 		},
 		country: {
-			label: 'land',
+			label: 'Land',
 			sort: true,
 			data: 'country',
 			displayOn: 'small'
 		},
 		email: {
-			label: 'email',
+			label: 'Email',
 			sort: false,
 			data: 'email',
 			displayOn: 'none'

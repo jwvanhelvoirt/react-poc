@@ -9,6 +9,7 @@
 	display: flex;
 	flex-direction: column;
   border-right: 2px solid #eee;
+	color: grey;
 }
 
 .Pane {
@@ -26,10 +27,12 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    margin-left: 10px;
 		background-color: white;
+		z-index: 10;
+		margin-left: 10px;
+		padding-bottom: 11px;
 }
 
 .Pane .ListviewContainer {
-    padding: 20px;
+    // padding: 20px;
 }

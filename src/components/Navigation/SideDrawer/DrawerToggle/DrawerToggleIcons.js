@@ -1,6 +1,5 @@
 import React from 'react';
 import ToolbarIcons from '../../Toolbar/ToolbarIcons/ToolbarIcons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const drawerToggleIcons = (props) => {
   const icons = [

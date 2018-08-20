@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import formConfigPerson from '../../../config/Forms/ConfigFormPerson';
 import FormParser from '../FormParser/FormParser';
 import Button from '../../UI/Button/Button';
@@ -121,7 +122,7 @@ class View extends Component {
     callServer('get', '/' + this.props.viewConfig.url + '/read_multiple', this.successGetHandler, this.errorGetHandler);
   }
 
-  render() {
+  render_old() {
     // Create HTML for the list of items.
     let listItems = this.state.listItems.map((listItem, index) => {
       // In case the listItem has been edited during this client session, it gets additional styling.
@@ -189,6 +190,316 @@ class View extends Component {
         </div>
       );
     }
+
+    render() {
+      const classesDynamicHeaders = [classes.Headers, classes.Flex].join(' ');
+      return(
+        <div className={classes.ListviewContainer}>
+          <div className={classes.ListviewHeader}>
+            <div className={classes.TitleRow}>
+              <div className={classes.Title}>{this.props.viewConfig.title}</div>
+              <div className={classes.Navigation}>
+                <div className={classes.Counter}>1-50 of 691</div>
+                <div className={classes.PreviousNext}>&lt;</div>
+                <div className={classes.PreviousNext}>&lt;5</div>
+                <div className={classes.PreviousNext}>&gt;5</div>
+                <div className={classes.PreviousNext}>&gt;</div>
+                <div className={classes.ColumnConfigurator}><FontAwesomeIcon icon='ellipsis-v' /></div>
+              </div>
+            </div>
+            <div className={classes.ActionRow}>
+              <div className={classes.ActionRowActions}>
+                <div><FontAwesomeIcon icon='ellipsis-v' /></div>
+                <div><FontAwesomeIcon icon='users' /></div>
+                <div><FontAwesomeIcon icon='save' /></div>
+                <div><FontAwesomeIcon icon='plus-square' /></div>
+              </div>
+              <div className={classes.Search}>Searchbar</div>
+              <div className={classes.FilterSort}>
+                <div><FontAwesomeIcon icon='filter' /></div>
+                <div><FontAwesomeIcon icon='sort' /></div>
+              </div>
+            </div>
+            <div className={classes.HeaderRow}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}></div>
+              </div>
+              <div className={classesDynamicHeaders}>
+                <div className={classes.Flex40}>
+                  <div>Naam</div>
+                  <div className={classes.Sort}><FontAwesomeIcon icon='sort' /></div>
+                </div>
+                <div className={classes.Flex40}>
+                  <div>Adres</div>
+                  <div className={classes.Sort}><FontAwesomeIcon icon='sort' /></div>
+                </div>
+                <div className={classes.Flex20}>
+                  <div>Woonplaats</div>
+                  <div className={classes.Sort}><FontAwesomeIcon icon='sort' /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={classes.ListviewContent}>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+            <div className={classes.Row}>
+              <div className={classes.Fixed}>
+                <div className={classes.Fixed1}><input type="checkbox"/></div>
+                <div className={classes.Fixed1}>x</div>
+              </div>
+              <div className={classes.Flex}>
+                <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
+                <div className={classes.Flex40}>Heiligenbos 55</div>
+                <div className={classes.Flex20}>Berghem</div>
+                <div className={classes.ShowOnHover}>x</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+
   }
 
   export default View;
