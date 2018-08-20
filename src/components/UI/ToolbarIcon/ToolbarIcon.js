@@ -7,8 +7,9 @@ import classes from './ToolbarIcon.scss';
 const toolbarIcon = (props) => {
 	const tooltipId = "tb_icon_" + props.id;
 
-	return (
-		<li className={classes.ToolbarIcon}>
+	let containerLink = null;
+	if (props.link) {
+		containerLink =
 			<NavLink
 				to={props.link}
 				exact
@@ -19,6 +20,19 @@ const toolbarIcon = (props) => {
 				}}>
 				{props.children}
 			</NavLink>
+	} else if (props.clicked) {
+		containerLink =
+			<a
+				onClick={props.clicked}
+				data-tip="React-tooltip"
+				data-for={tooltipId}>
+				{props.children}
+			</a>
+	}
+
+	return (
+		<li className={classes.ToolbarIcon}>
+			{containerLink}
 			<ReactTooltip id={tooltipId} place="bottom" type="dark" effect="solid">
 				<span>{props.label}</span>
 			</ReactTooltip>
