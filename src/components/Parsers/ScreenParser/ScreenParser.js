@@ -4,7 +4,6 @@ import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../classes/tabs.js';
 import Button from '../../UI/Button/Button';
 import classes from './ScreenParser.scss';
-// import Aux from '../../../hoc/Auxiliary';
 
 class Screen extends Component {
   Large = props => <Responsive {...props} minWidth={1280} />;
@@ -23,29 +22,27 @@ class Screen extends Component {
   }
 
   togglePane = (id) => {
-    setTimeout(() => {
-      // Clone the state.
-      const updatedTabsConfig = [
-        ...this.state.tabsConfig
-      ]
+    // Clone the state.
+    const updatedTabsConfig = [
+      ...this.state.tabsConfig
+    ]
 
-      const arrayRecords = Object.keys(updatedTabsConfig);
-      for (let index in arrayRecords) {
-        let updatedTabsConfigElement = {
-          ...updatedTabsConfig[arrayRecords[index]]
-        }
-
-        if (updatedTabsConfigElement.id === id) {
-          updatedTabsConfigElement.show = !updatedTabsConfigElement.show;
-          updatedTabsConfig[arrayRecords[index]] = updatedTabsConfigElement;
-        }
+    const arrayRecords = Object.keys(updatedTabsConfig);
+    arrayRecords.forEach((index) => {
+      let updatedTabsConfigElement = {
+        ...updatedTabsConfig[arrayRecords[index]]
       }
 
-      // Modify the state.
-      this.setState({
-        tabsConfig: updatedTabsConfig
-      });
-    }, 100);
+      if (updatedTabsConfigElement.id === id) {
+        updatedTabsConfigElement.show = !updatedTabsConfigElement.show;
+        updatedTabsConfig[arrayRecords[index]] = updatedTabsConfigElement;
+      }
+    });
+
+    // Modify the state.
+    this.setState({
+      tabsConfig: updatedTabsConfig
+    });
   }
 
   getHtml = (display) => {
@@ -55,20 +52,15 @@ class Screen extends Component {
 
     const result = tabsConfig.map((pane, indexPane) => {
       const buttonShow = <Button
-        color="secondary"
-        dataTip="React-tooltip"
-        id="Pane-Expand"
+        color="success"
         labelIcon="plus"
-        tooltip="Venster tonen"
         clicked={() => this.togglePane(pane.id)}
       />
 
     const buttonHide = <Button
         color="secondary"
-        dataTip="React-tooltip"
-        id="Pane-Collapse"
+        outline="true"
         labelIcon="minus"
-        tooltip="Venster verbergen"
         clicked={() => this.togglePane(pane.id)}
       />
 
