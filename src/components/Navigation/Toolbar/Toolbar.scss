@@ -18,6 +18,18 @@
 	// display: none;
 }
 
+.GrowSmall {
+	flex-grow: 1;
+}
+
+.GrowMedium {
+	flex-grow: 2;
+}
+
+.GrowBig {
+	flex-grow: 3;
+}
+
 @media (max-width: 1919px) {
 	.Toolbar .Title {
 		color: white;

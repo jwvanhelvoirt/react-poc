@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import Responsive from 'react-responsive';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../classes/tabs.js';
 import Button from '../../UI/Button/Button';
+import { Large, Medium, Small } from '../../../classes/responsive';
 import classes from './ScreenParser.scss';
 
 class Screen extends Component {
-  Large = props => <Responsive {...props} minWidth={1280} />;
-  Medium = props => <Responsive {...props} minWidth={768} maxWidth={1279} />;
-  Small = props => <Responsive {...props} maxWidth={767} />;
-
   constructor(props) {
     super(props);
 
@@ -104,9 +100,9 @@ class Screen extends Component {
 
     return (
       <div>
-        <this.Large>{large}</this.Large>
-        <this.Medium>{medium}</this.Medium>
-        <this.Small>{small}</this.Small>
+        <Large>{large}</Large>
+        <Medium>{medium}</Medium>
+        <Small>{small}</Small>
       </div>
     );
   }

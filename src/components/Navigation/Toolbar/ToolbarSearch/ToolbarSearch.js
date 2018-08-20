@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { InputGroup, Input } from 'reactstrap';
 import Button from '../../../UI/Button/Button';
 import { withRouter } from 'react-router-dom';
-import classes from './ToolbarSearch.scss';
 
 class ToolbarSearch extends Component {
   state = {
@@ -32,7 +31,7 @@ class ToolbarSearch extends Component {
 
   render() {
     return (
-      <div className={classes.ToolbarSearch}>
+      <div>
         <InputGroup>
           <Button
             color="secondary"
