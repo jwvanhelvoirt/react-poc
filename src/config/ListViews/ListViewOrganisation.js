@@ -1,15 +1,15 @@
 const listViewConfig = {
-	url: 'organisations',
 	batch: 50,
-	title: 'organisaties',
-	searchbar: true,
-	rowSelectAll: true,
 	columnsConfigurator: true,
+	defaulSort: 'name',
 	row: {
 		selectable: true,
 		menu: true
-	}
-	defaulSort: 'name'
+	},
+	rowSelectAll: true,
+	searchbar: true,
+	title: 'organisaties',
+	url: 'organisations',
 	actions: {
 		delete: {
 			labelIcon: 'trash-alt', /* kan ook labelText zijn */
@@ -19,7 +19,7 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			callback: () => { alert("Delete selected!") },
+			callback: () => { alert("Delete selected!") }
 		},
 		createOrganisation: {
 			labelIcon: 'building',
@@ -29,7 +29,7 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			callback: () => { alert("Create organisation!") },
+			callback: () => { alert("Create organisation!") }
 		},
 		create: {
 			labelIcon: 'plus-square',
@@ -47,7 +47,7 @@ const listViewConfig = {
 					showInBarPrimary: true,
 					showInBarMenu: true,
 					showInRowMenu: true,
-					callback: () => { alert("Create person!") },
+					callback: () => { alert("Create person!") }
 				},
 				createTask: {
 					labelIcon: 'check-square',
@@ -57,7 +57,7 @@ const listViewConfig = {
 					showInBarPrimary: true,
 					showInBarMenu: true,
 					showInRowMenu: true,
-					callback: () => { alert("Create task!") },
+					callback: () => { alert("Create task!") }
 				}
 			}
 		}

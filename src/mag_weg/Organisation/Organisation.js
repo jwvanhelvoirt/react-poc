@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import formConfigPerson from '../../../config/Forms/FormPerson';
-import FormParser from '../FormParser/FormParser';
-import Button from '../../UI/Button/Button';
-import Spinner from '../../UI/Spinner/Spinner';
-import Modal from '../../UI/Modal/Modal';
-import { callServer } from '../../../api/api';
-import classes from './ViewParser.scss';
+import formConfigPerson from '../../../../config/Forms/FormPerson';
+import formConfigOrganisation from '../../../../config/Forms/FormOrganisation';
+import FormParser from '../../../Parsers/FormParser/FormParser';
+import Button from '../../../UI/Button/Button';
+import Spinner from '../../../UI/Spinner/Spinner';
+import Modal from '../../../UI/Modal/Modal';
+import { callServer } from '../../../../api/api';
+import classes from './Organisation.scss';
 
-class View extends Component {
+class Organisation extends Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +19,7 @@ class View extends Component {
       selectedListItems: [],
       selectedListItemId: null,
       configForm: {
-        ...this.props.formConfig
+        ...formConfigOrganisation //TODO
       }
     }
 
@@ -53,14 +54,14 @@ class View extends Component {
   }
 
   onCloseHandler = () => {
-    this.setState({ loadedListItem: null, configForm: { ...this.props.formConfig } });
+    this.setState({ loadedListItem: null, configForm: { ...formConfigOrganisation } }); //TODO: Config related to list items.
   }
 
 
 
   onClickItemHandler = (id) => {
     this.setState({ selectedListItemId: id });
-    callServer('get', '/' + this.props.viewConfig.url + '/read/' + id, this.successGetSingleHandler, this.errorGetSingleHandler);
+    callServer('get', '/organisations/read/' + id, this.successGetSingleHandler, this.errorGetSingleHandler); //TODO
   }
 
   successGetSingleHandler = (response) => {
@@ -118,11 +119,11 @@ class View extends Component {
   }
 
   reloadListView() {
-    callServer('get', '/' + this.props.viewConfig.url + '/read_multiple', this.successGetHandler, this.errorGetHandler);
+    callServer('get', '/organisations/read_multiple', this.successGetHandler, this.errorGetHandler); //TODO
   }
 
   render() {
-    // Create HTML for the list of items.
+    // Create HTML for the list of organisations.
     let listItems = this.state.listItems.map((listItem, index) => {
       // In case the listItem has been edited during this client session, it gets additional styling.
       const classesDynamic = listItem.edit ? [classes.ListRow, classes.ListRowEdit].join(' ') : classes.ListRow;
@@ -166,7 +167,7 @@ class View extends Component {
             color="primary"
             id="Button-New"
             labelText="Org+"
-            clicked={() => this.addItem(this.props.formConfig)}
+            clicked={() => this.addItem(formConfigOrganisation)}
             />
           <Button
             color="primary"
@@ -191,4 +192,4 @@ class View extends Component {
     }
   }
 
-  export default View;
+  export default Organisation;

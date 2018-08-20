@@ -1,6 +1,6 @@
 import React from 'react';
-import TabContentOrganisation from '../../components/Content/TabContent/Organisation/Organisation';
-import TabContentPerson from '../../components/Content/TabContent/Person/Person';
+import TabContentOrganisation from '../../components/Content/TabContent/Organisation';
+import TabContentPerson from '../../components/Content/TabContent/Person';
 
 export const tabsConfig = [
   {
