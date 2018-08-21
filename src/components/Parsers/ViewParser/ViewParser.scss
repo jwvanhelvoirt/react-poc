@@ -37,6 +37,8 @@
 
 .ListviewContainer>* {
   font-size: 13px;
+  margin: 0;
+  padding: 0;
 }
 
 .ListviewHeader {
@@ -44,13 +46,12 @@
   position: -webkit-sticky;
   position: sticky;
   top: 51px;
-  background-color: #eee;
 }
 
 .ListviewHeader>* {
   display: flex;
-  padding: 0;
   margin: 0;
+  padding: 0;
   padding-left: 10px;
   height: 40px;
   align-items: center;
@@ -68,34 +69,47 @@
 .Title {
   font-weight: 500;
   font-size: 15px;
+  padding: 0;
+  margin: 0;
 }
 
 .Navigation {
   display: flex;
   min-height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .Navigation>* {
-  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
   min-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
 .Navigation>*:last-child {
-  border-right: none;
+  // border-right: none;
 }
 
 .Counter {
-  padding-right: 10px;
+  padding: 0 10px;
 }
 
 .PreviousNext, .ColumnConfigurator {
   width: 36px;
 }
-.PreviousNext:hover, .ColumnConfigurator:hover {
-  background-color: lightgrey;
+.PreviousNext {
+  background-color: #ddd;
+}
+.PreviousNext:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+.ColumnConfigurator:hover {
+  background-color: #ddd;
   cursor: pointer;
 }
 
@@ -110,22 +124,73 @@
 .ActionRowActions, .FilterSort {
   display: flex;
   min-height: 100%;
+  padding: 0;
+  margin: 0;
 }
 .ActionRowActions>*, .FilterSort>* {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 36px;
+  padding: 0;
+  margin: 0;
 }
 .ActionRowActions>*  {
   border-right: 1px solid #ccc;
+  color: white;
+  background-color: #007bff;
+}
+.ActionRowActions>*:last-child {
+  // border-right: none;
 }
 .FilterSort>*  {
   border-left: 1px solid #ccc;
+  color: white;
+  background-color: #28a745;
 }
-.ActionRowActions>*:hover, .FilterSort>*:hover {
-  background-color: lightgrey;
+.FilterSort>*:first-child {
+  // border-left: none;
+}
+.ActionRowActions>*:hover {
+  background-color: darkblue;
   cursor: pointer;
+}
+.FilterSort>*:hover {
+  background-color: darkgreen;
+  cursor: pointer;
+}
+.Search {
+  min-height: 100%;
+  padding: 0;
+  margin: 0 5px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  // border: 1px solid red;
+}
+.Search>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  padding: 0;
+  margin: 0;
+  background-color: #dc3545;
+  color: white;
+}
+.Search>div:hover {
+  background-color: darkred;
+  cursor: pointer;
+}
+.Search>input {
+  padding: 0 10px;
+  flex-grow: 2;
+  outline: none;
+  border: none;
+}
+
+.Search>input:focus {
+    border: 2px solid #dc3545;
 }
 
 .HeaderRow {
@@ -141,8 +206,14 @@
 
 
 
+
+
+
 .Headers>* {
   display: flex;
+  margin: 0;
+  padding: 0;
+  // box-sizing: border-box;
 }
 
 .Sort {
@@ -150,7 +221,7 @@
 }
 
 .Row {
-  padding: 8px 10px;
+  padding: 8px 0 8px 10px;
   display: flex;
   border-bottom: 1px solid #eee;
 }
@@ -180,6 +251,7 @@
 }
 .Flex40 {
   width: 40%;
+  // border: 1px solid grey;
 }
 .Flex50 {
   width: 50%;

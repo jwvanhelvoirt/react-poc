@@ -20,12 +20,18 @@ class View extends Component {
       selectedListItemId: null,
       configForm: {
         ...this.props.formConfig
-      }
-    }
+      },
+      sort: this.props.viewConfig.sort,
+      skip: 0,
+      count: 0,
+      viewConfig: { ...this.props.viewConfig }
+    };
+
+    this.navStep = 5; // For multiple view skips, back- and forward.
 
     // Initially we load the list of listItems.
-    this.reloadListView();
-  }
+    this.reloadListView(this.state.skip);
+  };
 
   onSubmitHandler = (response) => {
     let updatedListItems = [];
@@ -51,40 +57,43 @@ class View extends Component {
     // Update the state and close the form dialog.
     this.setState({ listItems: updatedListItems });
     this.onCloseHandler();
-  }
+  };
 
   onCloseHandler = () => {
     this.setState({ loadedListItem: null, configForm: { ...this.props.formConfig } });
-  }
+  };
 
 
 
   onClickItemHandler = (id) => {
     this.setState({ selectedListItemId: id });
-    callServer('get', '/' + this.props.viewConfig.url + '/read/' + id, this.successGetSingleHandler, this.errorGetSingleHandler);
-  }
+    callServer('get', '/' + this.state.viewConfig.url + '/read/' + id, this.successGetSingleHandler, this.errorGetSingleHandler);
+  };
 
   successGetSingleHandler = (response) => {
     // Item succssfully loaded from the server, setting state 'loadedListItem', will render form dialog.
     this.setState({ loadedListItem: response.data });
-  }
+  };
 
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-  }
+  };
 
 
 
-  successGetHandler = (response) => {
+  successGetHandler = (response, skip) => {
+    const { limit } = this.state.viewConfig;
+    const { count, listItems } = response.data;
+
     // List items successfully loaded, update the state.
-    this.setState({ listItems: response.data, loading: false });
-  }
+    this.setState({ listItems, count, skip, loading: false });
+  };
 
   errorGetHandler = (error) => {
     // List items NOT successfully loaded, show the error in a modal.
     // Remove the spinner.
     this.setState({ loading: false });
-  }
+  };
 
 
   addItem = (formConfig) => {
@@ -95,7 +104,7 @@ class View extends Component {
     }
 
     this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: {...formConfig} });
-  }
+  };
 
   toggleRowHandler(event, id) {
     // Update state.selecteRows with IDs of selected rows.
@@ -116,11 +125,24 @@ class View extends Component {
     }
 
     this.setState({ selectedListItems: updatedRowSelection });
-  }
+  };
 
-  reloadListView() {
-    callServer('get', '/' + this.props.viewConfig.url + '/read_multiple', this.successGetHandler, this.errorGetHandler);
-  }
+  reloadListView(skip) {
+    const { sort, viewConfig } = this.state;
+    const { limit } = viewConfig;
+    const params = { sort, skip, limit };
+    callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
+  };
+
+  nav(forward, multiple) {
+    const { skip, viewConfig } = this.state;
+    const skipNext = forward ?
+      (multiple ? skip + (this.navStep * viewConfig.limit ) : skip + viewConfig.limit) :
+      (multiple ? skip - (this.navStep * viewConfig.limit ) : skip - viewConfig.limit);
+
+    this.reloadListView(skipNext);
+
+  };
 
   render_old() {
     // Create HTML for the list of items.
@@ -179,7 +201,7 @@ class View extends Component {
             color="success"
             id="Button-Resort"
             labelText="Refresh"
-            clicked={() => this.reloadListView()} /*ATTENTIE: Als fat arrow function opnemen, anders krijg je de this context van de button!!*/
+            clicked={() => this.reloadListView(this.state.skip)} /*ATTENTIE: Als fat arrow function opnemen, anders krijg je de this context van de button!!*/
             />
 
           {/*List of listItems*/}
@@ -189,22 +211,48 @@ class View extends Component {
           {form}
         </div>
       );
-    }
+    };
 
     render() {
+      const { viewConfig, count, skip } = this.state;
+      const { limit } = viewConfig;
+      const step = this.navStep;
+
+      // Navigation element.
+      let navInfo = null;
+      let navBack = null;
+      let navBackMult = null;
+      let navForw = null;
+      let navForwMult = null;
+
+      if (viewConfig.rowTitle && viewConfig.navigation && count > 0) {
+          if (count > skip) {
+            navInfo =     <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} of {count}</div>;
+            navBack =     skip - limit >= 0             ? <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div> : null;
+            navBackMult = skip - (step * limit) >= 0    ? <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div> : null;
+            navForwMult = count > skip + (step * limit) ? <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div> : null;
+            navForw =     count > skip + limit          ? <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div> : null;
+          } else {
+            navInfo =     <div key="1" className={classes.Counter}>1-{count} of {count}</div>;
+          }
+      }
+      const nav = [navInfo, navBack, navBackMult, navForwMult, navForw];
+
+      // Column configurator.
+
+      // Title bar.
+
       const classesDynamicHeaders = [classes.Headers, classes.Flex].join(' ');
+      const classesDynamicSearchbar = [classes.Search, classes.Medium].join(' ');
+
       return(
         <div className={classes.ListviewContainer}>
           <div className={classes.ListviewHeader}>
             <div className={classes.TitleRow}>
-              <div className={classes.Title}>{this.props.viewConfig.title}</div>
+              <div className={classes.Title}>{this.state.viewConfig.title}</div>
               <div className={classes.Navigation}>
-                <div className={classes.Counter}>1-50 of 691</div>
-                <div className={classes.PreviousNext}>&lt;</div>
-                <div className={classes.PreviousNext}>&lt;5</div>
-                <div className={classes.PreviousNext}>&gt;5</div>
-                <div className={classes.PreviousNext}>&gt;</div>
                 <div className={classes.ColumnConfigurator}><FontAwesomeIcon icon='ellipsis-v' /></div>
+                {nav}
               </div>
             </div>
             <div className={classes.ActionRow}>
@@ -214,7 +262,11 @@ class View extends Component {
                 <div><FontAwesomeIcon icon='save' /></div>
                 <div><FontAwesomeIcon icon='plus-square' /></div>
               </div>
-              <div className={classes.Search}>Searchbar</div>
+              <div className={classesDynamicSearchbar}>
+                <div><FontAwesomeIcon icon='times-circle' /></div>
+                <input className={classes.SearchInput} type="text" placeholder="Zoeken..." />
+                <div><FontAwesomeIcon icon='search' /></div>
+              </div>
               <div className={classes.FilterSort}>
                 <div><FontAwesomeIcon icon='filter' /></div>
                 <div><FontAwesomeIcon icon='sort' /></div>
@@ -497,8 +549,7 @@ class View extends Component {
           </div>
         </div>
       );
-    }
-
+    };
 
   }
 

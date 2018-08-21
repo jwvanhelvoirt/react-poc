@@ -1,7 +1,7 @@
 const listViewConfig = {
-	batch: 50,
+	limit: 2,
 	columnsConfigurator: true,
-	defaultSort: 'name',
+	navigation: true,
 	row: {
 		selectable: true,
 		menu: true
@@ -11,6 +11,7 @@ const listViewConfig = {
 	rowHeader: true,
 	rowSelectAll: true,
 	searchbar: true,
+	sort: 'name',
 	title: 'Organisaties',
 	url: 'organisations',
 	actions: {
@@ -70,13 +71,13 @@ const listViewConfig = {
 			label: 'Naam',
 			sort: true,
 			data: 'name',
-			displayOn: 'small'
+			displayOn: 'always'
 		},
 		street: {
 			label: 'Straat',
 			sort: false,
 			data: 'street',
-			displayOn: 'medium'
+			displayOn: 'medium,large'
 		},
 		zip: {
 			label: 'Postcode',
@@ -88,7 +89,7 @@ const listViewConfig = {
 			label: 'Land',
 			sort: true,
 			data: 'country',
-			displayOn: 'small'
+			displayOn: 'always'
 		},
 		email: {
 			label: 'Email',

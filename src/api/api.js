@@ -8,7 +8,6 @@ const callServer = (type, url, successCallback, errorCallback, postData, hash, q
 		case "get":
 			axios.get(url)
 				.then(successCallback)
-				// .then(console.log('1234'))
 				.catch(errorCallback);
 			break;
 		case "post":
