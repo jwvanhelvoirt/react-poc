@@ -46,6 +46,10 @@
   position: -webkit-sticky;
   position: sticky;
   top: 51px;
+  // border-top: 2px solid #aaa;
+  // border-bottom: 2px solid #aaa;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 .ListviewHeader>* {
@@ -59,7 +63,6 @@
 }
 
 .TitleRow {
-  border-top: 2px solid #aaa;
   border-bottom: 1px solid #ccc;
   box-sizing: border-box;
   min-height: 100%;
@@ -141,10 +144,10 @@
   background-color: #007bff;
 }
 .ActionRowActions>*:last-child {
-  // border-right: none;
+  border-right: none;
 }
 .FilterSort>*  {
-  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
   color: white;
   background-color: #28a745;
 }
@@ -162,7 +165,7 @@
 .Search {
   min-height: 100%;
   padding: 0;
-  margin: 0 5px;
+  margin: 0;
   background-color: white;
   display: flex;
   justify-content: space-between;
@@ -175,11 +178,12 @@
   width: 36px;
   padding: 0;
   margin: 0;
-  background-color: #dc3545;
-  color: white;
+  color: #dc3545;
+  background-color: white;
 }
 .Search>div:hover {
-  background-color: darkred;
+  background-color: #dc3545;
+  color: white;
   cursor: pointer;
 }
 .Search>input {
@@ -190,13 +194,12 @@
 }
 
 .Search>input:focus {
-    border: 2px solid #dc3545;
+    // border: 2px solid #dc3545;
 }
 
 .HeaderRow {
   background-color: #ddd;
   // font-weight: bold;
-  border-bottom: 2px solid #aaa;
   box-sizing: border-box;
   min-height: 100%;
 }
@@ -224,6 +227,10 @@
   padding: 8px 0 8px 10px;
   display: flex;
   border-bottom: 1px solid #eee;
+}
+
+.RowEdit {
+  background-color: #eee;
 }
 
 .Fixed {
