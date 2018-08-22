@@ -15,30 +15,32 @@ class View extends Component {
     super(props);
 
     this.state = {
+      configForm: { ...this.props.formConfig },
+      count: 0,
+      listItems: [],
       loadedListItem: null,
       loading: true,
-      listItems: [],
-      selectedListItems: [],
-      selectedListItemId: null,
-      configForm: {
-        ...this.props.formConfig
-      },
-      sort: this.props.viewConfig.sort,
-      skip: 0,
-      count: 0,
-      viewConfig: { ...this.props.viewConfig },
       searchbarValue: '',
-      showModalSort: false,
+      selectedListItemId: null,
+      selectedListItems: [],
+      showModalColumnConfigurator: false,
       showModalFilter: false,
-      showModalColumnConfigurator: false
+      showModalSort: false,
+      skip: 0,
+      sort: this.props.viewConfig.sort,
+      viewConfig: { ...this.props.viewConfig }
     };
 
-    this.navStep = 5; // For multiple view skips, back- and forward.
+    // For multiple view skips, back- and forward.
+    this.navStep = 5;
 
     // Initially we load the list of listItems.
     this.reloadListView(this.state.skip);
   };
 
+  /**
+   * @brief   Updates listItems after a new listItem or an update of a selected listItem.
+   */
   onSubmitHandler = (response) => {
     let updatedListItems = [];
 
@@ -65,28 +67,39 @@ class View extends Component {
     this.onCloseHandler();
   };
 
+  /**
+   * @brief   Closes the modal that shows the formdata of the selected or new listItem.
+   */
   onCloseHandler = () => {
     this.setState({ loadedListItem: null, configForm: { ...this.props.formConfig } });
   };
 
-
-
+  /**
+   * @brief   Pulls data from the selected listItem from the server.
+   */
   onClickItemHandler = (id) => {
     this.setState({ selectedListItemId: id });
     callServer('get', '/' + this.state.viewConfig.url + '/read/' + id, this.successGetSingleHandler, this.errorGetSingleHandler);
   };
 
+  /**
+   * @brief   Callback that is triggered once data for a selected listItem has been successfully pulled from the server.
+   */
   successGetSingleHandler = (response) => {
     // Item succssfully loaded from the server, setting state 'loadedListItem', will render form dialog.
     this.setState({ loadedListItem: response.data });
   };
 
+  /**
+   * @brief   Callback that is triggered once data for a selected listItem has NOT been successfully pulled from the server.
+   */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
   };
 
-
-
+  /**
+   * @brief   Callback that is triggered once a list of items has been successfully pulled from the server.
+   */
   successGetHandler = (response, skip) => {
     const { limit } = this.state.viewConfig;
     const { count, listItems } = response.data;
@@ -95,6 +108,9 @@ class View extends Component {
     this.setState({ listItems, count, skip, loading: false });
   };
 
+  /**
+   * @brief   Callback that is triggered once a list of items has NOT been successfully pulled from the server.
+   */
   errorGetHandler = (error) => {
     // List items NOT successfully loaded, show the error in a modal.
     // Remove the spinner.
@@ -102,6 +118,9 @@ class View extends Component {
   };
 
 
+  /**
+   * @brief   Displays a form modal to add a new record to the database.
+   */
   addItem = (formConfig) => {
     // Prepares the form data to add a new item by filling 'loadedListItem'.
     const newPostData = {};
@@ -112,6 +131,9 @@ class View extends Component {
     this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: {...formConfig} });
   };
 
+  /**
+   * @brief   Manages state containing an array of all selected rows in the listView.
+   */
   toggleRowHandler(event, id) {
     // Update state.selecteRows with IDs of selected rows.
     let updatedRowSelection = [];
@@ -133,6 +155,9 @@ class View extends Component {
     this.setState({ selectedListItems: updatedRowSelection });
   };
 
+  /**
+   * @brief   Refreshes the current listView by pulling it from the server starting by the first record.
+   */
   reloadListView(skip, search) {
     const { sort, viewConfig } = this.state;
     const { limit } = viewConfig;
@@ -140,6 +165,10 @@ class View extends Component {
     callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
   };
 
+  /**
+   * @brief   Navigates a set of records (defined by limit property of the viewConfig) back- or forward.
+   *          It can also skip multiple sets back- or forward.
+   */
   nav(forward, multiple) {
     const { skip, viewConfig } = this.state;
     const skipNext = forward ?
@@ -149,117 +178,81 @@ class View extends Component {
     this.reloadListView(skipNext);
   };
 
+  /**
+   * @brief   Updates the state for the search value.
+   */
   inputSearchbarHandler(event) {
     this.setState({ searchbarValue: event.target.value });
   };
 
+  /**
+   * @brief   Updates the state for the search value.
+   */
   clearSearchbarHandler() {
     this.setState({ searchbarValue: '' });
   };
 
+  /**
+   * @brief   Submits the search to the server.
+   */
   submitSearchHandler() {
     this.reloadListView(0, this.state.searchbarValue);
   };
 
+  /**
+   * @brief   Shows a modal where the user can select on which attribute to sort the listView in which order.
+   */
   onClickSortHandler() {
     this.setState({ showModalSort: true });
   };
+
+  /**
+   * @brief   Closes the sort modal.
+   */
   onModalSortCloseHandler() {
     this.setState({ showModalSort: false });
   };
 
+  /**
+   * @brief   Shows a modal where the user can select on which attribute to filter the listView on which value.
+   */
   onClickFilterHandler() {
     this.setState({ showModalFilter: true });
   };
+
+  /**
+   * @brief   Closes the filter modal.
+   */
   onModalFilterCloseHandler() {
     this.setState({ showModalFilter: false });
   };
 
+  /**
+   * @brief   Shows a modal where the user can change which columns to display in the listView.
+   */
   onClickColumnConfiguratorHandler() {
     this.setState({ showModalColumnConfigurator: true });
   };
+
+  /**
+   * @brief   Closes the columns configurator modal.
+   */
   onModalColumnConfiguratorCloseHandler() {
     this.setState({ showModalColumnConfigurator: false });
   };
 
+  /**
+   * @brief   Selects or deselects all listItems in the listView.
+   */
   toggleAllRows(event) {
     console.log(event.target.checked);
     //TODO: alle rijen selecteren of deselecteren.
     // this.state.selectedListItems bevat een array met ids van rijen die geselecteerd zijn.
   };
 
-
-  render_old() {
-    // Create HTML for the list of items.
-    let listItems = this.state.listItems.map((listItem, index) => {
-      // In case the listItem has been edited during this client session, it gets additional styling.
-      const classesDynamic = listItem.edit ? [classes.ListRow, classes.ListRowEdit].join(' ') : classes.ListRow;
-      return (
-        <div key={listItem._id} className={classesDynamic}>
-          <input type="checkbox" className={classes.ListRowCheckbox} onClick={(event) => this.toggleRowHandler(event, listItem._id)}/>
-          <div
-            style={{width: '100%'}}
-            onClick={() => this.onClickItemHandler(listItem._id)}>
-            {listItem.name}
-          </div>
-        </div>
-      );
-    });
-
-    listItems = <div style={{ marginBottom: '20px' }}>{listItems}</div>;
-
-    // In case the listItems are still fetched, we display a spinner.
-    if (this.state.loading) {
-      listItems = <Spinner />;
-    }
-
-    // Display the form modal in case loadedListItem is filled with form data.
-    let form = null;
-    if (this.state.loadedListItem) {
-      form = (
-        <Modal show modalClosed={this.onCloseHandler}>
-          <FormParser
-            configForm={this.state.configForm}
-            data={this.state.loadedListItem}
-            onCancel={() => this.onCloseHandler()}
-            onSubmit={this.onSubmitHandler}
-            id={this.state.selectedListItemId}
-            />
-        </Modal>
-      );
-    }
-
-    return (
-      <div className="TabContent">
-        {/*TIJDELIJKE BUTTON, MOET STRAKS NAAR DE ACTION BAR*/}
-        <Button
-          color="primary"
-          id="Button-New"
-          labelText="Org+"
-          clicked={() => this.addItem(this.props.formConfig)}
-          />
-        <Button
-          color="primary"
-          id="Button-New"
-          labelText="Pers+"
-          clicked={() => this.addItem(formConfigPerson)}
-          />
-        <Button
-          color="success"
-          id="Button-Resort"
-          labelText="Refresh"
-          clicked={() => this.reloadListView(this.state.skip)} /*ATTENTIE: Als fat arrow function opnemen, anders krijg je de this context van de button!!*/
-          />
-
-        {/*List of listItems*/}
-        {listItems}
-
-        {/*Selected listItem OR new listItem*/}
-        {form}
-      </div>
-    );
-  };
-
+  /**
+   * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
+   */
   render() {
     // Display the form modal in case loadedListItem is filled with form data.
     let formModal = null;
@@ -277,6 +270,7 @@ class View extends Component {
       );
     }
 
+    // Display the filter modal.
     let filterModal = null;
     if (this.state.showModalFilter) {
       filterModal = (
@@ -286,6 +280,7 @@ class View extends Component {
       );
     }
 
+    // Display the sort modal.
     let sortModal = null;
     if (this.state.showModalSort) {
       sortModal = (
@@ -295,6 +290,7 @@ class View extends Component {
       );
     }
 
+    // Display the column configurator modal.
     let columnConfiguratorModal = null;
     if (this.state.showModalColumnConfigurator) {
       columnConfiguratorModal = (
@@ -304,6 +300,7 @@ class View extends Component {
       );
     }
 
+    // Start building the listView. It contains many elements that can be shown or not, depending on configuration in the viewConfig.
     const { viewConfig, count, skip } = this.state;
     const { limit } = viewConfig;
     const step = this.navStep;
@@ -323,7 +320,7 @@ class View extends Component {
           navForwMult = count > skip + (step * limit) ? <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div> : null;
           navForw =     count > skip + limit          ? <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div> : null;
         } else {
-          navInfo =     <div key="1" className={classes.Counter}>1-{count} of {count}</div>;
+          navInfo =     <div key="1" className={classes.Counter}>1-{count} van {count}</div>;
         }
     }
     const nav = [navInfo, navBack, navBackMult, navForwMult, navForw];
@@ -460,72 +457,14 @@ class View extends Component {
       );
     });
 
-      // <div className={classes.Row}>
-      //   <div className={classes.Fixed}>
-      //     <div className={classes.Fixed1}><input type="checkbox"/></div>
-      //     <div className={classes.Fixed1}>x</div>
-      //   </div>
-      //   <div className={classes.Flex}>
-      //     <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
-      //     <div className={classes.Flex40}>Heiligenbos 55</div>
-      //     <div className={classes.Flex20}>Berghem</div>
-      //     <div className={classes.ShowOnHover}>x</div>
-      //   </div>
-      // </div>
-
-      // // Create HTML for the list of items.
-      // let listItems = this.state.listItems.map((listItem, index) => {
-      //   // In case the listItem has been edited during this client session, it gets additional styling.
-      //   const classesDynamic = listItem.edit ? [classes.ListRow, classes.ListRowEdit].join(' ') : classes.ListRow;
-      //   return (
-      //     <div key={listItem._id} className={classesDynamic}>
-      //       <input type="checkbox" className={classes.ListRowCheckbox} onClick={(event) => this.toggleRowHandler(event, listItem._id)}/>
-      //       <div
-      //         style={{width: '100%'}}
-      //         onClick={() => this.onClickItemHandler(listItem._id)}>
-      //         {listItem.name}
-      //       </div>
-      //     </div>
-      //   );
-      // });
-      //
-      // listItems = <div style={{ marginBottom: '20px' }}>{listItems}</div>;
-      //
-      // // In case the listItems are still fetched, we display a spinner.
-      // if (this.state.loading) {
-      //   listItems = <Spinner />;
-      // }
-      //
-
-      // <div className={classes.Row}>
-      //   <div className={classes.Fixed}>
-      //     <div className={classes.Fixed1}><input type="checkbox"/></div>
-      //     <div className={classes.Fixed1}>x</div>
-      //   </div>
-      //   <div className={classes.Flex}>
-      //     <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
-      //     <div className={classes.Flex40}>Heiligenbos 55</div>
-      //     <div className={classes.Flex20}>Berghem</div>
-      //     <div className={classes.ShowOnHover}>x</div>
-      //   </div>
-      // </div>
-      // <div className={classes.Row}>
-      //   <div className={classes.Fixed}>
-      //     <div className={classes.Fixed1}><input type="checkbox"/></div>
-      //     <div className={classes.Fixed1}>x</div>
-      //   </div>
-      //   <div className={classes.Flex}>
-      //     <div className={classes.Flex40}>Jan-Willem van Helvoirt</div>
-      //     <div className={classes.Flex40}>Heiligenbos 55</div>
-      //     <div className={classes.Flex20}>Berghem</div>
-      //     <div className={classes.ShowOnHover}>x</div>
-      //   </div>
-      // </div>
-
-
+    // In case the listItems are still fetched, we display a spinner.
+    if (this.state.loading) {
+      listItems = <Spinner />;
+    }
 
     return(
       <Aux>
+
         <div className={classes.ListviewContainer}>
           <div className={classes.ListviewHeader}>
             {titleBar}
@@ -537,12 +476,11 @@ class View extends Component {
           </div>
         </div>
 
-        {/*Selected listItem OR new listItem*/}
         {formModal}
-
         {filterModal}
         {sortModal}
         {columnConfiguratorModal}
+
       </Aux>
     );
   };
