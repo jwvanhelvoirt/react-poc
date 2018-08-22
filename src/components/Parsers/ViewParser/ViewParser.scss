@@ -204,14 +204,6 @@
   min-height: 100%;
 }
 
-
-
-
-
-
-
-
-
 .Headers>* {
   display: flex;
   margin: 0;
@@ -219,14 +211,28 @@
   // box-sizing: border-box;
 }
 
+.HeaderSortable {
+  cursor: pointer;
+}
+
+.HeaderSortable:hover {
+  font-weight: bold;
+}
+
 .Sort {
   margin-left: 5px;
+
 }
 
 .Row {
   padding: 8px 0 8px 10px;
   display: flex;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.Row:hover {
+  background-color: #eee;
 }
 
 .RowEdit {
@@ -258,7 +264,6 @@
 }
 .Flex40 {
   width: 40%;
-  // border: 1px solid grey;
 }
 .Flex50 {
   width: 50%;

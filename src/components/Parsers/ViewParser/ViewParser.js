@@ -28,7 +28,10 @@ class View extends Component {
       showModalSort: false,
       skip: 0,
       sort: this.props.viewConfig.sort,
-      viewConfig: { ...this.props.viewConfig }
+      viewConfig: { ...this.props.viewConfig },
+
+      sortedColumn: '',
+      sortOrder: 1
     };
 
     // For multiple view skips, back- and forward.
@@ -159,9 +162,9 @@ class View extends Component {
    * @brief   Refreshes the current listView by pulling it from the server starting by the first record.
    */
   reloadListView(skip, search) {
-    const { sort, viewConfig } = this.state;
+    const { sort, sortOrder, viewConfig } = this.state;
     const { limit } = viewConfig;
-    const params = { sort, skip, limit, search };
+    const params = { sort, sortOrder, skip, limit, search };
     callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
   };
 
@@ -248,6 +251,28 @@ class View extends Component {
     console.log(event.target.checked);
     //TODO: alle rijen selecteren of deselecteren.
     // this.state.selectedListItems bevat een array met ids van rijen die geselecteerd zijn.
+  };
+
+  /**
+   * @brief   Resorts the listView if user clicks on a column header.
+   */
+  sortOnColumn(id) {
+    const { sortedColumn, sortOrder } = this.state;
+
+    if (sortedColumn === id) {
+      // Previous column sort click was on the same header.
+      switch (sortOrder) {
+        case 1: // ascending
+          this.setState({sortOrder: -1}, () => { this.reloadListView(0); });
+          break;
+        case -1: // descending
+          this.setState({sort: this.state.viewConfig.sort, sortedColumn: '', sortOrder: 1}, () => { this.reloadListView(0); });
+          break;
+      }
+    } else {
+      // setState is async function, the method 'reloadListView' relies on the updated state, so we use a callback to continue.
+      this.setState({sort: id, sortedColumn: id, sortOrder: 1}, () => { this.reloadListView(0); });
+    }
   };
 
   /**
@@ -408,10 +433,19 @@ class View extends Component {
         <div className={classesDynamicHeaders}>
         {
           columnsVisible.map((column, index) => {
+            let sortIcon = <FontAwesomeIcon icon='sort' />;
+            if (column.id === this.state.sortedColumn) {
+              // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
+              sortIcon = this.state.sortOrder === 1 ? <FontAwesomeIcon icon='sort-up' /> : <FontAwesomeIcon icon='sort-down' />;
+            }
+            const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
+            const labelColumn = <div>{column.label}</div>;
+            const onColumn = column.sort ? () => this.sortOnColumn(column.id) : null;
+            const classesDynamicHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
             return(
-              <div key={index} className={classes[column.size]}>
-                <div>{column.label}</div>
-                <div className={classes.Sort}><FontAwesomeIcon icon='sort' /></div>
+              <div key={index} onClick={onColumn} className={classesDynamicHeader}>
+                {labelColumn}
+                {sortColumn}
               </div>
             );
           })
@@ -419,6 +453,11 @@ class View extends Component {
         </div>
       );
     }
+
+
+
+
+
 
     // Header bar: fixed columns.
     let columnsFixed = (

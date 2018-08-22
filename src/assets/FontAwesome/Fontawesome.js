@@ -1,6 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
+// import { fab } from '@fortawesome/free-brands-svg-icons';
 
-import { fab } from '@fortawesome/free-brands-svg-icons';
 import {
 	faAddressCard,
 	faBars,
@@ -23,6 +23,8 @@ import {
 	faSearch,
 	faShoppingCart,
 	faSort,
+	faSortUp,
+	faSortDown,
 	faSyncAlt,
 	faTimesCircle,
 	faTrashAlt,
@@ -54,6 +56,8 @@ export default library.add(
 	faSearch,
 	faShoppingCart,
 	faSort,
+	faSortUp,
+	faSortDown,
 	faSyncAlt,
 	faTimesCircle,
 	faTrashAlt,
