@@ -7,6 +7,7 @@ import FormParser from '../FormParser/FormParser';
 import Button from '../../UI/Button/Button';
 import Spinner from '../../UI/Spinner/Spinner';
 import Modal from '../../UI/Modal/Modal';
+import MessageBox from '../../UI/MessageBox/MessageBox';
 import { callServer } from '../../../api/api';
 import classes from './ViewParser.scss';
 
@@ -25,6 +26,7 @@ class View extends Component {
       selectedListItems: [],
       showModalColumnConfigurator: false,
       showModalFilter: false,
+      showModalMessage: false,
       showModalSort: false,
       skip: 0,
       sort: this.props.viewConfig.sort,
@@ -33,6 +35,15 @@ class View extends Component {
       sortedColumn: '',
       sortOrder: 1
     };
+
+    this.localData = {
+      modalClass: '',
+      messageTitle: '',
+      messageContent: '',
+      messageButtons: '',
+      callBackMessageBoxOk: null,
+      callBackMessageBoxCancel: null
+    }
 
     // For multiple view skips, back- and forward.
     this.navStep = 5;
@@ -98,6 +109,7 @@ class View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
+    this.showErrorModal('Fout', 'Fout tijdens ophalen list item, item is reeds verwijderd.');
   };
 
   /**
@@ -108,7 +120,7 @@ class View extends Component {
     const { count, listItems } = response.data;
 
     // List items successfully loaded, update the state.
-    this.setState({ listItems, count, skip, loading: false });
+    this.setState({ listItems, count, skip, loading: false, selectedListItems: [] });
   };
 
   /**
@@ -134,6 +146,65 @@ class View extends Component {
     this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: {...formConfig} });
   };
 
+  /**
+   * @brief   Delete a (multiple) set of list items.
+   */
+  deleteItems = (userConfirmation) => {
+    if (userConfirmation) {
+      // Ask for user confirmation before deleting records from the database.
+      this.localData['modalClass'] = 'ModalWide';
+      this.localData['messageTitle'] = 'Verwijderen list items';
+      this.localData['messageContent'] = 'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?';
+      this.localData['messageButtons'] = 'butOkCancel';
+      this.localData['callBackMessageBoxOk'] = () => this.deleteItems(false);
+      this.localData['callBackMessageBoxCancel'] = () => this.onModalMessageCloseHandler();
+      this.setState({ showModalMessage: true });
+    } else {
+      this.onModalMessageCloseHandler();
+      // Delete records from the database.
+      const params = { selectedListItems: this.state.selectedListItems };
+      callServer('post', '/' + this.state.viewConfig.url + '/delete_multiple',
+        (response) => this.successDeleteHandler(response),
+        (error) => this.errorDeleteHandler(error), params
+      );
+    }
+  };
+
+  /**
+   * @brief   Callback that is triggered once a delete action has been successfully executed on the server.
+   */
+  successDeleteHandler = (response) => {
+    const { selectedListItems } = this.state;
+    if (response.data.ok === 1 && response.data.n === selectedListItems.length) {
+      // All records successfully deleted. Modify state.listItems
+      let updatedListItems = [...this.state.listItems];
+      updatedListItems = updatedListItems.filter((item) => {
+        return selectedListItems.indexOf(item._id) ===  -1
+      });
+
+      this.setState({ listItems: updatedListItems, selectedListItems: [] });
+    }
+  }
+
+  /**
+   * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
+   */
+  errorDeleteHandler = (error) => {
+    this.showErrorModal('Fout', 'Fout tijdens verwijderen list items');
+  }
+
+  /**
+   * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
+   */
+  showErrorModal = (title, content) => {
+    this.localData['modalClass'] = 'ModalSmall';
+    this.localData['messageTitle'] = title;
+    this.localData['messageContent'] = content;
+    this.localData['messageButtons'] = 'butOk';
+    this.localData['callBackMessageBoxCancel'] = () => this.onModalMessageCloseHandler();
+    this.localData['callBackMessageBoxOk'] = () => this.onModalMessageCloseHandler();
+    this.setState({ showModalMessage: true });
+  }
   /**
    * @brief   Manages state containing an array of all selected rows in the listView.
    */
@@ -217,6 +288,13 @@ class View extends Component {
   };
 
   /**
+   * @brief   Closes the message modal.
+   */
+  onModalMessageCloseHandler() {
+    this.setState({ showModalMessage: false });
+  };
+
+  /**
    * @brief   Shows a modal where the user can select on which attribute to filter the listView on which value.
    */
   onClickFilterHandler() {
@@ -283,7 +361,7 @@ class View extends Component {
     let formModal = null;
     if (this.state.loadedListItem) {
       formModal = (
-        <Modal show modalClosed={this.onCloseHandler}>
+        <Modal show modalClass='ModalWide' modalClosed={this.onCloseHandler}>
           <FormParser
             configForm={this.state.configForm}
             data={this.state.loadedListItem}
@@ -299,7 +377,7 @@ class View extends Component {
     let filterModal = null;
     if (this.state.showModalFilter) {
       filterModal = (
-        <Modal show modalClosed={() => this.onModalFilterCloseHandler()}>
+        <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalFilterCloseHandler()}>
           <div style={{ 'padding':'20px' }}>FILTER MODAL</div>
         </Modal>
       );
@@ -309,7 +387,7 @@ class View extends Component {
     let sortModal = null;
     if (this.state.showModalSort) {
       sortModal = (
-        <Modal show modalClosed={() => this.onModalSortCloseHandler()}>
+        <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalSortCloseHandler()}>
           <div style={{ 'padding':'20px' }}>SORT MODAL</div>
         </Modal>
       );
@@ -319,9 +397,21 @@ class View extends Component {
     let columnConfiguratorModal = null;
     if (this.state.showModalColumnConfigurator) {
       columnConfiguratorModal = (
-        <Modal show modalClosed={() => this.onModalColumnConfiguratorCloseHandler()}>
+        <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalColumnConfiguratorCloseHandler()}>
           <div style={{ 'padding':'20px' }}>COLUMN CONFIGURATOR MODAL</div>
         </Modal>
+      );
+    }
+
+    // Display the message modal.
+    let messageModal = null;
+    if (this.state.showModalMessage) {
+      const { modalClass, messageButtons, messageTitle, messageContent, callBackMessageBoxOk, callBackMessageBoxCancel} = this.localData;
+      messageModal = (
+        <MessageBox modalClass={modalClass} messageTitle={messageTitle}
+          messageContent={messageContent} buttons={messageButtons}
+          callBackMessageBoxOk={callBackMessageBoxOk} callBackMessageBoxCancel={callBackMessageBoxCancel}
+        />
       );
     }
 
@@ -454,11 +544,6 @@ class View extends Component {
       );
     }
 
-
-
-
-
-
     // Header bar: fixed columns.
     let columnsFixed = (
       <div className={classes.Fixed}>
@@ -480,10 +565,13 @@ class View extends Component {
     let listItems = this.state.listItems.map((listItem, index) => {
       // In case the listItem has been edited during this client session, it gets additional styling.
       const classesDynamicListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
+      const checkbox = this.state.selectedListItems.indexOf(listItem._id) ===  -1 ?
+        <input type="checkbox" onClick={(event) => this.toggleRowHandler(event, listItem._id)}/> :
+        <input type="checkbox" checked onClick={(event) => this.toggleRowHandler(event, listItem._id)}/>;
       return(
         <div key={index} className={classesDynamicListItem} onDoubleClick={() => this.onClickItemHandler(listItem._id)}>
           <div className={classes.Fixed}>
-            <div className={classes.Fixed1}><input type="checkbox" onClick={(event) => this.toggleRowHandler(event, listItem._id)}/></div>
+            <div className={classes.Fixed1}>{checkbox}</div>
             <div className={classes.Fixed1}></div>
           </div>
           <div className={classes.Flex}>
@@ -519,6 +607,7 @@ class View extends Component {
         {filterModal}
         {sortModal}
         {columnConfiguratorModal}
+        {messageModal}
 
       </Aux>
     );

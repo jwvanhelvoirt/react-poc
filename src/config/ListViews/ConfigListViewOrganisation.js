@@ -64,7 +64,7 @@ const listViewConfig = {
 			showInBarMenu: true,
 			showInRowMenu: true,
 			tooltip: 'Verwijder geselecteerde organisaties',
-			callback: (_this) => { console.log('delete'); }
+			callback: (_this) => { _this.deleteItems(true) }
 		},
 		{
 			id: 'refresh',

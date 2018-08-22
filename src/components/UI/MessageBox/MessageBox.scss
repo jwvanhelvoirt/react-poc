@@ -1,0 +1,25 @@
+.MessageBox {
+  width: 100%;
+  // border: 1px solid red;
+}
+
+.Header {
+  height: auto;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.Content {
+  padding: 20px 10px;
+}
+
+.Footer {
+  padding: 0 10px 10px 10px;
+}
+.Footer>* {
+  padding: 5px;
+  width: 80px;
+}

@@ -48,17 +48,18 @@ class Screen extends Component {
 
     const result = tabsConfig.map((pane, indexPane) => {
       const buttonShow = <Button
+        key={indexPane}
         color="success"
         labelIcon="plus"
         clicked={() => this.togglePane(pane.id)}
       />
 
-    const buttonHide = <Button
-        color="secondary"
-        outline="true"
-        labelIcon="minus"
-        clicked={() => this.togglePane(pane.id)}
-      />
+      const buttonHide = <Button
+          color="secondary"
+          outline="true"
+          labelIcon="minus"
+          clicked={() => this.togglePane(pane.id)}
+        />
 
       let html = "";
       if (pane.show) {
