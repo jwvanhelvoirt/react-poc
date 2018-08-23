@@ -122,7 +122,15 @@ class View extends Component {
     const { count, listItems } = response.data;
 
     // List items successfully loaded, update the state.
-    this.setState({ listItems, count, skip, loading: false, selectedListItems: [], headerSelected: false, debounceFunction: true });
+    this.setState({
+      listItems,
+      count,
+      skip,
+      loading: false,
+      selectedListItems: [],
+      headerSelected: false,
+      debounceFunction: true
+    });
   };
 
   /**
@@ -244,13 +252,13 @@ class View extends Component {
    *          It can also skip multiple sets back- or forward.
    */
   nav(forward, multiple) {
-    const { skip, viewConfig } = this.state;
+    const { skip, viewConfig, searchbarValue } = this.state;
     const skipNext = forward ?
       (multiple ? skip + (this.navStep * viewConfig.limit ) : skip + viewConfig.limit) :
       (multiple ? skip - (this.navStep * viewConfig.limit ) : skip - viewConfig.limit);
 
     // Navigation buttons are always clickable, but should not trigger a server call if not necessary.
-    skipNext >= 0 && this.state.count > skipNext ? this.reloadListView(skipNext) : null;
+    skipNext >= 0 && this.state.count > skipNext ? this.reloadListView(skipNext, searchbarValue) : null;
   };
 
   /**
@@ -270,7 +278,7 @@ class View extends Component {
   /**
    * @brief   Submits the search to the server.
    */
-  submitSearchHandler(_this){
+  submitSearchHandler(_this) {
      _this.reloadListView(0, _this.state.searchbarValue);
   };
 
@@ -349,21 +357,21 @@ class View extends Component {
    * @brief   Resorts the listView if user clicks on a column header.
    */
   sortOnColumn(id) {
-    const { sortedColumn, sortOrder } = this.state;
+    const { sortedColumn, sortOrder, searchbarValue } = this.state;
 
     if (sortedColumn === id) {
       // Previous column sort click was on the same header.
       switch (sortOrder) {
         case 1: // ascending
-          this.setState({sortOrder: -1}, () => { this.reloadListView(0); });
+          this.setState({sortOrder: -1}, () => { this.reloadListView(0, searchbarValue); });
           break;
         case -1: // descending
-          this.setState({sort: this.state.viewConfig.sort, sortedColumn: '', sortOrder: 1}, () => { this.reloadListView(0); });
+          this.setState({sort: this.state.viewConfig.sort, sortedColumn: '', sortOrder: 1}, () => { this.reloadListView(0, searchbarValue); });
           break;
       }
     } else {
       // setState is async function, the method 'reloadListView' relies on the updated state, so we use a callback to continue.
-      this.setState({sort: id, sortedColumn: id, sortOrder: 1}, () => { this.reloadListView(0); });
+      this.setState({sort: id, sortedColumn: id, sortOrder: 1}, () => { this.reloadListView(0, searchbarValue); });
     }
   };
 
