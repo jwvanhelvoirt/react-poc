@@ -50,6 +50,7 @@
   // border-bottom: 2px solid #aaa;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  user-select: none;
 }
 
 .ListviewHeader>* {
@@ -233,14 +234,27 @@
 
 .Row:hover {
   background-color: #eee;
+  color: inherit;
 }
 
 .RowEdit {
-  background-color: #eee;
+  background-color: #28a745;
+  color: white;
+}
+
+.RowSelectZone, .HeaderSelectZone {
+  border: 1px solid #bbb;
+  width: 12px;
+  height: 12px;
+}
+
+.RowSelected, .HeaderSelected {
+  background-color: #dc3545;
 }
 
 .Fixed {
   display: flex;
+  align-items: center;
 }
 
 .Flex {
@@ -249,6 +263,10 @@
 }
 
 .Fixed1 {
+  width: 12px;
+  min-width: 12px;
+}
+.Fixed2 {
   width: 26px;
   min-width: 26px;
 }

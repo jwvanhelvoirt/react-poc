@@ -18,6 +18,7 @@ class View extends Component {
     this.state = {
       configForm: { ...this.props.formConfig },
       count: 0,
+      headerSelected: false,
       listItems: [],
       loadedListItem: null,
       loading: true,
@@ -30,10 +31,9 @@ class View extends Component {
       showModalSort: false,
       skip: 0,
       sort: this.props.viewConfig.sort,
-      viewConfig: { ...this.props.viewConfig },
-
       sortedColumn: '',
-      sortOrder: 1
+      sortOrder: 1,
+      viewConfig: { ...this.props.viewConfig }
     };
 
     this.localData = {
@@ -71,8 +71,8 @@ class View extends Component {
     } else {
       // Append the object of the new entry to the state.
       updatedListItems = [
-        ...this.state.listItems,
-        editedResponse
+        editedResponse,
+        ...this.state.listItems
       ];
     }
 
@@ -120,7 +120,7 @@ class View extends Component {
     const { count, listItems } = response.data;
 
     // List items successfully loaded, update the state.
-    this.setState({ listItems, count, skip, loading: false, selectedListItems: [] });
+    this.setState({ listItems, count, skip, loading: false, selectedListItems: [], headerSelected: false });
   };
 
   /**
@@ -151,7 +151,7 @@ class View extends Component {
   deleteItems = (userConfirmation) => {
     if (userConfirmation) {
       // Ask for user confirmation before deleting records from the database.
-      this.localData['modalClass'] = 'ModalWide';
+      this.localData['modalClass'] = 'ModalSmall';
       this.localData['messageTitle'] = 'Verwijderen list items';
       this.localData['messageContent'] = 'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?';
       this.localData['messageButtons'] = 'butOkCancel';
@@ -207,25 +207,24 @@ class View extends Component {
   /**
    * @brief   Manages state containing an array of all selected rows in the listView.
    */
-  toggleRowHandler(event, id) {
-    // Update state.selecteRows with IDs of selected rows.
-    let updatedRowSelection = [];
+  toggleRowHandler(id) {
+    // Update state.selecteRows with ID of selected row.
 
-    if (event.target.checked) {
-      updatedRowSelection = [
-        ...this.state.selectedListItems,
-        id
-      ];
+    let updatedSelectedListItems = [
+      ...this.state.selectedListItems
+    ];
+
+    // Check if the id is currently selected.
+    const isSelected = updatedSelectedListItems.filter((item) => item === id);
+    if (isSelected.length === 1) {
+      // id selected, remove it from the array.
+      updatedSelectedListItems = updatedSelectedListItems.filter((item) => item !== id );
     } else {
-      const currentSelection = [
-        ...this.state.selectedListItems
-      ];
-      updatedRowSelection = currentSelection.filter(item => {
-        return item !== id;
-      });
+      // id not selected yet, add it to the array.
+      updatedSelectedListItems.push(id);
     }
 
-    this.setState({ selectedListItems: updatedRowSelection });
+    this.setState({ selectedListItems: updatedSelectedListItems });
   };
 
   /**
@@ -248,7 +247,8 @@ class View extends Component {
       (multiple ? skip + (this.navStep * viewConfig.limit ) : skip + viewConfig.limit) :
       (multiple ? skip - (this.navStep * viewConfig.limit ) : skip - viewConfig.limit);
 
-    this.reloadListView(skipNext);
+    // Navigation buttons are always clickable, but should not trigger a server call if not necessary.
+    skipNext >= 0 && this.state.count > skipNext ? this.reloadListView(skipNext) : null;
   };
 
   /**
@@ -324,10 +324,23 @@ class View extends Component {
   /**
    * @brief   Selects or deselects all listItems in the listView.
    */
-  toggleAllRows(event) {
-    console.log(event.target.checked);
-    //TODO: alle rijen selecteren of deselecteren.
-    // this.state.selectedListItems bevat een array met ids van rijen die geselecteerd zijn.
+  toggleAllRows() {
+    let updatedSelectedListItems = [
+      ...this.state.selectedListItems
+    ];
+
+    if (this.state.headerSelected) {
+      updatedSelectedListItems = [];
+    } else {
+      updatedSelectedListItems = this.state.listItems.map((item) => item._id);
+    }
+
+    this.setState((prevState) => {
+      return {
+        headerSelected: !prevState.headerSelected,
+        selectedListItems: updatedSelectedListItems
+      };
+    })
   };
 
   /**
@@ -446,10 +459,16 @@ class View extends Component {
     if (viewConfig.showNavigation && count > 0) {
         if (count > skip) {
           navInfo =     <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} van {count}</div>;
-          navBack =     skip - limit >= 0             ? <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div> : null;
-          navBackMult = skip - (step * limit) >= 0    ? <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div> : null;
-          navForwMult = count > skip + (step * limit) ? <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div> : null;
-          navForw =     count > skip + limit          ? <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div> : null;
+          navBack =     <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div>;
+          navBackMult = <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div>;
+          navForwMult = <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div>;
+          navForw =     <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div>;
+          // JWvH 23-8-2018: Laten we nog even staan, voor het geval we het toch anders willen.
+          // navInfo =     <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} van {count}</div>;
+          // navBack =     skip - limit >= 0             ? <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div> : null;
+          // navBackMult = skip - (step * limit) >= 0    ? <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div> : null;
+          // navForwMult = count > skip + (step * limit) ? <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div> : null;
+          // navForw =     count > skip + limit          ? <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div> : null;
         } else {
           navInfo =     <div key="1" className={classes.Counter}>1-{count} van {count}</div>;
         }
@@ -569,12 +588,14 @@ class View extends Component {
     }
 
     // Header bar: fixed columns.
+    const classesDynamicHeaderSelected = this.state.headerSelected ?
+      [classes.Fixed1, classes.HeaderSelectZone, classes.HeaderSelected].join(' ') :
+      [classes.Fixed1, classes.HeaderSelectZone].join(' ');
+
     let columnsFixed = (
       <div className={classes.Fixed}>
-        <div className={classes.Fixed1}>
-          <input type="checkbox" onClick={(event) => this.toggleAllRows(event)} />
-        </div>
-        <div className={classes.Fixed1}></div>
+        <div className={classesDynamicHeaderSelected} onClick={(event) => this.toggleAllRows(event)}></div>
+        <div className={classes.Fixed2}></div>
       </div>
     );
 
@@ -589,14 +610,17 @@ class View extends Component {
     let listItems = this.state.listItems.map((listItem, index) => {
       // In case the listItem has been edited during this client session, it gets additional styling.
       const classesDynamicListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
-      const checkbox = this.state.selectedListItems.indexOf(listItem._id) ===  -1 ?
-        <input type="checkbox" onClick={(event) => this.toggleRowHandler(event, listItem._id)}/> :
-        <input type="checkbox" checked onClick={(event) => this.toggleRowHandler(event, listItem._id)}/>;
+      const classesDynamicSelected = this.state.selectedListItems.indexOf(listItem._id) ===  -1 ?
+        [classes.Fixed1, classes.RowSelectZone].join(' ') :
+        [classes.Fixed1, classes.RowSelectZone, classes.RowSelected].join(' ');
+
       return(
-        <div key={index} className={classesDynamicListItem} onDoubleClick={() => this.onClickItemHandler(listItem._id)}>
+        <div key={index} className={classesDynamicListItem}
+          onClick={(event) => this.toggleRowHandler(listItem._id)}
+          onDoubleClick={() => this.onClickItemHandler(listItem._id)}>
           <div className={classes.Fixed}>
-            <div className={classes.Fixed1}>{checkbox}</div>
-            <div className={classes.Fixed1}></div>
+            <div className={classesDynamicSelected}></div>
+            <div className={classes.Fixed2}></div>
           </div>
           <div className={classes.Flex}>
           {
