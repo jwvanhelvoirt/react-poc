@@ -1,10 +1,11 @@
 import React from 'react';
 import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
+import ModalHeader from '../ModalHeader/ModalHeader';
 import Aux from '../../../hoc/Auxiliary';
 import classes from './MessageBox.scss';
 
-const MessageBox = (props) => {
+const messageBox = (props) => {
   const btnOk = <Button clicked={props.callBackMessageBoxOk} color="success" labelText="Ok" />;
   const btn = props.buttons === 'butOkCancel' ?
     <Aux>
@@ -16,7 +17,7 @@ const MessageBox = (props) => {
   return(
     <Modal show modalClass={props.modalClass} modalClosed={props.callBackMessageBoxCancel}>
       <div className={classes.MessageBox}>
-        <div className={classes.Header}>{props.messageTitle}</div>
+        <ModalHeader title={props.messageTitle} />
         <div className={classes.Content}>{props.messageContent}</div>
         <div className={classes.Footer}>{btn}</div>
       </div>
@@ -24,4 +25,4 @@ const MessageBox = (props) => {
   );
 }
 
-export default MessageBox;
+export default messageBox;

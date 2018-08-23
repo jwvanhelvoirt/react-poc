@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
 import Aux from '../../../hoc/Auxiliary';
 import formConfigPerson from '../../../config/Forms/ConfigFormPerson';
@@ -16,6 +17,7 @@ class View extends Component {
     super(props);
 
     this.state = {
+      debounceFunction: true,
       configForm: { ...this.props.formConfig },
       count: 0,
       headerSelected: false,
@@ -109,7 +111,7 @@ class View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    this.showErrorModal('Fout', 'Fout tijdens ophalen list item, item is reeds verwijderd.');
+    this.showInfoModal('Fout', 'Fout tijdens ophalen list item, item is reeds verwijderd.');
   };
 
   /**
@@ -120,7 +122,7 @@ class View extends Component {
     const { count, listItems } = response.data;
 
     // List items successfully loaded, update the state.
-    this.setState({ listItems, count, skip, loading: false, selectedListItems: [], headerSelected: false });
+    this.setState({ listItems, count, skip, loading: false, selectedListItems: [], headerSelected: false, debounceFunction: true });
   };
 
   /**
@@ -189,13 +191,13 @@ class View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    this.showErrorModal('Fout', 'Fout tijdens verwijderen list items');
+    this.showInfoModal('Fout', 'Fout tijdens verwijderen list items');
   }
 
   /**
    * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
    */
-  showErrorModal = (title, content) => {
+  showInfoModal = (title, content) => {
     this.localData['modalClass'] = 'ModalSmall';
     this.localData['messageTitle'] = title;
     this.localData['messageContent'] = content;
@@ -255,7 +257,7 @@ class View extends Component {
    * @brief   Updates the state for the search value.
    */
   inputSearchbarHandler(event) {
-    this.setState({ searchbarValue: event.target.value });
+    this.setState({ searchbarValue: event.target.value, debounceFunction: false });
   };
 
   /**
@@ -268,8 +270,8 @@ class View extends Component {
   /**
    * @brief   Submits the search to the server.
    */
-  submitSearchHandler() {
-    this.reloadListView(0, this.state.searchbarValue);
+  submitSearchHandler(_this){
+     _this.reloadListView(0, _this.state.searchbarValue);
   };
 
   /**
@@ -371,16 +373,16 @@ class View extends Component {
         (response) => this.successFaker(response),
         this.errorFaker, params);
   };
-  successFaker = () => console.log('Fake data successfully created');
-  errorFaker = () => console.log('Fake data NOT successfully created');
+  successFaker = () => this.showInfoModal('Info', 'Fake data succesvol aanemaakt.');
+  errorFaker = () => this.showInfoModal('Fout', 'Er is iets misgegaan met het aanmaken van fake data.');
 
   deleteAll = () => {
     callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
       (response) => this.successDeleteAll(response),
       this.errorDeleteAll);
   };
-  successDeleteAll = () => console.log('All records successfully deleted');
-  errorDeleteAll = () => console.log('Could NOT delete all records');
+  successDeleteAll = () => this.showInfoModal('Info', 'Bulk records succesvol aangemaakt.');
+  errorDeleteAll = () => this.showInfoModal('Info', 'Er is iets misgegaan met het aanmaken van bulk records.');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
@@ -535,6 +537,11 @@ class View extends Component {
 
     // Action bar: Searchbar.
     const classesDynamicSearchbar = [classes.Search, classes.Medium].join(' ');
+
+    // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
+    // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
+    const debounced = this.state.debounceFunction ? _.debounce(this.submitSearchHandler, 500) : null;
+
     let searchBar = null;
     if (viewConfig.showSearchbar) {
       searchBar = (
@@ -542,9 +549,12 @@ class View extends Component {
           <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon='times-circle' /></div>
           <input
             value={this.state.searchbarValue}
-            onChange={(event) => this.inputSearchbarHandler(event)}
+            onChange={(event) => {
+              this.inputSearchbarHandler(event);
+              debounced ? debounced(this) : null;
+            }}
             className={classes.SearchInput} type="text" placeholder="Zoeken..." />
-          <div onClick={() => this.submitSearchHandler()}><FontAwesomeIcon icon='search' /></div>
+          <div onClick={() => this.submitSearchHandler(this)}><FontAwesomeIcon icon='search' /></div>
         </div>
       );
     }

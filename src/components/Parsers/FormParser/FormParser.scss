@@ -16,7 +16,12 @@
 	text-transform: capitalize;
 }
 
-.Fields {
-	padding: 10px;
-	max-height: 500px;
+.FieldsWrapper {
+		padding: 10px;
+		box-sizing: border-box;
+		max-height: 500px;
+}
+
+.Fields:last-child {
+	margin-bottom: 10px;
 }

@@ -14,6 +14,7 @@ import React, { Component } from 'react';
 import Aux from '../../../hoc/Auxiliary';
 import Input from '../../UI/Input/Input';
 import Button from '../../UI/Button/Button';
+import ModalHeader from '../../UI/ModalHeader/ModalHeader';
 import classes from './FormParser.scss';
 import { callServer } from '../../../api/api';
 
@@ -132,17 +133,20 @@ class Form extends Component {
   }
 
   render() {
+console.log(this.state.configForm);
     let formElementsArray = [];
     for (let id in this.state.configForm) {
-      formElementsArray.push({
-        id: id,
-        configInput: this.state.configForm[id]
-      });
+      if (id !== '_id' && id !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
+        formElementsArray.push({
+          id: id,
+          configInput: this.state.configForm[id]
+        });
+      }
     }
 
     // Title of the form.
+    // <ModalHeader title={title} />
     const title = this.props.id ? this.props.configForm.title : 'nieuwe ' + this.props.configForm.title;
-
     return (
       <Aux>
         <div className={classes.TitleBar}>
@@ -163,21 +167,23 @@ class Form extends Component {
               />
           </div>
         </div>
-        <div className={classes.Fields}>
-          <div>
-            {formElementsArray.map(formElement => (
-              <Input
-                key={formElement.id}
-                elementType={formElement.configInput.elementType}
-                elementConfig={formElement.configInput.elementConfig}
-                value={formElement.configInput.value}
-                invalid={!formElement.configInput.valid}
-                shouldValidate={formElement.configInput.validation}
-                touched={formElement.configInput.touched}
-                changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                />
-            ))}
-          </div>
+        <div className={classes.FieldsWrapper}>
+          <div className={classes.Fields}>
+            <div>
+              {formElementsArray.map(formElement => (
+                <Input
+                  key={formElement.id}
+                  elementType={formElement.configInput.elementType}
+                  elementConfig={formElement.configInput.elementConfig}
+                  value={formElement.configInput.value}
+                  invalid={!formElement.configInput.valid}
+                  shouldValidate={formElement.configInput.validation}
+                  touched={formElement.configInput.touched}
+                  changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                  />
+              ))}
+            </div>
+        </div>
         </div>
       </Aux>
     );
