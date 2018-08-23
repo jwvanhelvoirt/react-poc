@@ -1,6 +1,6 @@
 const formConfig = {
-	url: 'organisations',
 	title: 'organisatie',
+	url: 'organisations',
 	inputs: {
 		name: {
 			elementType: 'input',
@@ -15,18 +15,29 @@ const formConfig = {
 			valid: false,
 			touched: false
 		},
-		street: {
+		email: {
+			elementType: 'input',
+			elementConfig: {
+				type: 'email',
+				placeholder: 'Email'
+			},
+			value: ''
+		},
+		phone: {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Straatnaam'
+				placeholder: 'Telefoon'
 			},
-			value: '',
-			validation: {
-				required: true
+			value: ''
+		},
+		website: {
+			elementType: 'input',
+			elementConfig: {
+				type: 'text',
+				placeholder: 'Website'
 			},
-			valid: false,
-			touched: false
+			value: ''
 		},
 		zip: {
 			elementType: 'input',
@@ -43,32 +54,75 @@ const formConfig = {
 			valid: false,
 			touched: false
 		},
+		streetAddress: {
+			elementType: 'input',
+			elementConfig: {
+				type: 'text',
+				placeholder: 'Straatnaam'
+			},
+			value: '',
+			validation: {
+				required: true
+			},
+			valid: false,
+			touched: false
+		},
+		city: {
+			elementType: 'input',
+			elementConfig: {
+				type: 'text',
+				placeholder: 'Plaats'
+			},
+			value: '',
+			validation: {
+				required: true
+			},
+			valid: false,
+			touched: false
+		},
 		country: {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
 				placeholder: 'Land'
 			},
-			value: 'Nederland'
-		},
-		email: {
-			elementType: 'input',
-			elementConfig: {
-				type: 'email',
-				placeholder: 'Email'
+			value: 'Nederland',
+			validation: {
+				required: true
 			},
-			value: ''
+			valid: false,
+			touched: false
 		},
-		deliveryMethod: {
+		organisationManager: {
 			elementType: 'select',
 			elementConfig: {
 				options: [
-					{ value: 'fastest', displayValue: 'Snelste' },
-					{ value: 'cheapest', displayValue: 'Goedkoopste' },
+					{ value: 'erwin', displayValue: 'Erwin' },
+					{ value: 'jos', displayValue: 'Jos' },
+					{ value: 'jw', displayValue: 'JW' },
+					{ value: 'jordy', displayValue: 'Jordy' },
+					{ value: 'pradeep', displayValue: 'Pradeep' },
+					{ value: 'rob', displayValue: 'Rob' },
 				]
 			},
-			value: 'cheapest'
-		}
+			value: 'erwin'
+		},
+		note: {
+			elementType: 'textarea',
+			elementConfig: {
+				rows: '4',
+				placeholder: 'Notities'
+			},
+			value: ''
+		},
+		image: {
+			elementType: 'input',
+			elementConfig: {
+				type: 'text',
+				placeholder: 'Image url'
+			},
+			value: ''
+		},
 	}
 }
 

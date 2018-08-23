@@ -132,7 +132,6 @@ class View extends Component {
     this.setState({ loading: false });
   };
 
-
   /**
    * @brief   Displays a form modal to add a new record to the database.
    */
@@ -353,6 +352,23 @@ class View extends Component {
     }
   };
 
+  createFakeData = () => {
+      const params = {};
+      callServer('post', '/' + this.state.viewConfig.url + '/create_fake_data',
+        (response) => this.successFaker(response),
+        this.errorFaker, params);
+  };
+  successFaker = () => console.log('Fake data successfully created');
+  errorFaker = () => console.log('Fake data NOT successfully created');
+
+  deleteAll = () => {
+    callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
+      (response) => this.successDeleteAll(response),
+      this.errorDeleteAll);
+  };
+  successDeleteAll = () => console.log('All records successfully deleted');
+  errorDeleteAll = () => console.log('Could NOT delete all records');
+
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
    */
@@ -447,11 +463,19 @@ class View extends Component {
             <FontAwesomeIcon icon='ellipsis-v' />
       </div> : null;
 
+    // Title bar: TEMPORARY TO DELETE ALL RECORDS FROM A COLLECTION, FOR TEST PURPOSES.
+    const deleteAll =
+      <div onClick={() => this.deleteAll()}
+           className={classes.ColumnConfigurator}>
+           <FontAwesomeIcon icon='trash' />
+      </div>;
+
     // Title bar overall.
     const titleBar = viewConfig.showRowTitle ?
       <div className={classes.TitleRow}>
-        <div className={classes.Title}>{this.state.viewConfig.title}</div>
+        <div onClick={() => this.createFakeData()} className={classes.Title}>{this.state.viewConfig.title}</div>
         <div className={classes.Navigation}>
+          {deleteAll}
           {columnConfig}
           {nav}
         </div>

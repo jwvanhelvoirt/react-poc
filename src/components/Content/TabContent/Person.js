@@ -1,16 +1,8 @@
-/**
-* @brief   Returns all HTML for the organisations tab. In general this is an action bar and a listview.
-*/
+import React from 'react';
+import formConfig from '../../../config/Forms/ConfigFormPerson';
+import View from '../../Parsers/ViewParser/ViewParser';
+import viewConfig from '../../../config/ListViews/ConfigListViewPerson';
 
-import React, { Component } from 'react';
+const person = () => <View formConfig={formConfig} viewConfig={viewConfig} />
 
-class Person extends Component {
-  render() {
-    // Create HTML for the list of organisations.
-      return (
-        <div>Persoon - Component</div>
-      );
-    }
-  }
-
-  export default Person;
+export default person;

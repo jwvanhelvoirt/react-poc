@@ -1,9 +1,9 @@
-import formConfigPerson from '../Forms/ConfigFormPerson';
+import formConfigOrganisation from '../Forms/ConfigFormOrganisation';
 
 const listViewConfig = {
 	actions: [
 		{
-			id: 'createOrganisation',
+			id: 'createPerson',
 			labelIcon: 'plus',
 			multiDoc: true,
 			zeroDoc: true,
@@ -11,20 +11,20 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			tooltip: 'Voeg nieuwe organisatie toe',
+			tooltip: 'Voeg nieuw persoon toe',
 			callback: (_this) => { _this.addItem(_this.props.formConfig) }
 		},
 		{
-			id: 'createPerson',
-			labelIcon: 'user',
+			id: 'createOrganisation',
+			labelIcon: 'building',
 			multiDoc: true,
 			zeroDoc: true,
 			showOnHover: false,
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			tooltip: 'Voeg nieuwe persoon toe',
-			callback: (_this) => { _this.addItem(formConfigPerson) }
+			tooltip: 'Voeg nieuwe organisatie toe',
+			callback: (_this) => { _this.addItem(formConfigOrganisation) }
 		},
 		{
 			id: 'delete',
@@ -35,7 +35,7 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			tooltip: 'Verwijder geselecteerde organisaties',
+			tooltip: 'Verwijder geselecteerde personen',
 			callback: (_this) => { _this.deleteItems(true) }
 		},
 		{
@@ -77,15 +77,6 @@ const listViewConfig = {
 			data: 'phone',
 			displayOn: 'none',
 			show: true,
-			size: 'Flex20'
-		},
-		{
-			id: 'website',
-			label: 'Website',
-			sort: false,
-			data: 'website',
-			displayOn: 'none',
-			show: false,
 			size: 'Flex20'
 		},
 		{
@@ -147,88 +138,13 @@ const listViewConfig = {
 		{ id: 'name', label: 'Naam'},
 		{ id: 'email', label: 'Email'},
 		{ id: 'phone', label: 'Telefoon'},
-		{ id: 'website', label: 'Website'},
 		{ id: 'zip', label: 'Postcode'},
 		{ id: 'streetAddress', label: 'Straat'},
 		{ id: 'city', label: 'Plaats'},
 		{ id: 'country', label: 'Land'}
 	],
-	title: 'Organisaties',
-	url: 'organisations'
+	title: 'Personen',
+	url: 'persons'
 }
 
 export default listViewConfig;
-
-
-// SUBACTIONS VOOR HET MOMENT NIET GEIMPLEMENTEERD.
-// {
-// 	id: 'create',
-// 	labelIcon: 'plus-square',
-// 	multiDoc: true,
-// 	zeroDoc: true,
-// 	showOnHover: false,
-// 	showInBarPrimary: true,
-// 	showInBarMenu: true,
-// 	subActions: [
-// 		{
-// 			id: 'createPerson',
-// 			labelIcon: 'user-circle',
-// 			multiDoc: false,
-// 			zeroDoc: true,
-// 			showOnHover: false,
-// 			showInBarPrimary: true,
-// 			showInBarMenu: true,
-// 			showInRowMenu: true,
-// 			callback: () => { alert("Create person!") }
-// 		},
-// 		{
-// 			id: 'createTask',
-// 			labelIcon: 'check-square',
-// 			multiDoc: false,
-// 			zeroDoc: true,
-// 			showOnHover: false,
-// 			showInBarPrimary: true,
-// 			showInBarMenu: true,
-// 			showInRowMenu: true,
-// 			callback: () => { alert("Create task!") }
-// 		}
-// 	]
-// }
-
-// IK HEB HET IDEE DAT EEN ARRAY VEEL HANDIGER IS, WEET ALLEEN NOG NIET HOE HET VALT BIJ UPDATEN.
-// columns: {
-// 	name: {
-// 		label: 'Naam',
-// 		sort: true,
-// 		data: 'name',
-// 		displayOn: 'always',
-// 		show: true
-// 	},
-// 	street: {
-// 		label: 'Straat',
-// 		sort: false,
-// 		data: 'street',
-// 		displayOn: 'medium,large',
-// 		show: true
-// 	},
-// 	zip: {
-// 		label: 'Postcode',
-// 		sort: true,
-// 		data: 'zip',
-// 		displayOn: 'large',
-// 		show: false
-// 	},
-// 	country: {
-// 		label: 'Land',
-// 		sort: true,
-// 		data: 'country',
-// 		displayOn: 'always',
-// 		show: true
-// 	},
-// 	email: {
-// 		label: 'Email',
-// 		sort: false,
-// 		data: 'email',
-// 		displayOn: 'none',
-// 		show: false
-// 	}
