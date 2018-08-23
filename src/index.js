@@ -6,8 +6,9 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 
-import { createStore } from 'redux';
-import reducer from './store/reducer';
+import { createStore, combineReducers } from 'redux';
+import reducer from './store/Reducer';
+import reducerCrm from './store/ReducerCrm';
 import { Provider } from 'react-redux';
 
 // axios.defaults.baseURL = 'https://ez2xs-4bf38.firebaseio.com/';
@@ -31,7 +32,11 @@ axios.defaults.baseURL = 'http://localhost:3050/api/';
 //	return Promise.reject(error); // To prevent blocking local error handling with the catch method.
 //});
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+	redMain: reducer,
+	redCrm: reducerCrm
+});
+const store = createStore(rootReducer);
 
 const app = (
 	<Provider store={store}>

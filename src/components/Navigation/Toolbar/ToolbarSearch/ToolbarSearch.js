@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import { InputGroup, Input } from 'reactstrap';
 import Button from '../../../UI/Button/Button';
+import * as types from '../../../../store/Actions';
 import { withRouter } from 'react-router-dom';
 
 class ToolbarSearch extends Component {
@@ -16,6 +17,7 @@ class ToolbarSearch extends Component {
   }
 
   executeSearchHandler = () => {
+    this.props.onSearch(this.state.searchText);
     this.props.history.push('/search?query=' + this.state.searchText);
   }
 
@@ -58,4 +60,10 @@ class ToolbarSearch extends Component {
   }
 }
 
-export default withRouter(ToolbarSearch);
+const mapDispatchToProps = dispatch => {
+  return {
+    onSearch: (searchText) => dispatch( {type: types.SEARCHTEXT_OVERALL, searchText } )
+  }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(ToolbarSearch));
