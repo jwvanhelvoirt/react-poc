@@ -41,6 +41,7 @@ class View extends Component {
     this.localData = {
       modalClass: '',
       messageTitle: '',
+      messageType: '',
       messageContent: '',
       messageButtons: '',
       callBackMessageBoxOk: null,
@@ -111,7 +112,7 @@ class View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    this.showInfoModal('Fout', 'Fout tijdens ophalen list item, item is reeds verwijderd.');
+    this.showInfoModal('Fout', 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.');
   };
 
   /**
@@ -163,6 +164,7 @@ class View extends Component {
       // Ask for user confirmation before deleting records from the database.
       this.localData['modalClass'] = 'ModalSmall';
       this.localData['messageTitle'] = 'Verwijderen list items';
+      this.localData['messageType'] = 'warning';
       this.localData['messageContent'] = 'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?';
       this.localData['messageButtons'] = 'butOkCancel';
       this.localData['callBackMessageBoxOk'] = () => this.deleteItems(false);
@@ -199,15 +201,16 @@ class View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    this.showInfoModal('Fout', 'Fout tijdens verwijderen list items');
+    this.showInfoModal('Fout', 'error', 'Fout tijdens verwijderen list items');
   }
 
   /**
    * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
    */
-  showInfoModal = (title, content) => {
+  showInfoModal = (title, type, content) => {
     this.localData['modalClass'] = 'ModalSmall';
     this.localData['messageTitle'] = title;
+    this.localData['messageType'] = type;
     this.localData['messageContent'] = content;
     this.localData['messageButtons'] = 'butOk';
     this.localData['callBackMessageBoxCancel'] = () => this.onModalMessageCloseHandler();
@@ -385,16 +388,16 @@ class View extends Component {
         (response) => this.successFaker(response),
         this.errorFaker, params);
   };
-  successFaker = () => this.showInfoModal('Info', 'Fake data succesvol aanemaakt.');
-  errorFaker = () => this.showInfoModal('Fout', 'Er is iets misgegaan met het aanmaken van fake data.');
+  successFaker = () => this.showInfoModal('Info', 'info', 'Fake data succesvol aanemaakt.');
+  errorFaker = () => this.showInfoModal('Fout', 'error', 'Er is iets misgegaan met het aanmaken van fake data.');
 
   deleteAll = () => {
     callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
       (response) => this.successDeleteAll(response),
       this.errorDeleteAll);
   };
-  successDeleteAll = () => this.showInfoModal('Info', 'Bulk records succesvol verwijderd.');
-  errorDeleteAll = () => this.showInfoModal('Info', 'Er is iets misgegaan met het bulk verwijderen van records.');
+  successDeleteAll = () => this.showInfoModal('Info', 'info', 'Bulk records succesvol verwijderd.');
+  errorDeleteAll = () => this.showInfoModal('Info', 'error', 'Er is iets misgegaan met het bulk verwijderen van records.');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
@@ -449,9 +452,9 @@ class View extends Component {
     // Display the message modal.
     let messageModal = null;
     if (this.state.showModalMessage) {
-      const { modalClass, messageButtons, messageTitle, messageContent, callBackMessageBoxOk, callBackMessageBoxCancel} = this.localData;
+      const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackMessageBoxOk, callBackMessageBoxCancel} = this.localData;
       messageModal = (
-        <MessageBox modalClass={modalClass} messageTitle={messageTitle}
+        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
           messageContent={messageContent} buttons={messageButtons}
           callBackMessageBoxOk={callBackMessageBoxOk} callBackMessageBoxCancel={callBackMessageBoxCancel}
         />

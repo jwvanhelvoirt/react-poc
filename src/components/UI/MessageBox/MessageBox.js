@@ -17,7 +17,7 @@ const messageBox = (props) => {
   return(
     <Modal show modalClass={props.modalClass} modalClosed={props.callBackMessageBoxCancel}>
       <div className={classes.MessageBox}>
-        <ModalHeader title={props.messageTitle} />
+        <ModalHeader title={props.messageTitle} type={props.type} />
         <div className={classes.Content}>{props.messageContent}</div>
         <div className={classes.Footer}>{btn}</div>
       </div>
