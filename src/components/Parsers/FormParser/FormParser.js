@@ -10,7 +10,8 @@
 */
 
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import * as types from '../../../store/Actions';
 import Aux from '../../../hoc/Auxiliary';
 import Input from '../../UI/Input/Input';
 import Button from '../../UI/Button/Button';
@@ -47,6 +48,9 @@ class Form extends Component {
   }
 
   inputChangedHandler = (event, id) => {
+    // Set the state 'formTouched' in the store to 'true'.
+    this.props.touchForm();
+
     // Clone the state to a variable.
     const updatedForm = {
       ...this.state.configForm
@@ -176,7 +180,13 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapDispatchToProps = dispatch => {
+  return {
+    touchForm: () => dispatch( {type: types.FORM_TOUCH } )
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Form);
 
 
 /*

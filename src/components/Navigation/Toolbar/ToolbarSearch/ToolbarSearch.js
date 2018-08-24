@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as types from '../../../../store/Actions';
 import { InputGroup, Input } from 'reactstrap';
 import Button from '../../../UI/Button/Button';
-import * as types from '../../../../store/Actions';
 import { withRouter } from 'react-router-dom';
 
 class ToolbarSearch extends Component {

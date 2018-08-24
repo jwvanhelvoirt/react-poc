@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
+import * as types from '../../../store/Actions';
 import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
 import Aux from '../../../hoc/Auxiliary';
@@ -81,14 +83,30 @@ class View extends Component {
 
     // Update the state and close the form dialog.
     this.setState({ listItems: updatedListItems });
-    this.onCloseHandler();
+    this.onCloseHandler(false);
+  };
+
+  /**
+   * @brief   Called if user ignores the warning that changes will be lost if he closes the form.
+   */
+  onCloseHandlerDiscardChanges = () => {
+    this.onModalMessageCloseHandler();
+    this.onCloseHandler(false);
   };
 
   /**
    * @brief   Closes the modal that shows the formdata of the selected or new listItem.
    */
-  onCloseHandler = () => {
-    this.setState({ loadedListItem: null, configForm: { ...this.props.formConfig } });
+  onCloseHandler = (userConfirmation) => {
+    if (userConfirmation && this.props.formTouched) {
+      // Ask for user confirmation to lose all changes in the form.
+      this.showInfoModal('ModalSmall', 'Sluiten formulier', 'warning',
+        'Weet u zeker dat u het formulier wil sluiten? U verliest al uw wijzigingen!', 'butOkCancel',
+         () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
+    } else {
+      this.props.untouchForm();
+      this.setState({ loadedListItem: null, configForm: { ...this.props.formConfig } });
+    }
   };
 
   /**
@@ -112,7 +130,7 @@ class View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    this.showInfoModal('Fout', 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.');
+    this.showInfoModal('ModalSmall', 'Fout', 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.', 'butOk');
   };
 
   /**
@@ -162,13 +180,10 @@ class View extends Component {
   deleteItems = (userConfirmation) => {
     if (userConfirmation) {
       // Ask for user confirmation before deleting records from the database.
-      this.localData['modalClass'] = 'ModalSmall';
-      this.localData['messageTitle'] = 'Verwijderen list items';
-      this.localData['messageType'] = 'warning';
-      this.localData['messageContent'] = 'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?';
-      this.localData['messageButtons'] = 'butOkCancel';
-      this.localData['callBackOk'] = () => this.deleteItems(false);
-      this.localData['callBackCancel'] = () => this.onModalMessageCloseHandler();
+      this.showInfoModal('ModalSmall', 'Verwijderen list items', 'warning',
+        'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?', 'butOkCancel',
+         () => this.deleteItems(false), () => this.onModalMessageCloseHandler());
+
       this.setState({ showModalMessage: true });
     } else {
       this.onModalMessageCloseHandler();
@@ -201,20 +216,22 @@ class View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    this.showInfoModal('Fout', 'error', 'Fout tijdens verwijderen list items');
+    this.showInfoModal('ModalSmall', 'Fout', 'error', 'Fout tijdens verwijderen list items', 'butOk');
   }
 
   /**
    * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
    */
-  showInfoModal = (title, type, content) => {
-    this.localData['modalClass'] = 'ModalSmall';
+  showInfoModal = (modalClass, title, type, content, buttons,
+    callBackOk = () => this.onModalMessageCloseHandler(),
+    callBackCancel = () => this.onModalMessageCloseHandler()) => {
+    this.localData['modalClass'] = modalClass;
     this.localData['messageTitle'] = title;
     this.localData['messageType'] = type;
     this.localData['messageContent'] = content;
-    this.localData['messageButtons'] = 'butOk';
-    this.localData['callBackCancel'] = () => this.onModalMessageCloseHandler();
-    this.localData['callBackOk'] = () => this.onModalMessageCloseHandler();
+    this.localData['messageButtons'] = buttons;
+    this.localData['callBackCancel'] = callBackCancel;
+    this.localData['callBackOk'] = callBackOk;
     this.setState({ showModalMessage: true });
   }
   /**
@@ -388,16 +405,16 @@ class View extends Component {
         (response) => this.successFaker(response),
         this.errorFaker, params);
   };
-  successFaker = () => this.showInfoModal('Info', 'info', 'Fake data succesvol aanemaakt.');
-  errorFaker = () => this.showInfoModal('Fout', 'error', 'Er is iets misgegaan met het aanmaken van fake data.');
+  successFaker = () => this.showInfoModal('ModalSmall', 'Info', 'info', 'Fake data succesvol aanemaakt.', 'butOk');
+  errorFaker = () => this.showInfoModal('ModalSmall', 'Fout', 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
 
   deleteAll = () => {
     callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
       (response) => this.successDeleteAll(response),
       this.errorDeleteAll);
   };
-  successDeleteAll = () => this.showInfoModal('Info', 'info', 'Bulk records succesvol verwijderd.');
-  errorDeleteAll = () => this.showInfoModal('Info', 'error', 'Er is iets misgegaan met het bulk verwijderen van records.');
+  successDeleteAll = () => this.showInfoModal('ModalSmall', 'Info', 'info', 'Bulk records succesvol verwijderd.', 'butOk');
+  errorDeleteAll = () => this.showInfoModal('ModalSmall', 'Info', 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
@@ -410,7 +427,7 @@ class View extends Component {
         <FormParser
           configForm={this.state.configForm}
           data={this.state.loadedListItem}
-          onCancel={() => this.onCloseHandler()}
+          onCancel={() => this.onCloseHandler(true)}
           onSubmit={this.onSubmitHandler}
           id={this.state.selectedListItemId}
           />
@@ -690,4 +707,16 @@ class View extends Component {
 
 }
 
-  export default View;
+const mapStateToProps = state => {
+  return {
+    formTouched: state.redMain.formTouched
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    untouchForm: () => dispatch( {type: types.FORM_UNTOUCH } )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(View);
