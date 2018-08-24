@@ -1,3 +1,4 @@
+import formConfigPerson from '../Forms/ConfigFormPerson';
 import formConfigOrganisation from '../Forms/ConfigFormOrganisation';
 
 const listViewConfig = {
@@ -12,7 +13,7 @@ const listViewConfig = {
 			showInBarMenu: true,
 			showInRowMenu: true,
 			tooltip: 'Voeg nieuw persoon toe',
-			callback: (_this) => { _this.addItem(_this.props.formConfig) }
+			callback: (_this) => { _this.addItem(formConfigPerson, true) }
 		},
 		{
 			id: 'createOrganisation',
@@ -24,7 +25,7 @@ const listViewConfig = {
 			showInBarMenu: true,
 			showInRowMenu: true,
 			tooltip: 'Voeg nieuwe organisatie toe',
-			callback: (_this) => { _this.addItem(formConfigOrganisation) }
+			callback: (_this) => { _this.addItem(formConfigOrganisation, false) }
 		},
 		{
 			id: 'delete',
@@ -122,6 +123,7 @@ const listViewConfig = {
 		{ id: 'organisationManager', label: 'Organisatie manager', collection: 'medewerkers'}
 	],
 	limit: 50,
+	relatedForm: formConfigPerson,
 	row: { selectable: true, menu: true },
 	rowSelectAll: true,
 	showActions: true,

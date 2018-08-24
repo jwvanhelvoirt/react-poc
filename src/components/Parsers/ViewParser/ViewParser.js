@@ -20,7 +20,7 @@ class View extends Component {
 
     this.state = {
       debounceFunction: true,
-      configForm: { ...this.props.formConfig },
+      configForm: this.props.viewConfig.relatedForm,
       count: 0,
       headerSelected: false,
       listItems: [],
@@ -41,6 +41,7 @@ class View extends Component {
     };
 
     this.localData = {
+      addRecordToView: false,
       modalClass: '',
       messageTitle: '',
       messageType: '',
@@ -61,28 +62,30 @@ class View extends Component {
    * @brief   Updates listItems after a new listItem or an update of a selected listItem.
    */
   onSubmitHandler = (response) => {
-    let updatedListItems = [];
+    if (this.localData.addRecordToView) {
+      let updatedListItems = [];
 
-    // Edited view entries are marked, so that we can emphasize them in the listview.
-    const editedResponse = {
-      ...response.data,
-      edit: true
+      // Edited view entries are marked, so that we can emphasize them in the listview.
+      const editedResponse = {
+        ...response.data,
+        edit: true
+      }
+
+      if (this.state.selectedListItemId) {
+        // Put all current listItems in a variable, except the updated one.
+        // For the updated we include the response.
+        updatedListItems = this.state.listItems.map(item => item._id === response.data._id ? editedResponse : item);
+      } else {
+        // Append the object of the new entry to the state.
+        updatedListItems = [
+          editedResponse,
+          ...this.state.listItems
+        ];
+      }
+
+      // Update the state and close the form dialog.
+      this.setState({ listItems: updatedListItems });
     }
-
-    if (this.state.selectedListItemId) {
-      // Put all current listItems in a variable, except the updated one.
-      // For the updated we include the response.
-      updatedListItems = this.state.listItems.map(item => item._id === response.data._id ? editedResponse : item);
-    } else {
-      // Append the object of the new entry to the state.
-      updatedListItems = [
-        editedResponse,
-        ...this.state.listItems
-      ];
-    }
-
-    // Update the state and close the form dialog.
-    this.setState({ listItems: updatedListItems });
     this.onCloseHandler(false);
   };
 
@@ -100,12 +103,12 @@ class View extends Component {
   onCloseHandler = (userConfirmation) => {
     if (userConfirmation && this.props.formTouched) {
       // Ask for user confirmation to lose all changes in the form.
-      this.showInfoModal('ModalSmall', 'Sluiten formulier', 'warning',
+      this.showModal('showModalMessage', 'ModalSmall', 'Sluiten formulier', 'warning',
         'Weet u zeker dat u het formulier wil sluiten? U verliest al uw wijzigingen.', 'butOkCancel',
          () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
     } else {
       this.props.untouchForm();
-      this.setState({ loadedListItem: null, configForm: { ...this.props.formConfig } });
+      this.setState({ loadedListItem: null, configForm: { ...this.props.viewConfig.relatedForm } });
     }
   };
 
@@ -130,7 +133,7 @@ class View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    this.showInfoModal('ModalSmall', 'Fout', 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.', 'butOk');
+    this.showModal('showModalMessage', 'ModalSmall', 'Fout', 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.', 'butOk');
   };
 
   /**
@@ -164,13 +167,13 @@ class View extends Component {
   /**
    * @brief   Displays a form modal to add a new record to the database.
    */
-  addItem = (formConfig) => {
+  addItem = (formConfig, addToView) => {
     // Prepares the form data to add a new item by filling 'loadedListItem'.
     const newPostData = {};
     for (let inputId in formConfig.inputs) {
       newPostData[inputId] = formConfig.inputs[inputId].value;
     }
-
+    this.localData.addRecordToView = addToView;
     this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: {...formConfig} });
   };
 
@@ -180,7 +183,7 @@ class View extends Component {
   deleteItems = (userConfirmation) => {
     if (userConfirmation) {
       // Ask for user confirmation before deleting records from the database.
-      this.showInfoModal('ModalSmall', 'Verwijderen list items', 'warning',
+      this.showModal('showModalMessage', 'ModalSmall', 'Verwijderen list items', 'warning',
         'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?', 'butOkCancel',
          () => this.deleteItems(false), () => this.onModalMessageCloseHandler());
 
@@ -216,13 +219,13 @@ class View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    this.showInfoModal('ModalSmall', 'Fout', 'error', 'Fout tijdens verwijderen list items', 'butOk');
+    this.showModal('showModalMessage', 'ModalSmall', 'Fout', 'error', 'Fout tijdens verwijderen list items', 'butOk');
   }
 
   /**
    * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
    */
-  showInfoModal = (modalClass, title, type, content, buttons,
+  showModal = (modalState, modalClass, title, type, content, buttons,
     callBackOk = () => this.onModalMessageCloseHandler(),
     callBackCancel = () => this.onModalMessageCloseHandler()) => {
     this.localData.modalClass = modalClass;
@@ -232,7 +235,7 @@ class View extends Component {
     this.localData.messageButtons = buttons;
     this.localData.callBackCancel = callBackCancel;
     this.localData.callBackOk = callBackOk;
-    this.setState({ showModalMessage: true });
+    this.setState({ [modalState]: true });
   }
   /**
    * @brief   Manages state containing an array of all selected rows in the listView.
@@ -310,7 +313,13 @@ class View extends Component {
    * @brief   Shows a modal where the user can select on which attribute to sort the listView in which order.
    */
   onClickSortHandler() {
-    this.setState({ showModalSort: true });
+    console.log(this.state.viewConfig.sortOptions);
+    // this.setState({ showModalSort: true });
+    // <View formConfig={this.state.configForm} viewConfig={this.state.viewConfig} />
+    this.showModal('showModalSort', 'ModalWide', 'Sorteren', 'info',
+      <View viewConfig={this.state.viewConfig} />, 'butOkCancel',
+       () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
+
   };
 
   /**
@@ -318,6 +327,10 @@ class View extends Component {
    */
   onModalSortCloseHandler() {
     this.setState({ showModalSort: false });
+  };
+
+  processSelectedSortOption = () => {
+    console.log('processSelectedSortOption');
   };
 
   /**
@@ -405,21 +418,23 @@ class View extends Component {
         (response) => this.successFaker(response),
         this.errorFaker, params);
   };
-  successFaker = () => this.showInfoModal('ModalSmall', 'Info', 'info', 'Fake data succesvol aangemaakt.', 'butOk');
-  errorFaker = () => this.showInfoModal('ModalSmall', 'Fout', 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
+  successFaker = () => this.showModal('showModalMessage', 'ModalSmall', 'Info', 'info', 'Fake data succesvol aangemaakt.', 'butOk');
+  errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', 'Fout', 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
 
   deleteAll = () => {
     callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
       (response) => this.successDeleteAll(response),
       this.errorDeleteAll);
   };
-  successDeleteAll = () => this.showInfoModal('ModalSmall', 'Info', 'info', 'Bulk records succesvol verwijderd.', 'butOk');
-  errorDeleteAll = () => this.showInfoModal('ModalSmall', 'Info', 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
+  successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', 'Info', 'info', 'Bulk records succesvol verwijderd.', 'butOk');
+  errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', 'Info', 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
    */
   render() {
+    const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
+
     // Display the form modal in case loadedListItem is filled with form data.
     let formModal = null;
     if (this.state.loadedListItem) {
@@ -445,12 +460,32 @@ class View extends Component {
     }
 
     // Display the sort modal.
+    // let sortModal = null;
+    // if (this.state.showModalSort) {
+    //   sortModal = (
+    //     <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalSortCloseHandler()}>
+    //       <div style={{ 'padding':'20px' }}>SORT MODAL</div>
+    //     </Modal>
+    //   );
+    // }
     let sortModal = null;
     if (this.state.showModalSort) {
       sortModal = (
-        <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalSortCloseHandler()}>
-          <div style={{ 'padding':'20px' }}>SORT MODAL</div>
-        </Modal>
+        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
+          messageContent={messageContent} buttons={messageButtons}
+          callBackOk={callBackOk} callBackCancel={callBackCancel}
+        />
+      );
+    }
+
+    // Display the message modal.
+    let messageModal = null;
+    if (this.state.showModalMessage) {
+      messageModal = (
+        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
+          messageContent={messageContent} buttons={messageButtons}
+          callBackOk={callBackOk} callBackCancel={callBackCancel}
+        />
       );
     }
 
@@ -461,18 +496,6 @@ class View extends Component {
         <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalColumnConfiguratorCloseHandler()}>
           <div style={{ 'padding':'20px' }}>COLUMN CONFIGURATOR MODAL</div>
         </Modal>
-      );
-    }
-
-    // Display the message modal.
-    let messageModal = null;
-    if (this.state.showModalMessage) {
-      const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
-      messageModal = (
-        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
-          messageContent={messageContent} buttons={messageButtons}
-          callBackOk={callBackOk} callBackCancel={callBackCancel}
-        />
       );
     }
 
