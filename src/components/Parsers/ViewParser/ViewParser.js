@@ -44,8 +44,8 @@ class View extends Component {
       messageType: '',
       messageContent: '',
       messageButtons: '',
-      callBackMessageBoxOk: null,
-      callBackMessageBoxCancel: null
+      callBackOk: null,
+      callBackCancel: null
     }
 
     // For multiple view skips, back- and forward.
@@ -167,8 +167,8 @@ class View extends Component {
       this.localData['messageType'] = 'warning';
       this.localData['messageContent'] = 'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?';
       this.localData['messageButtons'] = 'butOkCancel';
-      this.localData['callBackMessageBoxOk'] = () => this.deleteItems(false);
-      this.localData['callBackMessageBoxCancel'] = () => this.onModalMessageCloseHandler();
+      this.localData['callBackOk'] = () => this.deleteItems(false);
+      this.localData['callBackCancel'] = () => this.onModalMessageCloseHandler();
       this.setState({ showModalMessage: true });
     } else {
       this.onModalMessageCloseHandler();
@@ -213,8 +213,8 @@ class View extends Component {
     this.localData['messageType'] = type;
     this.localData['messageContent'] = content;
     this.localData['messageButtons'] = 'butOk';
-    this.localData['callBackMessageBoxCancel'] = () => this.onModalMessageCloseHandler();
-    this.localData['callBackMessageBoxOk'] = () => this.onModalMessageCloseHandler();
+    this.localData['callBackCancel'] = () => this.onModalMessageCloseHandler();
+    this.localData['callBackOk'] = () => this.onModalMessageCloseHandler();
     this.setState({ showModalMessage: true });
   }
   /**
@@ -407,15 +407,13 @@ class View extends Component {
     let formModal = null;
     if (this.state.loadedListItem) {
       formModal = (
-        <Modal show modalClass='ModalWide' modalClosed={this.onCloseHandler}>
-          <FormParser
-            configForm={this.state.configForm}
-            data={this.state.loadedListItem}
-            onCancel={() => this.onCloseHandler()}
-            onSubmit={this.onSubmitHandler}
-            id={this.state.selectedListItemId}
-            />
-        </Modal>
+        <FormParser
+          configForm={this.state.configForm}
+          data={this.state.loadedListItem}
+          onCancel={() => this.onCloseHandler()}
+          onSubmit={this.onSubmitHandler}
+          id={this.state.selectedListItemId}
+          />
       );
     }
 
@@ -452,11 +450,11 @@ class View extends Component {
     // Display the message modal.
     let messageModal = null;
     if (this.state.showModalMessage) {
-      const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackMessageBoxOk, callBackMessageBoxCancel} = this.localData;
+      const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
       messageModal = (
         <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
           messageContent={messageContent} buttons={messageButtons}
-          callBackMessageBoxOk={callBackMessageBoxOk} callBackMessageBoxCancel={callBackMessageBoxCancel}
+          callBackOk={callBackOk} callBackCancel={callBackCancel}
         />
       );
     }

@@ -15,6 +15,8 @@ import Aux from '../../../hoc/Auxiliary';
 import Input from '../../UI/Input/Input';
 import Button from '../../UI/Button/Button';
 import ModalHeader from '../../UI/ModalHeader/ModalHeader';
+import ModalFooter from '../../UI/ModalFooter/ModalFooter';
+import MessageBox from '../../UI/MessageBox/MessageBox';
 import classes from './FormParser.scss';
 import { callServer } from '../../../api/api';
 
@@ -133,7 +135,6 @@ class Form extends Component {
   }
 
   render() {
-console.log(this.state.configForm);
     let formElementsArray = [];
     for (let id in this.state.configForm) {
       if (id !== '_id' && id !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
@@ -144,48 +145,33 @@ console.log(this.state.configForm);
       }
     }
 
-    // Title of the form.
-    // <ModalHeader title={title} />
-    const title = this.props.id ? this.props.configForm.title : 'nieuwe ' + this.props.configForm.title;
-    return (
-      <Aux>
-        <div className={classes.TitleBar}>
-          <div className={classes.Title}>{title}</div>
+    const content =
+      <div className={classes.FieldsWrapper}>
+        <div className={classes.Fields}>
           <div>
-            <Button
-              clicked={this.submitHandler}
-              color="success"
-              id="Button-Save"
-              labelIcon="save"
-              disabled={!this.state.formIsValid}
-              />
-            <Button
-              clicked={this.props.onCancel}
-              color="danger"
-              id="Button-Cancel"
-              labelIcon="window-close"
-              />
+            {formElementsArray.map(formElement => (
+              <Input
+                key={formElement.id}
+                elementType={formElement.configInput.elementType}
+                elementConfig={formElement.configInput.elementConfig}
+                value={formElement.configInput.value}
+                invalid={!formElement.configInput.valid}
+                shouldValidate={formElement.configInput.validation}
+                touched={formElement.configInput.touched}
+                changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                />
+            ))}
           </div>
         </div>
-        <div className={classes.FieldsWrapper}>
-          <div className={classes.Fields}>
-            <div>
-              {formElementsArray.map(formElement => (
-                <Input
-                  key={formElement.id}
-                  elementType={formElement.configInput.elementType}
-                  elementConfig={formElement.configInput.elementConfig}
-                  value={formElement.configInput.value}
-                  invalid={!formElement.configInput.valid}
-                  shouldValidate={formElement.configInput.validation}
-                  touched={formElement.configInput.touched}
-                  changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                  />
-              ))}
-            </div>
-        </div>
-        </div>
-      </Aux>
+      </div>;
+
+    // Title of the form.
+    const title = this.props.id ? this.props.configForm.title : 'nieuwe ' + this.props.configForm.title;
+    return (
+      <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
+        messageContent={content} buttons='butOkCancel'
+        callBackOk={this.submitHandler} callBackCancel={this.props.onCancel}
+      />
     );
   }
 }
