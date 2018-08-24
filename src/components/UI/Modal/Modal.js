@@ -5,22 +5,55 @@
 */
 
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import * as types from '../../../store/Actions';
 import classes from './Modal.scss';
 import Aux from '../../../hoc/Auxiliary';
 import Backdrop from '../Backdrop/Backdrop';
 
 class Modal extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
+  constructor(props) {
+    super(props);
+
+    this.localData = {
+      messageBox1: this.props.messageBox1,
+      messageBox2: this.props.messageBox2
+    }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
+  };
+
+  componentWillMount() {
+    // For now we support three levels of message boxes. Probably two is enough, but just in case.
+    !this.props.messageBox1 ?
+      this.props.openMessageBox1() :
+      (!this.props.messageBox2 ? this.props.openMessageBox2() : null);
+  };
+
+  componentWillUnmount() {
+    this.props.messageBox2 ?
+      this.props.closeMessageBox2() :
+      (this.props.messageBox1 ? this.props.closeMessageBox1() : null);
+  };
+
   render() {
+    const { messageBox1, messageBox2 } = this.localData;
+
+    // Complex construction for multiple MessageBoxes on screen.
+    // Complexity is the positioning and z-index of the modal and the backdrop.
+    // We have support up to three message boxes now.
+    const classNames = messageBox1 ?
+      [classes[this.props.modalClass], classes.Pos2].join(' ') :
+      (messageBox2 ? [classes[this.props.modalClass], classes.Pos3].join(' ') :
+        [classes[this.props.modalClass], classes.Pos1].join(' '));
+
     return (
       <Aux>
-        <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
+        <Backdrop show={this.props.show} clicked={this.props.modalClosed} messageBox1={messageBox1} messageBox2={messageBox2} />
         <div
-          className={classes[this.props.modalClass]}
+          className={classNames}
           style={{
             transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
             opacity: this.props.show ? '1' : '0'
@@ -32,4 +65,20 @@ class Modal extends Component {
   }
 }
 
-export default Modal;
+const mapStateToProps = state => {
+  return {
+    messageBox1: state.redMain.messageBox1,
+    messageBox2: state.redMain.messageBox2
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_OPENED } ),
+    openMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_OPENED } ),
+    closeMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_CLOSED } ),
+    closeMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_CLOSED } )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);

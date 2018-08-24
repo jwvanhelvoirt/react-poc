@@ -1,13 +1,26 @@
 .ModalExtraSmall, .ModalSmall, .ModalMedium, .ModalWide, .ModalExtraWide {
 	position: fixed;
-	z-index: 500;
 	background-color: white;
 	box-shadow: 1px 1px 1px black;
-	top: 10%;
 	box-sizing: border-box;
 	transition: all 0.3s ease-out;
 	overflow-y: auto;
 	max-height: 600px;
+}
+
+.Pos1 {
+	z-index: 200;
+	top: 10%;
+}
+
+.Pos2 {
+	z-index: 400;
+	top: 20%;
+}
+
+.Pos3 {
+	z-index: 600;
+	top: 30%;
 }
 
 .ModalExtraSmall, .ModalSmall, .ModalMedium, .ModalWide, .ModalExtraWide {

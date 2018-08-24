@@ -6,7 +6,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, compose } from 'redux';
 import reducer from './store/Reducer';
 import reducerCrm from './store/ReducerCrm';
 import { Provider } from 'react-redux';
@@ -36,7 +36,10 @@ const rootReducer = combineReducers({
 	redMain: reducer,
 	redCrm: reducerCrm
 });
-const store = createStore(rootReducer);
+
+const store = createStore(
+	rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const app = (
 	<Provider store={store}>

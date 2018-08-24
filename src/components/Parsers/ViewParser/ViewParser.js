@@ -91,7 +91,7 @@ class View extends Component {
    */
   onCloseHandlerDiscardChanges = () => {
     this.onModalMessageCloseHandler();
-    this.onCloseHandler(false);
+    setTimeout(() => {this.onCloseHandler(false)}, 100);
   };
 
   /**
@@ -225,13 +225,13 @@ class View extends Component {
   showInfoModal = (modalClass, title, type, content, buttons,
     callBackOk = () => this.onModalMessageCloseHandler(),
     callBackCancel = () => this.onModalMessageCloseHandler()) => {
-    this.localData['modalClass'] = modalClass;
-    this.localData['messageTitle'] = title;
-    this.localData['messageType'] = type;
-    this.localData['messageContent'] = content;
-    this.localData['messageButtons'] = buttons;
-    this.localData['callBackCancel'] = callBackCancel;
-    this.localData['callBackOk'] = callBackOk;
+    this.localData.modalClass = modalClass;
+    this.localData.messageTitle = title;
+    this.localData.messageType = type;
+    this.localData.messageContent = content;
+    this.localData.messageButtons = buttons;
+    this.localData.callBackCancel = callBackCancel;
+    this.localData.callBackOk = callBackOk;
     this.setState({ showModalMessage: true });
   }
   /**
@@ -405,7 +405,7 @@ class View extends Component {
         (response) => this.successFaker(response),
         this.errorFaker, params);
   };
-  successFaker = () => this.showInfoModal('ModalSmall', 'Info', 'info', 'Fake data succesvol aanemaakt.', 'butOk');
+  successFaker = () => this.showInfoModal('ModalSmall', 'Info', 'info', 'Fake data succesvol aangemaakt.', 'butOk');
   errorFaker = () => this.showInfoModal('ModalSmall', 'Fout', 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
 
   deleteAll = () => {
