@@ -1,16 +1,3 @@
-/*
-PERSON
-name
-email
-phone
-zip
-streetAddress
-city
-country
-note
-image
-*/
-
 const formConfig = {
 	title: 'persoon',
 	url: 'persons',
@@ -26,7 +13,8 @@ const formConfig = {
 				required: true
 			},
 			valid: false,
-			touched: false
+			touched: false,
+			defaultFocus: true
 		},
 		email: {
 			elementType: 'input',

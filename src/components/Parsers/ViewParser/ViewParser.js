@@ -101,7 +101,7 @@ class View extends Component {
     if (userConfirmation && this.props.formTouched) {
       // Ask for user confirmation to lose all changes in the form.
       this.showInfoModal('ModalSmall', 'Sluiten formulier', 'warning',
-        'Weet u zeker dat u het formulier wil sluiten? U verliest al uw wijzigingen!', 'butOkCancel',
+        'Weet u zeker dat u het formulier wil sluiten? U verliest al uw wijzigingen.', 'butOkCancel',
          () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
     } else {
       this.props.untouchForm();

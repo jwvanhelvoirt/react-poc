@@ -1,6 +1,6 @@
 import React from 'react';
 import Screen from '../../Parsers/ScreenParser/ScreenParser';
-import { tabsConfig } from '../../../config/Tabs/ConfigTabsCrm';
+import { tabsConfig } from '../../../config/Screens/ConfigTabsCrm';
 
 const modCrm = () => <Screen tabsConfig={tabsConfig} />
 

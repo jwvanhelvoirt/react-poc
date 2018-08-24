@@ -163,6 +163,7 @@ class Form extends Component {
                 shouldValidate={formElement.configInput.validation}
                 touched={formElement.configInput.touched}
                 changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                defaultFocus={formElement.configInput.defaultFocus}
                 />
             ))}
           </div>

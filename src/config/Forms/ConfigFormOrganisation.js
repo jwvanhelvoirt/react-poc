@@ -13,7 +13,8 @@ const formConfig = {
 				required: true
 			},
 			valid: false,
-			touched: false
+			touched: false,
+			defaultFocus: true
 		},
 		email: {
 			elementType: 'input',
