@@ -48,7 +48,7 @@ const listViewConfig = {
 			showInBarMenu: true,
 			showInRowMenu: false,
 			tooltip: 'Ververs listview',
-			callback: (_this) => _this.reloadListView(0)
+			callback: (_this) => _this.reloadListView(0, null, true)
 		}
 	],
 	columns: [

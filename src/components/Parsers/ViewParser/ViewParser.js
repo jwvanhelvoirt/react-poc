@@ -240,11 +240,14 @@ class View extends Component {
   /**
    * @brief   Refreshes the current listView by pulling it from the server starting by the first record.
    */
-  reloadListView(skip, search) {
+  reloadListView(skip, search, emptySearchbar) {
     const { sort, sortOrder, viewConfig } = this.state;
     const { limit } = viewConfig;
     const params = { sort, sortOrder, skip, limit, search };
     callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
+
+    // In case this reload is triggere from the view refresh action, text in the searchbar must be removed.
+    emptySearchbar ? this.setState({ searchbarValue: '' }) : null;
   };
 
   /**
@@ -273,6 +276,7 @@ class View extends Component {
    */
   clearSearchbarHandler() {
     this.setState({ searchbarValue: '' });
+    this.reloadListView(0, '');
   };
 
   /**
@@ -389,8 +393,8 @@ class View extends Component {
       (response) => this.successDeleteAll(response),
       this.errorDeleteAll);
   };
-  successDeleteAll = () => this.showInfoModal('Info', 'Bulk records succesvol aangemaakt.');
-  errorDeleteAll = () => this.showInfoModal('Info', 'Er is iets misgegaan met het aanmaken van bulk records.');
+  successDeleteAll = () => this.showInfoModal('Info', 'Bulk records succesvol verwijderd.');
+  errorDeleteAll = () => this.showInfoModal('Info', 'Er is iets misgegaan met het bulk verwijderen van records.');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
@@ -466,21 +470,22 @@ class View extends Component {
     let navForw = null;
     let navForwMult = null;
 
-    if (viewConfig.showNavigation && count > 0) {
+    if (viewConfig.showNavigation) {
+        navBack =     <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div>;
+        navBackMult = <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div>;
+        navForwMult = <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div>;
+        navForw =     <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div>;
+        // JWvH 23-8-2018: Laten we nog even staan, voor het geval we het toch anders willen.
+        // navBack =     skip - limit >= 0             ? <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div> : null;
+        // navBackMult = skip - (step * limit) >= 0    ? <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div> : null;
+        // navForwMult = count > skip + (step * limit) ? <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div> : null;
+        // navForw =     count > skip + limit          ? <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div> : null;
         if (count > skip) {
-          navInfo =     <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} van {count}</div>;
-          navBack =     <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div>;
-          navBackMult = <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div>;
-          navForwMult = <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div>;
-          navForw =     <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div>;
-          // JWvH 23-8-2018: Laten we nog even staan, voor het geval we het toch anders willen.
-          // navInfo =     <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} van {count}</div>;
-          // navBack =     skip - limit >= 0             ? <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div> : null;
-          // navBackMult = skip - (step * limit) >= 0    ? <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div> : null;
-          // navForwMult = count > skip + (step * limit) ? <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div> : null;
-          // navForw =     count > skip + limit          ? <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div> : null;
+            navInfo = <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} van {count}</div>;
+        } else if (count === 0) {
+          navInfo = <div key="1" className={classes.Counter}>0</div>;
         } else {
-          navInfo =     <div key="1" className={classes.Counter}>1-{count} van {count}</div>;
+          navInfo = <div key="1" className={classes.Counter}>1-{count} van {count}</div>;
         }
     }
     const nav = [navInfo, navBack, navBackMult, navForwMult, navForw];
@@ -504,7 +509,7 @@ class View extends Component {
       <div className={classes.TitleRow}>
         <div onClick={() => this.createFakeData()} className={classes.Title}>{this.state.viewConfig.title}</div>
         <div className={classes.Navigation}>
-          {deleteAll}
+          {/*deleteAll*/}
           {columnConfig}
           {nav}
         </div>
@@ -625,30 +630,33 @@ class View extends Component {
       </div> : null;
 
     // Listitems.
-    let listItems = this.state.listItems.map((listItem, index) => {
-      // In case the listItem has been edited during this client session, it gets additional styling.
-      const classesDynamicListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
-      const classesDynamicSelected = this.state.selectedListItems.indexOf(listItem._id) ===  -1 ?
-        [classes.Fixed1, classes.RowSelectZone].join(' ') :
-        [classes.Fixed1, classes.RowSelectZone, classes.RowSelected].join(' ');
+    let listItems = <div className={classes.Row}>Geen documenten gevonden.</div>;
+    if (this.state.listItems.length > 0) {
+      listItems = this.state.listItems.map((listItem, index) => {
+        // In case the listItem has been edited during this client session, it gets additional styling.
+        const classesDynamicListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
+        const classesDynamicSelected = this.state.selectedListItems.indexOf(listItem._id) ===  -1 ?
+          [classes.Fixed1, classes.RowSelectZone].join(' ') :
+          [classes.Fixed1, classes.RowSelectZone, classes.RowSelected].join(' ');
 
-      return(
-        <div key={index} className={classesDynamicListItem}
-          onClick={(event) => this.toggleRowHandler(listItem._id)}
-          onDoubleClick={() => this.onClickItemHandler(listItem._id)}>
-          <div className={classes.Fixed}>
-            <div className={classesDynamicSelected}></div>
-            <div className={classes.Fixed2}></div>
+        return(
+          <div key={index} className={classesDynamicListItem}
+            onClick={(event) => this.toggleRowHandler(listItem._id)}
+            onDoubleClick={() => this.onClickItemHandler(listItem._id)}>
+            <div className={classes.Fixed}>
+              <div className={classesDynamicSelected}></div>
+              <div className={classes.Fixed2}></div>
+            </div>
+            <div className={classes.Flex}>
+            {
+              columnsVisible.map((column, index) => <div key={index} className={classes[column.size]}>{listItem[column.id]}</div>
+              )
+            }
+            </div>
           </div>
-          <div className={classes.Flex}>
-          {
-            columnsVisible.map((column, index) => <div key={index} className={classes[column.size]}>{listItem[column.id]}</div>
-            )
-          }
-          </div>
-        </div>
-      );
-    });
+        );
+      });
+    }
 
     // In case the listItems are still fetched, we display a spinner.
     if (this.state.loading) {

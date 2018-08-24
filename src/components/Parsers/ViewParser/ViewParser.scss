@@ -262,6 +262,12 @@
   display: flex;
 }
 
+.Flex>*, .Title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .Fixed1 {
   width: 12px;
   min-width: 12px;
