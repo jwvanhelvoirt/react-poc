@@ -1,9 +1,10 @@
 // We use this to avoid typos that are not detected by the compiler and might cost you hours to find.
 
-export const FORM_TOUCH = 'FORM_TOUCHED';
-export const FORM_UNTOUCH = 'FORM_UNTOUCHED';
-export const MESSAGE_BOX1_OPENED = 'MESSAGE_BOX1_OPENED';
-export const MESSAGE_BOX1_CLOSED = 'MESSAGE_BOX1_CLOSED';
-export const MESSAGE_BOX2_OPENED = 'MESSAGE_BOX2_OPENED';
-export const MESSAGE_BOX2_CLOSED = 'MESSAGE_BOX2_CLOSED';
-export const SEARCHTEXT_OVERALL = 'SEARCHTEXT_OVERALL';
+export const FORM_TOUCH = 'FORM_TOUCH';
+export const FORM_UNTOUCH = 'FORM_UNTOUCH';
+export const MESSAGE_BOX1_OPEN = 'MESSAGE_BOX1_OPEN';
+export const MESSAGE_BOX1_CLOSE = 'MESSAGE_BOX1_CLOSE';
+export const MESSAGE_BOX2_OPEN = 'MESSAGE_BOX2_OPEN';
+export const MESSAGE_BOX2_CLOSE = 'MESSAGE_BOX2_CLOSE';
+export const SEARCHTEXT_OVERALL_STORE = 'SEARCHTEXT_OVERALL_STORE';
+export const SORT_ITEM_STORE = 'SORT_ITEM_STORE';

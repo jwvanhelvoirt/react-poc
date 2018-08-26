@@ -27,10 +27,6 @@ class ToolbarSearch extends Component {
     );
   }
 
-  componentDidMount() {
-    //console.log(this.props);
-  }
-
   render() {
     return (
       <div>
@@ -62,7 +58,7 @@ class ToolbarSearch extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSearch: (searchText) => dispatch( {type: types.SEARCHTEXT_OVERALL, searchText } )
+    onSearch: (searchText) => dispatch( {type: types.SEARCHTEXT_OVERALL_STORE, searchText } )
   }
 }
 

@@ -252,6 +252,10 @@
   background-color: #dc3545;
 }
 
+.Radio {
+  border-radius: 30px;
+}
+
 .Fixed {
   display: flex;
   align-items: center;
@@ -268,6 +272,10 @@
   text-overflow: ellipsis;
 }
 
+.Fixed0 {
+  width: 8px;
+  min-width: 8px;
+}
 .Fixed1 {
   width: 12px;
   min-width: 12px;

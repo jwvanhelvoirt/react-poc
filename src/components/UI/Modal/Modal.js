@@ -74,10 +74,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_OPENED } ),
-    openMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_OPENED } ),
-    closeMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_CLOSED } ),
-    closeMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_CLOSED } )
+    openMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_OPEN } ),
+    openMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_OPEN } ),
+    closeMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_CLOSE } ),
+    closeMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_CLOSE } )
   }
 }
 

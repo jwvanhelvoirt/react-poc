@@ -6,6 +6,7 @@ import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
 import Aux from '../../../hoc/Auxiliary';
 import formConfigPerson from '../../../config/Forms/ConfigFormPerson';
+import viewConfigSort from '../../../config/Views/ConfigListViewSortOptions';
 import FormParser from '../FormParser/FormParser';
 import Button from '../../UI/Button/Button';
 import Spinner from '../../UI/Spinner/Spinner';
@@ -14,18 +15,22 @@ import MessageBox from '../../UI/MessageBox/MessageBox';
 import { callServer } from '../../../api/api';
 import classes from './ViewParser.scss';
 
-class View extends Component {
+class _View extends Component {
   constructor(props) {
     super(props);
 
+    const { viewConfig } = this.props;
+    const loading = viewConfig.url ? true : false;
+    const listItems = viewConfig.url ? [] : this.props.listItems;
+
     this.state = {
       debounceFunction: true,
-      configForm: this.props.viewConfig.relatedForm,
+      configForm: viewConfig.relatedForm,
       count: 0,
       headerSelected: false,
-      listItems: [],
+      listItems,
       loadedListItem: null,
-      loading: true,
+      loading,
       searchbarValue: '',
       selectedListItemId: null,
       selectedListItems: [],
@@ -37,7 +42,7 @@ class View extends Component {
       sort: this.props.viewConfig.sort,
       sortedColumn: '',
       sortOrder: 1,
-      viewConfig: { ...this.props.viewConfig }
+      viewConfig: { ...viewConfig }
     };
 
     this.localData = {
@@ -54,8 +59,10 @@ class View extends Component {
     // For multiple view skips, back- and forward.
     this.navStep = 5;
 
-    // Initially we load the list of listItems.
-    this.reloadListView(this.state.skip);
+    if (viewConfig.url) {
+      // In case the view source is a bunch of data to be loaded from a database, we initially load these listItems.
+      this.reloadListView(this.state.skip);
+    }
   };
 
   /**
@@ -241,20 +248,38 @@ class View extends Component {
    * @brief   Manages state containing an array of all selected rows in the listView.
    */
   toggleRowHandler(id) {
-    // Update state.selecteRows with ID of selected row.
-
     let updatedSelectedListItems = [
       ...this.state.selectedListItems
     ];
 
-    // Check if the id is currently selected.
-    const isSelected = updatedSelectedListItems.filter((item) => item === id);
-    if (isSelected.length === 1) {
-      // id selected, remove it from the array.
-      updatedSelectedListItems = updatedSelectedListItems.filter((item) => item !== id );
+    if (this.state.viewConfig.multiSelect) {
+      // Multiple rows can be selected in this listView.
+      // Check if the id is currently selected.
+      const isSelected = updatedSelectedListItems.filter((item) => item === id);
+      if (isSelected.length === 1) {
+        // id selected, remove it from the array.
+        updatedSelectedListItems = updatedSelectedListItems.filter((item) => item !== id );
+      } else {
+        // id not selected yet, add it to the array.
+        updatedSelectedListItems.push(id);
+      }
     } else {
-      // id not selected yet, add it to the array.
-      updatedSelectedListItems.push(id);
+      // Only a single row can be selected in this listView.
+      const isSelected = updatedSelectedListItems.filter((item) => item === id);
+      if (isSelected.length === 1) {
+        // id selected, we don't do anything.
+      } else {
+        // id not selected, it becomes the selected item..
+        updatedSelectedListItems = [id];
+      }
+
+      // We also have to update the store.
+      switch (this.state.viewConfig.viewType) {
+        case 'sort':
+          this.props.storeSortItem(id);
+          break;
+      }
+
     }
 
     this.setState({ selectedListItems: updatedSelectedListItems });
@@ -313,13 +338,9 @@ class View extends Component {
    * @brief   Shows a modal where the user can select on which attribute to sort the listView in which order.
    */
   onClickSortHandler() {
-    console.log(this.state.viewConfig.sortOptions);
-    // this.setState({ showModalSort: true });
-    // <View formConfig={this.state.configForm} viewConfig={this.state.viewConfig} />
     this.showModal('showModalSort', 'ModalWide', 'Sorteren', 'info',
-      <View viewConfig={this.state.viewConfig} />, 'butOkCancel',
+      <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
        () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
-
   };
 
   /**
@@ -330,7 +351,17 @@ class View extends Component {
   };
 
   processSelectedSortOption = () => {
-    console.log('processSelectedSortOption');
+    // Get the selected sort item via the store.
+    const selectedSortOption = this.state.viewConfig.sortOptions.filter((item) => item._id === this.props.sortItem);
+
+    const { searchbarValue } = this.state;
+    const { sort, sortOrder } = selectedSortOption[0];
+
+    // setState is async function, the method 'reloadListView' relies on the updated state, so we use a callback to continue.
+    this.setState({sort: selectedSortOption[0].sortOn, sortOrder: selectedSortOption[0].order}, () => { this.reloadListView(0, searchbarValue); });
+
+    // Close the sort modal.
+    this.onModalSortCloseHandler();
   };
 
   /**
@@ -459,15 +490,6 @@ class View extends Component {
       );
     }
 
-    // Display the sort modal.
-    // let sortModal = null;
-    // if (this.state.showModalSort) {
-    //   sortModal = (
-    //     <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalSortCloseHandler()}>
-    //       <div style={{ 'padding':'20px' }}>SORT MODAL</div>
-    //     </Modal>
-    //   );
-    // }
     let sortModal = null;
     if (this.state.showModalSort) {
       sortModal = (
@@ -501,7 +523,7 @@ class View extends Component {
 
     // Start building the listView. It contains many elements that can be shown or not, depending on configuration in the viewConfig.
     const { viewConfig, count, skip } = this.state;
-    const { limit } = viewConfig;
+    const { limit, row, multiSelect, filterOptions, sortOptions, showFilter, showSort } = viewConfig;
     const step = this.navStep;
 
     // Title bar: Navigation element.
@@ -516,11 +538,6 @@ class View extends Component {
         navBackMult = <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div>;
         navForwMult = <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div>;
         navForw =     <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div>;
-        // JWvH 23-8-2018: Laten we nog even staan, voor het geval we het toch anders willen.
-        // navBack =     skip - limit >= 0             ? <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div> : null;
-        // navBackMult = skip - (step * limit) >= 0    ? <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div> : null;
-        // navForwMult = count > skip + (step * limit) ? <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div> : null;
-        // navForw =     count > skip + limit          ? <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div> : null;
         if (count > skip) {
             navInfo = <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} van {count}</div>;
         } else if (count === 0) {
@@ -556,16 +573,16 @@ class View extends Component {
         </div>
       </div> : null;
 
-    // Actions bar: Filtering and sorting.
-    let filterSort = null;
-    if (viewConfig.showFilterSort) {
-      filterSort = (
-        <div className={classes.FilterSort}>
-          <div onClick={() => this.onClickFilterHandler()}><FontAwesomeIcon icon='filter' /></div>
-          <div onClick={() => this.onClickSortHandler()}><FontAwesomeIcon icon='sort' /></div>
-        </div>
-      );
-    }
+    // Actions bar: Filtering.
+    const showFilterAction = filterOptions && filterOptions.length > 0 && showFilter ? true : false;
+    const filter = showFilterAction ? <div onClick={() => this.onClickFilterHandler()}><FontAwesomeIcon icon='filter' /></div> : null;
+
+    // Actions bar: Sorting.
+    const showSortAction = sortOptions && sortOptions.length > 0 && showSort ? true : false;
+    const sort = showSortAction ? <div onClick={() => this.onClickSortHandler()}><FontAwesomeIcon icon='sort' /></div> : null;
+
+    // Filtering and sorting overall.
+    const filterSort = showFilterAction || showSortAction ? <div className={classes.FilterSort}>{filter}{sort}</div> : null;
 
     // Action bar: Actions.
     let actions = null;
@@ -590,7 +607,7 @@ class View extends Component {
     }
 
     // Action bar: Searchbar.
-    const classesDynamicSearchbar = [classes.Search, classes.Medium].join(' ');
+    const classesCombinedSearchbar = [classes.Search, classes.Medium].join(' ');
 
     // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
     // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
@@ -599,7 +616,7 @@ class View extends Component {
     let searchBar = null;
     if (viewConfig.showSearchbar) {
       searchBar = (
-        <div className={classesDynamicSearchbar}>
+        <div className={classesCombinedSearchbar}>
           <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon='times-circle' /></div>
           <input
             value={this.state.searchbarValue}
@@ -621,13 +638,40 @@ class View extends Component {
         {searchBar}
       </div> : null;
 
+    // Header bar: fixed columns selectable.
+    const classesCombinedHeaderSelected = this.state.headerSelected ?
+      [classes.Fixed1, classes.HeaderSelectZone, classes.HeaderSelected].join(' ') :
+      [classes.Fixed1, classes.HeaderSelectZone].join(' ');
+
+    let columnsFixedSelect = null;
+    if (row && row.selectable) {
+      multiSelect ?
+        // Only if the row is selectable and multiselect is enabled, we print the 'checkbox' to select/deselect all listItems.
+        columnsFixedSelect = <div className={classesCombinedHeaderSelected} onClick={(event) => this.toggleAllRows(event)}></div> :
+        columnsFixedSelect = <div className={classes.Fixed1}></div>
+    }
+
+    // Header bar: fixed columns menu.
+    let columnsFixedMenu = <div className={classes.Fixed0}></div>;
+    if (row && row.menu) {
+      // Only if the row contains a click menu, we print a div in the header to align equally with the listItems.
+      columnsFixedMenu = <div className={classes.Fixed2}></div>;
+    }
+
+    // Header bar: fixed columns overall.
+    const columnsFixed =
+      <div className={classes.Fixed}>
+        {columnsFixedSelect}
+        {columnsFixedMenu}
+      </div>
+
     // Header bar: columns.
-    const classesDynamicHeaders = [classes.Headers, classes.Flex].join(' ');
+    const classesCombinedHeaders = [classes.Headers, classes.Flex].join(' ');
     let columnHeaders = null;
     const columnsVisible = viewConfig.columns.filter((column) => column.show);
     if (columnsVisible.length > 0) {
       columnHeaders = (
-        <div className={classesDynamicHeaders}>
+        <div className={classesCombinedHeaders}>
         {
           columnsVisible.map((column, index) => {
             let sortIcon = <FontAwesomeIcon icon='sort' />;
@@ -638,9 +682,9 @@ class View extends Component {
             const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
             const labelColumn = <div>{column.label}</div>;
             const onColumn = column.sort ? () => this.sortOnColumn(column.id) : null;
-            const classesDynamicHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
+            const classesCombinedHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
             return(
-              <div key={index} onClick={onColumn} className={classesDynamicHeader}>
+              <div key={index} onClick={onColumn} className={classesCombinedHeader}>
                 {labelColumn}
                 {sortColumn}
               </div>
@@ -651,18 +695,6 @@ class View extends Component {
       );
     }
 
-    // Header bar: fixed columns.
-    const classesDynamicHeaderSelected = this.state.headerSelected ?
-      [classes.Fixed1, classes.HeaderSelectZone, classes.HeaderSelected].join(' ') :
-      [classes.Fixed1, classes.HeaderSelectZone].join(' ');
-
-    let columnsFixed = (
-      <div className={classes.Fixed}>
-        <div className={classesDynamicHeaderSelected} onClick={(event) => this.toggleAllRows(event)}></div>
-        <div className={classes.Fixed2}></div>
-      </div>
-    );
-
     // Header bar overall.
     const headerBar = viewConfig.showRowHeader ?
       <div className={classes.HeaderRow}>
@@ -670,24 +702,65 @@ class View extends Component {
         {columnHeaders}
       </div> : null;
 
+    // ListviewHeader overall
+    const listviewHeader = viewConfig.showListViewHeader ?
+      <div className={classes.ListviewHeader}>
+        {titleBar}
+        {actionBar}
+        {headerBar}
+      </div> : null;
+
     // Listitems.
     let listItems = <div className={classes.Row}>Geen documenten gevonden.</div>;
     if (this.state.listItems.length > 0) {
       listItems = this.state.listItems.map((listItem, index) => {
         // In case the listItem has been edited during this client session, it gets additional styling.
-        const classesDynamicListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
-        const classesDynamicSelected = this.state.selectedListItems.indexOf(listItem._id) ===  -1 ?
-          [classes.Fixed1, classes.RowSelectZone].join(' ') :
-          [classes.Fixed1, classes.RowSelectZone, classes.RowSelected].join(' ');
+        const classesCombinedListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
+
+        // Is it a radio or a checkbox?
+        let classesCombinedSelected = null;
+        if (this.state.selectedListItems.indexOf(listItem._id) ===  -1) {
+          if (multiSelect) {
+            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone].join(' ');
+          } else {
+            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.Radio].join(' ');
+          }
+        } else {
+          if (multiSelect) {
+            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.RowSelected].join(' ');
+          } else {
+            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.RowSelected, classes.Radio].join(' ');
+          }
+        }
+
+        let listItemsFixedSelect = null;
+        if (row && row.selectable) {
+          // Only if the row is selectable, we print the 'checkbox' to select/deselect a listItems.
+          listItemsFixedSelect = <div className={classesCombinedSelected}></div>;
+        }
+
+        // Header bar: fixed columns menu.
+        let listItemsFixedMenu = <div className={classes.Fixed0}></div>;
+        if (row && row.menu) {
+          // Only if the row contains a click menu, we print a div in the row to align equally with the listItems.
+          listItemsFixedMenu = <div className={classes.Fixed2}></div>;
+        }
+
+        // Header bar: fixed columns overall.
+        const listItemsFixed =
+          <div className={classes.Fixed}>
+            {listItemsFixedSelect}
+            {listItemsFixedMenu}
+          </div>
+
+        // Only onDoubleClick event in case of mulitple selection of rows.
+        const doubleClick = multiSelect ? () => this.onClickItemHandler(listItem._id) : null;
 
         return(
-          <div key={index} className={classesDynamicListItem}
+          <div key={index} className={classesCombinedListItem}
             onClick={(event) => this.toggleRowHandler(listItem._id)}
-            onDoubleClick={() => this.onClickItemHandler(listItem._id)}>
-            <div className={classes.Fixed}>
-              <div className={classesDynamicSelected}></div>
-              <div className={classes.Fixed2}></div>
-            </div>
+            onDoubleClick={doubleClick}>
+            {listItemsFixed}
             <div className={classes.Flex}>
             {
               columnsVisible.map((column, index) => <div key={index} className={classes[column.size]}>{listItem[column.id]}</div>
@@ -708,11 +781,7 @@ class View extends Component {
       <Aux>
 
         <div className={classes.ListviewContainer}>
-          <div className={classes.ListviewHeader}>
-            {titleBar}
-            {actionBar}
-            {headerBar}
-          </div>
+          {listviewHeader}
           <div className={classes.ListviewContent}>
             {listItems}
           </div>
@@ -732,14 +801,20 @@ class View extends Component {
 
 const mapStateToProps = state => {
   return {
-    formTouched: state.redMain.formTouched
+    formTouched: state.redMain.formTouched,
+    sortItem: state.redMain.sortItem
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    untouchForm: () => dispatch( {type: types.FORM_UNTOUCH } )
+    untouchForm: () => dispatch( {type: types.FORM_UNTOUCH } ),
+    storeSortItem: (sortItem) => dispatch( {type: types.SORT_ITEM_STORE, sortItem } )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(View);
+// BUG IN REDUX: In case of nested components (<View> embeds another <View>) mapStateToProps and mapDispatchToProps are NOT invoked.
+// export default connect(mapStateToProps, mapDispatchToProps)(View);
+// So if we assign connect() to a seperate variable and then we export this variable, it works!
+const View = connect(mapStateToProps, mapDispatchToProps)(_View);
+export default View;

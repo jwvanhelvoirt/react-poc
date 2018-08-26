@@ -74,7 +74,7 @@ const listViewConfig = {
 		{
 			id: 'phone',
 			label: 'Telefoon',
-			sort: false,
+			sort: true,
 			data: 'phone',
 			displayOn: 'none',
 			show: true,
@@ -123,27 +123,29 @@ const listViewConfig = {
 		{ id: 'organisationManager', label: 'Organisatie manager', collection: 'medewerkers'}
 	],
 	limit: 50,
+	multiSelect: true,
 	relatedForm: formConfigPerson,
-	row: { selectable: true, menu: true },
+	row: { selectable: true, menu: false },
 	rowSelectAll: true,
 	showActions: true,
 	showColumnConfigurator: true,
-	showFilterSort: true,
+	showFilter: true,
 	showListViewHeader: true,
 	showNavigation: true,
 	showRowActions: true,
 	showRowHeader: true,
 	showRowTitle: true,
 	showSearchbar: true,
+	showSort: true,
 	sort: 'name',
-	sortOptions: [
-		{ id: 'name', label: 'Naam'},
-		{ id: 'email', label: 'Email'},
-		{ id: 'phone', label: 'Telefoon'},
-		{ id: 'zip', label: 'Postcode'},
-		{ id: 'streetAddress', label: 'Straat'},
-		{ id: 'city', label: 'Plaats'},
-		{ id: 'country', label: 'Land'}
+	sortOptions: [ // In this order the sort options will appear in the list.
+		{ _id: 'nameA', label: 'Naam (a-z)', sortOn: 'name', order: 1},
+		{ _id: 'nameD', label: 'Naam (z-a)', sortOn: 'name', order: -1},
+		{ _id: 'emailA', label: 'Email (a-z)', sortOn: 'email', order: 1},
+		{ _id: 'emailD', label: 'Email (z-a)', sortOn: 'email', order: -1},
+		{ _id: 'zipA', label: 'Postcode (a-z)', sortOn: 'zip', order: 1},
+		{ _id: 'streetAddressA', label: 'Straat (a-z)', sortOn: 'streetAddress', order: 1},
+		{ _id: 'countryA', label: 'Land (a-z)', sortOn: 'country', order: 1}
 	],
 	title: 'Personen',
 	url: 'persons'
