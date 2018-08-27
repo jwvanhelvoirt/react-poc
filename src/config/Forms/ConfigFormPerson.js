@@ -28,11 +28,11 @@ const formConfig = {
 				placeholder: 'Land'
 			},
 			value: [],
-			// validation: {
-			// 	required: true
-			// },
-			// valid: false,
-			// touched: false
+			validation: {
+				required: true
+			},
+			valid: false,
+			touched: false
 		},
 		email: {
 			elementType: 'input',

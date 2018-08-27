@@ -3,6 +3,7 @@ import * as types from './Actions';
 const initialState = {
   configFormActive: null,
   formTouched: false,
+  isValidForm: false,
   lookupFieldId: '',
   lookupFieldVal: '',
   messageBox1: false,
@@ -32,6 +33,12 @@ const reducer = (state = initialState, action) => {
   return {
     ...state,
     formTouched: false
+  }
+
+  case types.IS_VALID_FORM: // Is the form valid for submitting.
+  return {
+    ...state,
+    isValidForm: action.isValidForm
   }
 
   case types.LOOKUP_FIELD_ID_STORE: // User clicks on a lookup button in a form, stores the id of the related form field.

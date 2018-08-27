@@ -19,6 +19,7 @@ import Aux from '../../../hoc/Auxiliary'
 import classes from './Input.scss';
 
 class Input extends Component {
+
   removeMultiValueItem = (fieldId, valueId) => {
     const clone = cloneDeep(this.props.configForm);
 
@@ -33,15 +34,25 @@ class Input extends Component {
     const updatedValue = updatedForm[fieldId].value.filter((item) => item._id !== valueId);
     updatedFormElement.value = updatedValue;
 
-    // // Check for validity.
-    // if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
-    //   updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-    //   if (!updatedFormElement.valid) {
-    //     updatedFormElement.touched = true;
-    //   }
-    // }
+    // Check for validity.
+    if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
+      updatedFormElement.valid = this.props.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+      if (!updatedFormElement.valid) {
+        updatedFormElement.touched = true;
+      }
+    }
 
     updatedForm[fieldId] = updatedFormElement;
+
+
+    // Is the entire form valid? (For enabling submit button yes or no).
+    let isValidForm = true;
+    for (let id in updatedForm) {
+      if (updatedForm[id].validation) {
+        isValidForm = this.props.checkValidity(updatedForm[id].value, updatedForm[id].validation) && isValidForm;
+      }
+    }
+    this.props.setIsValidForm(isValidForm);
 
     clone.inputs = updatedForm;
     this.props.configForm.inputs = updatedForm;
@@ -130,15 +141,6 @@ class Input extends Component {
         break;
 
 
-        // let lookupModal = null;
-        // if (this.state.showModalLookup) {
-        //   lookupModal = (
-        //     <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
-        //       messageContent={messageContent} buttons={messageButtons}
-        //       callBackOk={callBackOk} callBackCancel={callBackCancel}
-        //     />
-        //   );
-        // }
 
         // this.showModal('showModalSort', 'ModalWide', 'Sorteren', 'info',
         //   <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
@@ -187,6 +189,7 @@ class Input extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setIsValidForm: (isValidForm) => dispatch( {type: types.IS_VALID_FORM, isValidForm } ),
     setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } )
   }
 }

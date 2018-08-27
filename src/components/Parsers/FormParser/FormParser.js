@@ -24,15 +24,23 @@ import { callServer } from '../../../api/api';
 
 class Form extends Component {
   state = {
-    formIsValid: false,
+    // formIsValid: false,
     showModalLookup: false
   }
 
   checkValidity(value, rules) {
+    const isArray = Array.isArray(value);
+
     let isValid = true;
 
-    if (rules.required) {
-      isValid = value.trim() !== '' && isValid;
+    if (isArray) {
+      if (rules.required) {
+        isValid = value.length > 0 && isValid;
+      }
+    } else {
+      if (rules.required) {
+        isValid = value.trim() !== '' && isValid;
+      }
     }
 
     if (rules.minLength) {
@@ -64,19 +72,16 @@ class Form extends Component {
     }
 
     // Is the entire form valid? (For enabling submit button yes or no).
-    let formIsValid = true;
+    let isValidForm = true;
     for (let id in updatedForm.inputs) {
       if (updatedForm.inputs[id].validation) {
-        formIsValid = this.checkValidity(updatedForm.inputs[id].value, updatedForm.inputs[id].validation) && formIsValid;
+        isValidForm = this.checkValidity(updatedForm.inputs[id].value, updatedForm.inputs[id].validation) && isValidForm;
       }
     }
+    this.props.setIsValidForm(isValidForm);
 
     this.props.configForm.inputs = updatedForm.inputs;
-
     this.props.setActiveConfigForm(updatedForm);
-
-    // Modify the state.
-    this.setState({ formIsValid: formIsValid });
   }
 
   submitHandler = (event) => {
@@ -119,10 +124,19 @@ class Form extends Component {
       updatedFormElement.value = this.props.data[arrayRecords[index]];
 
       // Check for validity.
-      if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        if (!updatedFormElement.valid) {
-          updatedFormElement.touched = true;
+      if (Array.isArray(updatedFormElement.value)) {
+        if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
+          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+          if (!updatedFormElement.valid) {
+            updatedFormElement.touched = true;
+          }
+        }
+      } else {
+        if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
+          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+          if (!updatedFormElement.valid) {
+            updatedFormElement.touched = true;
+          }
         }
       }
 
@@ -134,7 +148,21 @@ class Form extends Component {
     this.props.setActiveConfigForm(this.props.configForm);
   }
 
+  componentWillUnmount() {
+    this.props.setIsValidForm(false);
+  }
+
   render() {
+    // let lookupModal = null;
+    // if (this.state.showModalLookup) {
+    //   lookupModal = (
+    //     <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
+    //       messageContent={messageContent} buttons={messageButtons}
+    //       callBackOk={callBackOk} callBackCancel={callBackCancel}
+    //     />
+    //   );
+    // }
+
     let formElementsArray = [];
     for (let inputId in this.props.configForm.inputs) {
       if (inputId !== '_id' && inputId !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
@@ -158,6 +186,7 @@ class Form extends Component {
                       changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
                       configInput={formElement.configInput}
                       configForm={this.props.configForm}
+                      checkValidity={(value, rules) => this.checkValidity(value, rules)}
                       />
                   )
                 )
@@ -171,7 +200,7 @@ class Form extends Component {
 
     return (
       <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
-        messageContent={content} buttons='butOkCancel' formIsValid={this.state.formIsValid}
+        messageContent={content} buttons='butOkCancel' formIsValid={this.props.isValidForm}
         callBackOk={this.submitHandler} callBackCancel={this.props.onCancel}
       />
     );
@@ -180,12 +209,14 @@ class Form extends Component {
 
 const mapStateToProps = state => {
   return {
-    configForm: state.redMain.configFormActive
+    configForm: state.redMain.configFormActive,
+    isValidForm: state.redMain.isValidForm
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    setIsValidForm: (isValidForm) => dispatch( {type: types.IS_VALID_FORM, isValidForm } ),
     setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } ),
     touchForm: () => dispatch( {type: types.FORM_TOUCH } )
   }
