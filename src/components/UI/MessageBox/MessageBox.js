@@ -10,7 +10,8 @@ const messageBox = (props) => {
       <div className={classes.MessageBox}>
         <ModalHeader title={props.messageTitle} type={props.type} />
         <div className={classes.Content}>{props.messageContent}</div>
-        <ModalFooter buttons={props.buttons} callBackOk={props.callBackOk} callBackCancel={props.callBackCancel} />
+        <ModalFooter buttons={props.buttons} formIsValid={props.formIsValid}
+          callBackOk={props.callBackOk} callBackCancel={props.callBackCancel} />
       </div>
     </Modal>
   );

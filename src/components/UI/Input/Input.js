@@ -10,76 +10,185 @@
 * @params  value            String containing the input's current value.
 */
 
-import React from 'react';
-
+import React, { Component } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
+import { connect } from 'react-redux';
+import * as types from '../../../store/Actions';
+import Button from '../Button/Button';
+import Aux from '../../../hoc/Auxiliary'
 import classes from './Input.scss';
 
-const input = (props) => {
-  // console.log(props.defaultFocus);
-  let inputElement = null;
-  let inputClasses = [classes.InputElement];
-  let validationError = null;
+class Input extends Component {
+  removeMultiValueItem = (fieldId, valueId) => {
+    const clone = cloneDeep(this.props.configForm);
 
-  if (props.invalid && props.shouldValidate && props.touched) {
-    inputClasses.push(classes.Invalid);
-    validationError = <p className={classes.ValidationError}>Please enter a valid value!</p>
+    const updatedForm = {
+      ...clone.inputs
+    }
+
+    let updatedFormElement = {
+      ...updatedForm[fieldId]
+    }
+
+    const updatedValue = updatedForm[fieldId].value.filter((item) => item._id !== valueId);
+    updatedFormElement.value = updatedValue;
+
+    // // Check for validity.
+    // if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
+    //   updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+    //   if (!updatedFormElement.valid) {
+    //     updatedFormElement.touched = true;
+    //   }
+    // }
+
+    updatedForm[fieldId] = updatedFormElement;
+
+    clone.inputs = updatedForm;
+    this.props.configForm.inputs = updatedForm;
+    this.props.setActiveConfigForm(clone);
   }
 
-  // Default focus.
-  const autoFocus = props.defaultFocus ? true : false;
+  render() {
+    let inputElement = null;
+    let inputClasses = [classes.InputElement];
+    let validationError = null;
 
-  switch (props.elementType) {
+    const { elementType, elementConfig, value, valid, validation, touched, label,
+      defaultFocus, lookup, lookupFieldForDisplay, lookupTitle} = this.props.configInput;
 
-    case ('input'):
-      inputElement = <input
-        className={inputClasses.join(' ')}
-        {...props.elementConfig}
-        value={props.value}
-        autoFocus={autoFocus}
-        onChange={props.changed}/>;
-      break;
+    if (!valid && validation && touched) {
+      inputClasses.push(classes.Invalid);
+      validationError = <p className={classes.ValidationError}>Please enter a valid value!</p>
+    }
 
-    case ('textarea'):
-      inputElement = <textarea
-        className={inputClasses.join(' ')}
-        {...props.elementConfig}
-        value={props.value}
-        autoFocus={autoFocus}
-        onChange={props.changed}/>;
-      break;
+    // Default focus.
+    const autoFocus = defaultFocus ? true : false;
 
-    case ('select'):
-      inputElement = (
-        <select
+    switch (elementType) {
+
+      case ('input'):
+        inputElement = <input
           className={inputClasses.join(' ')}
-          value={props.value}
+          {...elementConfig}
+          value={value}
           autoFocus={autoFocus}
-          onChange={props.changed}>
-          {props.elementConfig.options.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.displayValue}
-            </option>
-          ))}
-        </select>
-      );
-      break;
+          onChange={this.props.changed}/>;
+        break;
 
-    default:
-      inputElement = <input
-        className={inputClasses.join(' ')}
-        {...props.elementConfig}
-        value={props.value}
-        autoFocus={autoFocus}
-        onChange={props.changed}/>;
+      case ('textarea'):
+        inputElement = <textarea
+          className={inputClasses.join(' ')}
+          {...elementConfig}
+          value={value}
+          autoFocus={autoFocus}
+          onChange={this.props.changed}/>;
+        break;
+
+      case ('select'):
+        inputElement = (
+          <select
+            className={inputClasses.join(' ')}
+            value={value}
+            autoFocus={autoFocus}
+            onChange={this.props.changed}>
+            {elementConfig.options.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.displayValue}
+              </option>
+            ))}
+          </select>
+        );
+        break;
+
+  //HIER BEN IK GEBLEVEN: VOLGENDE STAP IS OM DE LISTVIEW TE OPENEN IN EEN MESSAGEBOX
+  //DENK DAT DE METHOD DAARVOOR VANUIT FORMPARSER.JS MOET KOMEN
+      case ('multiAppend'):
+        const multiLineItems = value.map((item, index) => {
+          const valueId = item._id;
+          // console.log(lookupFieldForDisplay);
+          return (
+            <div key={index} className={classes.Multiline}>
+              <div onClick={() => this.removeMultiValueItem(this.props.inputId, valueId)}>
+                <Button outline='true' color="danger" labelIcon="times" />
+              </div>
+              <div className={classes.DisplayValue}>{item.name}</div>
+            </div>
+          );
+        });
+
+        const multiLines =
+          <div className={classes.MultilineWrapper}>
+            {multiLineItems}
+          </div>
+
+        inputElement = (
+          <Aux>
+            <Button clicked={() => console.log('clicked a button')} color="primary" labelText="+ Organisatie" />
+            {multiLines}
+          </Aux>
+        );
+        break;
+
+
+        // let lookupModal = null;
+        // if (this.state.showModalLookup) {
+        //   lookupModal = (
+        //     <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
+        //       messageContent={messageContent} buttons={messageButtons}
+        //       callBackOk={callBackOk} callBackCancel={callBackCancel}
+        //     />
+        //   );
+        // }
+
+        // this.showModal('showModalSort', 'ModalWide', 'Sorteren', 'info',
+        //   <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
+        //    () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
+
+        /**
+         * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
+         */
+        // showModal = (modalState, modalClass, title, type, content, buttons,
+        //   callBackOk = () => this.onModalMessageCloseHandler(),
+        //   callBackCancel = () => this.onModalMessageCloseHandler()) => {
+        //   this.localData.modalClass = modalClass;
+        //   this.localData.messageTitle = title;
+        //   this.localData.messageType = type;
+        //   this.localData.messageContent = content;
+        //   this.localData.messageButtons = buttons;
+        //   this.localData.callBackCancel = callBackCancel;
+        //   this.localData.callBackOk = callBackOk;
+        //   this.setState({ [modalState]: true });
+        // }
+
+
+
+
+
+
+      default:
+        inputElement = <input
+          className={inputClasses.join(' ')}
+          {...elementConfig}
+          value={value}
+          autoFocus={autoFocus}
+          onChange={this.props.changed}/>;
+    }
+
+    return(
+      <div className={classes.Input}>
+        <label className={classes.Label}>{label}</label>
+        {validationError}
+        {inputElement}
+      </div>
+    );
   }
 
-  return (
-    <div className={classes.Input}>
-      <label className={classes.Label}>{props.label}</label>
-      {validationError}
-      {inputElement}
-    </div>
-  );
-};
+}
 
-export default input;
+const mapDispatchToProps = dispatch => {
+  return {
+    setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } )
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Input);

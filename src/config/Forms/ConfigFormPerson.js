@@ -1,3 +1,5 @@
+import configLookupOrganisation from '../Views/ConfigListViewOrganisation';
+
 const formConfig = {
 	title: 'persoon',
 	url: 'persons',
@@ -15,6 +17,22 @@ const formConfig = {
 			valid: false,
 			touched: false,
 			defaultFocus: true
+		},
+		organisations: {
+			elementType: 'multiAppend',
+			lookup: configLookupOrganisation,
+			lookupFieldForDisplay: 'name',
+			lookupTitle: 'Organisations',
+			elementConfig: {
+				type: 'text',
+				placeholder: 'Land'
+			},
+			value: [],
+			// validation: {
+			// 	required: true
+			// },
+			// valid: false,
+			// touched: false
 		},
 		email: {
 			elementType: 'input',
@@ -115,7 +133,7 @@ const formConfig = {
 				placeholder: 'Image url'
 			},
 			value: ''
-		},
+		}
 	}
 }
 

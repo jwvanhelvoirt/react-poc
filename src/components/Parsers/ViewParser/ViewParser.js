@@ -63,13 +63,21 @@ class _View extends Component {
       // In case the view source is a bunch of data to be loaded from a database, we initially load these listItems.
       this.reloadListView(this.state.skip);
     }
+
+    // The config form is used to manage values a user enters.
+    // The <FormParser> component will grab it from the store.
+    // Then the <Input>  component can manipulate the values in the configForm,
+    // which will cause a re-render of the <FormParser> component.
+    if (this.props.configFormInStore) {
+      this.props.setActiveConfigForm(viewConfig.relatedForm);
+    }
   };
 
   /**
    * @brief   Updates listItems after a new listItem or an update of a selected listItem.
    */
   onSubmitHandler = (response) => {
-    if (this.localData.addRecordToView) {
+    if (this.localData.addRecordToView || this.state.selectedListItemId) {
       let updatedListItems = [];
 
       // Edited view entries are marked, so that we can emphasize them in the listview.
@@ -467,11 +475,11 @@ class _View extends Component {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
 
     // Display the form modal in case loadedListItem is filled with form data.
+// console.log(this.state.loadedListItem); //jwvh
     let formModal = null;
     if (this.state.loadedListItem) {
       formModal = (
         <FormParser
-          configForm={this.state.configForm}
           data={this.state.loadedListItem}
           onCancel={() => this.onCloseHandler(true)}
           onSubmit={this.onSubmitHandler}
@@ -624,8 +632,9 @@ class _View extends Component {
               this.inputSearchbarHandler(event);
               debounced ? debounced(this) : null;
             }}
+            autoFocus
             className={classes.SearchInput} type="text" placeholder="Zoeken..." />
-          <div onClick={() => this.submitSearchHandler(this)}><FontAwesomeIcon icon='search' /></div>
+          {/*<div onClick={() => this.submitSearchHandler(this)}><FontAwesomeIcon icon='search' /></div>*/}
         </div>
       );
     }
@@ -808,6 +817,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } ),
     untouchForm: () => dispatch( {type: types.FORM_UNTOUCH } ),
     storeSortItem: (sortItem) => dispatch( {type: types.SORT_ITEM_STORE, sortItem } )
   }

@@ -10,6 +10,7 @@
 */
 
 import React, { Component } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
 import * as types from '../../../store/Actions';
 import Aux from '../../../hoc/Auxiliary';
@@ -23,10 +24,8 @@ import { callServer } from '../../../api/api';
 
 class Form extends Component {
   state = {
-    configForm: {
-      ...this.props.configForm.inputs
-    },
-    formIsValid: false
+    formIsValid: false,
+    showModalLookup: false
   }
 
   checkValidity(value, rules) {
@@ -52,14 +51,8 @@ class Form extends Component {
     this.props.touchForm();
 
     // Clone the state to a variable.
-    const updatedForm = {
-      ...this.state.configForm
-    }
-
-    // Deepclone the object of the given key to a variable.
-    const updatedFormElement = {
-      ...updatedForm[id]
-    }
+    const updatedForm = cloneDeep(this.props.configForm);
+    const updatedFormElement = updatedForm.inputs[id];
 
     // Update the value.
     updatedFormElement.value = event.target.value;
@@ -70,32 +63,28 @@ class Form extends Component {
       updatedFormElement.touched = true;
     }
 
-    // Update the clone with the updated deepclone.
-    updatedForm[id] = updatedFormElement;
-
     // Is the entire form valid? (For enabling submit button yes or no).
     let formIsValid = true;
-    for (let id in updatedForm) {
-      if (updatedForm[id].validation) {
-        formIsValid = this.checkValidity(updatedForm[id].value, updatedForm[id].validation) && formIsValid;
+    for (let id in updatedForm.inputs) {
+      if (updatedForm.inputs[id].validation) {
+        formIsValid = this.checkValidity(updatedForm.inputs[id].value, updatedForm.inputs[id].validation) && formIsValid;
       }
     }
 
+    this.props.configForm.inputs = updatedForm.inputs;
+
+    this.props.setActiveConfigForm(updatedForm);
+
     // Modify the state.
-    this.setState({
-      configForm: updatedForm,
-      formIsValid: formIsValid
-    });
+    this.setState({ formIsValid: formIsValid });
   }
 
   submitHandler = (event) => {
     event.preventDefault();
     const submitData = {};
-    for (let id in this.state.configForm) {
-      submitData[id] = this.state.configForm[id].value;
+    for (let id in this.props.configForm.inputs) {
+      submitData[id] = this.props.configForm.inputs[id].value;
     }
-    //	/api/organisations/create				POST
-    //	/api/organisations/update/:id		PUT
     const url = this.props.id ?
     '/' + this.props.configForm.url + '/update/' + this.props.id :
     '/' + this.props.configForm.url + '/create';
@@ -115,9 +104,13 @@ class Form extends Component {
 
   componentWillMount() {
     // state property 'configForm' contains default values, update these with the values of the selected entry and update state.
+
+    const clone = cloneDeep(this.props.configForm);
+
     const updatedForm = {
-      ...this.state.configForm
+      ...clone.inputs
     }
+
     const arrayRecords = Object.keys(this.props.data);
     for (let index in arrayRecords) {
       let updatedFormElement = {
@@ -135,16 +128,19 @@ class Form extends Component {
 
       updatedForm[arrayRecords[index]] = updatedFormElement;
     }
-    this.setState({ configForm: updatedForm	});
+
+    this.props.configForm.inputs = updatedForm;
+
+    this.props.setActiveConfigForm(this.props.configForm);
   }
 
   render() {
     let formElementsArray = [];
-    for (let id in this.state.configForm) {
-      if (id !== '_id' && id !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
+    for (let inputId in this.props.configForm.inputs) {
+      if (inputId !== '_id' && inputId !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
         formElementsArray.push({
-          id: id,
-          configInput: this.state.configForm[id]
+          inputId,
+          configInput: this.props.configForm.inputs[inputId]
         });
       }
     }
@@ -153,45 +149,51 @@ class Form extends Component {
       <div className={classes.FieldsWrapper}>
         <div className={classes.Fields}>
           <div>
-            {formElementsArray.map(formElement => (
-              <Input
-                key={formElement.id}
-                elementType={formElement.configInput.elementType}
-                elementConfig={formElement.configInput.elementConfig}
-                value={formElement.configInput.value}
-                invalid={!formElement.configInput.valid}
-                shouldValidate={formElement.configInput.validation}
-                touched={formElement.configInput.touched}
-                changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                defaultFocus={formElement.configInput.defaultFocus}
-                />
-            ))}
+            {formElementsArray.map(formElement => {
+                return (
+                  (
+                    <Input
+                      key={formElement.inputId}
+                      inputId={formElement.inputId}
+                      changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
+                      configInput={formElement.configInput}
+                      configForm={this.props.configForm}
+                      />
+                  )
+                )
+            })}
           </div>
         </div>
       </div>;
 
     // Title of the form.
     const title = this.props.id ? this.props.configForm.title : 'nieuwe ' + this.props.configForm.title;
+
     return (
       <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
-        messageContent={content} buttons='butOkCancel'
+        messageContent={content} buttons='butOkCancel' formIsValid={this.state.formIsValid}
         callBackOk={this.submitHandler} callBackCancel={this.props.onCancel}
       />
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    configForm: state.redMain.configFormActive
+  };
+}
+
 const mapDispatchToProps = dispatch => {
   return {
+    setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } ),
     touchForm: () => dispatch( {type: types.FORM_TOUCH } )
   }
 }
 
-export default connect(null, mapDispatchToProps)(Form);
-
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 /*
-
 Wat hebben we voor een IO aan configuratie nodig?
 
 id
@@ -234,6 +236,4 @@ disabled (true/false) om de waarde van het veld niet wijzigbaar te maken
 focus (true/false) om focus op het veld te zetten als de IO op het scherm staat
 action > callback als je veld verlaat (text/textarea) of waarde aanpast (radio, checkbox)
 repeatblock > verder uitwerken, met een plusje voeg je een nieuwe regel toe
-
-
 */

@@ -33,4 +33,23 @@
 .ValidationError {
 	color: red;
 	margin: 5px 0;
-} 
+}
+
+.MultilineWrapper {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.Multiline {
+	display: flex;
+	align-items: center;
+	height: 32px;
+}
+
+.Multiline {
+	margin-right: 5px;
+}
+
+.DisplayValue {
+	margin-left: 5px;
+}

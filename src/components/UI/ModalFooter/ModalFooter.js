@@ -4,9 +4,10 @@ import Aux from '../../../hoc/Auxiliary';
 import classes from './ModalFooter.scss';
 
 const modalFooter = (props) => {
+  const okButDisabled = props.formIsValid === false  ? true : false;
+  const butOk     = <Button clicked={props.callBackOk} color="success" labelText="Ok" disabled={okButDisabled} />;
+  const butCancel = <Button clicked={props.callBackCancel} color="danger" labelText="Annuleren" />;
   let but = null;
-  let butOk     = <Button clicked={props.callBackOk} color="success" labelText="Ok" />;
-  let butCancel = <Button clicked={props.callBackCancel} color="danger" labelText="Annuleren" />;
 
   switch (props.buttons) {
   case 'butOk':
