@@ -42,7 +42,8 @@ class _View extends Component {
       sort: this.props.viewConfig.sort,
       sortedColumn: '',
       sortOrder: 1,
-      viewConfig: { ...viewConfig }
+      viewConfig: { ...viewConfig },
+      cleanConfigForm: { ...viewConfig.relatedForm }
     };
 
     this.localData = {
@@ -480,6 +481,7 @@ class _View extends Component {
     if (this.state.loadedListItem) {
       formModal = (
         <FormParser
+          configFormOriginalTemp={this.state.cleanConfigForm}
           data={this.state.loadedListItem}
           onCancel={() => this.onCloseHandler(true)}
           onSubmit={this.onSubmitHandler}

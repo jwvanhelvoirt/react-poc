@@ -28,7 +28,7 @@ class Form extends Component {
     super(props);
 
     this.state = { showModalLookup: false };
-
+console.log(this.props.configFormOriginalTemp);
     this.localData = {
       modalClass: '',
       messageTitle: '',
@@ -162,6 +162,7 @@ class Form extends Component {
 
   componentWillUnmount() {
     this.props.setIsValidForm(false);
+    this.props.setActiveConfigForm(this.props.configFormOriginalTemp);
   }
 
   showModal = (modalState, modalClass, title, type, content, buttons,

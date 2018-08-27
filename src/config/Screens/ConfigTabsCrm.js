@@ -7,6 +7,7 @@ export const tabsConfig = [
     id: 'panes1',
     displaySmall: true,
     displayMedium: true,
+    displayLarge: true, // added
     toggle: true,
     show: true,
     blocks: [
@@ -24,7 +25,7 @@ export const tabsConfig = [
   },
   {
     id: 'panes2',
-    displayLarge: true,
+    displayLarge: false, // was true
     show: true,
     toggle: true,
     blocks: [
@@ -39,7 +40,7 @@ export const tabsConfig = [
   },
   {
     id: 'panes3',
-    displayLarge: true,
+    displayLarge: false, // was true
     show: true,
     toggle: true,
     blocks: [
