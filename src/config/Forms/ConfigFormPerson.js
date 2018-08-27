@@ -1,4 +1,4 @@
-import configLookupOrganisation from '../Views/ConfigListViewOrganisation';
+import configLookupOrganisation from '../Views/ConfigLookupOrganisation';
 
 const formConfig = {
 	title: 'persoon',
@@ -22,11 +22,7 @@ const formConfig = {
 			elementType: 'multiAppend',
 			lookup: configLookupOrganisation,
 			lookupFieldForDisplay: 'name',
-			lookupTitle: 'Organisations',
-			elementConfig: {
-				type: 'text',
-				placeholder: 'Land'
-			},
+			lookupTitle: 'Organisatie',
 			value: [],
 			validation: {
 				required: true

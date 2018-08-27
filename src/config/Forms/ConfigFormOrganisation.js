@@ -1,8 +1,11 @@
+import configLookupPerson from '../Views/ConfigLookupPerson';
+
 const formConfig = {
 	title: 'organisatie',
 	url: 'organisations',
 	inputs: {
 		name: {
+			label: 'Naam',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
@@ -16,7 +19,21 @@ const formConfig = {
 			touched: false,
 			defaultFocus: true
 		},
+		persons: {
+			label: 'Medewerkers',
+			elementType: 'multiAppend',
+			lookup: configLookupPerson,
+			lookupFieldForDisplay: 'name',
+			lookupTitle: 'Persoon',
+			value: [],
+			// validation: {
+			// 	required: true
+			// },
+			// valid: false,
+			// touched: false
+		},
 		email: {
+			label: 'Email',
 			elementType: 'input',
 			elementConfig: {
 				type: 'email',
@@ -25,6 +42,7 @@ const formConfig = {
 			value: ''
 		},
 		phone: {
+			label: 'Telefoon',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
@@ -33,6 +51,7 @@ const formConfig = {
 			value: ''
 		},
 		website: {
+			label: 'Website',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
@@ -41,6 +60,7 @@ const formConfig = {
 			value: ''
 		},
 		zip: {
+			label: 'Postcode',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
@@ -56,6 +76,7 @@ const formConfig = {
 			touched: false
 		},
 		streetAddress: {
+			label: 'Straat',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
@@ -69,6 +90,7 @@ const formConfig = {
 			touched: false
 		},
 		city: {
+			label: 'Plaats',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
@@ -82,6 +104,7 @@ const formConfig = {
 			touched: false
 		},
 		country: {
+			label: 'Land',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
@@ -95,6 +118,7 @@ const formConfig = {
 			touched: false
 		},
 		organisationManager: {
+			label: 'Organisatie manager',
 			elementType: 'select',
 			elementConfig: {
 				options: [
@@ -109,6 +133,7 @@ const formConfig = {
 			value: 'erwin'
 		},
 		note: {
+			label: 'Notitie',
 			elementType: 'textarea',
 			elementConfig: {
 				rows: '4',
@@ -117,6 +142,7 @@ const formConfig = {
 			value: ''
 		},
 		image: {
+			label: 'Logo',
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',

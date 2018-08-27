@@ -9,8 +9,8 @@ const initialState = {
   messageBox1: false,
   messageBox2: false,
   searchTextOverall: '',
-  sortItem: '',
-  dummy: 0,
+  showModalLookup: false,
+  sortItem: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -83,11 +83,20 @@ const reducer = (state = initialState, action) => {
     searchTextOverall: action.searchText
   }
 
+  case types.SHOW_MODAL_LOOKUP: // Should the lookup model be rendered.
+  return {
+    ...state,
+    showModalLookup: action.showModalLookup
+  }
+
   case types.SORT_ITEM_STORE: // In the sort modal choosen item to sort the listView on.
   return {
     ...state,
     sortItem: action.sortItem
   }
+
+
+
 
   }
 

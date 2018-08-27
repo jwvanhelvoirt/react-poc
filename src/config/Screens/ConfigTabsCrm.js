@@ -65,7 +65,7 @@ export const tabsConfig = [
       {
         id: 'pane4',
         tabs: [
-          { id: 'correspondence', label: 'Correspondentie', component: <div>Correspondentie<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1<br/>1</div> },
+          { id: 'correspondence', label: 'Correspondentie', component: <div>Correspondentie</div> },
           { id: 'email',          label: 'Email',           component: <div>Email</div> },
           { id: 'booking',        label: 'Boeking',         component: <div>Boeking</div> },
           { id: 'organigram',     label: 'Organigram',      component: <div>Organigram</div> }

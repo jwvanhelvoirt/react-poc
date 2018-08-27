@@ -14,6 +14,7 @@ import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
 import * as types from '../../../store/Actions';
+import View from '../../Parsers/ViewParser/ViewParser';
 import Button from '../Button/Button';
 import Aux from '../../../hoc/Auxiliary'
 import classes from './Input.scss';
@@ -67,8 +68,11 @@ class Input extends Component {
     const { elementType, elementConfig, value, valid, validation, touched, label,
       defaultFocus, lookup, lookupFieldForDisplay, lookupTitle} = this.props.configInput;
 
-    if (!valid && validation && touched) {
+    if (!valid && validation) {
       inputClasses.push(classes.Invalid);
+    }
+
+    if (!valid && validation && touched) {
       validationError = <p className={classes.ValidationError}>Please enter a valid value!</p>
     }
 
@@ -130,42 +134,28 @@ class Input extends Component {
         const multiLines =
           <div className={classes.MultilineWrapper}>
             {multiLineItems}
-          </div>
-
-        inputElement = (
-          <Aux>
-            <Button clicked={() => console.log('clicked a button')} color="primary" labelText="+ Organisatie" />
-            {multiLines}
-          </Aux>
-        );
-        break;
-
-
+          </div>;
+//showModal
+// this.props.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+        // inputElement = (
+        //   <Aux>
+        //     <Button clicked={() => console.log('clicked a button')} color="primary" labelText="+ Organisatie" />
+        //     {multiLines}
+        //   </Aux>
+        // );
 
         // this.showModal('showModalSort', 'ModalWide', 'Sorteren', 'info',
         //   <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
         //    () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
 
-        /**
-         * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
-         */
-        // showModal = (modalState, modalClass, title, type, content, buttons,
-        //   callBackOk = () => this.onModalMessageCloseHandler(),
-        //   callBackCancel = () => this.onModalMessageCloseHandler()) => {
-        //   this.localData.modalClass = modalClass;
-        //   this.localData.messageTitle = title;
-        //   this.localData.messageType = type;
-        //   this.localData.messageContent = content;
-        //   this.localData.messageButtons = buttons;
-        //   this.localData.callBackCancel = callBackCancel;
-        //   this.localData.callBackOk = callBackOk;
-        //   this.setState({ [modalState]: true });
-        // }
-
-
-
-
-
+        inputElement = (
+          <Aux>
+            <Button clicked={() => this.props.showModal('showModalLookup', 'ModalMedium', 'Selecteer ' + lookupTitle, 'info', <View viewConfig={lookup} />, 'butOkCancel')}
+              color="primary" labelText={'+ ' + lookupTitle} />
+            {multiLines}
+          </Aux>
+        );
+        break;
 
       default:
         inputElement = <input

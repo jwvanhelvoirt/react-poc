@@ -23,9 +23,21 @@ import classes from './FormParser.scss';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {
-  state = {
-    // formIsValid: false,
-    showModalLookup: false
+
+  constructor(props) {
+    super(props);
+
+    this.state = { showModalLookup: false };
+
+    this.localData = {
+      modalClass: '',
+      messageTitle: '',
+      messageType: '',
+      messageContent: '',
+      messageButtons: '',
+      callBackOk: null,
+      callBackCancel: null
+    };
   }
 
   checkValidity(value, rules) {
@@ -152,16 +164,40 @@ class Form extends Component {
     this.props.setIsValidForm(false);
   }
 
+  showModal = (modalState, modalClass, title, type, content, buttons,
+    callBackOk = () => this.onModalLookupSubmitHandler(),
+    callBackCancel = () => this.onModalLookupCloseHandler()) => {
+
+    this.localData.modalClass = modalClass;
+    this.localData.messageTitle = title;
+    this.localData.messageType = type;
+    this.localData.messageContent = content;
+    this.localData.messageButtons = buttons;
+    this.localData.callBackCancel = callBackCancel;
+    this.localData.callBackOk = callBackOk;
+    this.setState({ [modalState]: true });
+  }
+
+  onModalLookupSubmitHandler = () => {
+    console.log('Now we have to grab the selected records and add them to the applicable spot in configForm');
+  }
+
+  onModalLookupCloseHandler = () => {
+    this.setState({ showModalLookup: false });
+  }
+
   render() {
-    // let lookupModal = null;
-    // if (this.state.showModalLookup) {
-    //   lookupModal = (
-    //     <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
-    //       messageContent={messageContent} buttons={messageButtons}
-    //       callBackOk={callBackOk} callBackCancel={callBackCancel}
-    //     />
-    //   );
-    // }
+    const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
+
+    let lookupModal = null;
+    if (this.state.showModalLookup) {
+      lookupModal = (
+        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
+          messageContent={messageContent} buttons={messageButtons}
+          callBackOk={callBackOk} callBackCancel={callBackCancel}
+        />
+      );
+    }
 
     let formElementsArray = [];
     for (let inputId in this.props.configForm.inputs) {
@@ -187,6 +223,7 @@ class Form extends Component {
                       configInput={formElement.configInput}
                       configForm={this.props.configForm}
                       checkValidity={(value, rules) => this.checkValidity(value, rules)}
+                      showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) => this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
                       />
                   )
                 )
@@ -199,16 +236,20 @@ class Form extends Component {
     const title = this.props.id ? this.props.configForm.title : 'nieuwe ' + this.props.configForm.title;
 
     return (
-      <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
-        messageContent={content} buttons='butOkCancel' formIsValid={this.props.isValidForm}
-        callBackOk={this.submitHandler} callBackCancel={this.props.onCancel}
-      />
+      <Aux>
+        <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
+          messageContent={content} buttons='butOkCancel' formIsValid={this.props.isValidForm}
+          callBackOk={this.submitHandler} callBackCancel={this.props.onCancel}
+        />
+        {lookupModal}
+      </Aux>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
+    // showModalLookup: state.redMain.showModalLookup, // WELLICHT DAT WE DIT OOK MET LOCAL STATE KUNNEN DOEN.
     configForm: state.redMain.configFormActive,
     isValidForm: state.redMain.isValidForm
   };
@@ -216,6 +257,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    // setShowModalLookup: (showModalLookup) => dispatch( {type: types.SHOW_MODAL_LOOKUP, showModalLookup } ),
     setIsValidForm: (isValidForm) => dispatch( {type: types.IS_VALID_FORM, isValidForm } ),
     setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } ),
     touchForm: () => dispatch( {type: types.FORM_TOUCH } )
