@@ -27,8 +27,12 @@ class Form extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { showModalLookup: false };
-console.log(this.props.configFormOriginalTemp);
+    this.state = {
+      showModalLookup: false,
+      configForm: cloneDeep(this.props.configForm),
+      isValidForm: false
+    };
+
     this.localData = {
       modalClass: '',
       messageTitle: '',
@@ -38,6 +42,43 @@ console.log(this.props.configFormOriginalTemp);
       callBackOk: null,
       callBackCancel: null
     };
+  }
+
+  componentWillMount() {
+    // state property 'configForm' contains default values, update these with the values of the selected entry and update state.
+
+    const clone = cloneDeep(this.state.configForm);
+    const updatedFormInputs = clone.inputs;
+
+    const arrayRecords = Object.keys(this.props.data);
+    for (let index in arrayRecords) {
+      let updatedFormElement = {
+        ...updatedFormInputs[arrayRecords[index]]
+      }
+      updatedFormElement.value = this.props.data[arrayRecords[index]];
+
+      // Check for validity.
+      if (Array.isArray(updatedFormElement.value)) {
+        if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
+          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+          if (!updatedFormElement.valid) {
+            updatedFormElement.touched = true;
+          }
+        }
+      } else {
+        if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
+          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+          if (!updatedFormElement.valid) {
+            updatedFormElement.touched = true;
+          }
+        }
+      }
+
+      updatedFormInputs[arrayRecords[index]] = updatedFormElement;
+    }
+
+    clone.inputs = updatedFormInputs;
+    this.setState({ configForm: clone });
   }
 
   checkValidity(value, rules) {
@@ -68,11 +109,12 @@ console.log(this.props.configFormOriginalTemp);
 
   inputChangedHandler = (event, id) => {
     // Set the state 'formTouched' in the store to 'true'.
-    this.props.touchForm();
+    this.props.touchForm(); // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
 
-    // Clone the state to a variable.
-    const updatedForm = cloneDeep(this.props.configForm);
-    const updatedFormElement = updatedForm.inputs[id];
+    const clone = cloneDeep(this.state.configForm);
+    const updatedFormInputs = clone.inputs;
+
+    const updatedFormElement = updatedFormInputs[id];
 
     // Update the value.
     updatedFormElement.value = event.target.value;
@@ -85,84 +127,67 @@ console.log(this.props.configFormOriginalTemp);
 
     // Is the entire form valid? (For enabling submit button yes or no).
     let isValidForm = true;
-    for (let id in updatedForm.inputs) {
-      if (updatedForm.inputs[id].validation) {
-        isValidForm = this.checkValidity(updatedForm.inputs[id].value, updatedForm.inputs[id].validation) && isValidForm;
+    for (let id in updatedFormInputs) {
+      if (updatedFormInputs[id].validation) {
+        isValidForm = this.checkValidity(updatedFormInputs[id].value, updatedFormInputs[id].validation) && isValidForm;
       }
     }
-    this.props.setIsValidForm(isValidForm);
 
-    this.props.configForm.inputs = updatedForm.inputs;
-    this.props.setActiveConfigForm(updatedForm);
+    clone.inputs = updatedFormInputs;
+    this.setState({ configForm: clone, isValidForm });
+  }
+
+  removeMultiValueItem = (fieldId, valueId) => {
+    const clone = cloneDeep(this.state.configForm);
+    const updatedFormInputs = clone.inputs;
+
+    let updatedFormElement = updatedFormInputs[fieldId];
+
+    const updatedValue = updatedFormInputs[fieldId].value.filter((item) => item._id !== valueId);
+    updatedFormElement.value = updatedValue;
+
+    // Check for validity.
+    if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
+      updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+      if (!updatedFormElement.valid) {
+        updatedFormElement.touched = true;
+      }
+    }
+
+    updatedFormInputs[fieldId] = updatedFormElement;
+
+    // Is the entire form valid? (For enabling the submit button).
+    let isValidForm = true;
+    for (let id in updatedFormInputs) {
+      if (updatedFormInputs[id].validation) {
+        isValidForm = this.checkValidity(updatedFormInputs[id].value, updatedFormInputs[id].validation) && isValidForm;
+      }
+    }
+
+    clone.inputs = updatedFormInputs;
+    this.setState({ configForm: clone, isValidForm });
   }
 
   submitHandler = (event) => {
     event.preventDefault();
     const submitData = {};
-    for (let id in this.props.configForm.inputs) {
-      submitData[id] = this.props.configForm.inputs[id].value;
+    for (let id in this.state.configForm.inputs) {
+      submitData[id] = this.state.configForm.inputs[id].value;
     }
     const url = this.props.id ?
-    '/' + this.props.configForm.url + '/update/' + this.props.id :
-    '/' + this.props.configForm.url + '/create';
+    '/' + this.state.configForm.url + '/update/' + this.props.id :
+    '/' + this.state.configForm.url + '/create';
     const type = this.props.id ? 'put' : 'post';
     callServer(type, url, this.successSubmitHandler, this.errorSubmitHandler, submitData);
   }
 
   successSubmitHandler = (response) => {
-    //console.log(response);
     this.props.onSubmit(response);
   }
 
   errorSubmitHandler = (error) => {
     //console.log(error);
     //this.setState({ submitError: true }); //hier kun je dan iets wel of niet printen
-  }
-
-  componentWillMount() {
-    // state property 'configForm' contains default values, update these with the values of the selected entry and update state.
-
-    const clone = cloneDeep(this.props.configForm);
-
-    const updatedForm = {
-      ...clone.inputs
-    }
-
-    const arrayRecords = Object.keys(this.props.data);
-    for (let index in arrayRecords) {
-      let updatedFormElement = {
-        ...updatedForm[arrayRecords[index]]
-      }
-      updatedFormElement.value = this.props.data[arrayRecords[index]];
-
-      // Check for validity.
-      if (Array.isArray(updatedFormElement.value)) {
-        if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
-          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-          if (!updatedFormElement.valid) {
-            updatedFormElement.touched = true;
-          }
-        }
-      } else {
-        if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
-          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-          if (!updatedFormElement.valid) {
-            updatedFormElement.touched = true;
-          }
-        }
-      }
-
-      updatedForm[arrayRecords[index]] = updatedFormElement;
-    }
-
-    this.props.configForm.inputs = updatedForm;
-
-    this.props.setActiveConfigForm(this.props.configForm);
-  }
-
-  componentWillUnmount() {
-    this.props.setIsValidForm(false);
-    this.props.setActiveConfigForm(this.props.configFormOriginalTemp);
   }
 
   showModal = (modalState, modalClass, title, type, content, buttons,
@@ -201,11 +226,11 @@ console.log(this.props.configFormOriginalTemp);
     }
 
     let formElementsArray = [];
-    for (let inputId in this.props.configForm.inputs) {
+    for (let inputId in this.state.configForm.inputs) {
       if (inputId !== '_id' && inputId !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
         formElementsArray.push({
           inputId,
-          configInput: this.props.configForm.inputs[inputId]
+          configInput: this.state.configForm.inputs[inputId]
         });
       }
     }
@@ -222,9 +247,8 @@ console.log(this.props.configFormOriginalTemp);
                       inputId={formElement.inputId}
                       changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
                       configInput={formElement.configInput}
-                      configForm={this.props.configForm}
-                      checkValidity={(value, rules) => this.checkValidity(value, rules)}
                       showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) => this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
+                      removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
                       />
                   )
                 )
@@ -234,12 +258,12 @@ console.log(this.props.configFormOriginalTemp);
       </div>;
 
     // Title of the form.
-    const title = this.props.id ? this.props.configForm.title : 'nieuwe ' + this.props.configForm.title;
+    const title = this.props.id ? this.state.configForm.title : 'nieuwe ' + this.state.configForm.title;
 
     return (
       <Aux>
         <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
-          messageContent={content} buttons='butOkCancel' formIsValid={this.props.isValidForm}
+          messageContent={content} buttons='butOkCancel' formIsValid={this.state.isValidForm}
           callBackOk={this.submitHandler} callBackCancel={this.props.onCancel}
         />
         {lookupModal}
@@ -248,24 +272,13 @@ console.log(this.props.configFormOriginalTemp);
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    // showModalLookup: state.redMain.showModalLookup, // WELLICHT DAT WE DIT OOK MET LOCAL STATE KUNNEN DOEN.
-    configForm: state.redMain.configFormActive,
-    isValidForm: state.redMain.isValidForm
-  };
-}
-
 const mapDispatchToProps = dispatch => {
   return {
-    // setShowModalLookup: (showModalLookup) => dispatch( {type: types.SHOW_MODAL_LOOKUP, showModalLookup } ),
-    setIsValidForm: (isValidForm) => dispatch( {type: types.IS_VALID_FORM, isValidForm } ),
-    setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } ),
     touchForm: () => dispatch( {type: types.FORM_TOUCH } )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(null, mapDispatchToProps)(Form);
 
 /*
 Wat hebben we voor een IO aan configuratie nodig?

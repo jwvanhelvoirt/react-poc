@@ -64,14 +64,6 @@ class _View extends Component {
       // In case the view source is a bunch of data to be loaded from a database, we initially load these listItems.
       this.reloadListView(this.state.skip);
     }
-
-    // The config form is used to manage values a user enters.
-    // The <FormParser> component will grab it from the store.
-    // Then the <Input>  component can manipulate the values in the configForm,
-    // which will cause a re-render of the <FormParser> component.
-    if (this.props.configFormInStore) {
-      this.props.setActiveConfigForm(viewConfig.relatedForm);
-    }
   };
 
   /**
@@ -481,6 +473,7 @@ class _View extends Component {
     if (this.state.loadedListItem) {
       formModal = (
         <FormParser
+          configForm={this.state.cleanConfigForm}
           configFormOriginalTemp={this.state.cleanConfigForm}
           data={this.state.loadedListItem}
           onCancel={() => this.onCloseHandler(true)}
@@ -819,7 +812,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } ),
     untouchForm: () => dispatch( {type: types.FORM_UNTOUCH } ),
     storeSortItem: (sortItem) => dispatch( {type: types.SORT_ITEM_STORE, sortItem } )
   }

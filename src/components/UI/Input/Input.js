@@ -12,53 +12,12 @@
 
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
-import { connect } from 'react-redux';
-import * as types from '../../../store/Actions';
 import View from '../../Parsers/ViewParser/ViewParser';
 import Button from '../Button/Button';
 import Aux from '../../../hoc/Auxiliary'
 import classes from './Input.scss';
 
 class Input extends Component {
-
-  removeMultiValueItem = (fieldId, valueId) => {
-    const clone = cloneDeep(this.props.configForm);
-
-    const updatedForm = {
-      ...clone.inputs
-    }
-
-    let updatedFormElement = {
-      ...updatedForm[fieldId]
-    }
-
-    const updatedValue = updatedForm[fieldId].value.filter((item) => item._id !== valueId);
-    updatedFormElement.value = updatedValue;
-
-    // Check for validity.
-    if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
-      updatedFormElement.valid = this.props.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-      if (!updatedFormElement.valid) {
-        updatedFormElement.touched = true;
-      }
-    }
-
-    updatedForm[fieldId] = updatedFormElement;
-
-
-    // Is the entire form valid? (For enabling submit button yes or no).
-    let isValidForm = true;
-    for (let id in updatedForm) {
-      if (updatedForm[id].validation) {
-        isValidForm = this.props.checkValidity(updatedForm[id].value, updatedForm[id].validation) && isValidForm;
-      }
-    }
-    this.props.setIsValidForm(isValidForm);
-
-    clone.inputs = updatedForm;
-    this.props.configForm.inputs = updatedForm;
-    this.props.setActiveConfigForm(clone);
-  }
 
   render() {
     let inputElement = null;
@@ -115,15 +74,12 @@ class Input extends Component {
         );
         break;
 
-  //HIER BEN IK GEBLEVEN: VOLGENDE STAP IS OM DE LISTVIEW TE OPENEN IN EEN MESSAGEBOX
-  //DENK DAT DE METHOD DAARVOOR VANUIT FORMPARSER.JS MOET KOMEN
       case ('multiAppend'):
         const multiLineItems = value.map((item, index) => {
           const valueId = item._id;
-          // console.log(lookupFieldForDisplay);
           return (
             <div key={index} className={classes.Multiline}>
-              <div onClick={() => this.removeMultiValueItem(this.props.inputId, valueId)}>
+              <div onClick={() => this.props.removeMultiValueItem(this.props.inputId, valueId)}>
                 <Button outline='true' color="danger" labelIcon="times" />
               </div>
               <div className={classes.DisplayValue}>{item.name}</div>
@@ -135,18 +91,6 @@ class Input extends Component {
           <div className={classes.MultilineWrapper}>
             {multiLineItems}
           </div>;
-//showModal
-// this.props.checkValidity(updatedFormElement.value, updatedFormElement.validation)
-        // inputElement = (
-        //   <Aux>
-        //     <Button clicked={() => console.log('clicked a button')} color="primary" labelText="+ Organisatie" />
-        //     {multiLines}
-        //   </Aux>
-        // );
-
-        // this.showModal('showModalSort', 'ModalWide', 'Sorteren', 'info',
-        //   <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
-        //    () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
 
         inputElement = (
           <Aux>
@@ -177,11 +121,4 @@ class Input extends Component {
 
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setIsValidForm: (isValidForm) => dispatch( {type: types.IS_VALID_FORM, isValidForm } ),
-    setActiveConfigForm: (configForm) => dispatch( {type: types.FORM_CONFIG_SET, configForm } )
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Input);
+export default Input;

@@ -1,9 +1,7 @@
 import * as types from './Actions';
 
 const initialState = {
-  configFormActive: null,
   formTouched: false,
-  isValidForm: false,
   lookupFieldId: '',
   lookupFieldVal: '',
   messageBox1: false,
@@ -17,12 +15,6 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
 
-  case types.FORM_CONFIG_SET: // Set the active config form.
-  return {
-    ...state,
-    configFormActive: action.configForm
-  }
-
   case types.FORM_TOUCH: // Form is touched by the user.
   return {
     ...state,
@@ -33,12 +25,6 @@ const reducer = (state = initialState, action) => {
   return {
     ...state,
     formTouched: false
-  }
-
-  case types.IS_VALID_FORM: // Is the form valid for submitting.
-  return {
-    ...state,
-    isValidForm: action.isValidForm
   }
 
   case types.LOOKUP_FIELD_ID_STORE: // User clicks on a lookup button in a form, stores the id of the related form field.
@@ -81,12 +67,6 @@ const reducer = (state = initialState, action) => {
   return {
     ...state,
     searchTextOverall: action.searchText
-  }
-
-  case types.SHOW_MODAL_LOOKUP: // Should the lookup model be rendered.
-  return {
-    ...state,
-    showModalLookup: action.showModalLookup
   }
 
   case types.SORT_ITEM_STORE: // In the sort modal choosen item to sort the listView on.
