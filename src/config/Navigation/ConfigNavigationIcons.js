@@ -7,9 +7,6 @@ export const isAuthNavIcons = {
 };
 
 export const navIcons = [
-                            { icon: 'question',   label: 'Help',                      url: '/help' },
-                            { icon: 'newspaper',  label: 'Release',                   url: '/release' },
-  isAuthNavIcons.reports ?  { icon: 'file-alt',   label: 'Rapporten',                 url: '/reports' } : {},
                             { icon: 'user',       label: 'Persoonlijke instellingen', url: '/personal' },
   isAuthNavIcons.admin ?    { icon: 'cog',        label: 'Instellingen',              url: '/admin' } : {}
 ];

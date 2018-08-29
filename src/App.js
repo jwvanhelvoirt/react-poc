@@ -12,6 +12,7 @@ import asynchComponent from './hoc/asynchComponent';
 //});
 
 // Import components for all navigation item routes.
+import Dashboard from './components/Navigation/Dashboard/Dashboard';
 import ModInvoicing from './components/Content/Modules/ModInvoicing';
 import ModPlanning from './components/Content/Modules/ModPlanning';
 import ModBookings from './components/Content/Modules/ModBookings';
@@ -40,7 +41,7 @@ class App extends Component {
   componentDidMount() {
     // Redirect the root route to the starting module
     if (this.props.location.pathname === "/") {
-      this.props.history.replace('/' + this.startModule);
+      this.props.history.replace('/dashboard');
     }
   }
 
@@ -49,6 +50,8 @@ class App extends Component {
       Util.setGlobalCssModule(bootstrap),
       <Layout navItems={navItems} navIcons={navIcons}>
         <Switch>
+          <Route path="/dashboard" component={Dashboard} />
+
           {isAuthNavItems.invoicing ? <Route path="/invoicing" component={ModInvoicing} /> : null}
           {isAuthNavItems.planning ? <Route path="/planning" component={ModPlanning} /> : null}
           {isAuthNavItems.bookings ? <Route path="/bookings" component={ModBookings} /> : null}

@@ -9,16 +9,21 @@ export const isAuthNavItems = {
   gdpr: true,
   acquisition: true,
   recruitment: true,
-  inspection: true
+  inspection: true,
+  reports: true
 };
 
 export const navItems = [
-  isAuthNavItems.invoicing    ? { icon: 'euro-sign',      label: 'Facturering',         url: '/invoicing' } : {},
-  isAuthNavItems.planning     ? { icon: 'calendar-alt',   label: 'Planning',            url: '/planning' } : {},
-  isAuthNavItems.bookings     ? { icon: 'clock',          label: 'Urenregistratie',     url: '/bookings' } : {},
-  isAuthNavItems.crm          ? { icon: 'address-card',   label: 'CRM',                 url: '/crm' } : {},
-  isAuthNavItems.gdpr         ? { icon: 'user-shield',    label: 'AVG/GDPR',            url: '/gdpr' } : {},
-  isAuthNavItems.acquisition  ? { icon: 'shopping-cart',  label: 'Acquisitie',          url: '/acquisition' } : {},
-  isAuthNavItems.recruitment  ? { icon: 'users',          label: 'Werving en selectie', url: '/recruitment' } : {},
-  isAuthNavItems.inspection   ? { icon: 'check-circle',   label: 'Inspectie',           url: '/inspection' } : {}
+                                { icon: 'home',             label: 'Dashboard',           url: '/dashboard',    dashboard: false },
+  isAuthNavItems.invoicing    ? { icon: 'euro-sign',        label: 'Facturering',         url: '/invoicing',    dashboard: true } : {},
+  isAuthNavItems.planning     ? { icon: 'calendar-alt',     label: 'Planning',            url: '/planning',     dashboard: true } : {},
+  isAuthNavItems.bookings     ? { icon: 'clock',            label: 'Urenregistratie',     url: '/bookings',     dashboard: true } : {},
+  isAuthNavItems.crm          ? { icon: 'address-card',     label: 'CRM',                 url: '/crm',          dashboard: true } : {},
+  isAuthNavItems.gdpr         ? { icon: 'user-shield',      label: 'AVG/GDPR',            url: '/gdpr',         dashboard: true } : {},
+  isAuthNavItems.acquisition  ? { icon: 'shopping-cart',    label: 'Acquisitie',          url: '/acquisition',  dashboard: true } : {},
+  isAuthNavItems.recruitment  ? { icon: 'users',            label: 'Werving en selectie', url: '/recruitment',  dashboard: true } : {},
+  isAuthNavItems.inspection   ? { icon: 'check-circle',     label: 'Inspectie',           url: '/inspection',   dashboard: true } : {},
+                                { icon: 'question',         label: 'Help',                url: '/help',         dashboard: true },
+                                { icon: 'newspaper',        label: 'Release',             url: '/release',      dashboard: true },
+  isAuthNavItems.reports      ? { icon: 'file-alt',         label: 'Rapporten',           url: '/reports',      dashboard: true } : {}
 ];
