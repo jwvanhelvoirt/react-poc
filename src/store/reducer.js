@@ -66,7 +66,7 @@ const reducer = (state = initialState, action) => {
   case types.SEARCHTEXT_OVERALL_STORE: // Search text in the menu bar searchbar.
   return {
     ...state,
-    searchTextOverall: action.searchText
+    searchTextOverall: action.searchbarValue
   }
 
   case types.SORT_ITEM_STORE: // In the sort modal choosen item to sort the listView on.

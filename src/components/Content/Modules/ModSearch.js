@@ -4,9 +4,10 @@ import Aux from '../../../hoc/Auxiliary';
 
 class ModSearch extends Component {
     render () {
+      console.log("render SEARCH");
         return (
             <Aux>
-                <div>Zoekresultaten voor {this.props.searchText}</div>
+                <div>Zoekresultaten voor : {this.props.searchText}</div>
             </Aux>
         );
     }

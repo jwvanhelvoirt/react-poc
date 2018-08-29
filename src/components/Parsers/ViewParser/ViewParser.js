@@ -629,7 +629,6 @@ class _View extends Component {
             }}
             autoFocus
             className={classes.SearchInput} type="text" placeholder="Zoeken..." />
-          {/*<div onClick={() => this.submitSearchHandler(this)}><FontAwesomeIcon icon='search' /></div>*/}
         </div>
       );
     }

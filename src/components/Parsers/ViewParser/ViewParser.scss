@@ -170,7 +170,7 @@
   background-color: white;
   display: flex;
   justify-content: space-between;
-  // border: 1px solid red;
+  font-size: 13px;
 }
 .Search>div {
   display: flex;
@@ -192,10 +192,6 @@
   flex-grow: 2;
   outline: none;
   border: none;
-}
-
-.Search>input:focus {
-    // border: 2px solid #dc3545;
 }
 
 .HeaderRow {
