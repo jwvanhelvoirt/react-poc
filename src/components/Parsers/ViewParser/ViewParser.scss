@@ -1,33 +1,9 @@
-/*DIT MOET STRAKS NAAR EEN HOGER NIVO, VOOR ALLE LISTS!!!*/
-
-.ListRow {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  border-bottom: 1px solid #ccc;
-
-  .ListRowCheckbox {
-    margin-right: 6px;
-  }
-}
-
-.ListRowEdit {
-  background-color: #eee;
-}
-
-
-
-
-
-// NIEUWE classes
 .ListviewContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   height: 100%;
-  // overflow-y: auto;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -46,8 +22,6 @@
   position: -webkit-sticky;
   position: sticky;
   top: 51px;
-  // border-top: 2px solid #aaa;
-  // border-bottom: 2px solid #aaa;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   user-select: none;
@@ -94,10 +68,6 @@
   margin: 0;
 }
 
-.Navigation>*:last-child {
-  // border-right: none;
-}
-
 .Counter {
   padding: 0 10px;
 }
@@ -105,13 +75,16 @@
 .PreviousNext, .ColumnConfigurator {
   width: 36px;
 }
+
 .PreviousNext {
   background-color: #ddd;
 }
+
 .PreviousNext:hover {
   background-color: #eee;
   cursor: pointer;
 }
+
 .ColumnConfigurator:hover {
   background-color: #ddd;
   cursor: pointer;
@@ -131,6 +104,7 @@
   padding: 0;
   margin: 0;
 }
+
 .ActionRowActions>*, .FilterSort>* {
   display: flex;
   justify-content: center;
@@ -139,30 +113,33 @@
   padding: 0;
   margin: 0;
 }
+
 .ActionRowActions>*  {
   border-right: 1px solid #ccc;
   color: white;
   background-color: #007bff;
 }
+
 .ActionRowActions>*:last-child {
   border-right: none;
 }
+
 .FilterSort>*  {
   border-right: 1px solid #ccc;
   color: white;
   background-color: #28a745;
 }
-.FilterSort>*:first-child {
-  // border-left: none;
-}
+
 .ActionRowActions>*:hover {
   background-color: darkblue;
   cursor: pointer;
 }
+
 .FilterSort>*:hover {
   background-color: darkgreen;
   cursor: pointer;
 }
+
 .Search {
   min-height: 100%;
   padding: 0;
@@ -172,6 +149,7 @@
   justify-content: space-between;
   font-size: 13px;
 }
+
 .Search>div {
   display: flex;
   justify-content: center;
@@ -182,11 +160,13 @@
   color: #dc3545;
   background-color: white;
 }
+
 .Search>div:hover {
   background-color: #dc3545;
   color: white;
   cursor: pointer;
 }
+
 .Search>input {
   padding: 0 10px;
   flex-grow: 2;
@@ -196,7 +176,6 @@
 
 .HeaderRow {
   background-color: #ddd;
-  // font-weight: bold;
   box-sizing: border-box;
   min-height: 100%;
 }
@@ -205,7 +184,6 @@
   display: flex;
   margin: 0;
   padding: 0;
-  // box-sizing: border-box;
 }
 
 .HeaderSortable {
@@ -218,7 +196,6 @@
 
 .Sort {
   margin-left: 5px;
-
 }
 
 .Row {
