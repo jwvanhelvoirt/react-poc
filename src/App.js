@@ -29,7 +29,7 @@ import ModSearch from './components/Content/Modules/ModSearch';
 import ModHelp from './components/Content/Modules/ModHelp';
 import ModRelease from './components/Content/Modules/ModRelease';
 import ModReports from './components/Content/Modules/ModReports';
-import ModPersonal from './components/Content/Modules/ModPersonal';
+import ModPersonalSettings from './components/Content/Modules/ModPersonalSettings';
 import ModAdmin from './components/Content/Modules/ModAdmin';
 
 import Mod404 from './components/Content/Modules/Mod404';
@@ -97,7 +97,7 @@ class App extends Component {
           <Route path="/help" component={ModHelp} />
           <Route path="/release" component={ModRelease} />
           {isAuthNavIcons.reports ? <Route path="/reports" component={ModReports} /> : null}
-          <Route path="/personal" component={ModPersonal} />
+          <Route path="/personal" component={ModPersonalSettings} />
           {isAuthNavIcons.admin ? <Route path="/admin" component={ModAdmin} /> : null}
 
           {/* Every unexpected route results into a 404, except for the '/' route (the root) */}

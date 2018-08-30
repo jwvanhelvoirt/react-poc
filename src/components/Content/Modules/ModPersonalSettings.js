@@ -8,7 +8,7 @@ import FormParser from '../../Parsers/FormParser/FormParser';
 import formConfig from '../../../config/Forms/ConfigFormUserSettings';
 import { callServer } from '../../../api/api';
 
-class ModPersonal extends Component {
+class ModPersonalSettings extends Component {
 
   constructor(props) {
     super(props);
@@ -75,4 +75,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(ModPersonal));
+export default connect(null, mapDispatchToProps)(withRouter(ModPersonalSettings));
