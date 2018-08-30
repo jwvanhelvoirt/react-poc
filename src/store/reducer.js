@@ -8,7 +8,9 @@ const initialState = {
   messageBox2: false,
   searchTextOverall: '',
   showModalLookup: false,
-  sortItem: ''
+  sortItem: '',
+  transLanguage: 'nl',
+  transTranslates: {}
 }
 
 const reducer = (state = initialState, action) => {
@@ -73,6 +75,18 @@ const reducer = (state = initialState, action) => {
   return {
     ...state,
     sortItem: action.sortItem
+  }
+
+  case types.TRANS_LANGUAGE_STORE: // Language of the interface.
+  return {
+    ...state,
+    transLanguage: action.language
+  }
+
+  case types.TRANS_TRANSLATES_STORE: // Object with key/value pairs for the interfac language.
+  return {
+    ...state,
+    transTranslates: action.translates
   }
 
 

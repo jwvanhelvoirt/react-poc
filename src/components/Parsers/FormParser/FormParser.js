@@ -220,7 +220,7 @@ class Form extends Component {
       lookupModal = (
         <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
           messageContent={messageContent} buttons={messageButtons}
-          callBackOk={callBackOk} callBackCancel={callBackCancel}
+          callBackOk={callBackOk} callBackCancel={callBackCancel} modal={true}
         />
       );
     }
@@ -264,7 +264,7 @@ class Form extends Component {
       <Aux>
         <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
           messageContent={content} buttons='butOkCancel' formIsValid={this.state.isValidForm}
-          callBackOk={this.submitHandler} callBackCancel={this.props.onCancel}
+          callBackOk={this.submitHandler} callBackCancel={this.props.onCancel} modal={this.props.modal}
         />
         {lookupModal}
       </Aux>

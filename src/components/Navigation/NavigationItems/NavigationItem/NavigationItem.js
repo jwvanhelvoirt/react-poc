@@ -1,8 +1,8 @@
 import React from 'react';
-
-import classes from './NavigationItem.scss';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Label from '../../../UI/Label/Label';
+import classes from './NavigationItem.scss';
 
 const navigationItem = (props) => {
 	return (
@@ -18,7 +18,7 @@ const navigationItem = (props) => {
 						<FontAwesomeIcon icon={props.icon} />
 					</div>
 					<div>
-						{props.label}
+						<Label labelKey={props.label} propercase={true} />
 					</div>
 				</div>
 			</NavLink>

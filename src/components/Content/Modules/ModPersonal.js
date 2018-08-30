@@ -1,19 +1,78 @@
 import React, { Component } from 'react';
-
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as types from '../../../store/Actions';
 import Aux from '../../../hoc/Auxiliary';
+import Spinner from '../../UI/Spinner/Spinner';
+import FormParser from '../../Parsers/FormParser/FormParser';
+import formConfig from '../../../config/Forms/ConfigFormUserSettings';
+import { callServer } from '../../../api/api';
 
 class ModPersonal extends Component {
-    render () {
-        return (
-            <Aux>
-                <div>Persoonlijke instellingen</div>
-            </Aux>
-        );
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      id: null,
+      loading: true,
+      userSettings: null
+    };
+
+      this.loadUserSettings();
+  };
+
+  loadUserSettings = () => {
+    callServer('get', '/' + formConfig.url + '/read', (response) => this.successGetHandler(response), this.errorGetHandler);
+  }
+
+  successGetHandler = (response) => {
+    this.setState({
+      id: response.data[0]._id,
+      loading: false,
+      userSettings: response.data[0]
+    });
+  };
+
+  errorGetHandler = (error) => {
+    this.setState({ loading: false });
+  };
+
+  onCloseHandler = () => {
+    this.props.history.goBack();
+  }
+
+  onSubmitHandler = (response) => {
+    this.props.storeLanguage(response.data.language);
+    this.props.history.goBack();
+  }
+
+  render () {
+    let userSettings =
+      <FormParser
+        configForm={formConfig}
+        data={this.state.userSettings}
+        onCancel={() => this.onCloseHandler(true)}
+        onSubmit={this.onSubmitHandler}
+        id={this.state.id}
+        modal={false}
+      />
+
+    if (this.state.loading) {
+      userSettings = <Spinner />;
+    }
+
+    return (
+        <Aux>{userSettings}</Aux>
+    );
 	}
 
-	componentDidMount() {
-		console.log("Component Peronal did mount");
-	}
 }
 
-export default ModPersonal;
+const mapDispatchToProps = dispatch => {
+  return {
+    storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } )
+  }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(ModPersonal));

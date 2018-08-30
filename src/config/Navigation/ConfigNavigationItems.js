@@ -14,16 +14,16 @@ export const isAuthNavItems = {
 };
 
 export const navItems = [
-                                { icon: 'home',             label: 'Dashboard',           url: '/dashboard',    dashboard: false },
-  isAuthNavItems.invoicing    ? { icon: 'euro-sign',        label: 'Facturering',         url: '/invoicing',    dashboard: true } : {},
-  isAuthNavItems.planning     ? { icon: 'calendar-alt',     label: 'Planning',            url: '/planning',     dashboard: true } : {},
-  isAuthNavItems.bookings     ? { icon: 'clock',            label: 'Urenregistratie',     url: '/bookings',     dashboard: true } : {},
-  isAuthNavItems.crm          ? { icon: 'address-card',     label: 'CRM',                 url: '/crm',          dashboard: true } : {},
-  isAuthNavItems.gdpr         ? { icon: 'user-shield',      label: 'AVG/GDPR',            url: '/gdpr',         dashboard: true } : {},
-  isAuthNavItems.acquisition  ? { icon: 'shopping-cart',    label: 'Acquisitie',          url: '/acquisition',  dashboard: true } : {},
-  isAuthNavItems.recruitment  ? { icon: 'users',            label: 'Werving en selectie', url: '/recruitment',  dashboard: true } : {},
-  isAuthNavItems.inspection   ? { icon: 'check-circle',     label: 'Inspectie',           url: '/inspection',   dashboard: true } : {},
-                                { icon: 'question',         label: 'Help',                url: '/help',         dashboard: true },
-                                { icon: 'newspaper',        label: 'Release',             url: '/release',      dashboard: true },
-  isAuthNavItems.reports      ? { icon: 'file-alt',         label: 'Rapporten',           url: '/reports',      dashboard: true } : {}
+                                { icon: 'home',             label: 'keyDashboard',    url: '/dashboard',    dashboard: false },
+  isAuthNavItems.invoicing    ? { icon: 'euro-sign',        label: 'keyInvoicing',    url: '/invoicing',    dashboard: true } : {},
+  isAuthNavItems.planning     ? { icon: 'calendar-alt',     label: 'keyPlanning',     url: '/planning',     dashboard: true } : {},
+  isAuthNavItems.bookings     ? { icon: 'clock',            label: 'keyBookings',     url: '/bookings',     dashboard: true } : {},
+  isAuthNavItems.crm          ? { icon: 'address-card',     label: 'keyCrm',          url: '/crm',          dashboard: true } : {},
+  isAuthNavItems.gdpr         ? { icon: 'user-shield',      label: 'keyGdpr',         url: '/gdpr',         dashboard: true } : {},
+  isAuthNavItems.acquisition  ? { icon: 'shopping-cart',    label: 'keyAcquisition',  url: '/acquisition',  dashboard: true } : {},
+  isAuthNavItems.recruitment  ? { icon: 'users',            label: 'keyRecruitment',  url: '/recruitment',  dashboard: true } : {},
+  isAuthNavItems.inspection   ? { icon: 'check-circle',     label: 'keyInspection',   url: '/inspection',   dashboard: true } : {},
+                                { icon: 'question',         label: 'keyHelp',         url: '/help',         dashboard: true },
+                                { icon: 'newspaper',        label: 'keyRelease',      url: '/release',      dashboard: true },
+  isAuthNavItems.reports      ? { icon: 'file-alt',         label: 'keyReports',      url: '/reports',      dashboard: true } : {}
 ];

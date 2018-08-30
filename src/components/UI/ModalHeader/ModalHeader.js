@@ -1,4 +1,5 @@
 import React from 'react';
+import Label from '../../UI/Label/Label';
 import classes from './ModalHeader.scss';
 
 const modalHeader = (props) => {
@@ -15,7 +16,7 @@ const modalHeader = (props) => {
   const classesHeader = [classes.Header, classColor].join(' ');
 
   return(
-    <div className={classesHeader}>{props.title}</div>
+    <div className={classesHeader}><Label labelKey={props.title} propercase={true} /></div>
   );
 }
 

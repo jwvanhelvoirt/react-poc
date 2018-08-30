@@ -4,7 +4,7 @@ import Portal from './Portal/Portal';
 import classes from './Dashboard.scss';
 
 const dashboard = () => {
-  const portals = navItems.map((item) => item.dashboard ? <Portal portal={item} /> : null);
+  const portals = navItems.map((item, index) => item.dashboard ? <Portal key={index} portal={item} /> : null);
 
   return (
     <div className={classes.Wrapper}>

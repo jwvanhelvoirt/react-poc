@@ -43,7 +43,6 @@ class _View extends Component {
       sortedColumn: '',
       sortOrder: 1,
       viewConfig: { ...viewConfig },
-      cleanConfigForm: { ...viewConfig.relatedForm }
     };
 
     this.localData = {
@@ -245,6 +244,7 @@ class _View extends Component {
     this.localData.callBackOk = callBackOk;
     this.setState({ [modalState]: true });
   }
+
   /**
    * @brief   Manages state containing an array of all selected rows in the listView.
    */
@@ -473,12 +473,12 @@ class _View extends Component {
     if (this.state.loadedListItem) {
       formModal = (
         <FormParser
-          configForm={this.state.cleanConfigForm}
-          configFormOriginalTemp={this.state.cleanConfigForm}
+          configForm={this.state.configForm}
           data={this.state.loadedListItem}
           onCancel={() => this.onCloseHandler(true)}
           onSubmit={this.onSubmitHandler}
           id={this.state.selectedListItemId}
+          modal={true}
           />
       );
     }
@@ -498,7 +498,7 @@ class _View extends Component {
       sortModal = (
         <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
           messageContent={messageContent} buttons={messageButtons}
-          callBackOk={callBackOk} callBackCancel={callBackCancel}
+          callBackOk={callBackOk} callBackCancel={callBackCancel} modal={true}
         />
       );
     }
@@ -509,7 +509,7 @@ class _View extends Component {
       messageModal = (
         <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
           messageContent={messageContent} buttons={messageButtons}
-          callBackOk={callBackOk} callBackCancel={callBackCancel}
+          callBackOk={callBackOk} callBackCancel={callBackCancel} modal={true}
         />
       );
     }

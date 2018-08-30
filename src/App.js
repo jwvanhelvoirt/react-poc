@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import * as types from './store/Actions';
 import './assets/FontAwesome/Fontawesome';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 import { Util } from 'reactstrap';
 import Layout from './components/Layout/Layout';
 import asynchComponent from './hoc/asynchComponent';
+import { callServer } from './api/api';
 
 //const asynchModInvoicing = asynchComponent(() => { // lazy loading werkt niet in één keer, nader uitzoeken.
 //	return import('./containers/ModInvoicing/ModInvoicing');
@@ -36,13 +38,43 @@ import { isAuthNavItems, navItems } from './config/Navigation/ConfigNavigationIt
 import { isAuthNavIcons, navIcons } from './config/Navigation/ConfigNavigationIcons';
 
 class App extends Component {
-  startModule = 'crm';
+
+  loadPersonalSettings = () => {
+    callServer('get', '/usersettings/read', (response) => this.successGetHandlerPersonalSettings(response), this.errorGetHandlerPersonalSettings);
+  }
+
+  successGetHandlerPersonalSettings = (response) => {
+    this.props.storeLanguage(response.data[0].language);
+    callServer('get', '/translates/read/' + response.data[0].language, (response) => this.successGetHandlerTranslates(response), this.errorGetHandlerTranslates);
+  }
+
+  errorGetHandlerPersonalSettings = (error) => {
+    console.log(error);
+  }
+
+  successGetHandlerTranslates = (response) => {
+    this.props.storeTranslates(response.data[0].translates);
+  }
+
+  errorGetHandlerTranslates = (error) => {
+    console.log(error);
+  }
 
   componentDidMount() {
     // Redirect the root route to the starting module
     if (this.props.location.pathname === "/") {
       this.props.history.replace('/dashboard');
     }
+  }
+
+  componentWillUpdate() {
+    // console.log('App - componentWillUpdate');
+    this.loadPersonalSettings();
+  }
+
+  componentWillMount() {
+    // console.log('App - componentWillMount');
+    this.loadPersonalSettings();
   }
 
   render() {
@@ -76,4 +108,17 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+const mapStateToProps = state => {
+  return {
+    language: state.redMain.transLanguage
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } ),
+    storeTranslates: (translates) => dispatch( {type: types.TRANS_TRANSLATES_STORE, translates } )
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
