@@ -110,9 +110,10 @@ class _View extends Component {
    */
   onCloseHandler = (userConfirmation) => {
     if (userConfirmation && this.props.formTouched) {
+      const content = <Label labelKey='keyWarningCloseForm' />
+
       // Ask for user confirmation to lose all changes in the form.
-      this.showModal('showModalMessage', 'ModalSmall', ['keyClose'], 'warning',
-        'Weet u zeker dat u het formulier wil sluiten? U verliest al uw wijzigingen.', 'butOkCancel',
+      this.showModal('showModalMessage', 'ModalSmall', ['keyClose'], 'warning', content, 'butOkCancel',
          () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
     } else {
       this.props.untouchForm();
@@ -141,7 +142,8 @@ class _View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.', 'butOk');
+    const content = <Label labelKey='keyErrorFetchItem' />
+    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', content, 'butOk');
   };
 
   /**
@@ -190,9 +192,9 @@ class _View extends Component {
    */
   deleteItems = (userConfirmation) => {
     if (userConfirmation) {
+      const content = <Label labelKey='keyWarningDeleteDocs' />
       // Ask for user confirmation before deleting records from the database.
-      this.showModal('showModalMessage', 'ModalSmall', ['keyDelete'], 'warning',
-        'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?', 'butOkCancel',
+      this.showModal('showModalMessage', 'ModalSmall', ['keyDelete'], 'warning', content, 'butOkCancel',
          () => this.deleteItems(false), () => this.onModalMessageCloseHandler());
 
       this.setState({ showModalMessage: true });
@@ -227,7 +229,8 @@ class _View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Fout tijdens verwijderen list items', 'butOk');
+    const content = <Label labelKey='keyErrorRemoveListItems' />;
+    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', content, 'butOk');
   }
 
   /**
