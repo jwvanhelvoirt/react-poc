@@ -14,10 +14,10 @@ export const tabsConfig = [
       {
         id: 'pane1',
         tabs: [
-          { id: 'organisation', label: 'Organisatie', component: <TabContentOrganisation /> },
-          { id: 'person',       label: 'Persoon',     component: <TabContentPerson /> },
-          { id: 'project',      label: 'Project',     component: <div>Project</div> },
-          { id: 'task',         label: 'Taak',        component: <div>Taak</div> }
+          { id: 'organisation', label: 'keyOrganisation', component: <TabContentOrganisation /> },
+          { id: 'person',       label: 'keyPerson',       component: <TabContentPerson /> },
+          { id: 'project',      label: 'keyProject',      component: <div>Project</div> },
+          { id: 'task',         label: 'keyTask',         component: <div>Taak</div> }
         ],
         activeTab: 'organisation'
       }
@@ -32,7 +32,7 @@ export const tabsConfig = [
       {
         id: 'pane2',
         tabs: [
-          { id: 'organisation', label: 'Organisatie', component: <TabContentOrganisation /> }
+          { id: 'organisation', label: 'keyOrganisation', component: <TabContentOrganisation /> }
         ],
         activeTab: 'organisation'
       }
@@ -47,9 +47,9 @@ export const tabsConfig = [
       {
         id: 'pane3',
         tabs: [
-          { id: 'person',  label: 'Persoon',  component: <TabContentPerson /> },
-          { id: 'project', label: 'Project',  component: <div>Project</div> },
-          { id: 'task',    label: 'Taak',     component: <div>Taak</div> }
+          { id: 'person',  label: 'keyPerson',  component: <TabContentPerson /> },
+          { id: 'project', label: 'keyProject', component: <div>Project</div> },
+          { id: 'task',    label: 'keyTask',    component: <div>Taak</div> }
         ],
         activeTab: 'person'
       }
@@ -66,10 +66,10 @@ export const tabsConfig = [
       {
         id: 'pane4',
         tabs: [
-          { id: 'correspondence', label: 'Correspondentie', component: <div>Correspondentie</div> },
-          { id: 'email',          label: 'Email',           component: <div>Email</div> },
-          { id: 'booking',        label: 'Boeking',         component: <div>Boeking</div> },
-          { id: 'organigram',     label: 'Organigram',      component: <div>Organigram</div> }
+          { id: 'correspondence', label: 'keyCorrespondence', component: <div>Correspondentie</div> },
+          { id: 'email',          label: 'keyEmail',          component: <div>Email</div> },
+          { id: 'booking',        label: 'keyBooking',        component: <div>Boeking</div> },
+          { id: 'organigram',     label: 'keyOrganigram',     component: <div>Organigram</div> }
         ],
         activeTab: 'correspondence'
       }

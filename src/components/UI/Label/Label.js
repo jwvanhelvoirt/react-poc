@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as types from '../../../store/Actions';
-import { propercase } from '../../../classes/generic';
+import { propercase } from '../../../libs/generic';
 import Aux from '../../../hoc/Auxiliary';
 import classes from './Label.scss';
 

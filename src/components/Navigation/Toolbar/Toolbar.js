@@ -4,7 +4,7 @@ import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 import DrawerToggleIcons from '../SideDrawer/DrawerToggle/DrawerToggleIcons';
 import ToolbarSearch from './ToolbarSearch/ToolbarSearch';
 import ToolbarIcons from './ToolbarIcons/ToolbarIcons';
-import { Large, Medium, Small } from '../../../classes/responsive';
+import { Large, Medium, Small } from '../../../libs/responsive';
 import classes from './Toolbar.scss';
 
 const toolbar = (props) => {

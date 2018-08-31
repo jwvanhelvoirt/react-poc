@@ -1,5 +1,4 @@
 import React from 'react';
-// import TabContentOrganisation from '../../components/Content/TabContent/Organisation/Organisation';
 
 export const tabsConfig = [
   {
@@ -12,10 +11,10 @@ export const tabsConfig = [
       {
         id: 'pane1',
         tabs: [
-          { id: 'invoice',  label: 'Factureren',  component: <div>Factureren</div> },
-          { id: 'concept',  label: 'Concept',     component: <div>Concept</div> },
-          { id: 'process',  label: 'Verwerken',   component: <div>Verwerken</div> },
-          { id: 'invoices', label: 'Facturen',    component: <div>Facturen</div> }
+          { id: 'invoice',  label: 'keyInvoices',  component: <div>Factureren</div> },
+          { id: 'concept',  label: 'KeyConcept',   component: <div>Concept</div> },
+          { id: 'process',  label: 'keyProcess',   component: <div>Verwerken</div> },
+          { id: 'invoices', label: 'keyInvoice',   component: <div>Facturen</div> }
         ],
         activeTab: 'invoice'
       }
@@ -32,8 +31,8 @@ export const tabsConfig = [
       {
         id: 'pane2',
         tabs: [
-          { id: 'correspondence', label: 'Correspondentie', component: <div>Correspondentie</div> },
-          { id: 'project',        label: 'Project',         component: <div>Project</div> }
+          { id: 'correspondence', label: 'keyCorrespondence', component: <div>Correspondentie</div> },
+          { id: 'project',        label: 'keyProject',        component: <div>Project</div> }
         ],
         activeTab: 'correspondence'
       }

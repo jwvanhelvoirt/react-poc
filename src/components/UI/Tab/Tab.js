@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { Nav, NavItem, NavLink } from 'reactstrap';
+import Label from '../../UI/Label/Label';
 import classnames from 'classnames';
 
 const tab = (props) => {
@@ -13,7 +13,7 @@ const tab = (props) => {
 				<NavLink
 					className={classnames({ active: props.activeTab === props.tabItem.id })}
 					onClick={props.clicked}>
-					{props.tabItem.label}
+					<Label labelKey={props.tabItem.label} propercase={true} />
 				</NavLink>
 			</NavItem>
 		)
