@@ -1,7 +1,7 @@
 import configLookupOrganisation from '../Views/ConfigLookupOrganisation';
 
 const formConfig = {
-	title: 'persoon',
+	title: 'keyPerson',
 	url: 'persons',
 	inputs: {
 		name: {
@@ -22,7 +22,7 @@ const formConfig = {
 			elementType: 'multiAppend',
 			lookup: configLookupOrganisation,
 			lookupFieldForDisplay: 'name',
-			lookupTitle: 'Organisatie',
+			lookupTitle: 'keyOrganisation',
 			value: [],
 			validation: {
 				required: true

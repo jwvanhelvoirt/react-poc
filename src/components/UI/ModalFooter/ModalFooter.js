@@ -5,11 +5,9 @@ import Label from '../Label/Label';
 import classes from './ModalFooter.scss';
 
 const modalFooter = (props) => {
-  const labelOk = <Label labelKey='keyOk' propercase={true} />
-  const labelCancel = <Label labelKey='keyCancel' propercase={true} />
   const okButDisabled = props.formIsValid === false  ? true : false;
-  const butOk     = <Button clicked={props.callBackOk} color="success" labelText={labelOk} disabled={okButDisabled} />;
-  const butCancel = <Button clicked={props.callBackCancel} color="danger" labelText={labelCancel} />;
+  const butOk     = <Button clicked={props.callBackOk} color="success" labelText={['keyOk']} disabled={okButDisabled} />;
+  const butCancel = <Button clicked={props.callBackCancel} color="danger" labelText={['keyCancel']} />;
   let but = null;
 
   switch (props.buttons) {

@@ -49,7 +49,7 @@ class _View extends Component {
     this.localData = {
       addRecordToView: false,
       modalClass: '',
-      messageTitle: '',
+      messageTitle: [],
       messageType: '',
       messageContent: '',
       messageButtons: '',
@@ -111,7 +111,7 @@ class _View extends Component {
   onCloseHandler = (userConfirmation) => {
     if (userConfirmation && this.props.formTouched) {
       // Ask for user confirmation to lose all changes in the form.
-      this.showModal('showModalMessage', 'ModalSmall', 'Sluiten formulier', 'warning',
+      this.showModal('showModalMessage', 'ModalSmall', ['keyClose'], 'warning',
         'Weet u zeker dat u het formulier wil sluiten? U verliest al uw wijzigingen.', 'butOkCancel',
          () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
     } else {
@@ -141,7 +141,7 @@ class _View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    this.showModal('showModalMessage', 'ModalSmall', 'Fout', 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.', 'butOk');
+    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Fout tijdens ophalen list item, item is reeds verwijderd.', 'butOk');
   };
 
   /**
@@ -191,7 +191,7 @@ class _View extends Component {
   deleteItems = (userConfirmation) => {
     if (userConfirmation) {
       // Ask for user confirmation before deleting records from the database.
-      this.showModal('showModalMessage', 'ModalSmall', 'Verwijderen list items', 'warning',
+      this.showModal('showModalMessage', 'ModalSmall', ['keyDelete'], 'warning',
         'Weet u zeker dat u de geselecteerde items uit de database wilt verwijderen?', 'butOkCancel',
          () => this.deleteItems(false), () => this.onModalMessageCloseHandler());
 
@@ -227,7 +227,7 @@ class _View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    this.showModal('showModalMessage', 'ModalSmall', 'Fout', 'error', 'Fout tijdens verwijderen list items', 'butOk');
+    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Fout tijdens verwijderen list items', 'butOk');
   }
 
   /**
@@ -340,7 +340,7 @@ class _View extends Component {
    * @brief   Shows a modal where the user can select on which attribute to sort the listView in which order.
    */
   onClickSortHandler() {
-    this.showModal('showModalSort', 'ModalWide', 'Sorteren', 'info',
+    this.showModal('showModalSort', 'ModalWide', ['keySort'], 'info',
       <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
        () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
   };
@@ -451,16 +451,16 @@ class _View extends Component {
         (response) => this.successFaker(response),
         this.errorFaker, params);
   };
-  successFaker = () => this.showModal('showModalMessage', 'ModalSmall', 'Info', 'info', 'Fake data succesvol aangemaakt.', 'butOk');
-  errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', 'Fout', 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
+  successFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Fake data succesvol aangemaakt.', 'butOk');
+  errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
 
   deleteAll = () => {
     callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
       (response) => this.successDeleteAll(response),
       this.errorDeleteAll);
   };
-  successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', 'Info', 'info', 'Bulk records succesvol verwijderd.', 'butOk');
-  errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', 'Info', 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
+  successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Bulk records succesvol verwijderd.', 'butOk');
+  errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
@@ -469,7 +469,6 @@ class _View extends Component {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
 
     // Display the form modal in case loadedListItem is filled with form data.
-// console.log(this.state.loadedListItem); //jwvh
     let formModal = null;
     if (this.state.loadedListItem) {
       formModal = (

@@ -14,6 +14,7 @@ import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import View from '../../Parsers/ViewParser/ViewParser';
 import Button from '../Button/Button';
+import Label from '../Label/Label';
 import Aux from '../../../hoc/Auxiliary'
 import classes from './Input.scss';
 
@@ -94,8 +95,10 @@ class Input extends Component {
 
         inputElement = (
           <Aux>
-            <Button clicked={() => this.props.showModal('showModalLookup', 'ModalMedium', 'Selecteer ' + lookupTitle, 'info', <View viewConfig={lookup} />, 'butOkCancel')}
-              color="primary" labelText={'+ ' + lookupTitle} />
+            <Button clicked={() => this.props.showModal('showModalLookup', 'ModalMedium', ['keySelect', lookupTitle], 'info',
+              <View viewConfig={lookup} />, 'butOkCancel')}
+              color="primary" labelText={['keyPlus', lookupTitle]}
+            />
             {multiLines}
           </Aux>
         );

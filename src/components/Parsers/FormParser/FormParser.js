@@ -19,7 +19,6 @@ import Button from '../../UI/Button/Button';
 import ModalHeader from '../../UI/ModalHeader/ModalHeader';
 import ModalFooter from '../../UI/ModalFooter/ModalFooter';
 import MessageBox from '../../UI/MessageBox/MessageBox';
-import classes from './FormParser.scss';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {
@@ -35,7 +34,7 @@ class Form extends Component {
 
     this.localData = {
       modalClass: '',
-      messageTitle: '',
+      messageTitle: [],
       messageType: '',
       messageContent: '',
       messageButtons: '',
@@ -236,29 +235,25 @@ class Form extends Component {
     }
 
     const content =
-      <div className={classes.FieldsWrapper}>
-        <div className={classes.Fields}>
-          <div>
-            {formElementsArray.map(formElement => {
-                return (
-                  (
-                    <Input
-                      key={formElement.inputId}
-                      inputId={formElement.inputId}
-                      changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
-                      configInput={formElement.configInput}
-                      showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) => this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
-                      removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
-                      />
-                  )
-                )
-            })}
-          </div>
-        </div>
+      <div>
+        {formElementsArray.map(formElement => {
+            return (
+              (
+                <Input
+                  key={formElement.inputId}
+                  inputId={formElement.inputId}
+                  changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
+                  configInput={formElement.configInput}
+                  showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) => this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
+                  removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
+                  />
+              )
+            )
+        })}
       </div>;
 
     // Title of the form.
-    const title = this.props.id ? this.state.configForm.title : 'nieuwe ' + this.state.configForm.title;
+    const title = this.props.id ? [this.state.configForm.title] : ['keyNew', this.state.configForm.title];
 
     return (
       <Aux>

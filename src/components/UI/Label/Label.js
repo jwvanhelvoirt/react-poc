@@ -6,14 +6,16 @@ import Aux from '../../../hoc/Auxiliary';
 import classes from './Label.scss';
 
 const label = (props) => {
-
   let labelTranslated = <span className={classes.NoTranslate}>{props.labelKey}</span>;
+
   if (props.translates[props.labelKey]) {
     // labelKey exists in translates object.
     labelTranslated = props.propercase ?
-      <span>{propercase(props.translates[props.labelKey])}</span> :
-      <span>{props.translates[props.labelKey]}</span>
+      propercase(props.translates[props.labelKey]) :
+      props.translates[props.labelKey]
   }
+
+  labelTranslated = props.trailingSpace ? labelTranslated + ' ' : labelTranslated;
 
   return(
     <span>{labelTranslated}</span>

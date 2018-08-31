@@ -9,7 +9,7 @@
 * @params  outline      Boolean indicating the button should be of outline type.
 * @params  labelIcon    String with the FontAwesomeIcon to display in the button.
 *                       If both labelIcon and labelText are passed, labelIcon will be used.
-* @params  labelText    String with the text to display in the button.
+* @params  labelText    Array with translate keys for text to display in the button.
 * @params  tooltip      String containing the text to be used as tooltip when the users hovers the mouse over the Button.
 */
 
@@ -18,12 +18,21 @@ import React from 'react';
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactTooltip from 'react-tooltip';
+import Label from '../../UI/Label/Label';
 import Aux from '../../../hoc/Auxiliary';
 import classes from './Button.scss';
 
 const button = (props) => {
   // Get the label html for the button.
-  const label = props.labelIcon ? <FontAwesomeIcon icon={props.labelIcon} /> : (props.labelText ? props.labelText : '');
+  let labelText = '';
+  if (props.labelText) {
+    labelText = props.labelText.map((item, index) => {
+      return index === 0 ?
+        <Label key={index} labelKey={item} propercase={true} trailingSpace={true} /> :
+        <Label key={index} labelKey={item} />
+    });
+  }
+  const label = props.labelIcon ? <FontAwesomeIcon icon={props.labelIcon} /> : labelText;
 
   // Is there an outline property?
  let opts = {};
