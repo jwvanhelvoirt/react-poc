@@ -98,7 +98,7 @@ const listViewConfig = {
 		{ _id: 'cityD', label: 'Plaats (z-a)', sortOn: 'city', order: -1},
 		{ _id: 'countryA', label: 'Land (a-z)', sortOn: 'country', order: 1}
 	],
-	title: 'Organisaties',
+	title: 'keyOrganisation',
 	url: 'organisations'
 }
 

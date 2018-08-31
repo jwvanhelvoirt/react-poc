@@ -147,7 +147,7 @@ const listViewConfig = {
 		{ _id: 'streetAddressA', label: 'Straat (a-z)', sortOn: 'streetAddress', order: 1},
 		{ _id: 'countryA', label: 'Land (a-z)', sortOn: 'country', order: 1}
 	],
-	title: 'Personen',
+	title: 'keyPerson',
 	url: 'persons'
 }
 

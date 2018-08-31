@@ -12,6 +12,7 @@ import Button from '../../UI/Button/Button';
 import Spinner from '../../UI/Spinner/Spinner';
 import Modal from '../../UI/Modal/Modal';
 import MessageBox from '../../UI/MessageBox/MessageBox';
+import Label from '../../UI/Label/Label';
 import { callServer } from '../../../api/api';
 import classes from './ViewParser.scss';
 
@@ -568,7 +569,9 @@ class _View extends Component {
     // Title bar overall.
     const titleBar = viewConfig.showRowTitle ?
       <div className={classes.TitleRow}>
-        <div onClick={() => this.createFakeData()} className={classes.Title}>{this.state.viewConfig.title}</div>
+        <div onClick={() => this.createFakeData()} className={classes.Title}>
+          <Label labelKey={this.state.viewConfig.title} propercase={true} />
+        </div>
         <div className={classes.Navigation}>
           {/*deleteAll*/}
           {columnConfig}
