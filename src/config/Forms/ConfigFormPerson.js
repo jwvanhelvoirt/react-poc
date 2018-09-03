@@ -8,7 +8,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Naam contact'
+				placeholder: 'keyName'
 			},
 			value: '',
 			validation: {
@@ -34,7 +34,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'email',
-				placeholder: 'Email'
+				placeholder: 'keyEmail'
 			},
 			value: ''
 		},
@@ -42,7 +42,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Telefoon'
+				placeholder: 'keyPhone'
 			},
 			value: ''
 		},
@@ -50,7 +50,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Postcode'
+				placeholder: 'keyZip'
 			},
 			value: '',
 			validation: {
@@ -65,7 +65,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Straatnaam'
+				placeholder: 'keyStreet'
 			},
 			value: '',
 			validation: {
@@ -78,7 +78,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Plaats'
+				placeholder: 'keyCity'
 			},
 			value: '',
 			validation: {
@@ -91,7 +91,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Land'
+				placeholder: 'keyCountry'
 			},
 			value: 'Nederland',
 			validation: {
@@ -118,7 +118,7 @@ const formConfig = {
 			elementType: 'textarea',
 			elementConfig: {
 				rows: '4',
-				placeholder: 'Notities'
+				placeholder: 'keyRemarks'
 			},
 			value: ''
 		},
@@ -126,7 +126,7 @@ const formConfig = {
 			elementType: 'input',
 			elementConfig: {
 				type: 'text',
-				placeholder: 'Image url'
+				placeholder: 'keyLogo'
 			},
 			value: ''
 		}

@@ -16,9 +16,9 @@ const label = (props) => {
   }
 
   labelTranslated = props.trailingSpace ? labelTranslated + ' ' : labelTranslated;
-
+// console.log(labelTranslated);
   return(
-    <span>{labelTranslated}</span>
+    <Aux>{labelTranslated}</Aux>
   );
 }
 

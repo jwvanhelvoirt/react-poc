@@ -11,6 +11,8 @@
 */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as types from '../../../store/Actions';
 import cloneDeep from 'lodash/cloneDeep';
 import View from '../../Parsers/ViewParser/ViewParser';
 import Button from '../Button/Button';
@@ -21,12 +23,16 @@ import classes from './Input.scss';
 class Input extends Component {
 
   render() {
+    // console.log(this.props);
     let inputElement = null;
     let inputClasses = [classes.InputElement];
     let validationError = null;
 
     const { elementType, elementConfig, value, valid, validation, touched, label,
-      defaultFocus, lookup, lookupFieldForDisplay, lookupTitle} = this.props.configInput;
+      defaultFocus, lookup, lookupFieldForDisplay, lookupTitle, placeholder} = this.props.configInput;
+
+    // We cannot use the <Label> component, because that returns an object and we can only use a plain text for the placeholder.
+    const placeholderInput = this.props.translates[placeholder] ? this.props.translates[placeholder] : null;
 
     if (!valid && validation) {
       inputClasses.push(classes.Invalid);
@@ -45,6 +51,7 @@ class Input extends Component {
         inputElement = <input
           className={inputClasses.join(' ')}
           {...elementConfig}
+          placeholder={placeholderInput}
           value={value}
           autoFocus={autoFocus}
           onChange={this.props.changed}/>;
@@ -54,6 +61,7 @@ class Input extends Component {
         inputElement = <textarea
           className={inputClasses.join(' ')}
           {...elementConfig}
+          placeholder={placeholderInput}
           value={value}
           autoFocus={autoFocus}
           onChange={this.props.changed}/>;
@@ -108,6 +116,7 @@ class Input extends Component {
         inputElement = <input
           className={inputClasses.join(' ')}
           {...elementConfig}
+          placeholder={placeholderInput}
           value={value}
           autoFocus={autoFocus}
           onChange={this.props.changed}/>;
@@ -115,7 +124,9 @@ class Input extends Component {
 
     return(
       <div className={classes.Input}>
-        <label className={classes.Label}>{label}</label>
+        <label className={classes.Label}>
+          <Label labelKey={label} propercase={true} />
+        </label>
         {validationError}
         {inputElement}
       </div>
@@ -124,4 +135,10 @@ class Input extends Component {
 
 }
 
-export default Input;
+const mapStateToProps = state => {
+  return {
+    translates: state.redMain.transTranslates
+  };
+}
+
+export default connect(mapStateToProps)(Input);

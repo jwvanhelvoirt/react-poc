@@ -5,12 +5,12 @@ const formConfig = {
 	url: 'organisations',
 	inputs: {
 		name: {
-			label: 'Naam',
+			label: 'keyName',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Organisatie benaming'
+				type: 'text'
 			},
+			placeholder: 'keyName',
 			value: '',
 			validation: {
 				required: true
@@ -20,7 +20,7 @@ const formConfig = {
 			defaultFocus: true
 		},
 		persons: {
-			label: 'Medewerkers',
+			label: 'keyEmployees',
 			elementType: 'multiAppend',
 			lookup: configLookupPerson,
 			lookupFieldForDisplay: 'name',
@@ -33,39 +33,39 @@ const formConfig = {
 			// touched: false
 		},
 		email: {
-			label: 'Email',
+			label: 'keyEmail',
 			elementType: 'input',
 			elementConfig: {
-				type: 'email',
-				placeholder: 'Email'
+				type: 'email'
 			},
+			placeholder: 'keyEmail',
 			value: ''
 		},
 		phone: {
-			label: 'Telefoon',
+			label: 'keyPhone',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Telefoon'
+				type: 'text'
 			},
+			placeholder: 'keyPhone',
 			value: ''
 		},
 		website: {
-			label: 'Website',
+			label: 'keyWebsite',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Website'
+				type: 'text'
 			},
+			placeholder: 'keyWebsite',
 			value: ''
 		},
 		zip: {
-			label: 'Postcode',
+			label: 'keyZip',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Postcode'
+				type: 'text'
 			},
+			placeholder: 'keyZip',
 			value: '',
 			validation: {
 				required: true,
@@ -76,12 +76,12 @@ const formConfig = {
 			touched: false
 		},
 		streetAddress: {
-			label: 'Straat',
+			label: 'keyStreet',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Straatnaam'
+				type: 'text'
 			},
+			placeholder: 'keyStreet',
 			value: '',
 			validation: {
 				required: true
@@ -90,12 +90,12 @@ const formConfig = {
 			touched: false
 		},
 		city: {
-			label: 'Plaats',
+			label: 'keyCity',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Plaats'
+				type: 'text'
 			},
+			placeholder: 'keyCity',
 			value: '',
 			validation: {
 				required: true
@@ -104,12 +104,12 @@ const formConfig = {
 			touched: false
 		},
 		country: {
-			label: 'Land',
+			label: 'keyCountry',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Land'
+				type: 'text'
 			},
+			placeholder: 'keyCountry',
 			value: 'Nederland',
 			validation: {
 				required: true
@@ -118,7 +118,7 @@ const formConfig = {
 			touched: false
 		},
 		organisationManager: {
-			label: 'Organisatie manager',
+			label: 'keyOrganisationManager',
 			elementType: 'select',
 			elementConfig: {
 				options: [
@@ -133,21 +133,21 @@ const formConfig = {
 			value: 'erwin'
 		},
 		note: {
-			label: 'Notitie',
+			label: 'keyRemarks',
 			elementType: 'textarea',
 			elementConfig: {
-				rows: '4',
-				placeholder: 'Notities'
+				rows: '4'
 			},
+			placeholder: 'keyRemarks',
 			value: ''
 		},
 		image: {
-			label: 'Logo',
+			label: 'keyLogo',
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'Image url'
+				type: 'text'
 			},
+			placeholder: 'keyLogo',
 			value: ''
 		},
 	}

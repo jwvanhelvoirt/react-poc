@@ -6,8 +6,8 @@ const formConfig = {
 			elementType: 'select',
 			elementConfig: {
 				options: [
-					{ value: 'en', displayValue: 'Engels' },
-					{ value: 'nl', displayValue: 'Nederlands' }
+					{ value: 'en', displayValue: 'keyLangEnglish' },
+					{ value: 'nl', displayValue: 'keyLangDutch' }
 				]
 			},
 			value: 'nl'
