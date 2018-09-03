@@ -71,7 +71,7 @@ const button = (props) => {
 
     reactTooltip = (
       <ReactTooltip id={props.id} place="bottom" type="dark" effect="solid">
-        <span>{props.tooltip}</span>
+        <Label labelKey={props.tooltip} convertType={'propercase'} />
       </ReactTooltip>
     );
   }

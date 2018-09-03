@@ -12,7 +12,7 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			tooltip: 'Voeg nieuw persoon toe',
+			tooltip: 'keyAddPerson',
 			callback: (_this) => { _this.addItem(formConfigPerson, true) }
 		},
 		{
@@ -24,7 +24,7 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			tooltip: 'Voeg nieuwe organisatie toe',
+			tooltip: 'keyAddOrganisation',
 			callback: (_this) => { _this.addItem(formConfigOrganisation, false) }
 		},
 		{
@@ -36,7 +36,7 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: true,
-			tooltip: 'Verwijder geselecteerde personen',
+			tooltip: 'keyDeleteSelectedItems',
 			callback: (_this) => { _this.deleteItems(true) }
 		},
 		{
@@ -48,7 +48,7 @@ const listViewConfig = {
 			showInBarPrimary: true,
 			showInBarMenu: true,
 			showInRowMenu: false,
-			tooltip: 'Ververs listview',
+			tooltip: 'keyRefreshListView',
 			callback: (_this) => _this.reloadListView(0, null, true)
 		}
 	],

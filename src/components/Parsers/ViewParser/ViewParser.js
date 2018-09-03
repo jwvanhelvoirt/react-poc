@@ -604,7 +604,7 @@ class _View extends Component {
                 return <div key={index} onClick={() => action.callback(this)} data-tip="React-tooltip" data-for={action.id}>
                   <FontAwesomeIcon icon={action.labelIcon} />
                   <ReactTooltip id={action.id} place="bottom" type="dark" effect="solid">
-                    <span>{action.tooltip}</span>
+                    <Label labelKey={action.tooltip} convertType={'propercase'} />
                   </ReactTooltip>
                 </div>
               })

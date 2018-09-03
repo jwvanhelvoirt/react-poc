@@ -2,6 +2,7 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
+import Label from '../Label/Label';
 import classes from './ToolbarIcon.scss';
 
 const toolbarIcon = (props) => {
@@ -9,6 +10,7 @@ const toolbarIcon = (props) => {
 
 	let containerLink = null;
 	if (props.link) {
+		// Support for route to display a particular component after clicking the icon.
 		containerLink =
 			<NavLink
 				to={props.link}
@@ -21,6 +23,7 @@ const toolbarIcon = (props) => {
 				{props.children}
 			</NavLink>
 	} else if (props.clicked) {
+		// Support for executing a callback function after clicking the icon.
 		containerLink =
 			<a
 				onClick={props.clicked}
@@ -30,11 +33,13 @@ const toolbarIcon = (props) => {
 			</a>
 	}
 
+
+
 	return (
 		<li className={classes.ToolbarIcon}>
 			{containerLink}
 			<ReactTooltip id={tooltipId} place="bottom" type="dark" effect="solid">
-				<span>{props.label}</span>
+				  <Label labelKey={props.label} convertType={'propercase'} />
 			</ReactTooltip>
 		</li>
 	);
