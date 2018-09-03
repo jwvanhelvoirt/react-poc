@@ -10,6 +10,8 @@ const formConfig = {
 					{ value: 'nl', displayValue: 'keyLangDutch' }
 				]
 			},
+			translateDisplayValues: true,
+			convertDisplayValues: 'propercase',
 			value: 'nl'
 		}
 	}

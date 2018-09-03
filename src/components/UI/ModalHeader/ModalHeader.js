@@ -16,7 +16,7 @@ const modalHeader = (props) => {
   const classesHeader = [classes.Header, classColor].join(' ');
   const label = props.title.map((item, index) => {
     return index === 0 ?
-      <Label key={index} labelKey={item} propercase={true} trailingSpace={true} /> :
+      <Label key={index} labelKey={item} convertType={'propercase'} trailingSpace={true} /> :
       <Label key={index} labelKey={item} />
   });
 

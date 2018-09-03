@@ -18,21 +18,21 @@ import View from '../../Parsers/ViewParser/ViewParser';
 import Button from '../Button/Button';
 import Label from '../Label/Label';
 import Aux from '../../../hoc/Auxiliary'
+import { propercase, getDisplayValue } from '../../../libs/generic';
 import classes from './Input.scss';
 
 class Input extends Component {
 
   render() {
-    // console.log(this.props);
     let inputElement = null;
     let inputClasses = [classes.InputElement];
     let validationError = null;
 
     const { elementType, elementConfig, value, valid, validation, touched, label,
-      defaultFocus, lookup, lookupFieldForDisplay, lookupTitle, placeholder} = this.props.configInput;
+      defaultFocus, lookup, lookupFieldForDisplay, lookupTitle, placeholder,
+      translateDisplayValues, convertDisplayValues } = this.props.configInput;
 
-    // We cannot use the <Label> component, because that returns an object and we can only use a plain text for the placeholder.
-    const placeholderInput = this.props.translates[placeholder] ? this.props.translates[placeholder] : null;
+    const placeholderInput = placeholder ? getDisplayValue(placeholder, 'propercase', true, this.props.translates): null;
 
     if (!valid && validation) {
       inputClasses.push(classes.Invalid);
@@ -74,11 +74,12 @@ class Input extends Component {
             value={value}
             autoFocus={autoFocus}
             onChange={this.props.changed}>
-            {elementConfig.options.map(option => (
-              <option key={option.value} value={option.value}>
-                {option.displayValue}
+            {elementConfig.options.map(option => {
+              const displayValue = getDisplayValue(option.displayValue, convertDisplayValues, translateDisplayValues, this.props.translates);
+              return <option key={option.value} value={option.value}>
+                {displayValue}
               </option>
-            ))}
+            })}
           </select>
         );
         break;
@@ -125,7 +126,7 @@ class Input extends Component {
     return(
       <div className={classes.Input}>
         <label className={classes.Label}>
-          <Label labelKey={label} propercase={true} />
+          <Label labelKey={label} convertType={'propercase'} />
         </label>
         {validationError}
         {inputElement}

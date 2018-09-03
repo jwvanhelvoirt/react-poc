@@ -18,7 +18,7 @@ const navigationItem = (props) => {
 						<FontAwesomeIcon icon={props.icon} />
 					</div>
 					<div>
-						<Label labelKey={props.label} propercase={true} />
+						<Label labelKey={props.label} convertType={'propercase'} />
 					</div>
 				</div>
 			</NavLink>

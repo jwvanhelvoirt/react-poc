@@ -572,7 +572,7 @@ class _View extends Component {
     const titleBar = viewConfig.showRowTitle ?
       <div className={classes.TitleRow}>
         <div onClick={() => this.createFakeData()} className={classes.Title}>
-          <Label labelKey={this.state.viewConfig.title} propercase={true} />
+          <Label labelKey={this.state.viewConfig.title} convertType={'propercase'} />
         </div>
         <div className={classes.Navigation}>
           {/*deleteAll*/}

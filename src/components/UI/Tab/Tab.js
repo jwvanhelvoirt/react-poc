@@ -13,7 +13,7 @@ const tab = (props) => {
 				<NavLink
 					className={classnames({ active: props.activeTab === props.tabItem.id })}
 					onClick={props.clicked}>
-					<Label labelKey={props.tabItem.label} propercase={true} />
+					<Label labelKey={props.tabItem.label} convertType={'propercase'} />
 				</NavLink>
 			</NavItem>
 		)

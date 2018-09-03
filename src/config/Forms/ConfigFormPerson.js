@@ -7,9 +7,9 @@ const formConfig = {
 		name: {
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'keyName'
+				type: 'text'
 			},
+			placeholder: 'keyName',
 			value: '',
 			validation: {
 				required: true
@@ -33,25 +33,25 @@ const formConfig = {
 		email: {
 			elementType: 'input',
 			elementConfig: {
-				type: 'email',
-				placeholder: 'keyEmail'
+				type: 'email'
 			},
+			placeholder: 'keyEmail',
 			value: ''
 		},
 		phone: {
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'keyPhone'
+				type: 'text'
 			},
+			placeholder: 'keyPhone',
 			value: ''
 		},
 		zip: {
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'keyZip'
+				type: 'text'
 			},
+			placeholder: 'keyZip',
 			value: '',
 			validation: {
 				required: true,
@@ -64,9 +64,9 @@ const formConfig = {
 		streetAddress: {
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'keyStreet'
+				type: 'text'
 			},
+			placeholder: 'keyStreet',
 			value: '',
 			validation: {
 				required: true
@@ -77,9 +77,9 @@ const formConfig = {
 		city: {
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'keyCity'
+				type: 'text'
 			},
+			placeholder: 'keyCity',
 			value: '',
 			validation: {
 				required: true
@@ -90,9 +90,9 @@ const formConfig = {
 		country: {
 			elementType: 'input',
 			elementConfig: {
-				type: 'text',
-				placeholder: 'keyCountry'
+				type: 'text'
 			},
+			placeholder: 'keyCountry',
 			value: 'Nederland',
 			validation: {
 				required: true

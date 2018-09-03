@@ -10,7 +10,7 @@ const portal = (props) => {
     <NavLink to={url} exact activeStyle={{color: 'red'}}>
       <div className={classes.Portal}>
         <div className={classes.Icon}><FontAwesomeIcon icon={icon} /></div>
-        <div className={classes.Label}><Label labelKey={label} propercase={true} /></div>
+        <div className={classes.Label}><Label labelKey={label} convertType={'propercase'} /></div>
       </div>
     </NavLink>
   );

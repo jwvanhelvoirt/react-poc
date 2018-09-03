@@ -28,7 +28,7 @@ const button = (props) => {
   if (props.labelText) {
     labelText = props.labelText.map((item, index) => {
       return index === 0 ?
-        <Label key={index} labelKey={item} propercase={true} trailingSpace={true} /> :
+        <Label key={index} labelKey={item} convertType={'propercase'} trailingSpace={true} /> :
         <Label key={index} labelKey={item} />
     });
   }
