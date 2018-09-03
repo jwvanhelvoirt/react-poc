@@ -583,11 +583,25 @@ class _View extends Component {
 
     // Actions bar: Filtering.
     const showFilterAction = filterOptions && filterOptions.length > 0 && showFilter ? true : false;
-    const filter = showFilterAction ? <div onClick={() => this.onClickFilterHandler()}><FontAwesomeIcon icon='filter' /></div> : null;
+    const filter = showFilterAction ?
+      <div onClick={() => this.onClickFilterHandler()} data-tip="React-tooltip" data-for='keyFilterAction'>
+        <FontAwesomeIcon icon='filter' />
+        <ReactTooltip id='keyFilterAction' place="bottom" type="dark" effect="solid">
+          <Label labelKey='keyFilterAction' convertType={'propercase'} />
+        </ReactTooltip>
+      </div> :
+      null;
 
     // Actions bar: Sorting.
     const showSortAction = sortOptions && sortOptions.length > 0 && showSort ? true : false;
-    const sort = showSortAction ? <div onClick={() => this.onClickSortHandler()}><FontAwesomeIcon icon='sort' /></div> : null;
+    const sort = showSortAction ?
+      <div onClick={() => this.onClickSortHandler()} data-tip="React-tooltip" data-for='keySortAction'>
+        <FontAwesomeIcon icon='sort' />
+        <ReactTooltip id='keySortAction' place="bottom" type="dark" effect="solid">
+          <Label labelKey='keySortAction' convertType={'propercase'} />
+        </ReactTooltip>
+      </div> :
+      null;
 
     // Filtering and sorting overall.
     const filterSort = showFilterAction || showSortAction ? <div className={classes.FilterSort}>{filter}{sort}</div> : null;
