@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import * as types from '../../../store/Actions';
 import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import ReactTooltip from 'react-tooltip';
 import Aux from '../../../hoc/Auxiliary';
 import formConfigPerson from '../../../config/Forms/ConfigFormPerson';
@@ -14,6 +15,7 @@ import Modal from '../../UI/Modal/Modal';
 import MessageBox from '../../UI/MessageBox/MessageBox';
 import Label from '../../UI/Label/Label';
 import { callServer } from '../../../api/api';
+import { getDisplayValue } from '../../../libs/generic';
 import classes from './ViewParser.scss';
 
 class _View extends Component {
@@ -150,7 +152,6 @@ class _View extends Component {
    * @brief   Callback that is triggered once a list of items has been successfully pulled from the server.
    */
   successGetHandler = (response, skip) => {
-    const { limit } = this.state.viewConfig;
     const { count, listItems } = response.data;
 
     // List items successfully loaded, update the state.
@@ -184,7 +185,7 @@ class _View extends Component {
       newPostData[inputId] = formConfig.inputs[inputId].value;
     }
     this.localData.addRecordToView = addToView;
-    this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: {...formConfig} });
+    this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: cloneDeep(formConfig) });
   };
 
   /**
@@ -423,7 +424,7 @@ class _View extends Component {
         headerSelected: !prevState.headerSelected,
         selectedListItems: updatedSelectedListItems
       };
-    })
+    });
   };
 
   /**
@@ -539,17 +540,19 @@ class _View extends Component {
     let navForw = null;
     let navForwMult = null;
 
+    const of = <Label labelKey='keyOf' />;
+
     if (viewConfig.showNavigation) {
         navBack =     <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div>;
         navBackMult = <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div>;
         navForwMult = <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div>;
         navForw =     <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div>;
         if (count > skip) {
-            navInfo = <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} van {count}</div>;
+            navInfo = <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} {of} {count}</div>;
         } else if (count === 0) {
           navInfo = <div key="1" className={classes.Counter}>0</div>;
         } else {
-          navInfo = <div key="1" className={classes.Counter}>1-{count} van {count}</div>;
+          navInfo = <div key="1" className={classes.Counter}>1-{count} {of} {count}</div>;
         }
     }
     const nav = [navInfo, navBack, navBackMult, navForwMult, navForw];
@@ -634,6 +637,7 @@ class _View extends Component {
     // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
     // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
     const debounced = this.state.debounceFunction ? _.debounce(this.submitSearchHandler, 500) : null;
+    const search = getDisplayValue('keySearch', 'propercase', true, this.props.translates);
 
     let searchBar = null;
     if (viewConfig.showSearchbar) {
@@ -647,7 +651,7 @@ class _View extends Component {
               debounced ? debounced(this) : null;
             }}
             autoFocus
-            className={classes.SearchInput} type="text" placeholder="Zoeken..." />
+            className={classes.SearchInput} type="text" placeholder={search} />
         </div>
       );
     }
@@ -702,7 +706,7 @@ class _View extends Component {
               sortIcon = this.state.sortOrder === 1 ? <FontAwesomeIcon icon='sort-up' /> : <FontAwesomeIcon icon='sort-down' />;
             }
             const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
-            const labelColumn = <div>{column.label}</div>;
+            const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
             const onColumn = column.sort ? () => this.sortOnColumn(column.id) : null;
             const classesCombinedHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
             return(
@@ -824,7 +828,8 @@ class _View extends Component {
 const mapStateToProps = state => {
   return {
     formTouched: state.redMain.formTouched,
-    sortItem: state.redMain.sortItem
+    sortItem: state.redMain.sortItem,
+    translates: state.redMain.transTranslates
   };
 }
 

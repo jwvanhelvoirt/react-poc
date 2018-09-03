@@ -55,7 +55,7 @@ const listViewConfig = {
 	columns: [
 		{
 			id: 'name',
-			label: 'Naam',
+			label: 'keyName',
 			sort: true,
 			data: 'name',
 			displayOn: 'always',
@@ -64,7 +64,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'email',
-			label: 'Email',
+			label: 'keyEmail',
 			sort: false,
 			data: 'email',
 			displayOn: 'none',
@@ -73,7 +73,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'phone',
-			label: 'Telefoon',
+			label: 'keyPhone',
 			sort: false,
 			data: 'phone',
 			displayOn: 'none',
@@ -82,7 +82,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'website',
-			label: 'Website',
+			label: 'keyWebsite',
 			sort: false,
 			data: 'website',
 			displayOn: 'none',
@@ -91,7 +91,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'zip',
-			label: 'Postcode',
+			label: 'keyZip',
 			sort: true,
 			data: 'zip',
 			displayOn: 'large',
@@ -100,7 +100,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'streetAddress',
-			label: 'Straat',
+			label: 'keyStreet',
 			sort: false,
 			data: 'streetAddress',
 			displayOn: 'medium,large',
@@ -109,7 +109,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'city',
-			label: 'Plaats',
+			label: 'keyCity',
 			sort: true,
 			data: 'city',
 			displayOn: 'always',
@@ -118,7 +118,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'country',
-			label: 'Land',
+			label: 'keyCountry',
 			sort: false,
 			data: 'country',
 			displayOn: 'always',
