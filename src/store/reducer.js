@@ -1,6 +1,7 @@
 import * as types from './Actions';
 
 const initialState = {
+  authenticated: false,
   formTouched: false,
   lookupFieldId: '',
   lookupFieldVal: '',
@@ -83,10 +84,16 @@ const reducer = (state = initialState, action) => {
     transLanguage: action.language
   }
 
-  case types.TRANS_TRANSLATES_STORE: // Object with key/value pairs for the interfac language.
+  case types.TRANS_TRANSLATES_STORE: // Object with key/value pairs for the interface language.
   return {
     ...state,
     transTranslates: action.translates
+  }
+
+  case types.USER_AUTHENTICATE: // Is the user authenticated or not?.
+  return {
+    ...state,
+    authenticated: action.authenticate
   }
 
 

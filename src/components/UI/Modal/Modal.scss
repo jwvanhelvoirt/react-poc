@@ -1,11 +1,12 @@
 .ModalExtraSmall, .ModalSmall, .ModalMedium, .ModalWide, .ModalExtraWide {
 	position: fixed;
 	background-color: white;
-	box-shadow: 1px 1px 1px black;
+	box-shadow: 1px 1px 20px 8px rgba(0,0,0,0.35);
 	box-sizing: border-box;
 	transition: all 0.3s ease-out;
 	overflow-y: auto;
 	max-height: 600px;
+	border-radius: 5px;
 }
 
 .Pos1 {

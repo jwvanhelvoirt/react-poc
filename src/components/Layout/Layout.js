@@ -32,21 +32,35 @@ class Layout extends Component {
   }
 
   render() {
-    return (
+    const { toolbar } = this.props;
+
+    let toolbarAndSideDrawers = null;
+    if (toolbar) {
       <Aux>
         <Toolbar
           drawerToggleClicked={this.sideDrawerToggleHandler}
           drawerToggleClickedIcons={this.sideDrawerToggleHandlerIcons}
-          navIcons={this.props.navIcons} />
+          navIcons={this.props.navIcons}
+        />
         <SideDrawer
           open={this.state.showSideDrawer}
           closed={this.sideDrawerClosedHandler}
-          navItems={this.props.navItems} />
+          navItems={this.props.navItems}
+        />
         <SideDrawer
           open={this.state.showSideDrawerIcons}
           closed={this.sideDrawerClosedHandlerIcons}
-          navItems={this.props.navIcons} />
-        <main className={classes.Content}>
+          navItems={this.props.navIcons}
+        />
+      </Aux>
+    }
+
+    const contentClass = toolbar ? classes.Content : classes.FullScreen;
+
+    return (
+      <Aux>
+        {toolbar}
+        <main className={contentClass}>
           {this.props.children}
         </main>
       </Aux>

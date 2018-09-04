@@ -515,7 +515,7 @@ class _View extends Component {
           onSubmit={this.onSubmitHandler}
           id={this.state.selectedListItemId}
           modal={true}
-          />
+        />
       );
     }
 
