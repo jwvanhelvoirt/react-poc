@@ -127,9 +127,9 @@ const listViewConfig = {
 		}
 	],
 	filterOptions: [
-		{ id: 'city', label: 'Plaats', collection: ''}, // Als je geen collection opgeeft, dan gaat hij zoeken in collectie die aan viewConfig gekoppeld is.
-		{ id: 'country', label: 'Land', collection: ''},
-		{ id: 'organisationManager', label: 'Organisatie manager', collection: 'medewerkers'}
+		{ id: 'city', label: 'keyCity', collection: ''}, // Als je geen collection opgeeft, dan gaat hij zoeken in collectie die aan viewConfig gekoppeld is.
+		{ id: 'country', label: 'keyCountry', collection: ''},
+		{ id: 'organisationManager', label: 'keyOrganisationManager', collection: 'medewerkers'}
 	],
 	limit: 50,
 	multiSelect: true,
@@ -147,18 +147,21 @@ const listViewConfig = {
 	showSearchbar: true,
 	showSort: true,
 	sort: 'name',
-	sortOptions: [ // In this order the sort options will appear in the list.
-		{ _id: 'nameA', label: 'Naam (a-z)', sortOn: 'name', order: 1},
-		{ _id: 'nameD', label: 'Naam (z-a)', sortOn: 'name', order: -1},
-		{ _id: 'emailA', label: 'Email (a-z)', sortOn: 'email', order: 1},
-		{ _id: 'phoneA', label: 'Telefoon (a-z)', sortOn: 'phone', order: 1},
-		{ _id: 'websiteA', label: 'Website (a-z)', sortOn: 'website', order: 1},
-		{ _id: 'zipA', label: 'Postcode (a-z)', sortOn: 'zip', order: 1},
-		{ _id: 'streetAddressA', label: 'Straat (a-z)', sortOn: 'streetAddress', order: 1},
-		{ _id: 'cityA', label: 'Plaats (a-z)', sortOn: 'city', order: 1},
-		{ _id: 'cityD', label: 'Plaats (z-a)', sortOn: 'city', order: -1},
-		{ _id: 'countryA', label: 'Land (a-z)', sortOn: 'country', order: 1}
-	],
+	sortOptions: {
+		translate: true,
+		options: [ // In this order the sort options will appear in the list.
+			{ _id: 'nameA', label: ['keyName', 'keyAscending'], sortOn: 'name', order: 1},
+			{ _id: 'nameD', label: ['keyName', 'keyDescending'], sortOn: 'name', order: -1},
+			{ _id: 'emailA', label: ['keyEmail', 'keyAscending'], sortOn: 'email', order: 1},
+			{ _id: 'phoneA', label: ['keyPhone', 'keyAscending'], sortOn: 'phone', order: 1},
+			{ _id: 'websiteA', label: ['keyWebsite', 'keyAscending'], sortOn: 'website', order: 1},
+			{ _id: 'zipA', label: ['keyZip', 'keyAscending'], sortOn: 'zip', order: 1},
+			{ _id: 'streetAddressA', label: ['keyStreet', 'keyAscending'], sortOn: 'streetAddress', order: 1},
+			{ _id: 'cityA', label: ['keyCity', 'keyAscending'], sortOn: 'city', order: 1},
+			{ _id: 'cityD', label: ['keyCity', 'keyDescending'], sortOn: 'city', order: -1},
+			{ _id: 'countryA', label: ['keyCountry', 'keyAscending'], sortOn: 'country', order: 1}
+		]
+	},
 	title: 'keyOrganisation',
 	url: 'organisations'
 }

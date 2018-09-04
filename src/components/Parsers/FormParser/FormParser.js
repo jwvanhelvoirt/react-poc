@@ -15,9 +15,6 @@ import { connect } from 'react-redux';
 import * as types from '../../../store/Actions';
 import Aux from '../../../hoc/Auxiliary';
 import Input from '../../UI/Input/Input';
-import Button from '../../UI/Button/Button';
-import ModalHeader from '../../UI/ModalHeader/ModalHeader';
-import ModalFooter from '../../UI/ModalFooter/ModalFooter';
 import MessageBox from '../../UI/MessageBox/MessageBox';
 import { callServer } from '../../../api/api';
 

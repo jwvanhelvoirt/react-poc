@@ -24,7 +24,39 @@ class _View extends Component {
 
     const { viewConfig } = this.props;
     const loading = viewConfig.url ? true : false;
-    const listItems = viewConfig.url ? [] : this.props.listItems;
+
+    let listItems = [];
+    if (!viewConfig.url) {
+      // listItems can be taken dynamically from the server, but can also be injected via a prop.
+      // This prop must be an object with two attributes:
+      // 1. options   (Array of objects containing information of the items to be displayed).
+      // 2. translate (Boolean indicating if the label property of a single object should be translated).
+
+      let listItemsUpdated = cloneDeep(this.props.listItems);
+      if (listItemsUpdated.translate) {
+        listItemsUpdated.options = listItemsUpdated.options.map((item) => {
+          // Translate the label.
+          if (Array.isArray(item.label)) {
+              // Array of translate keys that are concatenated divided by a space.
+              item.label = item.label.map((labelPart, index) => {
+                if (index === 0) {
+                  // We propercase only the first translate key.
+                  return getDisplayValue(labelPart, 'propercase', true, this.props.translates);
+                } else {
+                  return getDisplayValue(labelPart, null, true, this.props.translates);
+                }
+              });
+              item.label = item.label.join(' ');
+          } else {
+            // Translate key is a string.
+            item.label = getDisplayValue(item.label, 'propercase', true, this.props.translates);
+          }
+          return item;
+        });
+      }
+
+      listItems = listItemsUpdated.options;
+    }
 
     this.state = {
       debounceFunction: true,
@@ -358,7 +390,7 @@ class _View extends Component {
 
   processSelectedSortOption = () => {
     // Get the selected sort item via the store.
-    const selectedSortOption = this.state.viewConfig.sortOptions.filter((item) => item._id === this.props.sortItem);
+    const selectedSortOption = this.state.viewConfig.sortOptions.options.filter((item) => item._id === this.props.sortItem);
 
     const { searchbarValue } = this.state;
     const { sort, sortOrder } = selectedSortOption[0];
@@ -596,7 +628,7 @@ class _View extends Component {
       null;
 
     // Actions bar: Sorting.
-    const showSortAction = sortOptions && sortOptions.length > 0 && showSort ? true : false;
+    const showSortAction = sortOptions && sortOptions.options && sortOptions.options.length > 0 && showSort ? true : false;
     const sort = showSortAction ?
       <div onClick={() => this.onClickSortHandler()} data-tip="React-tooltip" data-for='keySortAction'>
         <FontAwesomeIcon icon='sort' />

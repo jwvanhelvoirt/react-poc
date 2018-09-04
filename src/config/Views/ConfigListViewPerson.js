@@ -55,7 +55,7 @@ const listViewConfig = {
 	columns: [
 		{
 			id: 'name',
-			label: 'Naam',
+			label: 'keyName',
 			sort: true,
 			data: 'name',
 			displayOn: 'always',
@@ -64,7 +64,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'email',
-			label: 'Email',
+			label: 'keyEmail',
 			sort: false,
 			data: 'email',
 			displayOn: 'none',
@@ -73,8 +73,8 @@ const listViewConfig = {
 		},
 		{
 			id: 'phone',
-			label: 'Telefoon',
-			sort: true,
+			label: 'keyPhone',
+			sort: false,
 			data: 'phone',
 			displayOn: 'none',
 			show: true,
@@ -82,7 +82,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'zip',
-			label: 'Postcode',
+			label: 'keyZip',
 			sort: true,
 			data: 'zip',
 			displayOn: 'large',
@@ -91,7 +91,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'streetAddress',
-			label: 'Straat',
+			label: 'keyStreet',
 			sort: false,
 			data: 'streetAddress',
 			displayOn: 'medium,large',
@@ -100,7 +100,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'city',
-			label: 'Plaats',
+			label: 'keyCity',
 			sort: true,
 			data: 'city',
 			displayOn: 'always',
@@ -109,7 +109,7 @@ const listViewConfig = {
 		},
 		{
 			id: 'country',
-			label: 'Land',
+			label: 'keyCountry',
 			sort: false,
 			data: 'country',
 			displayOn: 'always',
@@ -118,9 +118,9 @@ const listViewConfig = {
 		}
 	],
 	filterOptions: [
-		{ id: 'city', label: 'Plaats', collection: ''}, // Als je geen collection opgeeft, dan gaat hij zoeken in collectie die aan viewConfig gekoppeld is.
-		{ id: 'country', label: 'Land', collection: ''},
-		{ id: 'organisationManager', label: 'Organisatie manager', collection: 'medewerkers'}
+		{ id: 'city', label: 'keyCity', collection: ''}, // Als je geen collection opgeeft, dan gaat hij zoeken in collectie die aan viewConfig gekoppeld is.
+		{ id: 'country', label: 'keyCountry', collection: ''},
+		{ id: 'organisationManager', label: 'keyOrganisationManager', collection: 'medewerkers'}
 	],
 	limit: 50,
 	multiSelect: true,
@@ -138,15 +138,18 @@ const listViewConfig = {
 	showSearchbar: true,
 	showSort: true,
 	sort: 'name',
-	sortOptions: [ // In this order the sort options will appear in the list.
-		{ _id: 'nameA', label: 'Naam (a-z)', sortOn: 'name', order: 1},
-		{ _id: 'nameD', label: 'Naam (z-a)', sortOn: 'name', order: -1},
-		{ _id: 'emailA', label: 'Email (a-z)', sortOn: 'email', order: 1},
-		{ _id: 'emailD', label: 'Email (z-a)', sortOn: 'email', order: -1},
-		{ _id: 'zipA', label: 'Postcode (a-z)', sortOn: 'zip', order: 1},
-		{ _id: 'streetAddressA', label: 'Straat (a-z)', sortOn: 'streetAddress', order: 1},
-		{ _id: 'countryA', label: 'Land (a-z)', sortOn: 'country', order: 1}
-	],
+	sortOptions: {
+		translate: true,
+		options: [ // In this order the sort options will appear in the list.
+			{ _id: 'nameA', label: ['keyName', 'keyAscending'], sortOn: 'name', order: 1},
+			{ _id: 'nameD', label: ['keyName', 'keyDescending'], sortOn: 'name', order: -1},
+			{ _id: 'emailA', label: ['keyEmail', 'keyAscending'], sortOn: 'email', order: 1},
+			{ _id: 'emailD', label: ['keyEmail', 'keyDescending'], sortOn: 'email', order: -1},
+			{ _id: 'zipA', label: ['keyZip', 'keyAscending'], sortOn: 'zip', order: 1},
+			{ _id: 'streetAddressA', label: ['keyStreet', 'keyAscending'], sortOn: 'streetAddress', order: 1},
+			{ _id: 'countryA', label: ['keyCountry', 'keyAscending'], sortOn: 'country', order: 1}
+		]
+	},
 	title: 'keyPerson',
 	url: 'persons'
 }
