@@ -96,8 +96,8 @@ const reducer = (state = initialState, action) => {
     authenticated: action.authenticate
   }
 
-
-
+  default:
+    break;
 
   }
 

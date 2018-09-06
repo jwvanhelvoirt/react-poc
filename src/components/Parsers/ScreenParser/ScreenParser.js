@@ -9,12 +9,17 @@ class Screen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { tabsConfig: [...this.props.tabsConfig] };
-    this.state.tabsConfig.forEach((pane) => {
+    const activeTabs = {};
+    this.props.tabsConfig.forEach((pane) => {
       pane.blocks.forEach((block) => {
-        this.state[block.id] = block.activeTab;
+        activeTabs[block.id] = block.activeTab;
       });
     });
+
+    this.state = {
+      activeTabs,
+      tabsConfig: [...this.props.tabsConfig]
+    };
   }
 
   togglePane = (id) => {
@@ -64,8 +69,8 @@ class Screen extends Component {
       let html = "";
       if (pane.show) {
         html = pane.blocks.map((block, indexBlock) => {
-          const links = getTabRow(this.state[block.id], block.tabs, block.id, this);
-          const content = getTabComponent(this.state[block.id], block.tabs);
+          const links = getTabRow(this.state.activeTabs[block.id], block.tabs, block.id, this);
+          const content = getTabComponent(this.state.activeTabs[block.id], block.tabs);
 
           const toggle = pane.toggle ? (pane.show ? buttonHide : "") : "";
 

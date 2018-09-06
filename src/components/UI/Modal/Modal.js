@@ -27,15 +27,19 @@ class Modal extends Component {
 
   componentWillMount() {
     // For now we support three levels of message boxes. Probably two is enough, but just in case.
-    !this.props.messageBox1 ?
-      this.props.openMessageBox1() :
-      (!this.props.messageBox2 ? this.props.openMessageBox2() : null);
+    if (!this.props.messageBox1) {
+      this.props.openMessageBox1()
+    } else if (!this.props.messageBox2) {
+        this.props.openMessageBox2()
+    }
   };
 
   componentWillUnmount() {
-    this.props.messageBox2 ?
-      this.props.closeMessageBox2() :
-      (this.props.messageBox1 ? this.props.closeMessageBox1() : null);
+    if (this.props.messageBox2) {
+      this.props.closeMessageBox2()
+    } else if (this.props.messageBox1) {
+      this.props.closeMessageBox1()
+    }
   };
 
   render() {

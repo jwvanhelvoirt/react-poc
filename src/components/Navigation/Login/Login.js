@@ -10,10 +10,6 @@ class Login extends Component {
     loadedListItem: null
   };
 
-  onCloseHandler = () => {
-    console.log('Login - cancel moet straks weg');
-  };
-
   onSubmitHandler = (response) => {
     const { authorized, magic } = response.data;
 
@@ -40,7 +36,6 @@ class Login extends Component {
         <FormParser
           configForm={formLogin}
           data={this.state.loadedListItem}
-          onCancel={() => this.onCloseHandler()}
           onSubmit={this.onSubmitHandler}
           id={null}
           modal={true}

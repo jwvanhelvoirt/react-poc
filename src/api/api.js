@@ -1,5 +1,4 @@
 import axios from 'axios';
-import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
 
 const callServer = (type, url, successCallback, errorCallback, postData, hash, queryParams, queryParamsValues) => {
 	// TODO: url uitbreiden met #hash en ?queryparams en queryparamsvalues
@@ -24,6 +23,8 @@ const callServer = (type, url, successCallback, errorCallback, postData, hash, q
 			axios.delete(url)
 				.then(successCallback)
 				.catch(errorCallback);
+			break;
+		default:
 			break;
 	}
 }

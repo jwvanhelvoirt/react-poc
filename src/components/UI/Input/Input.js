@@ -12,13 +12,13 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from '../../../store/Actions';
-import cloneDeep from 'lodash/cloneDeep';
+// import * as types from '../../../store/Actions';
+// import cloneDeep from 'lodash/cloneDeep';
 import View from '../../Parsers/ViewParser/ViewParser';
 import Button from '../Button/Button';
 import Label from '../Label/Label';
 import Aux from '../../../hoc/Auxiliary'
-import { propercase, getDisplayValue } from '../../../libs/generic';
+import { getDisplayValue } from '../../../libs/generic';
 import classes from './Input.scss';
 
 class Input extends Component {
@@ -29,7 +29,7 @@ class Input extends Component {
     let validationError = null;
 
     const { elementType, elementConfig, value, valid, validation, touched, label,
-      defaultFocus, lookup, lookupFieldForDisplay, lookupTitle, placeholder,
+      defaultFocus, lookup, lookupTitle, placeholder,
       translateDisplayValues, convertDisplayValues } = this.props.configInput;
 
     const placeholderInput = placeholder ? getDisplayValue(placeholder, 'propercase', true, this.props.translates): null;

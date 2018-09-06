@@ -9,10 +9,24 @@ const messageBox = (props) => {
 
   const content = (
     <div className={classes.MessageBox}>
-      <ModalHeader title={props.messageTitle} type={props.type} />
-      <div className={classes.Content}>{props.messageContent}</div>
-      <ModalFooter buttons={props.buttons} formIsValid={props.formIsValid}
-        callBackOk={props.callBackOk} callBackCancel={props.callBackCancel} />
+      <ModalHeader
+        title={props.messageTitle}
+        type={props.type}
+        headerSize={props.headerSize}
+        titleIcon={props.titleIcon}
+        titleAlign={props.titleAlign}
+      />
+      <div className={classes.Content}>
+        {props.messageContent}
+      </div>
+      <ModalFooter
+        buttons={props.buttons}
+        formIsValid={props.formIsValid}
+        okButtonLabel={props.okButtonLabel}
+        cancelButtonLabel={props.cancelButtonLabel}
+        callBackOk={props.callBackOk}
+        callBackCancel={props.callBackCancel}
+      />
     </div>
   );
 

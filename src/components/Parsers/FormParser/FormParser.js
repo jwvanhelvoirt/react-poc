@@ -210,6 +210,7 @@ class Form extends Component {
 
   render() {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
+    const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel, cancelButtonLabel } = this.state.configForm;
 
     let lookupModal = null;
     if (this.state.showModalLookup) {
@@ -222,11 +223,11 @@ class Form extends Component {
     }
 
     let formElementsArray = [];
-    for (let inputId in this.state.configForm.inputs) {
+    for (let inputId in inputs) {
       if (inputId !== '_id' && inputId !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
         formElementsArray.push({
           inputId,
-          configInput: this.state.configForm.inputs[inputId]
+          configInput: inputs[inputId]
         });
       }
     }
@@ -241,7 +242,8 @@ class Form extends Component {
                   inputId={formElement.inputId}
                   changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
                   configInput={formElement.configInput}
-                  showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) => this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
+                  showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) =>
+                    this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
                   removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
                   />
               )
@@ -250,13 +252,25 @@ class Form extends Component {
       </div>;
 
     // Title of the form.
-    const title = this.props.id ? [this.state.configForm.title] : ['keyNew', this.state.configForm.title];
+    const titleForm = (this.props.id || noCreate) ? [title] : ['keyNew', title];
 
     return (
       <Aux>
-        <MessageBox modalClass='ModalWide' messageTitle={title} type='info'
-          messageContent={content} buttons='butOkCancel' formIsValid={this.state.isValidForm}
-          callBackOk={this.submitHandler} callBackCancel={this.props.onCancel} modal={this.props.modal}
+        <MessageBox
+          modalClass={size}
+          messageTitle={titleForm}
+          type='info'
+          titleIcon={titleIcon}
+          titleAlign={titleAlign}
+          messageContent={content}
+          buttons={buttons}
+          okButtonLabel={okButtonLabel}
+          cancelButtonLabel={cancelButtonLabel}
+          formIsValid={this.state.isValidForm}
+          headerSize={headerSize}
+          modal={this.props.modal}
+          callBackOk={this.submitHandler}
+          callBackCancel={this.props.onCancel}
         />
         {lookupModal}
       </Aux>

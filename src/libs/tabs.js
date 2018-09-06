@@ -10,8 +10,17 @@ import Tab from '../components/UI/Tab/Tab';
  */
 export const clickHandlerTab = (tabPos, activeTab, tabIndex, _this) => {
   if (activeTab !== tabIndex) {
+    let activeTabsUpdated = { ..._this.state.activeTabs }
+    const activeTabsKeys = Object.keys({ ..._this.state.activeTabs });
+
+    activeTabsKeys.forEach((item) => {
+      if (item === tabPos) {
+        activeTabsUpdated[item] = tabIndex;
+      }
+    });
+
     _this.setState({
-      [tabPos]: tabIndex
+      activeTabs: activeTabsUpdated
     });
   }
 }

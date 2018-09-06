@@ -1,6 +1,9 @@
 import configLookupOrganisation from '../Views/ConfigLookupOrganisation';
 
 const formConfig = {
+	buttons: 'butOkCancel',
+	headerSize: 'HeaderSmall',
+	size: 'ModalWide',
 	title: 'keyPerson',
 	url: 'persons',
 	inputs: {
@@ -24,11 +27,11 @@ const formConfig = {
 			lookupFieldForDisplay: 'name',
 			lookupTitle: 'keyOrganisation',
 			value: [],
-			validation: {
-				required: true
-			},
-			valid: false,
-			touched: false
+			// validation: {
+			// 	required: true
+			// },
+			// valid: false,
+			// touched: false
 		},
 		email: {
 			elementType: 'input',

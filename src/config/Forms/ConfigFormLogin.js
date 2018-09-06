@@ -1,5 +1,12 @@
 const formConfig = {
+	buttons: 'butOk',
+	headerSize: 'HeaderMedium',
+	noCreate: true,
+	okButtonLabel: 'keyLogin',
+	size: 'ModalSmall',
 	title: 'keyLogin',
+	titleAlign: 'Left', // default
+	titleIcon: 'sign-in-alt',
 	url: 'login',
 	inputs: {
 		username: {

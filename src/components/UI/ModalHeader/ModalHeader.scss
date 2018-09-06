@@ -1,12 +1,58 @@
 .Header {
   height: auto;
   color: white;
-  padding: 10px 10px;
+  padding: 0 10px;
   box-sizing: border-box;
   font-size: 15px;
+  height: 40px;
   position: sticky;
 	top: 0;
 	left: 0;
+  display: flex;
+  align-items: center;
+}
+
+.Header>* {
+  margin-right: 6px;
+}
+
+.HeaderSmall {
+  font-size: 15px;
+  height: 40px;
+}
+
+.HeaderSmall>* {
+  margin-right: 6px;
+}
+
+.HeaderMedium {
+  font-size: 30px;
+  height: 60px;
+}
+
+.HeaderMedium>* {
+  margin-right: 10px;
+}
+
+.HeaderLarge {
+  font-size: 45px;
+  height: 80px;
+}
+
+.HeaderLarge>* {
+  margin-right: 14px;
+}
+
+.Left {
+  justify-content: flex-start;
+}
+
+.Center {
+  justify-content: center;
+}
+
+.Right {
+  justify-content: flex-end;
 }
 
 .Info {

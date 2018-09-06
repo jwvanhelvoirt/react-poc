@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { NavItem, NavLink } from 'reactstrap';
 import Label from '../../UI/Label/Label';
 import classnames from 'classnames';
 

@@ -18,6 +18,8 @@ export const getDisplayValue = (displayValue, convertDisplayValues, translateDis
     case 'lowercase':
       value = value.toLowerCase();
       break;
+    default:
+      break;
   }
 
   return value;

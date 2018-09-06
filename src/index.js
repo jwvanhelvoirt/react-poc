@@ -6,13 +6,14 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
 
-import { createStore, combineReducers, compose } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import reducer from './store/Reducer';
 import reducerCrm from './store/ReducerCrm';
 import { Provider } from 'react-redux';
 
 // axios.defaults.baseURL = 'https://ez2xs-4bf38.firebaseio.com/';
-axios.defaults.baseURL = 'http://localhost:3050/api/';
+// axios.defaults.baseURL = 'http://localhost:3050/api/';
+axios.defaults.baseURL = 'http://172.16.18.168:3050/api/';
 
 // Configure interceptor for handling requests globally.
 //axios.interceptors.request.use(request => {

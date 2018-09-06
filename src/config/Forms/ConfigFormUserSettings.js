@@ -1,4 +1,6 @@
 const formConfig = {
+	buttons: 'butOkCancel',
+	headerSize: 'HeaderLarge',
 	title: 'keyPersonalSettings',
 	url: 'usersettings',
 	inputs: {

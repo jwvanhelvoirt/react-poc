@@ -6,10 +6,8 @@ import _ from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import ReactTooltip from 'react-tooltip';
 import Aux from '../../../hoc/Auxiliary';
-import formConfigPerson from '../../../config/Forms/ConfigFormPerson';
 import viewConfigSort from '../../../config/Views/ConfigListViewSortOptions';
 import FormParser from '../FormParser/FormParser';
-import Button from '../../UI/Button/Button';
 import Spinner from '../../UI/Spinner/Spinner';
 import Modal from '../../UI/Modal/Modal';
 import MessageBox from '../../UI/MessageBox/MessageBox';
@@ -316,6 +314,8 @@ class _View extends Component {
         case 'sort':
           this.props.storeSortItem(id);
           break;
+        default:
+          break;
       }
 
     }
@@ -333,7 +333,9 @@ class _View extends Component {
     callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
     // In case this reload is triggere from the view refresh action, text in the searchbar must be removed.
-    emptySearchbar ? this.setState({ searchbarValue: '' }) : null;
+    if (emptySearchbar) {
+      this.setState({ searchbarValue: '' })
+    }
   };
 
   /**
@@ -347,7 +349,9 @@ class _View extends Component {
       (multiple ? skip - (this.navStep * viewConfig.limit ) : skip - viewConfig.limit);
 
     // Navigation buttons are always clickable, but should not trigger a server call if not necessary.
-    skipNext >= 0 && this.state.count > skipNext ? this.reloadListView(skipNext, searchbarValue) : null;
+    if (skipNext >= 0 && this.state.count > skipNext) {
+      this.reloadListView(skipNext, searchbarValue)
+    }
   };
 
   /**
@@ -393,7 +397,7 @@ class _View extends Component {
     const selectedSortOption = this.state.viewConfig.sortOptions.options.filter((item) => item._id === this.props.sortItem);
 
     const { searchbarValue } = this.state;
-    const { sort, sortOrder } = selectedSortOption[0];
+    // const { sortOrder } = selectedSortOption[0];
 
     // setState is async function, the method 'reloadListView' relies on the updated state, so we use a callback to continue.
     this.setState({sort: selectedSortOption[0].sortOn, sortOrder: selectedSortOption[0].order}, () => { this.reloadListView(0, searchbarValue); });
@@ -474,6 +478,9 @@ class _View extends Component {
         case -1: // descending
           this.setState({sort: this.state.viewConfig.sort, sortedColumn: '', sortOrder: 1}, () => { this.reloadListView(0, searchbarValue); });
           break;
+        default:
+          this.setState({sortOrder: -1}, () => { this.reloadListView(0, searchbarValue); });
+          break;
       }
     } else {
       // setState is async function, the method 'reloadListView' relies on the updated state, so we use a callback to continue.
@@ -490,13 +497,13 @@ class _View extends Component {
   successFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Fake data succesvol aangemaakt.', 'butOk');
   errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
 
-  deleteAll = () => {
-    callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
-      (response) => this.successDeleteAll(response),
-      this.errorDeleteAll);
-  };
-  successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Bulk records succesvol verwijderd.', 'butOk');
-  errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
+  // deleteAll = () => {
+  //   callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
+  //     (response) => this.successDeleteAll(response),
+  //     this.errorDeleteAll);
+  // };
+  // successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Bulk records succesvol verwijderd.', 'butOk');
+  // errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
@@ -597,11 +604,11 @@ class _View extends Component {
       </div> : null;
 
     // Title bar: TEMPORARY TO DELETE ALL RECORDS FROM A COLLECTION, FOR TEST PURPOSES.
-    const deleteAll =
-      <div onClick={() => this.deleteAll()}
-           className={classes.ColumnConfigurator}>
-           <FontAwesomeIcon icon='trash' />
-      </div>;
+    // const deleteAll =
+    //   <div onClick={() => this.deleteAll()}
+    //        className={classes.ColumnConfigurator}>
+    //        <FontAwesomeIcon icon='trash' />
+    //   </div>;
 
     // Title bar overall.
     const titleBar = viewConfig.showRowTitle ?
@@ -668,7 +675,7 @@ class _View extends Component {
 
     // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
     // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
-    const debounced = this.state.debounceFunction ? _.debounce(this.submitSearchHandler, 500) : null;
+    const debounced = this.state.debounceFunction ? _.debounce(this.submitSearchHandler, 800) : null;
     const search = getDisplayValue('keySearch', 'propercase', true, this.props.translates);
 
     let searchBar = null;
@@ -680,7 +687,9 @@ class _View extends Component {
             value={this.state.searchbarValue}
             onChange={(event) => {
               this.inputSearchbarHandler(event);
-              debounced ? debounced(this) : null;
+              if (debounced) {
+                debounced(this)
+              }
             }}
             autoFocus
             className={classes.SearchInput} type="text" placeholder={search} />

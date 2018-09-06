@@ -56,7 +56,9 @@ class ToolbarSearch extends Component {
           value={this.state.searchbarValue}
           onChange={(event) => {
             this.inputSearchbarHandler(event);
-            debounced ? debounced(this) : null;
+            if (debounced) {
+              debounced(this)  
+            }
           }}
           className={classes.SearchInput} type="text" placeholder={search} />
       </div>

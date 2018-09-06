@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as types from './store/Actions';
 import './assets/FontAwesome/Fontawesome';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 import { Util } from 'reactstrap';
 import Layout from './components/Layout/Layout';
-import asynchComponent from './hoc/asynchComponent';
+// import asynchComponent from './hoc/asynchComponent';
 import Aux from './hoc/Auxiliary';
 import { callServer } from './api/api';
 
@@ -79,7 +79,8 @@ class App extends Component {
 
   componentWillMount() {
     this.loadPersonalSettings(); // TODO : We have to get the translates somehow, configure a defaultin general settings ('en' or 'nl').
-// localStorage.setItem("magic", "12345");
+    // localStorage.setItem("magic", "123456");
+    // localStorage.removeItem("magic");
     const magic = localStorage.getItem("magic");
     if (magic) {
       // There is a magic in the local storage. Make a server call to check if this is the correct magic.

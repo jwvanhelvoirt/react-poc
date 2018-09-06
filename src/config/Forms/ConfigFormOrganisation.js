@@ -1,7 +1,11 @@
 import configLookupPerson from '../Views/ConfigLookupPerson';
 
 const formConfig = {
+	buttons: 'butOkCancel',
+	headerSize: 'HeaderSmall',
+	size: 'ModalWide',
 	title: 'keyOrganisation',
+	// titleIcon: 'building',
 	url: 'organisations',
 	inputs: {
 		name: {

@@ -1,5 +1,4 @@
 import React from 'react';
-import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 import DrawerToggleIcons from '../SideDrawer/DrawerToggle/DrawerToggleIcons';
 import ToolbarSearch from './ToolbarSearch/ToolbarSearch';
