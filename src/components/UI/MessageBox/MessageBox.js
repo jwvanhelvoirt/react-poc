@@ -21,6 +21,7 @@ const messageBox = (props) => {
       </div>
       <ModalFooter
         buttons={props.buttons}
+        buttonsClass={props.buttonsClass}
         formIsValid={props.formIsValid}
         okButtonLabel={props.okButtonLabel}
         cancelButtonLabel={props.cancelButtonLabel}

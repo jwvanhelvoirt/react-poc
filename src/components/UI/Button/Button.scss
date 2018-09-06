@@ -1,6 +1,11 @@
 .Button:not(:first-child) {
 	margin-left: 2px;
 }
+
 .Button:not(:last-child) {
 	margin-right: 2px;
+}
+
+.FillSpace {
+	flex-grow: 1;
 }

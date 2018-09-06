@@ -1,5 +1,6 @@
 const formConfig = {
 	buttons: 'butOk',
+	buttonsClass: 'FillSpace',
 	headerSize: 'HeaderMedium',
 	noCreate: true,
 	okButtonLabel: 'keyLogin',

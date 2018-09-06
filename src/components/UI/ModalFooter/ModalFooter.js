@@ -7,9 +7,13 @@ const modalFooter = (props) => {
   const okButDisabled = props.formIsValid === false  ? true : false;
   const labelOk = props.okButtonLabel ? props.okButtonLabel : 'keyOk';
   const labelCancel = props.cancelButtonLabel ? props.cancelButtonLabel : 'keyCancel';
-  const butOk     = <Button clicked={props.callBackOk} color="success" labelText={[labelOk]} disabled={okButDisabled} />;
-  const butCancel = <Button clicked={props.callBackCancel} color="danger" labelText={[labelCancel]} />;
   let but = null;
+
+  const butOk     =
+    <Button clicked={props.callBackOk} color="success" buttonsClass={props.buttonsClass} labelText={[labelOk]} disabled={okButDisabled} />;
+
+  const butCancel =
+    <Button clicked={props.callBackCancel} color="danger" buttonsClass={props.buttonsClass} labelText={[labelCancel]} />;
 
   switch (props.buttons) {
   case 'butOk':

@@ -40,12 +40,14 @@ const button = (props) => {
    opts['outline'] = true;
  }
 
-  // Get the button and tooltip html.
+ const classesButton = [classes.Button, classes[props.buttonsClass]].join(' ');
+
+   // Get the button and tooltip html.
   let button = (
     <Button
       size='sm'
       {...opts}
-      className={classes.Button}
+      className={classesButton}
       color={props.color}
       onClick={props.clicked}
       disabled={props.disabled}>
@@ -59,7 +61,7 @@ const button = (props) => {
       <Button
         size='sm'
         {...opts}
-        className={classes.Button}
+        className={classesButton}
         color={props.color}
         onClick={props.clicked}
         disabled={props.disabled}
