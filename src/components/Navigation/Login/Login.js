@@ -17,6 +17,11 @@ class Login extends Component {
       // Authorization was succesfull.
       localStorage.setItem("magic", magic);
       this.props.authenticateUser(true); // This will re-render the app component and show the dashboard.
+      this.props.showUserInfo(false);
+    } else {
+      // Login was not successfull. User must be informed.
+      // This re-renders the form, but now the user info message will be displayed.
+      this.props.showUserInfo(true);
     }
   };
 
@@ -47,7 +52,8 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } )
+    authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
+    showUserInfo: (formShowUserInfo) => dispatch( {type: types.FORM_USER_INFO, formShowUserInfo } )
   }
 }
 

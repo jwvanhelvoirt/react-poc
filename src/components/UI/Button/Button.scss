@@ -1,3 +1,7 @@
+.Button {
+	padding: 10px;
+}
+
 .Button:not(:first-child) {
 	margin-left: 2px;
 }

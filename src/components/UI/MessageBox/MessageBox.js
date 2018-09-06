@@ -2,11 +2,11 @@ import React from 'react';
 import Modal from '../Modal/Modal';
 import ModalHeader from '../ModalHeader/ModalHeader';
 import ModalFooter from '../ModalFooter/ModalFooter';
+import UserInfo from '../UserInfo/UserInfo';
 import Aux from '../../../hoc/Auxiliary';
 import classes from './MessageBox.scss';
 
 const messageBox = (props) => {
-
   const content = (
     <div className={classes.MessageBox}>
       <ModalHeader
@@ -16,6 +16,7 @@ const messageBox = (props) => {
         titleIcon={props.titleIcon}
         titleAlign={props.titleAlign}
       />
+      <UserInfo msgFailedSubmit={props.msgFailedSubmit} />
       <div className={classes.Content}>
         {props.messageContent}
       </div>

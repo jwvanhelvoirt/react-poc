@@ -210,7 +210,8 @@ class Form extends Component {
 
   render() {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
-    const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel, cancelButtonLabel, buttonsClass } = this.state.configForm;
+    const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel,
+      cancelButtonLabel, buttonsClass, msgFailedSubmit } = this.state.configForm;
 
     let lookupModal = null;
     if (this.state.showModalLookup) {
@@ -270,6 +271,7 @@ class Form extends Component {
           formIsValid={this.state.isValidForm}
           headerSize={headerSize}
           modal={this.props.modal}
+          msgFailedSubmit={msgFailedSubmit}
           callBackOk={this.submitHandler}
           callBackCancel={this.props.onCancel}
         />

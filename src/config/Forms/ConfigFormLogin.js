@@ -2,6 +2,7 @@ const formConfig = {
 	buttons: 'butOk',
 	buttonsClass: 'FillSpace',
 	headerSize: 'HeaderMedium',
+	msgFailedSubmit: 'keyFailedLogin',
 	noCreate: true,
 	okButtonLabel: 'keyLogin',
 	size: 'ModalSmall',

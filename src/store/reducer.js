@@ -9,6 +9,7 @@ const initialState = {
   messageBox2: false,
   searchTextOverall: '',
   showModalLookup: false,
+  formShowUserInfo: false,
   sortItem: '',
   transLanguage: 'nl',
   transTranslates: {}
@@ -28,6 +29,12 @@ const reducer = (state = initialState, action) => {
   return {
     ...state,
     formTouched: false
+  }
+
+  case types.FORM_USER_INFO: // Show user info message in a form yes or no.
+  return {
+    ...state,
+    formShowUserInfo: action.formShowUserInfo
   }
 
   case types.LOOKUP_FIELD_ID_STORE: // User clicks on a lookup button in a form, stores the id of the related form field.
