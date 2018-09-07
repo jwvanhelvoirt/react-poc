@@ -12,14 +12,14 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import * as types from '../../../store/Actions';
+// import * as types from '../../../store/actions';
 // import cloneDeep from 'lodash/cloneDeep';
-import View from '../../Parsers/ViewParser/ViewParser';
-import Button from '../Button/Button';
-import Label from '../Label/Label';
-import Aux from '../../../hoc/Auxiliary'
+import View from '../../parsers/viewParser/viewParser';
+import Button from '../button/button';
+import Label from '../label/label';
+import Aux from '../../../hoc/auxiliary'
 import { getDisplayValue } from '../../../libs/generic';
-import classes from './Input.scss';
+import classes from './input.scss';
 
 class Input extends Component {
 

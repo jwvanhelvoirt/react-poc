@@ -1,4 +1,4 @@
-import configLookupOrganisation from '../Views/ConfigLookupOrganisation';
+import configLookupOrganisation from '../views/configLookupOrganisation';
 
 const formConfig = {
 	buttons: 'butOkCancel',

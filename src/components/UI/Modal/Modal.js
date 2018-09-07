@@ -6,10 +6,10 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from '../../../store/Actions';
-import classes from './Modal.scss';
-import Aux from '../../../hoc/Auxiliary';
-import Backdrop from '../Backdrop/Backdrop';
+import * as types from '../../../store/actions';
+import Aux from '../../../hoc/auxiliary';
+import Backdrop from '../backdrop/backdrop';
+import classes from './modal.scss';
 
 class Modal extends Component {
   constructor(props) {

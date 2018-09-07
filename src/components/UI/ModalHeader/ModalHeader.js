@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Label from '../../UI/Label/Label';
-import classes from './ModalHeader.scss';
+import Label from '../../ui/label/label';
+import classes from './modalHeader.scss';
 
 const modalHeader = (props) => {
   let classColor = classes.Info;

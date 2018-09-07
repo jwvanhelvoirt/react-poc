@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
-import Button from '../../UI/Button/Button';
+import Button from '../../ui/button/button';
 import { Large, Medium, Small } from '../../../libs/responsive';
-import classes from './ScreenParser.scss';
+import classes from './screenParser.scss';
 
 class Screen extends Component {
   constructor(props) {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from '../../../store/Actions';
-import FormParser from '../../Parsers/FormParser/FormParser';
-import formLogin from '../../../config/Forms/ConfigFormLogin';
-import classes from './Login.scss';
+import * as types from '../../../store/actions';
+import FormParser from '../../parsers/formParser/formParser';
+import formLogin from '../../../config/forms/configFormLogin';
+import classes from './login.scss';
 
 class Login extends Component {
   state = {

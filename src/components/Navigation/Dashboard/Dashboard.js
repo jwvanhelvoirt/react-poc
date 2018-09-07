@@ -1,7 +1,7 @@
 import React from 'react';
-import { navItems } from '../../../config/Navigation/ConfigNavigationItems';
-import Portal from './Portal/Portal';
-import classes from './Dashboard.scss';
+import { navItems } from '../../../config/navigation/configNavigationItems';
+import Portal from './portal/portal';
+import classes from './dashboard.scss';
 
 const dashboard = () => {
   const portals = navItems.map((item, index) => item.dashboard ? <Portal key={index} portal={item} /> : null);

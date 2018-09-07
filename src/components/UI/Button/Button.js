@@ -18,9 +18,9 @@ import React from 'react';
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactTooltip from 'react-tooltip';
-import Label from '../../UI/Label/Label';
-import Aux from '../../../hoc/Auxiliary';
-import classes from './Button.scss';
+import Label from '../../ui/label/label';
+import Aux from '../../../hoc/auxiliary';
+import classes from './button.scss';
 
 const button = (props) => {
   // Get the label html for the button.

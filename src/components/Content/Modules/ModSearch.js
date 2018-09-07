@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Aux from '../../../hoc/Auxiliary';
+import Aux from '../../../hoc/auxiliary';
 
 class ModSearch extends Component {
     render () {

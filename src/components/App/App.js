@@ -1,44 +1,44 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../store/Actions';
-import '../../assets/FontAwesome/Fontawesome';
+import * as types from '../../store/actions';
+import '../../assets/fontAwesome/fontAwesome';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 import { Util } from 'reactstrap';
-import Layout from '../Layout/Layout';
+import Layout from '../layout/layout';
 // import asynchComponent from './hoc/asynchComponent';
-import Aux from '../../hoc/Auxiliary';
+import Aux from '../../hoc/auxiliary';
 import { callServer } from '../../api/api';
-import SpinnerInit from '../UI/SpinnerInit/SpinnerInit';
+import SpinnerInit from '../ui/spinnerInit/spinnerInit';
 
 //const asynchModInvoicing = asynchComponent(() => { // lazy loading werkt niet in één keer, nader uitzoeken.
 //	return import('./containers/ModInvoicing/ModInvoicing');
 //});
 
 // Import components for all navigation item routes.
-import Login from '../Navigation/Login/Login';
-import Dashboard from '../Navigation/Dashboard/Dashboard';
-import ModInvoicing from '../Content/Modules/ModInvoicing';
-import ModPlanning from '../Content/Modules/ModPlanning';
-import ModBookings from '../Content/Modules/ModBookings';
-import ModCrm from '../Content/Modules/ModCrm';
-import ModGdpr from '../Content/Modules/ModGdpr';
-import ModAcquisition from '../Content/Modules/ModAcquisition';
-import ModRecruitment from '../Content/Modules/ModRecruitment';
-import ModInspection from '../Content/Modules/ModInspection';
+import Login from '../navigation/login/login';
+import Dashboard from '../navigation/dashboard/dashboard';
+import ModInvoicing from '../content/modules/modInvoicing';
+import ModPlanning from '../content/modules/modPlanning';
+import ModBookings from '../content/modules/modBookings';
+import ModCrm from '../content/modules/modCrm';
+import ModGdpr from '../content/modules/modGdpr';
+import ModAcquisition from '../content/modules/modAcquisition';
+import ModRecruitment from '../content/modules/modRecruitment';
+import ModInspection from '../content/modules/modInspection';
 
 // Import components for all navigation icon routes.
-import ModSearch from '../Content/Modules/ModSearch';
-import ModHelp from '../Content/Modules/ModHelp';
-import ModRelease from '../Content/Modules/ModRelease';
-import ModReports from '../Content/Modules/ModReports';
-import ModPersonalSettings from '../Content/Modules/ModPersonalSettings';
-import ModAdmin from '../Content/Modules/ModAdmin';
+import ModSearch from '../content/modules/modSearch';
+import ModHelp from '../content/modules/modHelp';
+import ModRelease from '../content/modules/modRelease';
+import ModReports from '../content/modules/modReports';
+import ModPersonalSettings from '../content/modules/modPersonalSettings';
+import ModAdmin from '../content/modules/modAdmin';
 
-import Mod404 from '../Content/Modules/Mod404';
+import Mod404 from '../content/modules/mod404';
 
-import { isAuthNavItems, navItems } from '../../config/Navigation/ConfigNavigationItems';
-import { isAuthNavIcons, navIcons } from '../../config/Navigation/ConfigNavigationIcons';
+import { isAuthNavItems, navItems } from '../../config/navigation/configNavigationItems';
+import { isAuthNavIcons, navIcons } from '../../config/navigation/configNavigationIcons';
 
 class App extends Component {
 

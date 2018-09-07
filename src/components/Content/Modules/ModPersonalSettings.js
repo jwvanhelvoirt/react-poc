@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../../store/Actions';
-import Aux from '../../../hoc/Auxiliary';
-import Spinner from '../../UI/Spinner/Spinner';
-import FormParser from '../../Parsers/FormParser/FormParser';
-import formConfig from '../../../config/Forms/ConfigFormUserSettings';
+import * as types from '../../../store/actions';
+import Aux from '../../../hoc/auxiliary';
+import Spinner from '../../ui/spinner/spinner';
+import FormParser from '../../parsers/formParser/formParser';
+import formConfig from '../../../config/forms/configFormUserSettings';
 import { callServer } from '../../../api/api';
 
 class ModPersonalSettings extends Component {

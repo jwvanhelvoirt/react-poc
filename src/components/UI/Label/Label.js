@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Aux from '../../../hoc/Auxiliary';
+import Aux from '../../../hoc/auxiliary';
 import { getDisplayValue } from '../../../libs/generic';
-import classes from './Label.scss';
+import classes from './label.scss';
 
 const label = (props) => {
   let labelTranslated = (

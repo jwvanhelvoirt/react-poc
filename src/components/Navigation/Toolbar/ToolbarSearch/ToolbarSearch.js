@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import * as types from '../../../../store/Actions';
+import * as types from '../../../../store/actions';
 import { withRouter } from 'react-router-dom';
 import { getDisplayValue } from '../../../../libs/generic';
-import classes from './ToolbarSearch.scss';
+import classes from './toolbarSearch.scss';
 
 class ToolbarSearch extends Component {
   state = {
@@ -57,7 +57,7 @@ class ToolbarSearch extends Component {
           onChange={(event) => {
             this.inputSearchbarHandler(event);
             if (debounced) {
-              debounced(this)  
+              debounced(this)
             }
           }}
           className={classes.SearchInput} type="text" placeholder={search} />

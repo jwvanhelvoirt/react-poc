@@ -1,8 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
-import Label from '../../../UI/Label/Label';
-import classes from './Portal.scss';
+import Label from '../../../ui/label/label';
+import classes from './portal.scss';
 
 const portal = (props) => {
   const { icon, label, url } = props.portal;

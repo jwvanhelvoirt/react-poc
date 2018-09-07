@@ -1,7 +1,7 @@
 import React from 'react';
 
-import classes from './ToolbarIcons.scss';
-import ToolbarIcon from '../../../UI/ToolbarIcon/ToolbarIcon';
+import classes from './toolbarIcons.scss';
+import ToolbarIcon from '../../../ui/toolbarIcon/toolbarIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const toolbarIcons = (props) => {

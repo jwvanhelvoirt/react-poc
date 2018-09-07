@@ -1,5 +1,5 @@
 import React from 'react';
-import Tab from '../components/UI/Tab/Tab';
+import Tab from '../components/ui/tab/tab';
 
 /**
  * @brief   Sets the state of the selected tab to the tab the user click on.

@@ -1,6 +1,6 @@
 import React from 'react';
-import Screen from '../../Parsers/ScreenParser/ScreenParser';
-import { tabsConfig } from '../../../config/Screens/ConfigTabsInvoicing';
+import Screen from '../../parsers/screenParser/screenParser';
+import { tabsConfig } from '../../../config/screens/configTabsInvoicing';
 
 const modInvoicing = () => <Screen tabsConfig={tabsConfig} />
 

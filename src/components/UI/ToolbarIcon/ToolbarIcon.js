@@ -2,8 +2,8 @@ import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
-import Label from '../Label/Label';
-import classes from './ToolbarIcon.scss';
+import Label from '../label/label';
+import classes from './toolbarIcon.scss';
 
 const toolbarIcon = (props) => {
 	const tooltipId = "tb_icon_" + props.id;

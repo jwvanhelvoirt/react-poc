@@ -12,10 +12,10 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
-import * as types from '../../../store/Actions';
-import Aux from '../../../hoc/Auxiliary';
-import Input from '../../UI/Input/Input';
-import MessageBox from '../../UI/MessageBox/MessageBox';
+import * as types from '../../../store/actions';
+import Aux from '../../../hoc/auxiliary';
+import Input from '../../ui/input/input';
+import MessageBox from '../../ui/messageBox/messageBox';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {

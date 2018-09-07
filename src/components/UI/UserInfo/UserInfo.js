@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Label from '../Label/Label';
-import Aux from '../../../hoc/Auxiliary';
-import classes from './UserInfo.scss';
+import Label from '../label/label';
+import Aux from '../../../hoc/auxiliary';
+import classes from './userInfo.scss';
 
 const userInfo = (props) => {
 

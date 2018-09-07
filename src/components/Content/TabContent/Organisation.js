@@ -1,6 +1,6 @@
 import React from 'react';
-import View from '../../Parsers/ViewParser/ViewParser';
-import viewConfig from '../../../config/Views/ConfigListViewOrganisation';
+import View from '../../parsers/viewParser/viewParser';
+import viewConfig from '../../../config/views/configListViewOrganisation';
 
 const organisation = () => <View viewConfig={viewConfig} />
 

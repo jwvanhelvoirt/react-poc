@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import classes from './Backdrop.scss';
+import classes from './backdrop.scss';
 
 const backdrop = (props) => {
   const { messageBox1, messageBox2 } = props;

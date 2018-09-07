@@ -1,10 +1,10 @@
 import React from 'react';
-import Modal from '../Modal/Modal';
-import ModalHeader from '../ModalHeader/ModalHeader';
-import ModalFooter from '../ModalFooter/ModalFooter';
-import UserInfo from '../UserInfo/UserInfo';
-import Aux from '../../../hoc/Auxiliary';
-import classes from './MessageBox.scss';
+import Modal from '../modal/modal';
+import ModalHeader from '../modalHeader/modalHeader';
+import ModalFooter from '../modalFooter/modalFooter';
+import UserInfo from '../userInfo/userInfo';
+import Aux from '../../../hoc/auxiliary';
+import classes from './messageBox.scss';
 
 const messageBox = (props) => {
   const content = (

@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import * as types from '../../../store/Actions';
+import * as types from '../../../store/actions';
 import _ from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import ReactTooltip from 'react-tooltip';
-import Aux from '../../../hoc/Auxiliary';
-import viewConfigSort from '../../../config/Views/ConfigListViewSortOptions';
-import FormParser from '../FormParser/FormParser';
-import Spinner from '../../UI/Spinner/Spinner';
-import Modal from '../../UI/Modal/Modal';
-import MessageBox from '../../UI/MessageBox/MessageBox';
-import Label from '../../UI/Label/Label';
+import Aux from '../../../hoc/auxiliary';
+import viewConfigSort from '../../../config/views/configListViewSortOptions';
+import FormParser from '../formParser/formParser';
+import Spinner from '../../ui/spinner/spinner';
+import Modal from '../../ui/modal/modal';
+import MessageBox from '../../ui/messageBox/messageBox';
+import Label from '../../ui/label/label';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
-import classes from './ViewParser.scss';
+import classes from './viewParser.scss';
 
 class _View extends Component {
   constructor(props) {

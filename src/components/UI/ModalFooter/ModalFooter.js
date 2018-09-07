@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '../Button/Button';
-import Aux from '../../../hoc/Auxiliary';
-import classes from './ModalFooter.scss';
+import Button from '../button/button';
+import Aux from '../../../hoc/auxiliary';
+import classes from './modalFooter.scss';
 
 const modalFooter = (props) => {
   const okButDisabled = props.formIsValid === false  ? true : false;

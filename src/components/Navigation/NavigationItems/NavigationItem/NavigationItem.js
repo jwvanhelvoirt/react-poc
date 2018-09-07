@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Label from '../../../UI/Label/Label';
-import classes from './NavigationItem.scss';
+import Label from '../../../ui/label/label';
+import classes from './navigationItem.scss';
 
 const navigationItem = (props) => {
 	return (

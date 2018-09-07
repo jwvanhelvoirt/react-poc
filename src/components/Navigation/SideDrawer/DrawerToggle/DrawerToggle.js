@@ -1,5 +1,5 @@
 import React from 'react';
-import ToolbarIcons from '../../Toolbar/ToolbarIcons/ToolbarIcons';
+import ToolbarIcons from '../../toolbar/toolbarIcons/toolbarIcons';
 
 const drawerToggle = (props) => {
   const icons = [

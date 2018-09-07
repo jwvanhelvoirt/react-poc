@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Auxiliary';
+import Aux from '../../hoc/auxiliary';
 
 class ModCertification extends Component {
 	tabs = [

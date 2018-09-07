@@ -1,7 +1,7 @@
 import React from 'react';
 
-import classes from './NavigationItems.scss';
-import NavigationItem from './NavigationItem/NavigationItem';
+import classes from './navigationItems.scss';
+import NavigationItem from './navigationItem/navigationItem';
 
 const navigationItems = (props) => {
 	const links = props.navItems.map((navItem, index) => {

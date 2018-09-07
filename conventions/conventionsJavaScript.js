@@ -290,3 +290,77 @@ import classes from './ViewParser.scss';
 import classes from './Button.scss';
 import classes from './Input.scss';
 // etc....
+
+
+
+
+// **** JSX ****
+
+// #### To a variable assigned multiple line JSX is surrounde by round brackets.  ####
+
+// incorrect
+const app =
+	<Provider store={store}>
+		<BrowserRouter>
+			<App/>
+		</BrowserRouter>
+	</Provider>;
+
+//correct
+const app = (
+	<Provider store={store}>
+		<BrowserRouter>
+			<App/>
+		</BrowserRouter>
+	</Provider>
+);
+
+// #### = Assignment is not surrounded by a space  ####
+
+//incorrect
+const app = (
+	<Provider store = {store}>
+		<BrowserRouter>
+			<App/>
+		</BrowserRouter>
+	</Provider>
+);
+
+//correct
+const app = (
+	<Provider store={store}>
+		<BrowserRouter>
+			<App/>
+		</BrowserRouter>
+	</Provider>
+);
+
+
+
+
+// **** React ****
+
+// #### Variable refering to a React component always with a CAPITAL  ####
+
+// incorrect
+import spinnerInit from '../../ui/spinnerInit/spinnerInit';
+render = () => {
+  return (
+    <spinnerInit/>
+  );
+}
+
+// correct
+import SpinnerInit from '../../ui/spinnerInit/spinnerInit';
+render = () => {
+  return (
+    <SpinnerInit/>
+  );
+}
+
+
+
+
+// **** jQuery ****
+
+// #### Use of jQuery is forbidden. jQuery affects the DOM, which should 100% be managed by React.  ####

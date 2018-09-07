@@ -1,4 +1,4 @@
-import configLookupPerson from '../Views/ConfigLookupPerson';
+import configLookupPerson from '../views/configLookupPerson';
 
 const formConfig = {
 	buttons: 'butOkCancel',

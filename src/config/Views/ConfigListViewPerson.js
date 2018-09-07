@@ -1,5 +1,5 @@
-import formConfigPerson from '../Forms/ConfigFormPerson';
-import formConfigOrganisation from '../Forms/ConfigFormOrganisation';
+import formConfigPerson from '../forms/configFormPerson';
+import formConfigOrganisation from '../forms/configFormOrganisation';
 
 const listViewConfig = {
 	actions: [

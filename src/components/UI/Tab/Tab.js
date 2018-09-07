@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavItem, NavLink } from 'reactstrap';
-import Label from '../../UI/Label/Label';
+import Label from '../../ui/label/label';
 import classnames from 'classnames';
 
 const tab = (props) => {
