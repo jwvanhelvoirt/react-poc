@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 
-import Aux from '../../../hoc/auxiliary';
-
 class ModGdpr extends Component {
-    render () {
-        return (
-            <Aux>
-                <div>Release</div>
-            </Aux>
-        );
-    }
+  render () {
+    return (
+      <div>Release</div>
+    );
+  }
 }
 
 export default ModGdpr;

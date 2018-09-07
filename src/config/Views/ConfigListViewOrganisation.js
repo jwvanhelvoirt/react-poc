@@ -164,7 +164,7 @@ const listViewConfig = {
 	},
 	title: 'keyOrganisation',
 	url: 'organisations'
-}
+};
 
 export default listViewConfig;
 

@@ -22,6 +22,6 @@ const tab = (props) => {
 	return (
 		link
 	);
-}
+};
 
 export default tab;

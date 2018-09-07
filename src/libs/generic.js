@@ -23,7 +23,7 @@ export const getDisplayValue = (displayValue, convertDisplayValues, translateDis
   }
 
   return value;
-}
+};
 
 /**
  * @brief   Convert a string to propercase.
@@ -31,4 +31,4 @@ export const getDisplayValue = (displayValue, convertDisplayValues, translateDis
  */
 export const propercase = (label) => {
   return label.charAt(0).toUpperCase() + label.substr(1).toLowerCase();
-}
+};

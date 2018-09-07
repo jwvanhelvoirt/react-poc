@@ -19,6 +19,6 @@ const asynchComponent = (importComponent) => {
 			return C ? <C {...this.props} /> : null;
 		}
 	}
-}
+};
 
 export default asynchComponent;

@@ -9,29 +9,29 @@ class Layout extends Component {
   state = {
     showSideDrawer: false,
     showSideDrawerIcons: false
-  }
+  };
 
-  sideDrawerClosedHandler = () => {
-    this.setState({ showSideDrawer: false });
-  }
+  // User closes the normal sideBar.
+  sideDrawerClosedHandler = () => this.setState({ showSideDrawer: false });
 
-  sideDrawerClosedHandlerIcons = () => {
-    this.setState({ showSideDrawerIcons: false });
-  }
+  // User closes the icon sideBar.
+  sideDrawerClosedHandlerIcons = () => this.setState({ showSideDrawerIcons: false });
 
+  // User clicks on the icon (hamburger) to show the normal sideBar.
   sideDrawerToggleHandler = () => {
     this.setState((prevState) => {
       return { showSideDrawer: !prevState.showSideDrawer };
     });
-  }
+  };
 
+  // User clicks on the icon (ribon) to show the icon sideBar.
   sideDrawerToggleHandlerIcons = () => {
     this.setState((prevState) => {
       return { showSideDrawerIcons: !prevState.showSideDrawerIcons };
     });
-  }
+  };
 
-  render() {
+  render = () => {
     const { toolbar } = this.props;
     let toolbarAndSideDrawers = null;
 
@@ -65,7 +65,8 @@ class Layout extends Component {
           {this.props.children}
         </main>
       </Aux>
-    )
-  }
+    );
+  };
+
 }
 export default Layout;

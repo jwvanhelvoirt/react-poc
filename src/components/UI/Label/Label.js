@@ -19,12 +19,12 @@ const label = (props) => {
   return(
     <Aux>{labelTranslated}</Aux>
   );
-}
+};
 
 const mapStateToProps = state => {
   return {
     translates: state.redMain.transTranslates
   };
-}
+};
 
 export default connect(mapStateToProps)(label);

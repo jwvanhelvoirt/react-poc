@@ -38,9 +38,9 @@ class Form extends Component {
       callBackOk: null,
       callBackCancel: null
     };
-  }
+  };
 
-  componentWillMount() {
+  componentWillMount = () => {
     // state property 'configForm' contains default values, update these with the values of the selected entry and update state.
 
     const clone = cloneDeep(this.state.configForm);
@@ -85,9 +85,9 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone });
-  }
+  };
 
-  checkValidity(value, rules) {
+  checkValidity = (value, rules) => {
     const isArray = Array.isArray(value);
 
     let isValid = true;
@@ -111,7 +111,7 @@ class Form extends Component {
     }
 
     return isValid;
-  }
+  };
 
   inputChangedHandler = (event, id) => {
     // Set the state 'formTouched' in the store to 'true'.
@@ -141,7 +141,7 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone, isValidForm });
-  }
+  };
 
   removeMultiValueItem = (fieldId, valueId) => {
     const clone = cloneDeep(this.state.configForm);
@@ -172,7 +172,7 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone, isValidForm });
-  }
+  };
 
   submitHandler = (event) => {
     event.preventDefault();
@@ -189,14 +189,13 @@ class Form extends Component {
     const type = this.props.id ? 'put' : 'post';
 
     callServer(type, url, this.successSubmitHandler, this.errorSubmitHandler, submitData);
-  }
+  };
 
   successSubmitHandler = response => this.props.onSubmit(response);
 
   errorSubmitHandler = (error) => {
     //console.log(error);
-    //this.setState({ submitError: true }); //hier kun je dan iets wel of niet printen
-  }
+  };
 
   showModal = (modalState, modalClass, title, type, content, buttons,
     callBackOk = () => this.onModalLookupSubmitHandler(),
@@ -210,25 +209,15 @@ class Form extends Component {
     this.localData.callBackCancel = callBackCancel;
     this.localData.callBackOk = callBackOk;
     this.setState({ [modalState]: true });
-  }
+  };
 
   onModalLookupSubmitHandler = () => {
     console.log('Now we have to grab the selected records and add them to the applicable spot in configForm');
-  }
+  };
 
   onModalLookupCloseHandler = () => this.setState({ showModalLookup: false });
 
-  // onModalLookupCloseHandler = () => {
-  //   console.log('CLOSE');
-  //   this.setState({ showModalLookup: false });
-  // }
-
-  // onModalLookupCloseHandler = function() {
-  //   console.log('CLOSE');
-  //   this.setState({ showModalLookup: false });
-  // }
-
-  render() {
+  render = () => {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
     const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel,
       cancelButtonLabel, buttonsClass, msgFailedSubmit } = this.state.configForm;
@@ -299,14 +288,15 @@ class Form extends Component {
         {lookupModal}
       </Aux>
     );
-  }
+  };
+
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     touchForm: () => dispatch( {type: types.FORM_TOUCH } )
   }
-}
+};
 
 export default connect(null, mapDispatchToProps)(Form);
 

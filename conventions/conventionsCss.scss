@@ -46,7 +46,39 @@
   padding: 0;
 }
 
+// #### We put a white line between every selector. ####
 
+// incorrect
+.FullScreen {
+  width: 100%;
+  box-sizing: border-box;
+}
+.Content {
+  width: 100%;
+  margin-top: 56px;
+  box-sizing: border-box;
+}
+.Content>* {
+	display: flex;
+	min-height: 100%;
+}
+
+// correct
+.FullScreen {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.Content {
+  width: 100%;
+  margin-top: 56px;
+  box-sizing: border-box;
+}
+
+.Content>* {
+	display: flex;
+	min-height: 100%;
+}
 
 
 // **** Consistency ****

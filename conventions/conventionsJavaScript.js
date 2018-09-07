@@ -239,6 +239,14 @@ submitHandler = (event) => {
   callServer(type, url, this.successSubmitHandler, this.errorSubmitHandler, submitData);
 }
 
+// ### Divide long lines of code over multiple lines. ####
+
+// incorrect
+const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel, cancelButtonLabel, buttonsClass, msgFailedSubmit } = this.state.configForm;
+
+// correct (notice that every line after the first has an extra indent)
+const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel,
+  cancelButtonLabel, buttonsClass, msgFailedSubmit } = this.state.configForm;
 
 
 
@@ -334,6 +342,23 @@ const app = (
 		</BrowserRouter>
 	</Provider>
 );
+
+// #### Divide long JSX code line over multiple lines ####
+
+// incorrect
+<FormParser configForm={formConfig} data={this.state.userSettings} onCancel={() => this.onCloseHandler(true)} onSubmit={this.onSubmitHandler} id={this.state.id} modal={false} />
+
+// correct (notify the indent of the /> )
+<FormParser
+  configForm={formConfig}
+  data={this.state.userSettings}
+  onCancel={() => this.onCloseHandler(true)}
+  onSubmit={this.onSubmitHandler}
+  id={this.state.id}
+  modal={false}
+/>
+
+
 
 
 

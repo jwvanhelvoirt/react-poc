@@ -37,6 +37,6 @@ const messageBox = (props) => {
   return(
     <Aux>{box}</Aux>
   );
-}
+};
 
 export default messageBox;

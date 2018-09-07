@@ -19,13 +19,13 @@ class Modal extends Component {
       messageBox1: this.props.messageBox1,
       messageBox2: this.props.messageBox2
     }
-  }
+  };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate = (nextProps, nextState) => {
     return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
   };
 
-  componentWillMount() {
+  componentWillMount = () => {
     // For now we support three levels of message boxes. Probably two is enough, but just in case.
     if (!this.props.messageBox1) {
       this.props.openMessageBox1()
@@ -34,7 +34,7 @@ class Modal extends Component {
     }
   };
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     if (this.props.messageBox2) {
       this.props.closeMessageBox2()
     } else if (this.props.messageBox1) {
@@ -42,7 +42,7 @@ class Modal extends Component {
     }
   };
 
-  render() {
+  render = () => {
     const { messageBox1, messageBox2 } = this.localData;
 
     // Complex construction for multiple MessageBoxes on screen.
@@ -66,7 +66,8 @@ class Modal extends Component {
         </div>
       </Aux>
     )
-  }
+  };
+
 }
 
 const mapStateToProps = state => {
@@ -74,7 +75,7 @@ const mapStateToProps = state => {
     messageBox1: state.redMain.messageBox1,
     messageBox2: state.redMain.messageBox2
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -82,7 +83,7 @@ const mapDispatchToProps = dispatch => {
     openMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_OPEN } ),
     closeMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_CLOSE } ),
     closeMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_CLOSE } )
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

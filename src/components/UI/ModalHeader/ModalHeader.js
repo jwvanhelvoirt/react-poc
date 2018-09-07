@@ -14,7 +14,7 @@ const modalHeader = (props) => {
       break;
     default:
       break;
-  }
+  };
 
   const classesHeader = [classes.Header, classColor, classes[props.headerSize], classes[props.titleAlign]].join(' ');
   const label = props.title.map((item, index) => {
@@ -31,6 +31,6 @@ const modalHeader = (props) => {
       {label}
     </div>
   );
-}
+};
 
 export default modalHeader;

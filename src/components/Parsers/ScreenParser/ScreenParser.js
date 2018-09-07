@@ -6,6 +6,7 @@ import { Large, Medium, Small } from '../../../libs/responsive';
 import classes from './screenParser.scss';
 
 class Screen extends Component {
+
   constructor(props) {
     super(props);
 
@@ -20,13 +21,13 @@ class Screen extends Component {
       activeTabs,
       tabsConfig: [...this.props.tabsConfig]
     };
-  }
+  };
 
   togglePane = (id) => {
     // Clone the state.
     const updatedTabsConfig = [
       ...this.state.tabsConfig
-    ]
+    ];
 
     const arrayRecords = Object.keys(updatedTabsConfig);
     arrayRecords.forEach((index) => {
@@ -96,9 +97,9 @@ class Screen extends Component {
     });
 
     return result;
-  }
+  };
 
-  render() {
+  render = () => {
     // TODO : Laadt ze nu allemaal in, eigenlijk wil je alleen laden, wat nodig is. Uitzoeken...
     const large = this.getHtml('displayLarge');
     const medium = this.getHtml('displayMedium');
@@ -111,7 +112,8 @@ class Screen extends Component {
         <Small>{small}</Small>
       </div>
     );
-  }
+  };
+  
 }
 
 export default Screen;

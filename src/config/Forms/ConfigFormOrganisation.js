@@ -155,6 +155,6 @@ const formConfig = {
 			value: ''
 		},
 	}
-}
+};
 
 export default formConfig;

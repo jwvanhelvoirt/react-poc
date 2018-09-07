@@ -12,7 +12,7 @@ const toolbarIcons = (props) => {
 		} else if (icon.clicked) {
 			nav =<ToolbarIcon key={icon.index} id={icon.index} clicked={icon.clicked} label={icon.label}><FontAwesomeIcon icon={icon.icon} /></ToolbarIcon>
 		}
-		return nav
+		return nav;
 	});
 
 	return (
@@ -20,6 +20,6 @@ const toolbarIcons = (props) => {
 			{links}
 		</ul>
 	);
-}
+};
 
 export default toolbarIcons;

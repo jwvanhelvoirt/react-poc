@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-
 import classes from './backdrop.scss';
 
 const backdrop = (props) => {

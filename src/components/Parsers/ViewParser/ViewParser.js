@@ -8,7 +8,7 @@ import ReactTooltip from 'react-tooltip';
 import Aux from '../../../hoc/auxiliary';
 import viewConfigSort from '../../../config/views/configListViewSortOptions';
 import FormParser from '../formParser/formParser';
-import Spinner from '../../ui/spinner/spinner';
+import Spinner from '../../ui/spinners/spinner/spinner';
 import Modal from '../../ui/modal/modal';
 import MessageBox from '../../ui/messageBox/messageBox';
 import Label from '../../ui/label/label';
@@ -17,6 +17,7 @@ import { getDisplayValue } from '../../../libs/generic';
 import classes from './viewParser.scss';
 
 class _View extends Component {
+
   constructor(props) {
     super(props);
 
@@ -254,7 +255,7 @@ class _View extends Component {
 
       this.setState({ listItems: updatedListItems, selectedListItems: [] });
     }
-  }
+  };
 
   /**
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
@@ -262,7 +263,7 @@ class _View extends Component {
   errorDeleteHandler = (error) => {
     const content = <Label labelKey='keyErrorRemoveListItems' />;
     this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', content, 'butOk');
-  }
+  };
 
   /**
    * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
@@ -278,12 +279,12 @@ class _View extends Component {
     this.localData.callBackCancel = callBackCancel;
     this.localData.callBackOk = callBackOk;
     this.setState({ [modalState]: true });
-  }
+  };
 
   /**
    * @brief   Manages state containing an array of all selected rows in the listView.
    */
-  toggleRowHandler(id) {
+  toggleRowHandler = (id) => {
     let updatedSelectedListItems = [
       ...this.state.selectedListItems
     ];
@@ -326,7 +327,7 @@ class _View extends Component {
   /**
    * @brief   Refreshes the current listView by pulling it from the server starting by the first record.
    */
-  reloadListView(skip, search, emptySearchbar) {
+  reloadListView = (skip, search, emptySearchbar) => {
     const { sort, sortOrder, viewConfig } = this.state;
     const { limit } = viewConfig;
     const params = { sort, sortOrder, skip, limit, search };
@@ -342,7 +343,7 @@ class _View extends Component {
    * @brief   Navigates a set of records (defined by limit property of the viewConfig) back- or forward.
    *          It can also skip multiple sets back- or forward.
    */
-  nav(forward, multiple) {
+  nav = (forward, multiple) => {
     const { skip, viewConfig, searchbarValue } = this.state;
     const skipNext = forward ?
       (multiple ? skip + (this.navStep * viewConfig.limit ) : skip + viewConfig.limit) :
@@ -357,14 +358,14 @@ class _View extends Component {
   /**
    * @brief   Updates the state for the search value.
    */
-  inputSearchbarHandler(event) {
+  inputSearchbarHandler = (event) => {
     this.setState({ searchbarValue: event.target.value, debounceFunction: false });
   };
 
   /**
    * @brief   Updates the state for the search value.
    */
-  clearSearchbarHandler() {
+  clearSearchbarHandler = () => {
     this.setState({ searchbarValue: '' });
     this.reloadListView(0, '');
   };
@@ -372,14 +373,14 @@ class _View extends Component {
   /**
    * @brief   Submits the search to the server.
    */
-  submitSearchHandler(_this) {
+  submitSearchHandler = (_this) => {
      _this.reloadListView(0, _this.state.searchbarValue);
   };
 
   /**
    * @brief   Shows a modal where the user can select on which attribute to sort the listView in which order.
    */
-  onClickSortHandler() {
+  onClickSortHandler = () => {
     this.showModal('showModalSort', 'ModalWide', ['keySort'], 'info',
       <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
        () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
@@ -388,7 +389,7 @@ class _View extends Component {
   /**
    * @brief   Closes the sort modal.
    */
-  onModalSortCloseHandler() {
+  onModalSortCloseHandler = () => {
     this.setState({ showModalSort: false });
   };
 
@@ -409,42 +410,42 @@ class _View extends Component {
   /**
    * @brief   Closes the message modal.
    */
-  onModalMessageCloseHandler() {
+  onModalMessageCloseHandler = () => {
     this.setState({ showModalMessage: false });
   };
 
   /**
    * @brief   Shows a modal where the user can select on which attribute to filter the listView on which value.
    */
-  onClickFilterHandler() {
+  onClickFilterHandler = () => {
     this.setState({ showModalFilter: true });
   };
 
   /**
    * @brief   Closes the filter modal.
    */
-  onModalFilterCloseHandler() {
+  onModalFilterCloseHandler = () => {
     this.setState({ showModalFilter: false });
   };
 
   /**
    * @brief   Shows a modal where the user can change which columns to display in the listView.
    */
-  onClickColumnConfiguratorHandler() {
+  onClickColumnConfiguratorHandler = () => {
     this.setState({ showModalColumnConfigurator: true });
   };
 
   /**
    * @brief   Closes the columns configurator modal.
    */
-  onModalColumnConfiguratorCloseHandler() {
+  onModalColumnConfiguratorCloseHandler = () => {
     this.setState({ showModalColumnConfigurator: false });
   };
 
   /**
    * @brief   Selects or deselects all listItems in the listView.
    */
-  toggleAllRows() {
+  toggleAllRows = () => {
     let updatedSelectedListItems = [
       ...this.state.selectedListItems
     ];
@@ -466,7 +467,7 @@ class _View extends Component {
   /**
    * @brief   Resorts the listView if user clicks on a column header.
    */
-  sortOnColumn(id) {
+  sortOnColumn = (id) => {
     const { sortedColumn, sortOrder, searchbarValue } = this.state;
 
     if (sortedColumn === id) {
@@ -494,7 +495,9 @@ class _View extends Component {
         (response) => this.successFaker(response),
         this.errorFaker, params);
   };
+
   successFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Fake data succesvol aangemaakt.', 'butOk');
+
   errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
 
   // deleteAll = () => {
@@ -508,7 +511,7 @@ class _View extends Component {
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
    */
-  render() {
+  render = () => {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
 
     // Display the form modal in case loadedListItem is filled with form data.
@@ -829,10 +832,7 @@ class _View extends Component {
             onDoubleClick={doubleClick}>
             {listItemsFixed}
             <div className={classes.Flex}>
-            {
-              columnsVisible.map((column, index) => <div key={index} className={classes[column.size]}>{listItem[column.id]}</div>
-              )
-            }
+              {columnsVisible.map((column, index) => <div key={index} className={classes[column.size]}>{listItem[column.id]}</div>)}
             </div>
           </div>
         );
@@ -872,14 +872,14 @@ const mapStateToProps = state => {
     sortItem: state.redMain.sortItem,
     translates: state.redMain.transTranslates
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     untouchForm: () => dispatch( {type: types.FORM_UNTOUCH } ),
     storeSortItem: (sortItem) => dispatch( {type: types.SORT_ITEM_STORE, sortItem } )
   }
-}
+};
 
 // BUG IN REDUX: In case of nested components (<View> embeds another <View>) mapStateToProps and mapDispatchToProps are NOT invoked.
 // export default connect(mapStateToProps, mapDispatchToProps)(View);

@@ -27,6 +27,6 @@ const callServer = (type, url, successCallback, errorCallback, postData, hash, q
 		default:
 			break;
 	}
-}
+};
 
 export { callServer };

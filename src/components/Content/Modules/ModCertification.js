@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/auxiliary';
-
 class ModCertification extends Component {
-	tabs = [
-		{ key: '0', label: 'Opdracht', url: '/1' },
-		{ key: '1', label: 'Offline', url: '/2' },
-		{ key: '2', label: 'Email', url: '/3' }
-	];
-
-    render () {
-        return (
-            <Aux>
-                <div>Certificering</div>
-            </Aux>
-        );
-    }
+  render () {
+    return (
+      <div>Certificering</div>
+    );
+  }
 }
 
 export default ModCertification;

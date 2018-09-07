@@ -8,6 +8,7 @@ import classes from './toolbar.scss';
 
 const toolbar = (props) => {
   const classesCombinedSearchbar = [classes.GrowMedium, classes.Searchbar].join(' ');
+
   return (
     <header className={classes.Toolbar}>
       <DrawerToggle clicked={props.drawerToggleClicked} />

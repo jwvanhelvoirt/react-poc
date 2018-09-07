@@ -91,6 +91,6 @@ const listViewConfig = {
 	},
 	title: 'keyPerson',
 	url: 'persons'
-}
+};
 
 export default listViewConfig;

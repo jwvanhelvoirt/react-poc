@@ -14,7 +14,6 @@
 */
 
 import React from 'react';
-
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactTooltip from 'react-tooltip';
@@ -84,6 +83,6 @@ const button = (props) => {
       {reactTooltip}
     </Aux>
   );
-}
+};
 
 export default button;

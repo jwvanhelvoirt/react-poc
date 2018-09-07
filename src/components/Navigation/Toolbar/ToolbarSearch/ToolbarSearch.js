@@ -11,12 +11,12 @@ class ToolbarSearch extends Component {
   state = {
     debounceFunction: true,
     searchbarValue: ""
-  }
+  };
 
   /**
    * @brief   Submits the search to the server.
    */
-  submitSearchHandler(_this) {
+  submitSearchHandler = (_this) => {
     _this.props.onSearch(_this.state.searchbarValue);
 
     // If we're already on the search results page, we don't navigate to it.
@@ -29,19 +29,18 @@ class ToolbarSearch extends Component {
   /**
    * @brief   Updates the state for the search value.
    */
-  clearSearchbarHandler() {
+  clearSearchbarHandler = () => {
     this.setState({ searchbarValue: "", debounceFunction: true }, () => { this.submitSearchHandler(this); });
   };
 
   /**
    * @brief   Updates the state for the search value.
    */
-  inputSearchbarHandler(event) {
-    console.log('inputSearchbarHandler');
+  inputSearchbarHandler = (event) => {
     this.setState({ searchbarValue: event.target.value, debounceFunction: false });
   };
 
-  render() {
+  render = () => {
     const classesCombinedSearchbar = [classes.Search, classes.Medium].join(' ');
 
     // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
@@ -63,7 +62,7 @@ class ToolbarSearch extends Component {
           className={classes.SearchInput} type="text" placeholder={search} />
       </div>
     )
-  }
+  };
 
 }
 
@@ -71,12 +70,12 @@ const mapStateToProps = state => {
   return {
     translates: state.redMain.transTranslates
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     onSearch: (searchbarValue) => dispatch( {type: types.SEARCHTEXT_OVERALL_STORE, searchbarValue } )
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ToolbarSearch));

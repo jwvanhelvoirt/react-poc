@@ -23,7 +23,7 @@ export const clickHandlerTab = (tabPos, activeTab, tabIndex, _this) => {
       activeTabs: activeTabsUpdated
     });
   }
-}
+};
 
 /**
  * @brief   Returns the component to be rendered after the user clicks on a tab.
@@ -36,7 +36,7 @@ export const getTabComponent = (activeTab, tabConfig) => {
     return item.id === activeTab;
   });
   return component[0].component;
-}
+};
 
 /**
  * @brief   Returns a row of related tabs.
@@ -55,4 +55,4 @@ export const getTabRow = (activeTab, tabConfig, tabPos, _this) => {
     />
   });
   return tabRow;
-}
+};

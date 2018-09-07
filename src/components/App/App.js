@@ -9,7 +9,7 @@ import Layout from '../layout/layout';
 // import asynchComponent from './hoc/asynchComponent';
 import Aux from '../../hoc/auxiliary';
 import { callServer } from '../../api/api';
-import SpinnerInit from '../ui/spinnerInit/spinnerInit';
+import SpinnerInit from '../ui/spinners/spinnerInit/spinnerInit';
 
 //const asynchModInvoicing = asynchComponent(() => { // lazy loading werkt niet in één keer, nader uitzoeken.
 //	return import('./containers/ModInvoicing/ModInvoicing');
@@ -66,14 +66,14 @@ class App extends Component {
     console.log(error);
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     // Redirect the root route to the starting module
     if (this.props.location.pathname === "/") {
       this.props.authenticated ? this.props.history.replace('/dashboard') : this.props.history.replace('/login');
     }
   };
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     // In case the user successfully logged in, redirect to '/dashboard'.
     if (this.props.authenticated && this.props.location.pathname === "/login") {
       this.props.history.replace('/dashboard');

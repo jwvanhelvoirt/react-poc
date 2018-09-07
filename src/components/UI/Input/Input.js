@@ -23,7 +23,7 @@ import classes from './input.scss';
 
 class Input extends Component {
 
-  render() {
+  render = () => {
     let inputElement = null;
     let inputClasses = [classes.InputElement];
     let validationError = null;
@@ -158,7 +158,7 @@ class Input extends Component {
         {inputElement}
       </div>
     );
-  }
+  };
 
 }
 
@@ -166,6 +166,6 @@ const mapStateToProps = state => {
   return {
     translates: state.redMain.transTranslates
   };
-}
+};
 
 export default connect(mapStateToProps)(Input);

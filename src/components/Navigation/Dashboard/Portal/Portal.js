@@ -14,6 +14,6 @@ const portal = (props) => {
       </div>
     </NavLink>
   );
-}
+};
 
 export default portal;

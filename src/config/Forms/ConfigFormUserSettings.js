@@ -17,6 +17,6 @@ const formConfig = {
 			value: 'nl'
 		}
 	}
-}
+};
 
 export default formConfig;

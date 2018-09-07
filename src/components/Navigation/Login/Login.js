@@ -11,7 +11,6 @@ class Login extends Component {
   };
 
   onSubmitHandler = (response) => {
-    console.log(response.data);
     const { authorized, magic, rememberPrevLogin, username } = response.data;
 
     if (authorized) {
@@ -55,7 +54,8 @@ class Login extends Component {
         />
       </div>
     );
-  }
+  };
+
 }
 
 const mapDispatchToProps = dispatch => {
@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => {
     authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
     showUserInfo: (formShowUserInfo) => dispatch( {type: types.FORM_USER_INFO, formShowUserInfo } )
   }
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);
 

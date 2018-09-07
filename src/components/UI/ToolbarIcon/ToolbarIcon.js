@@ -33,8 +33,6 @@ const toolbarIcon = (props) => {
 			</a>
 	}
 
-
-
 	return (
 		<li className={classes.ToolbarIcon}>
 			{containerLink}
@@ -43,6 +41,6 @@ const toolbarIcon = (props) => {
 			</ReactTooltip>
 		</li>
 	);
-}
+};
 
 export default toolbarIcon;

@@ -11,6 +11,6 @@ const listViewConfig = {
 	],
 	row: { selectable: true, menu: false },
 	viewType: 'sort'
-}
+};
 
 export default listViewConfig;

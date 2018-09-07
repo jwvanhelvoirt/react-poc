@@ -9,7 +9,7 @@ const modalFooter = (props) => {
   const labelCancel = props.cancelButtonLabel ? props.cancelButtonLabel : 'keyCancel';
   let but = null;
 
-  const butOk     =
+  const butOk =
     <Button clicked={props.callBackOk} color="success" buttonsClass={props.buttonsClass} labelText={[labelOk]} disabled={okButDisabled} />;
 
   const butCancel =
@@ -27,11 +27,11 @@ const modalFooter = (props) => {
     break;
   default:
     but = butOk;
-  }
+  };
 
   return (
     <div className={classes.Footer}>{but}</div>
   );
-}
+};
 
 export default modalFooter;

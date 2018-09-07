@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 
-import Aux from '../../../hoc/auxiliary';
-
 class ModAdmin extends Component {
-    render () {
-        return (
-            <Aux>
-                <div>Instellingen</div>
-            </Aux>
-        );
-    }
+  render () {
+    return (
+      <div>Instellingen</div>
+    );
+  }
 }
 
 export default ModAdmin;
