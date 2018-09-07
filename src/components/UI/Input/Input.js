@@ -30,7 +30,7 @@ class Input extends Component {
 
     const { elementType, elementConfig, value, valid, validation, touched, label,
       defaultFocus, lookup, lookupTitle, placeholder,
-      translateDisplayValues, convertDisplayValues } = this.props.configInput;
+      translateDisplayValues, convertDisplayValues, func } = this.props.configInput;
 
     const placeholderInput = placeholder ? getDisplayValue(placeholder, 'propercase', true, this.props.translates): null;
 
@@ -54,6 +54,7 @@ class Input extends Component {
           placeholder={placeholderInput}
           value={value}
           autoFocus={autoFocus}
+          autoComplete='off'
           onChange={this.props.changed}/>;
         break;
 
@@ -64,6 +65,7 @@ class Input extends Component {
           placeholder={placeholderInput}
           value={value}
           autoFocus={autoFocus}
+          autoComplete='off'
           onChange={this.props.changed}/>;
         break;
 
@@ -81,6 +83,24 @@ class Input extends Component {
               </option>
             })}
           </select>
+        );
+        break;
+
+      case ('triggerFunctionLink'):
+        inputElement = (
+          <div className={classes.TriggerFunctionLink} onClick={() => func()}>
+            <a><Label labelKey={label} convertType={'propercase'} /></a>
+          </div>
+        );
+        break;
+
+      case ('triggerFunctionCheckbox'):
+        const click = func ? (event) => func(event, this.props.configForm) : null;
+        inputElement = (
+          <Aux>
+            <input type='checkbox' checked={value} className={classes.TriggerFunctionCheckbox} onChange={this.props.changed} onClick={click} />
+            <Label labelKey={label} convertType={'propercase'} />
+          </Aux>
         );
         break;
 
@@ -120,14 +140,20 @@ class Input extends Component {
           placeholder={placeholderInput}
           value={value}
           autoFocus={autoFocus}
+          autoComplete='off'
           onChange={this.props.changed}/>;
     }
 
+    // Not all input types require a label.
+    const labelPrint = (elementType !== 'triggerFunctionLink' && elementType !== 'triggerFunctionCheckbox') ?
+      <label className={classes.Label}>
+        <Label labelKey={label} convertType={'propercase'} />
+      </label> :
+      null;
+
     return(
       <div className={classes.Input}>
-        <label className={classes.Label}>
-          <Label labelKey={label} convertType={'propercase'} />
-        </label>
+        {labelPrint}
         {validationError}
         {inputElement}
       </div>

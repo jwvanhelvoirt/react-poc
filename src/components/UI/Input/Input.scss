@@ -53,3 +53,12 @@
 .DisplayValue {
 	margin-left: 5px;
 }
+
+.TriggerFunctionLink>a {
+	cursor: pointer;
+	border-bottom: 1px solid black;
+}
+
+.TriggerFunctionCheckbox {
+	margin-right: 5px;
+}

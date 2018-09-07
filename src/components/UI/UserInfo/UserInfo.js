@@ -8,7 +8,7 @@ const userInfo = (props) => {
 
   const msg = props.msgFailedSubmit && props.formShowUserInfo ?
     <div className={classes.UserInfo}>
-      <div><Label labelKey={props.msgFailedSubmit} /></div>
+      <div><Label labelKey={props.msgFailedSubmit} convertType={'propercase'} /></div>
     </div> :
     null;
 

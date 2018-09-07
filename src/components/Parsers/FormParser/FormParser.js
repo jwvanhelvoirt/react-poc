@@ -51,7 +51,17 @@ class Form extends Component {
       let updatedFormElement = {
         ...updatedFormInputs[arrayRecords[index]]
       }
-      updatedFormElement.value = this.props.data[arrayRecords[index]];
+
+      // Get the initial value.
+      if (updatedFormElement.valueLocalStorage && localStorage.getItem(updatedFormElement.valueLocalStorage)) {
+        if (updatedFormElement.elementType === 'triggerFunctionCheckbox') {
+          updatedFormElement.value = true;
+        } else {
+          updatedFormElement.value = localStorage.getItem(updatedFormElement.valueLocalStorage);
+        }
+      } else {
+        updatedFormElement.value = this.props.data[arrayRecords[index]];
+      }
 
       // Check for validity.
       if (Array.isArray(updatedFormElement.value)) {
@@ -113,7 +123,7 @@ class Form extends Component {
     const updatedFormElement = updatedFormInputs[id];
 
     // Update the value.
-    updatedFormElement.value = event.target.value;
+    updatedFormElement.value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
 
     // Check for validation.
     if (updatedFormElement.validation) {
@@ -246,6 +256,7 @@ class Form extends Component {
                   showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) =>
                     this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
                   removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
+                  configForm={this.state.configForm}
                   />
               )
             )

@@ -10,6 +10,8 @@ import Layout from './components/Layout/Layout';
 import Aux from './hoc/Auxiliary';
 import { callServer } from './api/api';
 
+import SpinnerInit from './components/UI/SpinnerInit/SpinnerInit';
+
 //const asynchModInvoicing = asynchComponent(() => { // lazy loading werkt niet in één keer, nader uitzoeken.
 //	return import('./containers/ModInvoicing/ModInvoicing');
 //});
@@ -56,6 +58,7 @@ class App extends Component {
 
   successGetHandlerTranslates = (response) => {
     this.props.storeTranslates(response.data[0].translates);
+    this.props.translatesLoaded();
   }
 
   errorGetHandlerTranslates = (error) => {
@@ -77,7 +80,7 @@ class App extends Component {
     this.loadPersonalSettings();
   }
 
-  componentWillMount() {
+  componentWillMount = () => {
     this.loadPersonalSettings(); // TODO : We have to get the translates somehow, configure a defaultin general settings ('en' or 'nl').
     // localStorage.setItem("magic", "123456");
     // localStorage.removeItem("magic");
@@ -89,6 +92,7 @@ class App extends Component {
     } else {
       // No magic in local storage.
       // The default of the store variable 'authenticated' is 'false', so the login screen will appear.
+      this.props.magicChecked();
     }
 
   }
@@ -98,10 +102,17 @@ class App extends Component {
       // Magic in local storage is correct. Change the store property 'authenticated' to 'true'. Modules will be rendered automatically then.
       this.props.authenticateUser(true);
     }
+    this.props.magicChecked();
   };
 
   errorHandlerCheckMagic = (error) => {
     console.log(error);
+  };
+
+  render1 = () => {
+    return(
+      <SpinnerInit />
+    );
   };
 
   render() {
@@ -113,7 +124,11 @@ class App extends Component {
       </Layout>
     );
 
-    if (this.props.authenticated) {
+    if (!this.props.initTranslatesLoaded || !this.props.initMagicChecked) {
+      layout = (
+        <SpinnerInit />
+      );
+    } else if (this.props.authenticated) {
       layout = (
         <Layout navItems={navItems} navIcons={navIcons} toolbar={true}>
           <Switch>
@@ -152,6 +167,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     authenticated: state.redMain.authenticated,
+    initTranslatesLoaded: state.redMain.initTranslatesLoaded,
+    initMagicChecked: state.redMain.initMagicChecked,
     language: state.redMain.transLanguage
   };
 }
@@ -159,6 +176,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
+    magicChecked: () => dispatch( {type: types.INIT_MAGIC_CHECKED } ),
+    translatesLoaded: () => dispatch( {type: types.INIT_TRANSLATES_LOADED } ),
     storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } ),
     storeTranslates: (translates) => dispatch( {type: types.TRANS_TRANSLATES_STORE, translates } )
   }

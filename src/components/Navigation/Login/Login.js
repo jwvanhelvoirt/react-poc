@@ -11,11 +11,19 @@ class Login extends Component {
   };
 
   onSubmitHandler = (response) => {
-    const { authorized, magic } = response.data;
+    console.log(response.data);
+    const { authorized, magic, rememberPrevLogin, username } = response.data;
 
     if (authorized) {
       // Authorization was succesfull.
       localStorage.setItem("magic", magic);
+
+      if (rememberPrevLogin) {
+        localStorage.setItem("user", username);
+      } else {
+        localStorage.removeItem("user");
+      }
+
       this.props.authenticateUser(true); // This will re-render the app component and show the dashboard.
       this.props.showUserInfo(false);
     } else {

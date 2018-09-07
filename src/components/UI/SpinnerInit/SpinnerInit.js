@@ -3,7 +3,7 @@
 */
 
 import React from 'react';
-import classes from './Spinner.scss';
+import classes from './SpinnerInit.scss';
 
 // Spinner from https://projects.lukehaas.me/css-loaders/
 

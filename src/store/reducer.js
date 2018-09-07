@@ -3,6 +3,8 @@ import * as types from './Actions';
 const initialState = {
   authenticated: false,
   formTouched: false,
+  initTranslatesLoaded: false,
+  initMagicChecked: false,
   lookupFieldId: '',
   lookupFieldVal: '',
   messageBox1: false,
@@ -15,9 +17,29 @@ const initialState = {
   transTranslates: {}
 }
 
+
+export const INIT_TRANSLATES_LOADED = 'INIT_TRANSLATES_LOADED';
+export const INIT_MAGIC_CHECKED = 'INIT_MAGIC_CHECKED';
+
+
+
 const reducer = (state = initialState, action) => {
 
   switch (action.type) {
+
+  case types.INIT_TRANSLATES_LOADED: // Translates have been fetched.
+  return {
+    ...state,
+    initTranslatesLoaded: true
+  }
+
+  case types.INIT_MAGIC_CHECKED: // Magic has been checked on the server..
+  return {
+    ...state,
+    initMagicChecked: true
+  }
+
+
 
   case types.FORM_TOUCH: // Form is touched by the user.
   return {
