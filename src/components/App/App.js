@@ -9,7 +9,6 @@ import Layout from '../Layout/Layout';
 // import asynchComponent from './hoc/asynchComponent';
 import Aux from '../../hoc/Auxiliary';
 import { callServer } from '../../api/api';
-
 import SpinnerInit from '../UI/SpinnerInit/SpinnerInit';
 
 //const asynchModInvoicing = asynchComponent(() => { // lazy loading werkt niet in één keer, nader uitzoeken.
@@ -44,33 +43,35 @@ import { isAuthNavIcons, navIcons } from '../../config/Navigation/ConfigNavigati
 class App extends Component {
 
   loadPersonalSettings = () => {
-    callServer('get', '/usersettings/read', (response) => this.successGetHandlerPersonalSettings(response), this.errorGetHandlerPersonalSettings);
-  }
+    callServer('get', '/usersettings/read',
+      (response) => this.successGetHandlerPersonalSettings(response), this.errorGetHandlerPersonalSettings);
+  };
 
   successGetHandlerPersonalSettings = (response) => {
     this.props.storeLanguage(response.data[0].language);
-    callServer('get', '/translates/read/' + response.data[0].language, (response) => this.successGetHandlerTranslates(response), this.errorGetHandlerTranslates);
-  }
+    callServer('get', '/translates/read/' + response.data[0].language,
+      (response) => this.successGetHandlerTranslates(response), this.errorGetHandlerTranslates);
+  };
 
   errorGetHandlerPersonalSettings = (error) => {
     console.log(error);
-  }
+  };
 
   successGetHandlerTranslates = (response) => {
     this.props.storeTranslates(response.data[0].translates);
     this.props.translatesLoaded();
-  }
+  };
 
   errorGetHandlerTranslates = (error) => {
     console.log(error);
-  }
+  };
 
   componentDidMount() {
     // Redirect the root route to the starting module
     if (this.props.location.pathname === "/") {
       this.props.authenticated ? this.props.history.replace('/dashboard') : this.props.history.replace('/login');
     }
-  }
+  };
 
   componentDidUpdate() {
     // In case the user successfully logged in, redirect to '/dashboard'.
@@ -78,13 +79,14 @@ class App extends Component {
       this.props.history.replace('/dashboard');
     }
     this.loadPersonalSettings();
-  }
+  };
 
   componentWillMount = () => {
     this.loadPersonalSettings(); // TODO : We have to get the translates somehow, configure a defaultin general settings ('en' or 'nl').
     // localStorage.setItem("magic", "123456");
     // localStorage.removeItem("magic");
     const magic = localStorage.getItem("magic");
+
     if (magic) {
       // There is a magic in the local storage. Make a server call to check if this is the correct magic.
       const submitData = { magic };
@@ -94,8 +96,7 @@ class App extends Component {
       // The default of the store variable 'authenticated' is 'false', so the login screen will appear.
       this.props.magicChecked();
     }
-
-  }
+  };
 
   successHandlerCheckMagic = (response) => {
     if (response.data.magic) {
@@ -109,13 +110,7 @@ class App extends Component {
     console.log(error);
   };
 
-  render1 = () => {
-    return(
-      <SpinnerInit />
-    );
-  };
-
-  render() {
+  render = () => {
     let layout = (
       <Layout navItems={navItems} navIcons={navIcons} toolbar={false}>
         <Switch>
@@ -161,7 +156,8 @@ class App extends Component {
       Util.setGlobalCssModule(bootstrap),
       <Aux>{layout}</Aux>
     )
-  }
+  };
+
 }
 
 const mapStateToProps = state => {
@@ -171,7 +167,7 @@ const mapStateToProps = state => {
     initMagicChecked: state.redMain.initMagicChecked,
     language: state.redMain.transLanguage
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -181,6 +177,6 @@ const mapDispatchToProps = dispatch => {
     storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } ),
     storeTranslates: (translates) => dispatch( {type: types.TRANS_TRANSLATES_STORE, translates } )
   }
-}
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

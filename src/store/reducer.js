@@ -17,12 +17,6 @@ const initialState = {
   transTranslates: {}
 }
 
-
-export const INIT_TRANSLATES_LOADED = 'INIT_TRANSLATES_LOADED';
-export const INIT_MAGIC_CHECKED = 'INIT_MAGIC_CHECKED';
-
-
-
 const reducer = (state = initialState, action) => {
 
   switch (action.type) {
@@ -38,8 +32,6 @@ const reducer = (state = initialState, action) => {
     ...state,
     initMagicChecked: true
   }
-
-
 
   case types.FORM_TOUCH: // Form is touched by the user.
   return {

@@ -1,0 +1,21 @@
+1. JavaScript files have the extension .js
+2. CSS files have the extension .scss (we embedded saas, so we can use that).
+3. We use the camelcase notation for folder and file names.
+    incorrect: FormParser - Form_Parser - Form-Parser - form_parser - form-parser - formparser
+    correct: formParser
+4. We create a separate directory (in the components directory) for every component that requires styling.
+5. In our IDE a single tab indent contains TWO SPACES.
+6. Directories decription within 'src':
+    - api (contains scripting handling ALL client server communication)
+    - assets (contains assets like images, fontawsome icons etc..)
+    - components (contains React components)
+        - app (root component that starts all rendering)
+        - content (contains components that render a particular module and render the content of a particular tab)
+        - layout (contains component that renders the frame for the application)
+        - navigation (contains components that are navigation related, like the toolbar, side drawers etc..)
+        - parsers (contains the central parser to render EVERY screen, form and view based on their config object)
+        - ui (contains components that are user interface related like a button, a message box, a spinner etc...)
+    - config (contains configuration objects for forms, navigation, screens and views that are injected in the applicable parser)
+    - hoc (contains higher order components that act as a wrapper for normal React components)
+    - libs (contains JavaScript libraries for generic use)
+    - store (contains action constants and reducers to manage to Redux store)

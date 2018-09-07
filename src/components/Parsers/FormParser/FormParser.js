@@ -176,20 +176,22 @@ class Form extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
+
     const submitData = {};
     for (let id in this.state.configForm.inputs) {
       submitData[id] = this.state.configForm.inputs[id].value;
     }
+
     const url = this.props.id ?
     '/' + this.state.configForm.url + '/update/' + this.props.id :
     '/' + this.state.configForm.url + '/create';
+
     const type = this.props.id ? 'put' : 'post';
+
     callServer(type, url, this.successSubmitHandler, this.errorSubmitHandler, submitData);
   }
 
-  successSubmitHandler = (response) => {
-    this.props.onSubmit(response);
-  }
+  successSubmitHandler = response => this.props.onSubmit(response);
 
   errorSubmitHandler = (error) => {
     //console.log(error);
@@ -214,9 +216,17 @@ class Form extends Component {
     console.log('Now we have to grab the selected records and add them to the applicable spot in configForm');
   }
 
-  onModalLookupCloseHandler = () => {
-    this.setState({ showModalLookup: false });
-  }
+  onModalLookupCloseHandler = () => this.setState({ showModalLookup: false });
+
+  // onModalLookupCloseHandler = () => {
+  //   console.log('CLOSE');
+  //   this.setState({ showModalLookup: false });
+  // }
+
+  // onModalLookupCloseHandler = function() {
+  //   console.log('CLOSE');
+  //   this.setState({ showModalLookup: false });
+  // }
 
   render() {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;

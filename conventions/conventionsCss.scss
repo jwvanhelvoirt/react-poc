@@ -1,0 +1,103 @@
+// **** Legibility ****
+
+// #### We do NOT combine styles on a single line ####
+
+// incorrect
+.TitleRow {
+  border-bottom: 1px solid #ccc; box-sizing: border-box; min-height: 100%; justify-content: space-between;
+}
+
+// incorrect
+.TitleRow { border-bottom: 1px solid #ccc; box-sizing: border-box; min-height: 100%; justify-content: space-between; }
+
+// correct
+.TitleRow {
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  min-height: 100%;
+  justify-content: space-between;
+}
+
+// #### The order of styles doesn't have to be alphabetical, related styles should be ordered together. ####
+
+// incorrect
+.ListviewContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+// correct (height/width are related, display/flex-direction are related, position/top are related, margin/padding are related)
+.ListviewContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+// **** Consistency ****
+
+// #### We use the camelcase notation for class names, except for the first character. That must be a CAPTAL. ####
+
+// incorrect
+.listviewContainer>* {
+  font-size: 13px;
+}
+
+// incorrect
+.listview-container>* {
+  font-size: 13px;
+}
+
+// incorrect
+.listview_container>* {
+  font-size: 13px;
+}
+
+// correct
+.ListviewContainer>* {
+  font-size: 13px;
+}
+
+
+
+
+// **** Scope ****
+// 1. React components that require styling have their own stylesheet (in the same directory!), that does NOT interfere other components.
+// 2. Global styles can be included in 'index.scss', but ONLY if there's a MAJOR reason for it.
+
+
+
+
+// **** Inline styling ****
+// 1. Inline styling is FORBIDDEN. ALWAYS define a class.
+
+
+
+
+// **** Classes vs id's ****
+// 1. We only use classes. in a React framework we DON'T use ID's anymore, because we never search for a DOM element anymore.
+
+// incorrect
+#ListviewContainer {
+  font-size: 13px;
+}
+
+// correct
+.ListviewContainer {
+  font-size: 13px;
+}
