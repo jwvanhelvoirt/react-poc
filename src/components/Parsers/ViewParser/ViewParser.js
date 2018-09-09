@@ -97,6 +97,11 @@ class _View extends Component {
       // In case the view source is a bunch of data to be loaded from a database, we initially load these listItems.
       this.reloadListView(this.state.skip);
     }
+
+    if (this.props.lookup) {
+      // In case of a lookup context, the selection must be binded to the input field in the end.
+      this.props.storeLookupInputId(this.props.lookupBindedInputId);
+    }
   };
 
   /**
@@ -184,6 +189,11 @@ class _View extends Component {
    */
   successGetHandler = (response, skip) => {
     const { count, listItems } = response.data;
+
+    if (this.props.lookup) {
+      // In case of a lookup context, the list items must be updated in the store.
+      this.props.storeLookupListItems(listItems);
+    }
 
     // List items successfully loaded, update the state.
     this.setState({
@@ -322,6 +332,11 @@ class _View extends Component {
     }
 
     this.setState({ selectedListItems: updatedSelectedListItems });
+
+    if (this.props.lookup) {
+      // In case of a lookup context, the selected listItem ids must be updated in the store.
+      this.props.storeLookupListItemsSelected(updatedSelectedListItems);
+    }
   };
 
   /**
@@ -462,6 +477,11 @@ class _View extends Component {
         selectedListItems: updatedSelectedListItems
       };
     });
+
+    if (this.props.lookup) {
+      // In case of a lookup context, the selected listItem ids must be updated in the store.
+      this.props.storeLookupListItemsSelected(updatedSelectedListItems);
+    }
   };
 
   /**
@@ -823,8 +843,8 @@ class _View extends Component {
             {listItemsFixedMenu}
           </div>
 
-        // Only onDoubleClick event in case of mulitple selection of rows.
-        const doubleClick = multiSelect ? () => this.onClickItemHandler(listItem._id) : null;
+        // Only onDoubleClick event in case of mulitple selection of rows and NOT a lookup context.
+        const doubleClick = (multiSelect && !this.props.lookup) ? () => this.onClickItemHandler(listItem._id) : null;
 
         return(
           <div key={index} className={classesCombinedListItem}
@@ -877,7 +897,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     untouchForm: () => dispatch( {type: types.FORM_UNTOUCH } ),
-    storeSortItem: (sortItem) => dispatch( {type: types.SORT_ITEM_STORE, sortItem } )
+    storeSortItem: (sortItem) => dispatch( {type: types.SORT_ITEM_STORE, sortItem } ),
+    storeLookupListItems: (lookupListItems) => dispatch( {type: types.LOOKUP_LIST_ITEMS_STORE, lookupListItems } ),
+    storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch( {type: types.LOOKUP_LIST_ITEMS_SELECTED_STORE, lookupListItemsSelected } ),
+    storeLookupInputId: (lookupInputId) => dispatch( {type: types.LOOKUP_INPUT_ID_STORE, lookupInputId } ),
   }
 };
 

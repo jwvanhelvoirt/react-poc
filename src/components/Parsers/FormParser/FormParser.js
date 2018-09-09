@@ -92,22 +92,24 @@ class Form extends Component {
 
     let isValid = true;
 
-    if (isArray) {
-      if (rules.required) {
-        isValid = value.length > 0 && isValid;
+    if (rules) {
+      if (isArray) {
+        if (rules.required) {
+          isValid = value.length > 0 && isValid;
+        }
+      } else {
+        if (rules.required) {
+          isValid = value.trim() !== '' && isValid;
+        }
       }
-    } else {
-      if (rules.required) {
-        isValid = value.trim() !== '' && isValid;
+
+      if (rules.minLength) {
+        isValid = value.length >= rules.minLength && isValid;
       }
-    }
 
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
+      if (rules.maxLength) {
+        isValid = value.length <= rules.maxLength && isValid;
+      }
     }
 
     return isValid;
@@ -132,15 +134,20 @@ class Form extends Component {
     }
 
     // Is the entire form valid? (For enabling submit button yes or no).
+    const isValidForm = this.isValidForm(updatedFormInputs);
+
+    clone.inputs = updatedFormInputs;
+    this.setState({ configForm: clone, isValidForm });
+  };
+
+  isValidForm = (updatedFormInputs) => {
     let isValidForm = true;
     for (let id in updatedFormInputs) {
       if (updatedFormInputs[id].validation) {
         isValidForm = this.checkValidity(updatedFormInputs[id].value, updatedFormInputs[id].validation) && isValidForm;
       }
     }
-
-    clone.inputs = updatedFormInputs;
-    this.setState({ configForm: clone, isValidForm });
+    return isValidForm;
   };
 
   removeMultiValueItem = (fieldId, valueId) => {
@@ -153,7 +160,7 @@ class Form extends Component {
     updatedFormElement.value = updatedValue;
 
     // Check for validity.
-    if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
+    if (updatedFormElement.validation) {
       updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
       if (!updatedFormElement.valid) {
         updatedFormElement.touched = true;
@@ -163,12 +170,7 @@ class Form extends Component {
     updatedFormInputs[fieldId] = updatedFormElement;
 
     // Is the entire form valid? (For enabling the submit button).
-    let isValidForm = true;
-    for (let id in updatedFormInputs) {
-      if (updatedFormInputs[id].validation) {
-        isValidForm = this.checkValidity(updatedFormInputs[id].value, updatedFormInputs[id].validation) && isValidForm;
-      }
-    }
+    const isValidForm = this.isValidForm(updatedFormInputs);
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone, isValidForm });
@@ -212,10 +214,63 @@ class Form extends Component {
   };
 
   onModalLookupSubmitHandler = () => {
-    console.log('Now we have to grab the selected records and add them to the applicable spot in configForm');
+    // Now we have to grab the selected records and append them to the applicable input in configForm.
+
+    // lookupInputId : input to which the selected entries should be appended.
+    // lookupListItemsSelected: array of IDs of the selected listItems.
+    // lookupListItems: array of objects of listItems, which contains all data but also the non-selected listItems.
+    const { lookupInputId, lookupListItemsSelected, lookupListItems } = this.props;
+
+    // Filter the selected items from the lookupListItems array.
+    const listItemsSelected = lookupListItems.filter((item) => {
+      return lookupListItemsSelected.includes(item._id);
+    });
+
+    // Prevent appending selected listItems that were appended before.
+    const listItemsToAppend = listItemsSelected.filter((item) => {
+      let append = true;
+      this.state.configForm.inputs[lookupInputId].value.forEach((current) => {
+        append = current._id === item._id ? false : append;
+      });
+      return append;
+    });
+
+    // If any, append the selected listItems to the applicable input and change the state so the component ges re-rendered.
+    if (listItemsToAppend.length > 0) {
+      const clone = cloneDeep(this.state.configForm);
+      clone.inputs[lookupInputId].value = [
+        ...clone.inputs[lookupInputId].value,
+        ...listItemsToAppend
+      ];
+      clone.inputs[lookupInputId].touched = true; // input has been touched.
+
+      // Update the valid property.
+      clone.inputs[lookupInputId].valid = this.checkValidity(clone.inputs[lookupInputId].value, clone.inputs[lookupInputId].validation);
+
+      // Is the entire form valid? (For enabling submit button yes or no).
+      const isValidForm = this.isValidForm(clone.inputs);
+
+      // Update the state to re-render the component.
+      this.setState({ configForm: clone, isValidForm });
+
+      // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
+      this.props.touchForm();
+    }
+
+    // Close the lookup selection.
+    this.onModalLookupCloseHandler();
   };
 
-  onModalLookupCloseHandler = () => this.setState({ showModalLookup: false });
+  onModalLookupCloseHandler = () => {
+    this.setState({ showModalLookup: false });
+    this.emptyLookupDataInStore(); // Clean up the store.
+  };
+
+  emptyLookupDataInStore = () => {
+    this.props.storeLookupListItems([]);
+    this.props.storeLookupListItemsSelected([]);
+    this.props.storeLookupInputId('');
+  };
 
   render = () => {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
@@ -292,13 +347,24 @@ class Form extends Component {
 
 }
 
+const mapStateToProps = state => {
+  return {
+    lookupListItems: state.redMain.lookupListItems,
+    lookupListItemsSelected: state.redMain.lookupListItemsSelected,
+    lookupInputId: state.redMain.lookupInputId
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
+    storeLookupListItems: (lookupListItems) => dispatch( {type: types.LOOKUP_LIST_ITEMS_STORE, lookupListItems } ),
+    storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch( {type: types.LOOKUP_LIST_ITEMS_SELECTED_STORE, lookupListItemsSelected } ),
+    storeLookupInputId: (lookupInputId) => dispatch( {type: types.LOOKUP_INPUT_ID_STORE, lookupInputId } ),
     touchForm: () => dispatch( {type: types.FORM_TOUCH } )
   }
 };
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 /*
 Wat hebben we voor een IO aan configuratie nodig?

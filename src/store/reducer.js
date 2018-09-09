@@ -5,8 +5,9 @@ const initialState = {
   formTouched: false,
   initTranslatesLoaded: false,
   initMagicChecked: false,
-  lookupFieldId: '',
-  lookupFieldVal: '',
+  lookupListItems: [],
+  lookupListItemsSelected: [],
+  lookupInputId: '',
   messageBox1: false,
   messageBox2: false,
   searchTextOverall: '',
@@ -51,16 +52,22 @@ const reducer = (state = initialState, action) => {
         formShowUserInfo: action.formShowUserInfo
       };
 
-    case types.LOOKUP_FIELD_ID_STORE: // User clicks on a lookup button in a form, stores the id of the related form field.
+    case types.LOOKUP_LIST_ITEMS_STORE: // Store the listItems array of objects of the current lookup view.
       return {
         ...state,
-        lookupFieldId: action.lookupFieldId
+        lookupListItems: action.lookupListItems
       };
 
-    case types.LOOKUP_FIELD_VAL_STORE: // User selected one or more rows from the lookup. Stores these values.
+    case types.LOOKUP_LIST_ITEMS_SELECTED_STORE: // Store the selected listItems of the current lookup view.
       return {
         ...state,
-        lookupFieldVal: action.lookupFieldVal
+        lookupListItemsSelected: action.lookupListItemsSelected
+      };
+
+    case types.LOOKUP_INPUT_ID_STORE: // User clicks on a lookup button in a form, stores the id of the related input field.
+      return {
+        ...state,
+        lookupInputId: action.lookupInputId
       };
 
     case types.MESSAGE_BOX1_OPEN: // There is a first message box on the screen.

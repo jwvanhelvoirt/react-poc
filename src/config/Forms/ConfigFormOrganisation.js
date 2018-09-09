@@ -24,7 +24,6 @@ const formConfig = {
 			defaultFocus: true
 		},
 		persons: {
-			label: 'keyEmployees',
 			elementType: 'multiAppend',
 			lookup: configLookupPerson,
 			lookupFieldForDisplay: 'name',
@@ -34,7 +33,7 @@ const formConfig = {
 			// 	required: true
 			// },
 			// valid: false,
-			// touched: false
+			touched: false
 		},
 		email: {
 			label: 'keyEmail',

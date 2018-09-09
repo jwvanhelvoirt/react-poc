@@ -27,11 +27,11 @@ const formConfig = {
 			lookupFieldForDisplay: 'name',
 			lookupTitle: 'keyOrganisation',
 			value: [],
-			// validation: {
-			// 	required: true
-			// },
-			// valid: false,
-			// touched: false
+			validation: {
+				required: true
+			},
+			valid: false,
+			touched: false
 		},
 		email: {
 			elementType: 'input',

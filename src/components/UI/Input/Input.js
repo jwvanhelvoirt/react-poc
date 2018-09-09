@@ -11,9 +11,8 @@
 */
 
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-// import * as types from '../../../store/actions';
-// import cloneDeep from 'lodash/cloneDeep';
 import View from '../../parsers/viewParser/viewParser';
 import Button from '../button/button';
 import Label from '../label/label';
@@ -28,6 +27,8 @@ class Input extends Component {
     let inputClasses = [classes.InputElement];
     let validationError = null;
 
+    const { inputId } = this.props;
+
     const { elementType, elementConfig, value, valid, validation, touched, label,
       defaultFocus, lookup, lookupTitle, placeholder,
       translateDisplayValues, convertDisplayValues, func } = this.props.configInput;
@@ -39,7 +40,7 @@ class Input extends Component {
     }
 
     if (!valid && validation && touched) {
-      validationError = <p className={classes.ValidationError}>Please enter a valid value!</p>
+      validationError = <p className={classes.ValidationError}><Label labelKey={'keyValidValue'} convertType={'propercase'} /></p>
     }
 
     // Default focus.
@@ -109,8 +110,8 @@ class Input extends Component {
           const valueId = item._id;
           return (
             <div key={index} className={classes.Multiline}>
-              <div onClick={() => this.props.removeMultiValueItem(this.props.inputId, valueId)}>
-                <Button outline='true' color="danger" labelIcon="times" />
+              <div className={classes.MultilineRemove} onClick={() => this.props.removeMultiValueItem(inputId, valueId)}>
+                <FontAwesomeIcon icon='times-circle' />
               </div>
               <div className={classes.DisplayValue}>{item.name}</div>
             </div>
@@ -125,7 +126,7 @@ class Input extends Component {
         inputElement = (
           <Aux>
             <Button clicked={() => this.props.showModal('showModalLookup', 'ModalMedium', ['keySelect', lookupTitle], 'info',
-              <View viewConfig={lookup} />, 'butOkCancel')}
+              <View viewConfig={lookup} lookup={true} lookupBindedInputId={inputId} />, 'butOkCancel')}
               color="primary" labelText={['keyPlus', lookupTitle]}
             />
             {multiLines}

@@ -3,9 +3,9 @@ import ToolbarIcons from '../../toolbar/toolbarIcons/toolbarIcons';
 
 const drawerToggle = (props) => {
   const icons = [
-    { index: 'menu', icon: 'bars', label: 'Menu', clicked: props.clicked }
+    { index: 'menu', icon: 'bars', label: 'keyMenu', clicked: props.clicked }
   ];
-  
+
   return (
     <ToolbarIcons navIcons={icons} />
   );

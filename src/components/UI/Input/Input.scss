@@ -50,6 +50,16 @@
 	margin-right: 5px;
 }
 
+.MultilineRemove {
+	color: #dc3545;
+	padding: 0 3px;
+}
+
+.MultilineRemove:hover {
+	color: white;
+	background-color: #dc3545;
+}
+
 .DisplayValue {
 	margin-left: 5px;
 }
