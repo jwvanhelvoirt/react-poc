@@ -10,7 +10,8 @@ export const isAuthNavItems = {
   acquisition: true,
   recruitment: true,
   inspection: true,
-  reports: true
+  reports: true,
+  project: true
 };
 
 export const navItems = [
@@ -25,5 +26,6 @@ export const navItems = [
   isAuthNavItems.inspection   ? { icon: 'check-circle',     label: 'keyInspection',   url: '/inspection',   dashboard: true } : {},
                                 { icon: 'question',         label: 'keyHelp',         url: '/help',         dashboard: true },
                                 { icon: 'newspaper',        label: 'keyRelease',      url: '/release',      dashboard: true },
-  isAuthNavItems.reports      ? { icon: 'file-alt',         label: 'keyReports',      url: '/reports',      dashboard: true } : {}
+  isAuthNavItems.reports      ? { icon: 'file-alt',         label: 'keyReports',      url: '/reports',      dashboard: true } : {},
+  isAuthNavItems.project      ? { icon: 'project-diagram',  label: 'keyProject',      url: '/project',      dashboard: true } : {}
 ];

@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 
 // axios.defaults.baseURL = 'https://ez2xs-4bf38.firebaseio.com/';
 axios.defaults.baseURL = 'http://localhost:3050/api/';
-// axios.defaults.baseURL = 'http://172.16.18.168:3050/api/';
+// axios.defaults.baseURL = 'http://172.16.18.167:3050/api/';
 
 // Configure interceptor for handling requests globally.
 //axios.interceptors.request.use(request => {

@@ -1,4 +1,4 @@
-import configLookupPerson from '../views/configLookupPerson';
+// import configLookupPerson from '../views/configLookupPerson';
 
 const formConfig = {
 	buttons: 'butOkCancel',
@@ -23,18 +23,18 @@ const formConfig = {
 			touched: false,
 			defaultFocus: true
 		},
-		persons: {
-			elementType: 'multiAppend',
-			lookup: configLookupPerson,
-			lookupFieldForDisplay: 'name',
-			lookupTitle: 'keyPerson',
-			value: [],
-			// validation: {
-			// 	required: true
-			// },
-			// valid: false,
-			touched: false
-		},
+		// persons: {
+		// 	elementType: 'multiAppend',
+		// 	lookup: configLookupPerson,
+		// 	lookupFieldForDisplay: 'name',
+		// 	lookupTitle: 'keyPerson',
+		// 	value: [],
+		// 	// validation: {
+		// 	// 	required: true
+		// 	// },
+		// 	// valid: false,
+		// 	touched: false
+		// },
 		email: {
 			label: 'keyEmail',
 			elementType: 'input',

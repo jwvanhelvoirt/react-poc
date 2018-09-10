@@ -2,6 +2,7 @@ import * as types from './actions';
 
 const initialState = {
   authenticated: false,
+  formShowUserInfo: false,
   formTouched: false,
   initTranslatesLoaded: false,
   initMagicChecked: false,
@@ -10,9 +11,9 @@ const initialState = {
   lookupInputId: '',
   messageBox1: false,
   messageBox2: false,
+  route: '',
   searchTextOverall: '',
   showModalLookup: false,
-  formShowUserInfo: false,
   sortItem: '',
   transLanguage: 'nl',
   transTranslates: {}
@@ -92,6 +93,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         messageBox2: false
+      };
+
+    case types.ROUTE_STORE: // URL extension to use when user clicks on a row that should display a follow-up screen.
+      return {
+        ...state,
+        route: action.route
       };
 
     case types.SEARCHTEXT_OVERALL_STORE: // Search text in the menu bar searchbar.

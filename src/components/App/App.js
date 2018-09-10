@@ -27,6 +27,10 @@ import ModAcquisition from '../content/modules/modAcquisition';
 import ModRecruitment from '../content/modules/modRecruitment';
 import ModInspection from '../content/modules/modInspection';
 
+// This is TEMPORARY, puur om geneste schermen uit te coderen in de viewparser.
+import ModProject from '../content/modules/modProject';
+import ModProjectDocument from '../content/modules/modProjectDocument';
+
 // Import components for all navigation icon routes.
 import ModSearch from '../content/modules/modSearch';
 import ModHelp from '../content/modules/modHelp';
@@ -110,6 +114,12 @@ class App extends Component {
     console.log(error);
   };
 
+  /*
+  en vervolgens moeten we de rows verpakken in een <Link to {'/project/document/' + id}>
+  daarna kunnen we het id op de url extracten met this.props.match.params.id
+  wellicht moeten we de routes omdraaien binnen <Switch>.
+  */
+
   render = () => {
     let layout = (
       <Layout navItems={navItems} navIcons={navIcons} toolbar={false}>
@@ -137,6 +147,9 @@ class App extends Component {
             {isAuthNavItems.acquisition ? <Route path="/acquisition" component={ModAcquisition} /> : null}
             {isAuthNavItems.recruitment ? <Route path="/recruitment" component={ModRecruitment} /> : null}
             {isAuthNavItems.inspection ? <Route path="/inspection" component={ModInspection} /> : null}
+
+            {isAuthNavItems.project ? <Route path="/project/document/:id" component={ModProjectDocument} /> : null}
+            {isAuthNavItems.project ? <Route path="/project" component={ModProject} /> : null}
 
             <Route path="/search" component={ModSearch} />
             <Route path="/help" component={ModHelp} />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import * as types from '../../../store/actions';
@@ -102,6 +103,10 @@ class _View extends Component {
       // In case of a lookup context, the selection must be binded to the input field in the end.
       this.props.storeLookupInputId(this.props.lookupBindedInputId);
     }
+  };
+
+  componentWillUnmount = () => {
+    // this.props.storeRouteBindedAttribute('');
   };
 
   /**
@@ -343,9 +348,12 @@ class _View extends Component {
    * @brief   Refreshes the current listView by pulling it from the server starting by the first record.
    */
   reloadListView = (skip, search, emptySearchbar) => {
+    const searchIn = [
+      { property: this.state.viewConfig.rowBindedAttribute, value: [this.props.match.params.id] }
+    ];
     const { sort, sortOrder, viewConfig } = this.state;
     const { limit } = viewConfig;
-    const params = { sort, sortOrder, skip, limit, search };
+    const params = { sort, sortOrder, skip, limit, search, searchIn };
     callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
     // In case this reload is triggere from the view refresh action, text in the searchbar must be removed.
@@ -846,8 +854,8 @@ class _View extends Component {
         // Only onDoubleClick event in case of mulitple selection of rows and NOT a lookup context.
         const doubleClick = (multiSelect && !this.props.lookup) ? () => this.onClickItemHandler(listItem._id) : null;
 
-        return(
-          <div key={index} className={classesCombinedListItem}
+        const listItemDiv = (
+          <div className={classesCombinedListItem}
             onClick={(event) => this.toggleRowHandler(listItem._id)}
             onDoubleClick={doubleClick}>
             {listItemsFixed}
@@ -855,6 +863,20 @@ class _View extends Component {
               {columnsVisible.map((column, index) => <div key={index} className={classes[column.size]}>{listItem[column.id]}</div>)}
             </div>
           </div>
+        );
+
+        let listItemPrint = <Aux>{listItemDiv}</Aux>;
+        // Check if we should display a new screen when clicking on a row.
+        if (this.props.route && this.props.route.length > 0) {
+          listItemPrint = (
+            <Link to={this.props.match.url + '/' + this.props.route + '/' + listItem._id} key={index}>
+              {listItemDiv}
+            </Link>
+          );
+        }
+
+        return(
+          <Aux key={index}>{listItemPrint}</Aux>
         );
       });
     }
@@ -890,6 +912,7 @@ const mapStateToProps = state => {
   return {
     formTouched: state.redMain.formTouched,
     sortItem: state.redMain.sortItem,
+    route: state.redMain.route,
     translates: state.redMain.transTranslates
   };
 };
@@ -900,12 +923,12 @@ const mapDispatchToProps = dispatch => {
     storeSortItem: (sortItem) => dispatch( {type: types.SORT_ITEM_STORE, sortItem } ),
     storeLookupListItems: (lookupListItems) => dispatch( {type: types.LOOKUP_LIST_ITEMS_STORE, lookupListItems } ),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch( {type: types.LOOKUP_LIST_ITEMS_SELECTED_STORE, lookupListItemsSelected } ),
-    storeLookupInputId: (lookupInputId) => dispatch( {type: types.LOOKUP_INPUT_ID_STORE, lookupInputId } ),
+    storeLookupInputId: (lookupInputId) => dispatch( {type: types.LOOKUP_INPUT_ID_STORE, lookupInputId } )
   }
 };
 
 // BUG IN REDUX: In case of nested components (<View> embeds another <View>) mapStateToProps and mapDispatchToProps are NOT invoked.
 // export default connect(mapStateToProps, mapDispatchToProps)(View);
 // So if we assign connect() to a seperate variable and then we export this variable, it works!
-const View = connect(mapStateToProps, mapDispatchToProps)(_View);
+const View = withRouter(connect(mapStateToProps, mapDispatchToProps)(_View));
 export default View;

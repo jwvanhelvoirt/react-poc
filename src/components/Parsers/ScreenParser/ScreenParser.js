@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as types from '../../../store/actions';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
 import Button from '../../ui/button/button';
 import { Large, Medium, Small } from '../../../libs/responsive';
+import Aux from '../../../hoc/auxiliary';
+import { propercase } from '../../../libs/generic';
 import classes from './screenParser.scss';
 
 class Screen extends Component {
@@ -17,10 +22,24 @@ class Screen extends Component {
       });
     });
 
+    this.localData = {
+      route: ''
+    };
+
     this.state = {
       activeTabs,
       tabsConfig: [...this.props.tabsConfig]
     };
+  };
+
+  componentWillMount = () => {
+    // Initialize the route data in the store.
+    this.props.storeRoute('');
+    // this.props.storeRouteBindedAttribute('');
+  };
+
+  componentDidMount = () => {
+    this.props.storeRoute(this.localData.route);
   };
 
   togglePane = (id) => {
@@ -75,12 +94,74 @@ class Screen extends Component {
 
           const toggle = pane.toggle ? (pane.show ? buttonHide : "") : "";
 
+          let upperZone = (
+            <div className={classes.TabBar}>
+              {toggle}
+              <Nav tabs>{links}</Nav>
+            </div>
+          );
+
+          // Check if we should display a breadcrumb zone instead of a tab zone.
+          if (block.showTabs === false) {
+
+            // First breadcrumb is a link to the dashboard.
+            let breadcrumb = (
+              <NavLink to='/dashboard'>
+                {propercase('home')}
+              </NavLink>
+            );
+
+            // Via the URL we calculate the other breadcrumbs.
+            // The URL might have params in it, for instance /project/document/5b7fb7c6495a102ff856dc3
+            // The path of such URL might be something like: /project/document/:id
+            // The :id part and it's predecessor is ONE breadcrumb.
+            let prevItem = '';
+            let arrayUrlParts = [];
+            this.props.match.path.split('/').forEach((item) => {
+
+              if (prevItem) {
+                if (item.indexOf(':') === 0) {
+                  const param = item.replace(':', '');
+                  breadcrumb = (
+                    <Aux>
+                      {breadcrumb}
+                      <NavLink to={'/' + arrayUrlParts.join('/') + '/' + this.props.match.params[param]}>
+                        {' > ' + propercase(prevItem)}
+                      </NavLink>
+                    </Aux>
+                  );
+                } else {
+                  breadcrumb = (
+                    <Aux>
+                      {breadcrumb}
+                      <NavLink to={'/' + arrayUrlParts.join('/')}>
+                        {' > ' + propercase(prevItem)}
+                      </NavLink>
+                    </Aux>
+                  );
+                }
+              }
+
+              if (item) {
+                prevItem = item.indexOf(':') === 0 ? '' : item;
+                arrayUrlParts.push(item);
+              }
+
+            });
+            // Print breadcrumb zone.
+            upperZone = (
+              <div className={classes.Breadcrumb}>{breadcrumb}</div>
+            );
+
+            // We also need to store route data in the store as input for the follow-up screen.
+            // We do this via localData, because React does not allow to update the store in the render method.
+            // In the componentDidMount lifecycle we update the store.
+            this.localData.route = block.route;
+          }
+
           return (
             <div key={indexBlock} className={classes.Pane}>
-              <div className={classes.TabBar}>
-                {toggle}
-                <Nav tabs>{links}</Nav>
-              </div>
+              {upperZone}
               <div className={classes.ListviewContainer}>
                 {content}
               </div>
@@ -113,7 +194,13 @@ class Screen extends Component {
       </div>
     );
   };
-  
+
 }
 
-export default Screen;
+const mapDispatchToProps = dispatch => {
+  return {
+    storeRoute: (route) => dispatch( {type: types.ROUTE_STORE, route } )
+  }
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(Screen));
