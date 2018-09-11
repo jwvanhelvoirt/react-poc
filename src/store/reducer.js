@@ -2,6 +2,7 @@ import * as types from './actions';
 
 const initialState = {
   authenticated: false,
+  // followUpScreenData: '',
   formShowUserInfo: false,
   formTouched: false,
   initTranslatesLoaded: false,
@@ -29,12 +30,18 @@ const reducer = (state = initialState, action) => {
         initTranslatesLoaded: true
       };
 
-    case types.INIT_MAGIC_CHECKED: // Magic has been checked on the server..
+    case types.INIT_MAGIC_CHECKED: // Magic has been checked on the server.
       return {
         ...state,
         initMagicChecked: true
       };
 
+    // case types.FOLLOW_UP_SCREEN_ID_STORE: // Follow-up screen needs to print data from the previous screen.
+    //   return {
+    //     ...state,
+    //     followUpScreenData: action.followUpScreenData
+    //   };
+    //
     case types.FORM_TOUCH: // Form is touched by the user.
       return {
         ...state,

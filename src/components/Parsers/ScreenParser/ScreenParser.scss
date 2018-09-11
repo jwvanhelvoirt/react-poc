@@ -33,7 +33,10 @@
   padding-bottom: 11px; /* Die 11px zit niet lekker, dat moet anders.*/
 }
 
-.Pane .Breadcrumb {
+.Pane .Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: -webkit-sticky;
   position: sticky;
   top: 0;

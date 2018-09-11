@@ -105,10 +105,6 @@ class _View extends Component {
     }
   };
 
-  componentWillUnmount = () => {
-    // this.props.storeRouteBindedAttribute('');
-  };
-
   /**
    * @brief   Updates listItems after a new listItem or an update of a selected listItem.
    */
@@ -911,8 +907,8 @@ class _View extends Component {
 const mapStateToProps = state => {
   return {
     formTouched: state.redMain.formTouched,
-    sortItem: state.redMain.sortItem,
     route: state.redMain.route,
+    sortItem: state.redMain.sortItem,
     translates: state.redMain.transTranslates
   };
 };

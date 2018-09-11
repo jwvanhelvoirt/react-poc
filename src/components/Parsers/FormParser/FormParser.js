@@ -150,32 +150,6 @@ class Form extends Component {
     return isValidForm;
   };
 
-  removeMultiValueItem = (fieldId, valueId) => {
-    const clone = cloneDeep(this.state.configForm);
-    const updatedFormInputs = clone.inputs;
-
-    let updatedFormElement = updatedFormInputs[fieldId];
-
-    const updatedValue = updatedFormInputs[fieldId].value.filter((item) => item._id !== valueId);
-    updatedFormElement.value = updatedValue;
-
-    // Check for validity.
-    if (updatedFormElement.validation) {
-      updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-      if (!updatedFormElement.valid) {
-        updatedFormElement.touched = true;
-      }
-    }
-
-    updatedFormInputs[fieldId] = updatedFormElement;
-
-    // Is the entire form valid? (For enabling the submit button).
-    const isValidForm = this.isValidForm(updatedFormInputs);
-
-    clone.inputs = updatedFormInputs;
-    this.setState({ configForm: clone, isValidForm });
-  };
-
   submitHandler = (event) => {
     event.preventDefault();
 
@@ -211,6 +185,32 @@ class Form extends Component {
     this.localData.callBackCancel = callBackCancel;
     this.localData.callBackOk = callBackOk;
     this.setState({ [modalState]: true });
+  };
+
+  removeMultiValueItem = (fieldId, valueId) => {
+    const clone = cloneDeep(this.state.configForm);
+    const updatedFormInputs = clone.inputs;
+
+    let updatedFormElement = updatedFormInputs[fieldId];
+
+    const updatedValue = updatedFormInputs[fieldId].value.filter((item) => item._id !== valueId);
+    updatedFormElement.value = updatedValue;
+
+    // Check for validity.
+    if (updatedFormElement.validation) {
+      updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+      if (!updatedFormElement.valid) {
+        updatedFormElement.touched = true;
+      }
+    }
+
+    updatedFormInputs[fieldId] = updatedFormElement;
+
+    // Is the entire form valid? (For enabling the submit button).
+    const isValidForm = this.isValidForm(updatedFormInputs);
+
+    clone.inputs = updatedFormInputs;
+    this.setState({ configForm: clone, isValidForm });
   };
 
   onModalLookupSubmitHandler = () => {

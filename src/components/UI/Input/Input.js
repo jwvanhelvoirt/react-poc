@@ -30,7 +30,7 @@ class Input extends Component {
     const { inputId } = this.props;
 
     const { elementType, elementConfig, value, valid, validation, touched, label,
-      defaultFocus, lookup, lookupTitle, placeholder,
+      defaultFocus, lookup, lookupTitle, placeholder, lookupFieldForDisplay,
       translateDisplayValues, convertDisplayValues, func } = this.props.configInput;
 
     const placeholderInput = placeholder ? getDisplayValue(placeholder, 'propercase', true, this.props.translates): null;
@@ -113,7 +113,7 @@ class Input extends Component {
               <div className={classes.MultilineRemove} onClick={() => this.props.removeMultiValueItem(inputId, valueId)}>
                 <FontAwesomeIcon icon='times-circle' />
               </div>
-              <div className={classes.DisplayValue}>{item.name}</div>
+              <div className={classes.DisplayValue}>{item[lookupFieldForDisplay]}</div>
             </div>
           );
         });
