@@ -1,0 +1,13 @@
+.Footer {
+  padding: 20px 10px 10px 10px;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  display: flex;
+}
+
+.Footer>* {
+  width: 80px;
+}

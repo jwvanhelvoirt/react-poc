@@ -1,0 +1,41 @@
+.Search {
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.Search>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  padding: 0;
+  margin: 0;
+  color: #dc3545;
+  background-color: white;
+}
+
+.Search>div:hover {
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+}
+
+.Search>input {
+  padding: 0 10px;
+  flex-grow: 2;
+  outline: none;
+  border: none;
+}
+
+.Small {
+  flex-grow: 1;
+}
+
+.Medium {
+  flex-grow: 2;
+}

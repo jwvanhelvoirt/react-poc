@@ -1,0 +1,44 @@
+.Toolbar {
+	height: 56px;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #eee;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	// padding: 0 20px;
+	box-sizing: border-box;
+	z-index: 50;
+	border-bottom: 1px solid #ccc;
+}
+
+.Toolbar .Title {
+	// display: none;
+}
+
+.Toolbar .Searchbar {
+	margin: 0 10px;
+	height: 34px;
+}
+
+.GrowSmall {
+	flex-grow: 1;
+}
+
+.GrowMedium {
+	flex-grow: 2;
+}
+
+.GrowBig {
+	flex-grow: 3;
+}
+
+@media (max-width: 1919px) {
+	.Toolbar .Title {
+		color: white;
+		display: block;
+		font-size: 20px;
+	}
+}

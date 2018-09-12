@@ -1,0 +1,25 @@
+.ToolbarIcon {
+	height: 100%;
+	width: 56px;
+	font-size: 26px;
+}
+
+.ToolbarIcon:hover {
+	background-color: lightgrey;
+}
+
+.ToolbarIcon a {
+	color: grey !important;
+	text-decoration: none;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/*.ToolbarIcon a.active {
+	color: red;
+	font-size: 30px;
+}*/
