@@ -189,16 +189,18 @@ class _View extends Component {
    * @brief   Callback that is triggered once a list of items has been successfully pulled from the server.
    */
   successGetHandler = (response, skip) => {
-    const { count, listItems } = response.data;
+    // const { count, listItems } = response.data;
+    const { count, list } = response.data;
 
     if (this.props.lookup) {
       // In case of a lookup context, the list items must be updated in the store.
-      this.props.storeLookupListItems(listItems);
+      // this.props.storeLookupListItems(listItems);
+      this.props.storeLookupListItems(list);
     }
 
     // List items successfully loaded, update the state.
     this.setState({
-      listItems,
+      listItems: list,
       count,
       skip,
       loading: false,
@@ -349,8 +351,9 @@ class _View extends Component {
     ];
     const { sort, sortOrder, viewConfig } = this.state;
     const { limit } = viewConfig;
-    const params = { sort, sortOrder, skip, limit, search, searchIn };
-    callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
+    const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search, searchIn };
+    // callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
+    callServer('put', '/' + this.state.viewConfig.url, (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
     // In case this reload is triggere from the view refresh action, text in the searchbar must be removed.
     if (emptySearchbar) {
@@ -865,7 +868,7 @@ class _View extends Component {
         // Check if we should display a new screen when clicking on a row.
         if (this.props.route && this.props.route.length > 0) {
           listItemPrint = (
-            <Link to={this.props.match.url + '/' + this.props.route + '/' + listItem._id} key={index}>
+            <Link to={this.props.match.url + '/' + this.props.route + '/' + listItem.id} key={index}>
               {listItemDiv}
             </Link>
           );

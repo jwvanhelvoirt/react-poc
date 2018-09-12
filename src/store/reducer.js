@@ -6,7 +6,7 @@ const initialState = {
   formShowUserInfo: false,
   formTouched: false,
   initTranslatesLoaded: false,
-  initMagicChecked: false,
+  // initMagicChecked: false,
   lookupListItems: [],
   lookupListItemsSelected: [],
   lookupInputId: '',
@@ -30,11 +30,11 @@ const reducer = (state = initialState, action) => {
         initTranslatesLoaded: true
       };
 
-    case types.INIT_MAGIC_CHECKED: // Magic has been checked on the server.
-      return {
-        ...state,
-        initMagicChecked: true
-      };
+    // case types.INIT_MAGIC_CHECKED: // Magic has been checked on the server.
+    //   return {
+    //     ...state,
+    //     initMagicChecked: true
+    //   };
 
     // case types.FOLLOW_UP_SCREEN_ID_STORE: // Follow-up screen needs to print data from the previous screen.
     //   return {
@@ -42,6 +42,13 @@ const reducer = (state = initialState, action) => {
     //     followUpScreenData: action.followUpScreenData
     //   };
     //
+
+  case types.FORM_SUBMIT_DATA_STORE: // Stores data of last submitted form.
+    return {
+      ...state,
+      formSubmitData: action.formSubmitData
+    };
+
     case types.FORM_TOUCH: // Form is touched by the user.
       return {
         ...state,

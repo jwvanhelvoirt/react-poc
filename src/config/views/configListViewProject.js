@@ -1,39 +1,43 @@
 const listViewConfig = {
   columns: [
     {
-      id: 'name',
+      id: 'naam',
       label: 'keyName',
       sort: true,
-      data: 'name',
+      data: 'naam',
       displayOn: 'always',
       show: true,
       size: 'Flex40'
     },
     {
-      id: 'phone',
-      label: 'keyPhone',
+      id: 'niveau4',
+      label: 'keyOrganisation',
       sort: false,
-      data: 'phone',
-      displayOn: 'none',
+      data: 'niveau4',
+      displayOn: 'always',
+      show: true,
+      size: 'Flex40'
+    },
+    {
+      id: 'start',
+      label: 'keyStart',
+      sort: true,
+      data: 'start',
+      displayOn: 'always',
       show: true,
       size: 'Flex20'
     },
     {
-      id: 'city',
-      label: 'keyCity',
+      id: 'eind',
+      label: 'keyEnd',
       sort: true,
-      data: 'city',
+      data: 'eind',
       displayOn: 'always',
       show: true,
       size: 'Flex20'
     }
   ],
-  filterOptions: [
-    { id: 'city', label: 'keyCity', collection: ''}, // Als je geen collection opgeeft, dan gaat hij zoeken in collectie die aan viewConfig gekoppeld is.
-    { id: 'country', label: 'keyCountry', collection: ''},
-    { id: 'organisationManager', label: 'keyOrganisationManager', collection: 'medewerkers'}
-  ],
-  limit: 50,
+  limit: 25,
 
   // multiSelect: true,
   // relatedForm: formConfigOrganisation,
@@ -46,7 +50,7 @@ const listViewConfig = {
   // rowSelectAll: true,
   // showActions: true,
   // showColumnConfigurator: true,
-  showFilter: true,
+  // showFilter: true,
   showListViewHeader: true,
   showNavigation: true,
   showRowActions: true,
@@ -54,24 +58,9 @@ const listViewConfig = {
   showRowTitle: true,
   showSearchbar: true,
   showSort: true,
-  sort: 'name',
-  sortOptions: {
-    translate: true,
-    options: [ // In this order the sort options will appear in the list.
-      { _id: 'nameA', label: ['keyName', 'keyAscending'], sortOn: 'name', order: 1},
-      { _id: 'nameD', label: ['keyName', 'keyDescending'], sortOn: 'name', order: -1},
-      { _id: 'emailA', label: ['keyEmail', 'keyAscending'], sortOn: 'email', order: 1},
-      { _id: 'phoneA', label: ['keyPhone', 'keyAscending'], sortOn: 'phone', order: 1},
-      { _id: 'websiteA', label: ['keyWebsite', 'keyAscending'], sortOn: 'website', order: 1},
-      { _id: 'zipA', label: ['keyZip', 'keyAscending'], sortOn: 'zip', order: 1},
-      { _id: 'streetAddressA', label: ['keyStreet', 'keyAscending'], sortOn: 'streetAddress', order: 1},
-      { _id: 'cityA', label: ['keyCity', 'keyAscending'], sortOn: 'city', order: 1},
-      { _id: 'cityD', label: ['keyCity', 'keyDescending'], sortOn: 'city', order: -1},
-      { _id: 'countryA', label: ['keyCountry', 'keyAscending'], sortOn: 'country', order: 1}
-    ]
-  },
+  sort: 'nr_desc',
   title: 'keyProject',
-  url: 'organisations'
+  url: 'api.project.project.list'
 };
 
 export default listViewConfig;

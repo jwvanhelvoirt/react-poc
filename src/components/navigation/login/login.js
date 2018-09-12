@@ -11,6 +11,33 @@ class Login extends Component {
   };
 
   onSubmitHandler = (response) => {
+    // Authorization was succesfull.
+    console.log(response.data);
+    console.log(this.props.formSubmitData);
+
+    const { MAGIC, idmedewerker, internaluser } = response.data;
+    const { login, remember_login } = this.props.formSubmitData;
+
+    localStorage.setItem("magic", MAGIC);
+
+    if (remember_login === 1) {
+      localStorage.setItem("user", login);
+    } else {
+      localStorage.removeItem("user");
+    }
+
+    this.props.authenticateUser(true); // This will re-render the app component and show the dashboard.
+    this.props.showUserInfo(false);
+  };
+
+  onErrorHandler = (error) => {
+    // Authorization was NOT succesfull.
+    console.log(error);
+    this.props.showUserInfo(true);
+  };
+
+  onSubmitHandler1 = (response) => {
+    console.log(response.data);
     const { authorized, magic, rememberPrevLogin, username } = response.data;
 
     if (authorized) {
@@ -49,14 +76,22 @@ class Login extends Component {
           configForm={formLogin}
           data={this.state.loadedListItem}
           onSubmit={this.onSubmitHandler}
+          onError={this.onErrorHandler}
           id={null}
           modal={true}
+          submitUrl={'api.login'}
         />
       </div>
     );
   };
 
 }
+
+const mapStateToProps = state => {
+  return {
+    formSubmitData: state.redMain.formSubmitData
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -65,7 +100,7 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 /*
 Kijk naar localstate.

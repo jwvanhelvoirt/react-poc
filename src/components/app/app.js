@@ -26,6 +26,11 @@ import ModGdpr from '../content/modules/modGdpr';
 import ModAcquisition from '../content/modules/modAcquisition';
 import ModRecruitment from '../content/modules/modRecruitment';
 import ModInspection from '../content/modules/modInspection';
+import ModHelp from '../content/modules/modHelp';
+import ModRelease from '../content/modules/modRelease';
+import ModReports from '../content/modules/modReports';
+import ModDocument from '../content/modules/modDocument';
+import ModPerson from '../content/modules/modPerson';
 
 // This is TEMPORARY, puur om geneste schermen uit te coderen in de viewparser.
 import ModProject from '../content/modules/modProject';
@@ -33,11 +38,9 @@ import ModProjectDocument from '../content/modules/modProjectDocument';
 
 // Import components for all navigation icon routes.
 import ModSearch from '../content/modules/modSearch';
-import ModHelp from '../content/modules/modHelp';
-import ModRelease from '../content/modules/modRelease';
-import ModReports from '../content/modules/modReports';
 import ModPersonalSettings from '../content/modules/modPersonalSettings';
 import ModAdmin from '../content/modules/modAdmin';
+import ModLogout from '../content/modules/modLogout';
 
 import Mod404 from '../content/modules/mod404';
 
@@ -86,34 +89,51 @@ class App extends Component {
   };
 
   componentWillMount = () => {
-    this.loadPersonalSettings(); // TODO : We have to get the translates somehow, configure a defaultin general settings ('en' or 'nl').
+    // this.loadPersonalSettings(); // TODO : We have to get the translates somehow, configure a defaultin general settings ('en' or 'nl').
     // localStorage.setItem("magic", "123456");
     // localStorage.removeItem("magic");
-    const magic = localStorage.getItem("magic");
 
+    const magic = localStorage.getItem("magic"); // EZ2XS WE PROBABLY HAVE TO STORE IT IN THE STORE.
+
+    // WORKS DIFFERENTLY IN EZ2XS, MAGIC IS SEND ALONG WITH EVERY API REQUEST INSTEAD OF TRUSTING ONCE.
     if (magic) {
       // There is a magic in the local storage. Make a server call to check if this is the correct magic.
-      const submitData = { magic };
-      callServer('post', '/login/checkmagic', (response) => this.successHandlerCheckMagic(response), this.errorHandlerCheckMagic, submitData);
+      const submitData = { MAGIC: magic };
+      // callServer('post', '/login/checkmagic', (response) => this.successHandlerCheckMagic(response), this.errorHandlerCheckMagic, submitData);
+      callServer('put', 'api.getMedewerkerInfo', (response) => this.successHandlerGetUserInfo(response), this.errorHandlerGetUserInfo, submitData);
     } else {
       // No magic in local storage.
       // The default of the store variable 'authenticated' is 'false', so the login screen will appear.
-      this.props.magicChecked();
+      // this.props.magicChecked();
     }
   };
 
-  successHandlerCheckMagic = (response) => {
-    if (response.data.magic) {
-      // Magic in local storage is correct. Change the store property 'authenticated' to 'true'. Modules will be rendered automatically then.
-      this.props.authenticateUser(true);
-    }
-    this.props.magicChecked();
+  successHandlerGetUserInfo = (response) => {
+    console.log(response);
+    // if (response.data.magic) {
+    //   // Magic in local storage is correct. Change the store property 'authenticated' to 'true'. Modules will be rendered automatically then.
+    //   this.props.authenticateUser(true);
+    // }
+    this.props.authenticateUser(true);
+    // this.props.magicChecked();
   };
 
-  errorHandlerCheckMagic = (error) => {
-    console.log(error);
+  errorHandlerGetUserInfo = (error) => {
+    // this.props.magicChecked();
   };
 
+  // successHandlerCheckMagic = (response) => {
+  //   if (response.data.magic) {
+  //     // Magic in local storage is correct. Change the store property 'authenticated' to 'true'. Modules will be rendered automatically then.
+  //     this.props.authenticateUser(true);
+  //   }
+  //   this.props.magicChecked();
+  // };
+  //
+  // errorHandlerCheckMagic = (error) => {
+  //   console.log(error);
+  // };
+  //
   /*
   en vervolgens moeten we de rows verpakken in een <Link to {'/project/document/' + id}>
   daarna kunnen we het id op de url extracten met this.props.match.params.id
@@ -129,11 +149,13 @@ class App extends Component {
       </Layout>
     );
 
-    if (!this.props.initTranslatesLoaded || !this.props.initMagicChecked) {
-      layout = (
-        <SpinnerInit />
-      );
-    } else if (this.props.authenticated) {
+    // // if (!this.props.initTranslatesLoaded || !this.props.initMagicChecked) {
+    // if (!this.props.initMagicChecked) {
+    //   layout = (
+    //     <SpinnerInit />
+    //   );
+    // } else if (this.props.authenticated) {
+    if (this.props.authenticated) {
       layout = (
         <Layout navItems={navItems} navIcons={navIcons} toolbar={true}>
           <Switch>
@@ -148,14 +170,24 @@ class App extends Component {
             {isAuthNavItems.recruitment ? <Route path="/recruitment" component={ModRecruitment} /> : null}
             {isAuthNavItems.inspection ? <Route path="/inspection" component={ModInspection} /> : null}
 
-            {isAuthNavItems.project ? <Route path="/project/document/:id" component={ModProjectDocument} /> : null}
-            {isAuthNavItems.project ? <Route path="/project" component={ModProject} /> : null}
+
+
+            {isAuthNavItems.document ? <Route path="/project" component={ModDocument} /> : null}
+            {isAuthNavItems.document ? <Route path="/project/document/:id" component={ModProjectDocument} /> : null}
+
+            {isAuthNavItems.person ? <Route path="/person" component={ModPerson} /> : null}
+
+            // {isAuthNavItems.project ? <Route path="/project/document/:id" component={ModProjectDocument} /> : null}
+            // {isAuthNavItems.project ? <Route path="/project" component={ModProject} /> : null}
+
+
 
             <Route path="/search" component={ModSearch} />
             <Route path="/help" component={ModHelp} />
             <Route path="/release" component={ModRelease} />
             {isAuthNavIcons.reports ? <Route path="/reports" component={ModReports} /> : null}
             <Route path="/personal" component={ModPersonalSettings} />
+            <Route path="/logout" component={ModLogout} />
             {isAuthNavIcons.admin ? <Route path="/admin" component={ModAdmin} /> : null}
 
             {/* Every unexpected route results into a 404, except for the '/' route (the root) */}
@@ -177,7 +209,7 @@ const mapStateToProps = state => {
   return {
     authenticated: state.redMain.authenticated,
     initTranslatesLoaded: state.redMain.initTranslatesLoaded,
-    initMagicChecked: state.redMain.initMagicChecked,
+    // initMagicChecked: state.redMain.initMagicChecked,
     language: state.redMain.transLanguage
   };
 };
@@ -185,7 +217,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
-    magicChecked: () => dispatch( {type: types.INIT_MAGIC_CHECKED } ),
+    // magicChecked: () => dispatch( {type: types.INIT_MAGIC_CHECKED } ),
     translatesLoaded: () => dispatch( {type: types.INIT_TRANSLATES_LOADED } ),
     storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } ),
     storeTranslates: (translates) => dispatch( {type: types.TRANS_TRANSLATES_STORE, translates } )

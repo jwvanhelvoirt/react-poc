@@ -55,7 +55,7 @@ class Form extends Component {
       // Get the initial value.
       if (updatedFormElement.valueLocalStorage && localStorage.getItem(updatedFormElement.valueLocalStorage)) {
         if (updatedFormElement.elementType === 'triggerFunctionCheckbox') {
-          updatedFormElement.value = true;
+          updatedFormElement.value = 1;
         } else {
           updatedFormElement.value = localStorage.getItem(updatedFormElement.valueLocalStorage);
         }
@@ -125,7 +125,9 @@ class Form extends Component {
     const updatedFormElement = updatedFormInputs[id];
 
     // Update the value.
-    updatedFormElement.value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    updatedFormElement.value = event.target.type === 'checkbox' ?
+      (event.target.checked ? 1 : 0) : // Backend doesn't understand boolean value (true/false), only a 1 for true and a 0 for false.
+      event.target.value;
 
     // Check for validation.
     if (updatedFormElement.validation) {
@@ -158,11 +160,19 @@ class Form extends Component {
       submitData[id] = this.state.configForm.inputs[id].value;
     }
 
-    const url = this.props.id ?
-    '/' + this.state.configForm.url + '/update/' + this.props.id :
-    '/' + this.state.configForm.url + '/create';
+    let url = '';
+    if (this.props.submitUrl) {
+      url = this.props.submitUrl;
+    } else {
+      url = this.props.id ?
+      '/' + this.state.configForm.url + '/update/' + this.props.id :
+      '/' + this.state.configForm.url + '/create';
+    }
 
     const type = this.props.id ? 'put' : 'post';
+
+    // Store submitData in store for processing in other components in general.
+    this.props.storeFormSubmitData(submitData);
 
     callServer(type, url, this.successSubmitHandler, this.errorSubmitHandler, submitData);
   };
@@ -170,7 +180,11 @@ class Form extends Component {
   successSubmitHandler = response => this.props.onSubmit(response);
 
   errorSubmitHandler = (error) => {
-    //console.log(error);
+    if (this.props.onError) {
+      this.props.onError(error);
+    } else {
+      console.log(error);
+    }
   };
 
   showModal = (modalState, modalClass, title, type, content, buttons,
@@ -357,6 +371,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    storeFormSubmitData: (formSubmitData) => dispatch( {type: types.FORM_SUBMIT_DATA_STORE, formSubmitData } ),
     storeLookupListItems: (lookupListItems) => dispatch( {type: types.LOOKUP_LIST_ITEMS_STORE, lookupListItems } ),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch( {type: types.LOOKUP_LIST_ITEMS_SELECTED_STORE, lookupListItemsSelected } ),
     storeLookupInputId: (lookupInputId) => dispatch( {type: types.LOOKUP_INPUT_ID_STORE, lookupInputId } ),

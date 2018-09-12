@@ -7,6 +7,7 @@ export const isAuthNavIcons = {
 };
 
 export const navIcons = [
-                            { icon: 'user',   label: 'keyPersonalSettings',   url: '/personal' },
+  { icon: 'user',         label: 'keyPersonalSettings',   url: '/personal' },
+  { icon: 'power-off',    label: 'keyLogout',             url: '/logout' },
   isAuthNavIcons.admin ?    { icon: 'cog',    label: 'keySettings',           url: '/admin' } : {}
 ];

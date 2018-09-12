@@ -2,16 +2,18 @@
 // ATTENTION: If you add a navigation item to this configuration, don't forget to add a route for it in app.js.
 
 export const isAuthNavItems = {
-  invoicing: true,
-  planning: true,
-  bookings: true,
-  crm: true,
-  gdpr: true,
-  acquisition: true,
-  recruitment: true,
-  inspection: true,
-  reports: true,
-  project: true
+  invoicing: false,
+  planning: false,
+  bookings: false,
+  crm: false,
+  gdpr: false,
+  acquisition: false,
+  recruitment: false,
+  inspection: false,
+  reports: false,
+  // project: false,
+  document: true,
+  person: true
 };
 
 export const navItems = [
@@ -27,5 +29,7 @@ export const navItems = [
                                 { icon: 'question',         label: 'keyHelp',         url: '/help',         dashboard: true },
                                 { icon: 'newspaper',        label: 'keyRelease',      url: '/release',      dashboard: true },
   isAuthNavItems.reports      ? { icon: 'file-alt',         label: 'keyReports',      url: '/reports',      dashboard: true } : {},
-  isAuthNavItems.project      ? { icon: 'project-diagram',  label: 'keyProject',      url: '/project',      dashboard: true } : {}
+  // isAuthNavItems.project      ? { icon: 'project-diagram',  label: 'keyProject',      url: '/project',      dashboard: true } : {},
+  isAuthNavItems.document     ? { icon: 'project-diagram',  label: 'keyDocument',     url: '/project',      dashboard: true } : {},
+  isAuthNavItems.person       ? { icon: 'project-diagram',  label: 'keyPerson',       url: '/person',       dashboard: true } : {}
 ];

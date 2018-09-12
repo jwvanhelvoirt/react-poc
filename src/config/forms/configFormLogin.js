@@ -11,7 +11,7 @@ const formConfig = {
 	titleIcon: 'sign-in-alt',
 	url: 'login',
 	inputs: {
-		username: {
+		login: {
 			label: 'keyUsername',
 			elementType: 'input',
 			elementConfig: {
@@ -41,12 +41,12 @@ const formConfig = {
 			valid: false,
 			touched: false
 		},
-		rememberPrevLogin: {
+		remember_login: {
 			// TODO : nu de functie niet meer nodig is, kan dit een normale checkbox worden, checkboxes en radios zijn echter nog niet ingeregeld.
 			// Moet straks dus wel omgezet worden naar een gewone checkbox.
 			label: 'keyRememberPrevLogin',
 			elementType: 'triggerFunctionCheckbox',
-			value: false,
+			value: 0,
 			valueLocalStorage: 'user'
 			// Don't need this anymore, but leave it for reference. You can bind a function to be called when clicking the checkbox.
 			// func: (event, configForm) => rememberPrevLogin(event, configForm)
