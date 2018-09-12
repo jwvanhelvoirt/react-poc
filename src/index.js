@@ -14,6 +14,8 @@ import { Provider } from 'react-redux';
 // axios.defaults.baseURL = 'http://localhost:3050/api/';
 axios.defaults.baseURL = 'http://172.16.18.167:3050/api/';
 
+// react-poc-ez2xs
+
 // Configure interceptor for handling requests globally.
 //axios.interceptors.request.use(request => {
 //	//console.log(request);
