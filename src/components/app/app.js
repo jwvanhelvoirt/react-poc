@@ -77,56 +77,27 @@ class App extends Component {
   };
 
   componentWillMount = () => {
-    // this.loadPersonalSettings(); // TODO : We have to get the translates somehow, configure a defaultin general settings ('en' or 'nl').
-    // localStorage.setItem("magic", "123456");
-    // localStorage.removeItem("magic");
-
     const magic = localStorage.getItem("magic"); // EZ2XS WE PROBABLY HAVE TO STORE IT IN THE STORE.
 
-    // WORKS DIFFERENTLY IN EZ2XS, MAGIC IS SEND ALONG WITH EVERY API REQUEST INSTEAD OF TRUSTING ONCE.
     if (magic) {
       // There is a magic in the local storage. Make a server call to check if this is the correct magic.
       const submitData = { MAGIC: magic };
-      // callServer('post', '/login/checkmagic', (response) => this.successHandlerCheckMagic(response), this.errorHandlerCheckMagic, submitData);
       callServer('put', 'api.getMedewerkerInfo', (response) => this.successHandlerGetUserInfo(response), this.errorHandlerGetUserInfo, submitData);
     } else {
       // No magic in local storage.
       // The default of the store variable 'authenticated' is 'false', so the login screen will appear.
-      // this.props.magicChecked();
+      this.props.magicChecked(true);
     }
   };
 
   successHandlerGetUserInfo = (response) => {
-    console.log(response);
-    // if (response.data.magic) {
-    //   // Magic in local storage is correct. Change the store property 'authenticated' to 'true'. Modules will be rendered automatically then.
-    //   this.props.authenticateUser(true);
-    // }
     this.props.authenticateUser(true);
-    // this.props.magicChecked();
+    this.props.magicChecked(true);
   };
 
   errorHandlerGetUserInfo = (error) => {
-    // this.props.magicChecked();
+    this.props.magicChecked(true);
   };
-
-  // successHandlerCheckMagic = (response) => {
-  //   if (response.data.magic) {
-  //     // Magic in local storage is correct. Change the store property 'authenticated' to 'true'. Modules will be rendered automatically then.
-  //     this.props.authenticateUser(true);
-  //   }
-  //   this.props.magicChecked();
-  // };
-  //
-  // errorHandlerCheckMagic = (error) => {
-  //   console.log(error);
-  // };
-  //
-  /*
-  en vervolgens moeten we de rows verpakken in een <Link to {'/project/document/' + id}>
-  daarna kunnen we het id op de url extracten met this.props.match.params.id
-  wellicht moeten we de routes omdraaien binnen <Switch>.
-  */
 
   render = () => {
     let layout = (
@@ -137,13 +108,12 @@ class App extends Component {
       </Layout>
     );
 
-    // // if (!this.props.initTranslatesLoaded || !this.props.initMagicChecked) {
-    // if (!this.props.initMagicChecked) {
-    //   layout = (
-    //     <SpinnerInit />
-    //   );
-    // } else if (this.props.authenticated) {
-    if (this.props.authenticated) {
+    // if (!this.props.initTranslatesLoaded || !this.props.initMagicChecked) {
+    if (!this.props.initMagicChecked) {
+      layout = (
+        <SpinnerInit />
+      );
+    } else if (this.props.authenticated) {
       layout = (
         <Layout navItems={navItems} navIcons={navIcons} toolbar={true}>
           <Switch>
@@ -181,7 +151,7 @@ const mapStateToProps = state => {
   return {
     authenticated: state.redMain.authenticated,
     initTranslatesLoaded: state.redMain.initTranslatesLoaded,
-    // initMagicChecked: state.redMain.initMagicChecked,
+    initMagicChecked: state.redMain.initMagicChecked,
     language: state.redMain.transLanguage
   };
 };
@@ -189,7 +159,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
-    // magicChecked: () => dispatch( {type: types.INIT_MAGIC_CHECKED } ),
+    magicChecked: (initMagicChecked) => dispatch( {type: types.INIT_MAGIC_CHECKED, initMagicChecked } ),
     translatesLoaded: () => dispatch( {type: types.INIT_TRANSLATES_LOADED } ),
     storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } ),
     storeTranslates: (translates) => dispatch( {type: types.TRANS_TRANSLATES_STORE, translates } )
