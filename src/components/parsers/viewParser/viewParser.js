@@ -13,6 +13,7 @@ import Spinner from '../../ui/spinners/spinner/spinner';
 import Modal from '../../ui/modal/modal';
 import MessageBox from '../../ui/messageBox/messageBox';
 import Label from '../../ui/label/label';
+import Avatar from '../../ui/avatar/avatar';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
 import classes from './viewParser.scss';
@@ -355,9 +356,11 @@ class _View extends Component {
     // callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
     callServer('put', '/' + this.state.viewConfig.url, (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
-    // In case this reload is triggere from the view refresh action, text in the searchbar must be removed.
+    // In case this reload is triggered from the view refresh action, text in the searchbar must be removed.
     if (emptySearchbar) {
-      this.setState({ searchbarValue: '' })
+      this.setState({ searchbarValue: '', loading: true })
+    } else {
+      this.setState({ loading: true });
     }
   };
 
@@ -859,7 +862,15 @@ class _View extends Component {
             onDoubleClick={doubleClick}>
             {listItemsFixed}
             <div className={classes.Flex}>
-              {columnsVisible.map((column, index) => <div key={index} className={classes[column.size]}>{listItem[column.id]}</div>)}
+              {
+                columnsVisible.map((column, index) => {
+                  const listItemColumnContent = column.avatar ?
+                    <Avatar size={column.size} foto={listItem[column.id]} name={listItem[column.avatarName]} /> :
+                    listItem[column.id];
+
+                  return <div key={index} className={classes[column.size]}>{listItemColumnContent}</div>;
+                })
+              }
             </div>
           </div>
         );

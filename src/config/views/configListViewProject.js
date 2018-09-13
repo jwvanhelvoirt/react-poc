@@ -1,6 +1,17 @@
 const listViewConfig = {
   columns: [
     {
+			id: 'foto',
+			label: '',
+			sort: false,
+			data: 'foto',
+			displayOn: 'always',
+			show: true,
+			size: 'AvatarLarge',
+			avatar: true,
+			avatarName: 'naam'
+		},
+    {
       id: 'naam',
       label: 'keyName',
       sort: true,
@@ -25,7 +36,7 @@ const listViewConfig = {
       data: 'start',
       displayOn: 'always',
       show: true,
-      size: 'Flex20'
+      size: 'Flex10'
     },
     {
       id: 'eind',
@@ -34,7 +45,7 @@ const listViewConfig = {
       data: 'eind',
       displayOn: 'always',
       show: true,
-      size: 'Flex20'
+      size: 'Flex10'
     }
   ],
   limit: 25,

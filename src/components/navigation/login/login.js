@@ -15,7 +15,7 @@ class Login extends Component {
     console.log(response.data);
     console.log(this.props.formSubmitData);
 
-    const { MAGIC, idmedewerker, internaluser } = response.data;
+    const { MAGIC, /*idmedewerker, internaluser*/ } = response.data;
     const { login, remember_login } = this.props.formSubmitData;
 
     localStorage.setItem("magic", MAGIC);

@@ -237,6 +237,7 @@
 .Flex {
   width: 100%;
   display: flex;
+  align-items: center;
 }
 
 .Flex>*, .Title {
@@ -287,6 +288,24 @@
 }
 .Flex100 {
   width: 100%;
+}
+
+.AvatarLarge {
+  color: white;
+  width: 56px;
+  font-size: 24px;
+}
+
+.AvatarMedium {
+  color: white;
+  width: 40px;
+  font-size: 16px;
+}
+
+.AvatarSmall {
+  color: white;
+  width: 32px;
+  font-size: 12px;
 }
 
 .ShowOnHover {

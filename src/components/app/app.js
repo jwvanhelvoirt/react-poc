@@ -37,29 +37,29 @@ import { isAuthNavIcons, navIcons } from '../../config/navigation/configNavigati
 
 class App extends Component {
 
-  loadPersonalSettings = () => {
-    callServer('get', '/usersettings/read',
-      (response) => this.successGetHandlerPersonalSettings(response), this.errorGetHandlerPersonalSettings);
-  };
-
-  successGetHandlerPersonalSettings = (response) => {
-    this.props.storeLanguage(response.data[0].language);
-    callServer('get', '/translates/read/' + response.data[0].language,
-      (response) => this.successGetHandlerTranslates(response), this.errorGetHandlerTranslates);
-  };
-
-  errorGetHandlerPersonalSettings = (error) => {
-    console.log(error);
-  };
-
-  successGetHandlerTranslates = (response) => {
-    this.props.storeTranslates(response.data[0].translates);
-    this.props.translatesLoaded();
-  };
-
-  errorGetHandlerTranslates = (error) => {
-    console.log(error);
-  };
+  // loadPersonalSettings = () => {
+  //   callServer('get', '/usersettings/read',
+  //     (response) => this.successGetHandlerPersonalSettings(response), this.errorGetHandlerPersonalSettings);
+  // };
+  //
+  // successGetHandlerPersonalSettings = (response) => {
+  //   this.props.storeLanguage(response.data[0].language);
+  //   callServer('get', '/translates/read/' + response.data[0].language,
+  //     (response) => this.successGetHandlerTranslates(response), this.errorGetHandlerTranslates);
+  // };
+  //
+  // errorGetHandlerPersonalSettings = (error) => {
+  //   console.log(error);
+  // };
+  //
+  // successGetHandlerTranslates = (response) => {
+  //   this.props.storeTranslates(response.data[0].translates);
+  //   this.props.translatesLoaded();
+  // };
+  //
+  // errorGetHandlerTranslates = (error) => {
+  //   console.log(error);
+  // };
 
   componentDidMount = () => {
     // Redirect the root route to the starting module
@@ -73,7 +73,7 @@ class App extends Component {
     if (this.props.authenticated && this.props.location.pathname === "/login") {
       this.props.history.replace('/dashboard');
     }
-    this.loadPersonalSettings();
+    // this.loadPersonalSettings();
   };
 
   componentWillMount = () => {
