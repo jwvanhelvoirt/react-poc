@@ -1,7 +1,7 @@
 import React from 'react';
-import TabContentProjectDocument from '../../components/content/tabContent/projectDocument';
+import TabContent from '../../components/content/tabContent/taskList';
 
-export const tabsConfig = {
+export const screenConfig = {
   showTabs: false,
   searchIdIn: 'organisations',
   searchIdFor: 'name',
@@ -17,9 +17,9 @@ export const tabsConfig = {
         {
           id: 'pane1',
           tabs: [
-            { id: 'projectDocument', label: 'keyDocument', component: <TabContentProjectDocument /> }
+            { id: 'taskList', label: 'keyTask', component: <TabContent /> }
           ],
-          activeTab: 'projectDocument'
+          activeTab: 'taskList'
         }
       ]
     }

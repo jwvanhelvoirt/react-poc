@@ -18,29 +18,17 @@ import SpinnerInit from '../ui/spinners/spinnerInit/spinnerInit';
 // Import components for all navigation item routes.
 import Login from '../navigation/login/login';
 import Dashboard from '../navigation/dashboard/dashboard';
-import ModInvoicing from '../content/modules/modInvoicing';
-import ModPlanning from '../content/modules/modPlanning';
-import ModBookings from '../content/modules/modBookings';
-import ModCrm from '../content/modules/modCrm';
-import ModGdpr from '../content/modules/modGdpr';
-import ModAcquisition from '../content/modules/modAcquisition';
-import ModRecruitment from '../content/modules/modRecruitment';
-import ModInspection from '../content/modules/modInspection';
-import ModHelp from '../content/modules/modHelp';
-import ModRelease from '../content/modules/modRelease';
-import ModReports from '../content/modules/modReports';
 import ModDocument from '../content/modules/modDocument';
+import ModDocumentList from '../content/modules/modDocumentList';
+import ModTask from '../content/modules/modTask';
+import ModTaskList from '../content/modules/modTaskList';
 import ModPerson from '../content/modules/modPerson';
-
-// This is TEMPORARY, puur om geneste schermen uit te coderen in de viewparser.
-import ModProject from '../content/modules/modProject';
-import ModProjectDocument from '../content/modules/modProjectDocument';
 
 // Import components for all navigation icon routes.
 import ModSearch from '../content/modules/modSearch';
 import ModPersonalSettings from '../content/modules/modPersonalSettings';
-import ModAdmin from '../content/modules/modAdmin';
 import ModLogout from '../content/modules/modLogout';
+import ModAdmin from '../content/modules/modAdmin';
 
 import Mod404 from '../content/modules/mod404';
 
@@ -161,31 +149,15 @@ class App extends Component {
           <Switch>
             <Route path="/dashboard" component={Dashboard} />
 
-            {isAuthNavItems.invoicing ? <Route path="/invoicing" component={ModInvoicing} /> : null}
-            {isAuthNavItems.planning ? <Route path="/planning" component={ModPlanning} /> : null}
-            {isAuthNavItems.bookings ? <Route path="/bookings" component={ModBookings} /> : null}
-            {isAuthNavItems.crm ? <Route path="/crm" component={ModCrm} /> : null}
-            {isAuthNavItems.gdpr ? <Route path="/gdpr" component={ModGdpr} /> : null}
-            {isAuthNavItems.acquisition ? <Route path="/acquisition" component={ModAcquisition} /> : null}
-            {isAuthNavItems.recruitment ? <Route path="/recruitment" component={ModRecruitment} /> : null}
-            {isAuthNavItems.inspection ? <Route path="/inspection" component={ModInspection} /> : null}
+            {isAuthNavItems.document ? <Route path="/document/list/:id" component={ModDocumentList} /> : null}
+            {isAuthNavItems.document ? <Route path="/document" component={ModDocument} /> : null}
 
-
-
-            {isAuthNavItems.document ? <Route path="/project" component={ModDocument} /> : null}
-            {isAuthNavItems.document ? <Route path="/project/document/:id" component={ModProjectDocument} /> : null}
+            {isAuthNavItems.task ? <Route path="/task/list/:id" component={ModTaskList} /> : null}
+            {isAuthNavItems.task ? <Route path="/task" component={ModTask} /> : null}
 
             {isAuthNavItems.person ? <Route path="/person" component={ModPerson} /> : null}
 
-            // {isAuthNavItems.project ? <Route path="/project/document/:id" component={ModProjectDocument} /> : null}
-            // {isAuthNavItems.project ? <Route path="/project" component={ModProject} /> : null}
-
-
-
             <Route path="/search" component={ModSearch} />
-            <Route path="/help" component={ModHelp} />
-            <Route path="/release" component={ModRelease} />
-            {isAuthNavIcons.reports ? <Route path="/reports" component={ModReports} /> : null}
             <Route path="/personal" component={ModPersonalSettings} />
             <Route path="/logout" component={ModLogout} />
             {isAuthNavIcons.admin ? <Route path="/admin" component={ModAdmin} /> : null}

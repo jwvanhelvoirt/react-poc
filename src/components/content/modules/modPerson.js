@@ -1,7 +1,7 @@
 import React from 'react';
 import Screen from '../../parsers/screenParser/screenParser';
-import { tabsConfig } from '../../../config/screens/configTabsPerson';
+import { screenConfig } from '../../../config/screens/configScreenPerson';
 
-const modPerson = () => <Screen tabsConfig={tabsConfig} />;
+const modPerson = () => <Screen screenConfig={screenConfig} />;
 
 export default modPerson;

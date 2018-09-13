@@ -1,32 +1,5 @@
-import formConfigPerson from '../forms/configFormPerson';
-import formConfigOrganisation from '../forms/configFormOrganisation';
-
 const listViewConfig = {
 	actions: [
-		{
-			id: 'createPerson',
-			labelIcon: 'plus',
-			multiDoc: true,
-			zeroDoc: true,
-			showOnHover: false,
-			showInBarPrimary: true,
-			showInBarMenu: true,
-			showInRowMenu: true,
-			tooltip: 'keyAddPerson',
-			callback: (_this) => { _this.addItem(formConfigPerson, true) }
-		},
-		{
-			id: 'createOrganisation',
-			labelIcon: 'building',
-			multiDoc: true,
-			zeroDoc: true,
-			showOnHover: false,
-			showInBarPrimary: true,
-			showInBarMenu: true,
-			showInRowMenu: true,
-			tooltip: 'keyAddOrganisation',
-			callback: (_this) => { _this.addItem(formConfigOrganisation, false) }
-		},
 		{
 			id: 'delete',
 			labelIcon: 'trash-alt', /* kan ook labelText zijn */
@@ -124,7 +97,6 @@ const listViewConfig = {
 	],
 	limit: 50,
 	multiSelect: true,
-	relatedForm: formConfigPerson,
 	row: { selectable: true, menu: false },
 	rowSelectAll: true,
 	showActions: true,

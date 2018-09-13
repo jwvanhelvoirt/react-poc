@@ -2,7 +2,7 @@ import React from 'react';
 import TabContentOrganisation from '../../components/content/tabContent/organisation';
 import TabContentPerson from '../../components/content/tabContent/person';
 
-export const tabsConfig = {
+export const screenConfig = {
   panes: [
     {
       id: 'panes1',

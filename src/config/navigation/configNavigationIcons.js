@@ -2,7 +2,6 @@
 // ATTENTION: If you add an icon to this configuration, don't forget to add a route for it in app.js.
 
 export const isAuthNavIcons = {
-  reports: true,
   admin: true
 };
 

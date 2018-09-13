@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const tabsConfig = {
+export const screenConfig = {
   panes: [
     {
       id: 'panes1',

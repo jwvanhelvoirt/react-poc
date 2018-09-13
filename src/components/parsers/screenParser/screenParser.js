@@ -18,7 +18,7 @@ class Screen extends Component {
     super(props);
 
     const activeTabs = {};
-    this.props.tabsConfig.panes.forEach((pane) => {
+    this.props.screenConfig.panes.forEach((pane) => {
       pane.blocks.forEach((block) => {
         activeTabs[block.id] = block.activeTab;
       });
@@ -27,7 +27,7 @@ class Screen extends Component {
     this.state = {
       activeTabs,
       followUpScreenData: '',
-      tabsConfig: cloneDeep(this.props.tabsConfig)
+      screenConfig: cloneDeep(this.props.screenConfig)
     };
   };
 
@@ -35,7 +35,7 @@ class Screen extends Component {
     // Initialize the route data in the store.
     this.props.storeRoute('');
 
-    const { searchIdIn } = this.props.tabsConfig;
+    const { searchIdIn } = this.props.screenConfig;
     const { id } = this.props.match.params;
 
     if (searchIdIn) {
@@ -46,15 +46,15 @@ class Screen extends Component {
 
   componentDidMount = () => {
     // We need to store route data in the store as input for the follow-up screen.
-    this.props.storeRoute(this.props.tabsConfig.route);
+    this.props.storeRoute(this.props.screenConfig.route);
   };
 
   successGetSingleHandler = (response) => {
-    // // Item succssfully loaded from the server. Store a particular property (as configured in tabsConfig) in the store.
-    // this.props.storeFollowUpScreenId(response.data[this.props.tabsConfig.searchIdFor]);
+    // // Item succssfully loaded from the server. Store a particular property (as configured in screenConfig) in the store.
+    // this.props.storeFollowUpScreenId(response.data[this.props.screenConfig.searchIdFor]);
 
     // For the time being we print the identifying data from the selection in the previous screen, behind the breadcrumb.
-    this.setState({ followUpScreenData: response.data[this.props.tabsConfig.searchIdFor] });
+    this.setState({ followUpScreenData: response.data[this.props.screenConfig.searchIdFor] });
   };
 
   errorGetSingleHandler = (error) => {
@@ -63,33 +63,33 @@ class Screen extends Component {
 
   togglePane = (id) => {
     // Clone the state.
-    const updatedTabsConfig = cloneDeep(this.state.tabsConfig);
+    const updatedScreenConfig = cloneDeep(this.state.screenConfig);
 
-    const arrayRecords = Object.keys(updatedTabsConfig.panes);
+    const arrayRecords = Object.keys(updatedScreenConfig.panes);
 
     arrayRecords.forEach((index) => {
-      let updatedTabsConfigElement = {
-        ...updatedTabsConfig.panes[arrayRecords[index]]
+      let updatedScreenConfigElement = {
+        ...updatedScreenConfig.panes[arrayRecords[index]]
       }
 
-      if (updatedTabsConfigElement.id === id) {
-        updatedTabsConfigElement.show = !updatedTabsConfigElement.show;
-        updatedTabsConfig.panes[arrayRecords[index]] = updatedTabsConfigElement;
+      if (updatedScreenConfigElement.id === id) {
+        updatedScreenConfigElement.show = !updatedScreenConfigElement.show;
+        updatedScreenConfig.panes[arrayRecords[index]] = updatedScreenConfigElement;
       }
     });
 
     // Modify the state.
     this.setState({
-      tabsConfig: updatedTabsConfig
+      screenConfig: updatedScreenConfig
     });
   }
 
   getHtml = (display) => {
-    const tabsConfig = this.state.tabsConfig.panes.filter((pane) => {
+    const screenConfig = this.state.screenConfig.panes.filter((pane) => {
       return pane[display];
     });
 
-    const result = tabsConfig.map((pane, indexPane) => {
+    const result = screenConfig.map((pane, indexPane) => {
       const buttonShow = <Button
         key={indexPane}
         color="success"
@@ -120,7 +120,7 @@ class Screen extends Component {
           );
 
           // Check if we should display a breadcrumb zone instead of a tab zone.
-          if (this.state.tabsConfig.showTabs === false) {
+          if (this.state.screenConfig.showTabs === false) {
 
             // First breadcrumb is a link to the dashboard.
             let breadcrumb = (

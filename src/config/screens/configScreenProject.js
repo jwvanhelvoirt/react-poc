@@ -1,9 +1,9 @@
 import React from 'react';
-import TabContentProject from '../../components/content/tabContent/project';
+import TabContent from '../../components/content/tabContent/project';
 
-export const tabsConfig = {
+export const screenConfig = {
   showTabs: false,
-  route: 'document', // This screen will contain one list, a click on a listrow, appends /document/row_id to the URL.
+  route: 'list', // This screen will contain one list, a click on a listrow, appends /list/row_id to the URL.
   panes: [
     {
       id: 'panes1',
@@ -16,7 +16,7 @@ export const tabsConfig = {
         {
           id: 'pane1',
           tabs: [
-            { id: 'project', label: 'keyProject', component: <TabContentProject /> }
+            { id: 'project', label: 'keyProject', component: <TabContent /> }
           ],
           activeTab: 'project'
         }
