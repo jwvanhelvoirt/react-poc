@@ -24,7 +24,8 @@ class _View extends Component {
     super(props);
 
     const { viewConfig } = this.props;
-    const loading = viewConfig.url ? true : false;
+
+    let loading = true;
 
     let listItems = [];
     if (!viewConfig.url) {
@@ -32,6 +33,9 @@ class _View extends Component {
       // This prop must be an object with two attributes:
       // 1. options   (Array of objects containing information of the items to be displayed).
       // 2. translate (Boolean indicating if the label property of a single object should be translated).
+
+      // In case there's no url specified, we've got nothing to load, so the Spinner should not be displayed.
+      loading = false;
 
       let listItemsUpdated = cloneDeep(this.props.listItems);
       if (listItemsUpdated.translate) {
@@ -97,6 +101,7 @@ class _View extends Component {
 
     if (this.props.lookup) {
       // In case of a lookup context, the selection must be binded to the input field in the end.
+      // So the user selects one or more organisations in a lookup view, then these organisations must be stored in that input field.
       this.props.storeLookupInputId(this.props.lookupBindedInputId);
     }
   };
@@ -349,12 +354,19 @@ class _View extends Component {
    * @brief   Refreshes the current listView by pulling it from the server starting by the first record.
    */
   reloadListView = (skip, search, emptySearchbar) => {
-    const searchIn = [
-      { property: this.state.viewConfig.rowBindedAttribute, value: [this.props.match.params.id] }
-    ];
+    // const searchIn = [
+    //   { property: this.state.viewConfig.rowBindedAttribute, value: [this.props.match.params.id] }
+    // ];
     const { sort, sortOrder, viewConfig } = this.state;
     const { limit } = viewConfig;
-    const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search, searchIn };
+    // const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search, searchIn };
+    const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search };
+
+    // In case the list must be filtered based on a selected row in the previous view.
+    if (this.state.viewConfig.rowBindedAttribute) {
+      params[this.state.viewConfig.rowBindedAttribute] = this.props.match.params.id;
+    }
+
     // callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
     callServer('put', '/' + this.state.viewConfig.url, (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
