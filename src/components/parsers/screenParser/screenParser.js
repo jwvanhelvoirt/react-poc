@@ -6,9 +6,10 @@ import * as types from '../../../store/actions';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
 import Button from '../../ui/button/button';
+import Label from '../../ui/label/label';
 import { Large, Medium, Small } from '../../../libs/responsive';
 import Aux from '../../../hoc/auxiliary';
-import { propercase } from '../../../libs/generic';
+import { propercase, getDisplayValue } from '../../../libs/generic';
 import { callServer } from '../../../api/api';
 import classes from './screenParser.scss';
 
@@ -17,6 +18,7 @@ class Screen extends Component {
   constructor(props) {
     super(props);
 
+    // Store active tabs per pane in an object.
     const activeTabs = {};
     this.props.screenConfig.panes.forEach((pane) => {
       pane.blocks.forEach((block) => {
@@ -35,8 +37,8 @@ class Screen extends Component {
     // Initialize the route data in the store.
     this.props.storeRoute('');
 
-    const { searchIdIn } = this.props.screenConfig;
-    const { id } = this.props.match.params;
+    const { id } = this.props.match.params; // id on the url.
+    const { searchIdIn } = this.props.screenConfig; // the api to search the id for.
 
     if (searchIdIn) {
       // In a follow-up screen we need information from the record selected in the previous screen. Fetch it!
@@ -46,12 +48,13 @@ class Screen extends Component {
 
   componentDidMount = () => {
     // We need to store route data in the store as input for the follow-up screen.
+    // Via this route we inform the viewParser that a click on a row should change the url.
     this.props.storeRoute(this.props.screenConfig.route);
   };
 
   successGetSingleHandler = (response) => {
     // // Item succssfully loaded from the server. Store a particular property (as configured in screenConfig) in the store.
-    // this.props.storeFollowUpScreenId(response.data[this.props.screenConfig.searchIdFor]);
+    // this.props.storeFollowUpScreenId(response.data[this.props.screenConfig.searchIdFor]); // If we want to print it in the <View> component.
 
     // For the time being we print the identifying data from the selection in the previous screen, behind the breadcrumb.
     this.setState({ followUpScreenData: response.data[this.props.screenConfig.searchIdFor] });
@@ -62,6 +65,8 @@ class Screen extends Component {
   };
 
   togglePane = (id) => {
+    // Toggles the panes that are configured as 'toggleable' from visible to hidden and vice versa.
+
     // Clone the state.
     const updatedScreenConfig = cloneDeep(this.state.screenConfig);
 
@@ -85,47 +90,50 @@ class Screen extends Component {
   }
 
   getHtml = (display) => {
+    // Create html for three different screen sizes (large, medium, small).
+
+    // Filters the panes that are configured to be displayed on the applicable screen size.
     const screenConfig = this.state.screenConfig.panes.filter((pane) => {
       return pane[display];
     });
 
     const result = screenConfig.map((pane, indexPane) => {
-      const buttonShow = <Button
-        key={indexPane}
-        color="success"
-        labelIcon="plus"
-        clicked={() => this.togglePane(pane.id)}
-      />
+      // Produce html for each pane.
 
-      const buttonHide = <Button
-          color="secondary"
-          outline="true"
-          labelIcon="minus"
+      // Button to show a 'toggleable' pane.
+      const buttonShow = (
+        <Button
+          key={indexPane}
+          color="success"
+          labelIcon="plus"
           clicked={() => this.togglePane(pane.id)}
         />
+      );
 
-      let html = "";
+      // Button to hide a 'toggleable' pane.
+      const buttonHide = (
+        <Button
+            color="secondary"
+            outline="true"
+            labelIcon="minus"
+            clicked={() => this.togglePane(pane.id)}
+        />
+      );
+
+      let html = '';
+      let upperZone = '';
+
       if (pane.show) {
+        // Pane is NOT hidden ('toggleable' panes can be in 'display mode' or 'hide mode').
         html = pane.blocks.map((block, indexBlock) => {
-          const links = getTabRow(this.state.activeTabs[block.id], block.tabs, block.id, this);
-          const content = getTabComponent(this.state.activeTabs[block.id], block.tabs);
-
-          const toggle = pane.toggle ? (pane.show ? buttonHide : "") : "";
-
-          let upperZone = (
-            <div className={classes.TabBar}>
-              {toggle}
-              <Nav tabs>{links}</Nav>
-            </div>
-          );
-
           // Check if we should display a breadcrumb zone instead of a tab zone.
           if (this.state.screenConfig.showTabs === false) {
+            // Show breadcrumb.
 
             // First breadcrumb is a link to the dashboard.
             let breadcrumb = (
               <NavLink to='/dashboard'>
-                {propercase('home')}
+                  <Label labelKey={'keyHome'} convertType={'propercase'} />
               </NavLink>
             );
 
@@ -159,7 +167,10 @@ class Screen extends Component {
               breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts);
             }
 
-            const followUpScreenData = this.state.followUpScreenData ? <span>{' (' + this.state.followUpScreenData + ')'}</span> : null;
+            // Print identifying data from the row selected in the previous screen or not.
+            const followUpScreenData = this.state.followUpScreenData ?
+              <span>{' (' + this.state.followUpScreenData + ')'}</span> :
+              null;
 
             // Print breadcrumb zone.
             upperZone = (
@@ -168,8 +179,29 @@ class Screen extends Component {
                 {followUpScreenData}
               </div>
             );
+          } else {
+            // Show tab bar
+
+            // Get all tabs for this pane.
+            const links = getTabRow(this.state.activeTabs[block.id], block.tabs, block.id, this);
+
+            // Should we show the toggle hide button?
+            const toggle = pane.toggle ? buttonHide : "";
+
+            // The tab bar.
+            upperZone = (
+              <div className={classes.TabBar}>
+                {toggle}
+                <Nav tabs>{links}</Nav>
+              </div>
+            );
+
           }
 
+          // Get the content of the active tab (in breadcrumb modus there's the one tab is always active).
+          const content = getTabComponent(this.state.activeTabs[block.id], block.tabs);
+
+          // Return html for this pane.
           return (
             <div key={indexBlock} className={classes.Pane}>
               {upperZone}
@@ -181,8 +213,10 @@ class Screen extends Component {
         });
       }
 
+      // Wrap the pane html in a div with a special class.
       const PaneWrapper = <div key={indexPane} className={classes.PaneWrapper}>{html}</div>
 
+      // Should we show the toggle display button?
       html = html === '' ? (pane.toggle ? buttonShow : '') : PaneWrapper;
 
       return html;
@@ -192,20 +226,22 @@ class Screen extends Component {
   };
 
   extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param) => {
+      // Extends the current breadcrumb.
+
       const addParam = param ? '/' + this.props.match.params[param] : '';
 
       return (
       <Aux>
         {breadcrumb}
         <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
-          {' > ' + propercase(item)}
+          {' > ' + getDisplayValue('key' + propercase(item), 'propercase', true, this.props.translates)}
         </NavLink>
       </Aux>
     );
   };
 
   render = () => {
-    // TODO : Laadt ze nu allemaal in, eigenlijk wil je alleen laden, wat nodig is. Uitzoeken...
+    // TODO : Berekent ze nu allemaal. Eigenlijk wil je alleen berekenen, wat nodig is. Uitzoeken...
     const large = this.getHtml('displayLarge');
     const medium = this.getHtml('displayMedium');
     const small = this.getHtml('displaySmall');
@@ -221,6 +257,12 @@ class Screen extends Component {
 
 }
 
+const mapStateToProps = state => {
+  return {
+    translates: state.redMain.transTranslates
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     // storeFollowUpScreenId: (followUpScreenData) => dispatch( {type: types.FOLLOW_UP_SCREEN_ID_STORE, followUpScreenData } ),
@@ -228,4 +270,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(Screen));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Screen));
