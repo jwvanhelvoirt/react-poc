@@ -1,5 +1,6 @@
 import React from 'react';
-import TabContent from '../../components/content/tabContent/project';
+import View from '../../components/parsers/viewParser/viewParser';
+import viewConfig from '../../config/views/configListViewProject';
 
 export const screenConfig = {
   showTabs: false,
@@ -16,7 +17,7 @@ export const screenConfig = {
         {
           id: 'pane1',
           tabs: [
-            { id: 'project', label: 'keyProject', component: <TabContent /> }
+            { id: 'project', label: 'keyProject', component: <View viewConfig={viewConfig} /> }
           ],
           activeTab: 'project'
         }
