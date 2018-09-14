@@ -22,7 +22,7 @@ const listViewConfig = {
 	limit: 25,
 	multiSelect: true,
 	row: { selectable: true, menu: false },
-	rowBindedAttribute: 'organisations', // This connects this follow-up screen to the selected row in the previous screen.
+	rowBindedAttribute: 'refniveau5', 	 // This connects this follow-up screen to the selected row in the previous screen.
                                        // F.i. if you click on an organisation in screen A, you get all related persons in screen B.
                                        // It will filter on the id in the URL in the collection 'persons' in the attribute configured here.
 	rowSelectAll: true,

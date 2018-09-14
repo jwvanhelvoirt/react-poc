@@ -207,7 +207,7 @@ class Form extends Component {
 
     let updatedFormElement = updatedFormInputs[fieldId];
 
-    const updatedValue = updatedFormInputs[fieldId].value.filter((item) => item._id !== valueId);
+    const updatedValue = updatedFormInputs[fieldId].value.filter((item) => item.id !== valueId);
     updatedFormElement.value = updatedValue;
 
     // Check for validity.
@@ -237,14 +237,14 @@ class Form extends Component {
 
     // Filter the selected items from the lookupListItems array.
     const listItemsSelected = lookupListItems.filter((item) => {
-      return lookupListItemsSelected.includes(item._id);
+      return lookupListItemsSelected.includes(item.id);
     });
 
     // Prevent appending selected listItems that were appended before.
     const listItemsToAppend = listItemsSelected.filter((item) => {
       let append = true;
       this.state.configForm.inputs[lookupInputId].value.forEach((current) => {
-        append = current._id === item._id ? false : append;
+        append = current.id === item.id ? false : append;
       });
       return append;
     });
@@ -303,7 +303,7 @@ class Form extends Component {
 
     let formElementsArray = [];
     for (let inputId in inputs) {
-      if (inputId !== '_id' && inputId !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
+      if (inputId !== 'id' && inputId !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
         formElementsArray.push({
           inputId,
           configInput: inputs[inputId]

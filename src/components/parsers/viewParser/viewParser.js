@@ -95,16 +95,18 @@ class _View extends Component {
     // For multiple view skips, back- and forward.
     this.navStep = 5;
 
-    if (viewConfig.url) {
-      // In case the view source is a bunch of data to be loaded from a database, we initially load these listItems.
-      this.reloadListView(this.state.skip);
-    }
-
     if (this.props.lookup) {
       // In case of a lookup context, the selection must be binded to the input field in the end.
       this.props.storeLookupInputId(this.props.lookupBindedInputId);
     }
   };
+
+  componentWillMount = () => {
+    if (this.state.viewConfig.url) {
+      // In case the view source is a bunch of data to be loaded from a database, we initially load these listItems.
+      this.reloadListView(this.state.skip);
+    }
+  }
 
   /**
    * @brief   Updates listItems after a new listItem or an update of a selected listItem.
@@ -122,7 +124,7 @@ class _View extends Component {
       if (this.state.selectedListItemId) {
         // Put all current listItems in a variable, except the updated one.
         // For the updated we include the response.
-        updatedListItems = this.state.listItems.map(item => item._id === response.data._id ? editedResponse : item);
+        updatedListItems = this.state.listItems.map(item => item.id === response.data.id ? editedResponse : item);
       } else {
         // Append the object of the new entry to the state.
         updatedListItems = [
@@ -264,7 +266,7 @@ class _View extends Component {
       // All records successfully deleted. Modify state.listItems
       let updatedListItems = [...this.state.listItems];
       updatedListItems = updatedListItems.filter((item) => {
-        return selectedListItems.indexOf(item._id) ===  -1
+        return selectedListItems.indexOf(item.id) ===  -1
       });
 
       this.setState({ listItems: updatedListItems, selectedListItems: [] });
@@ -420,7 +422,7 @@ class _View extends Component {
 
   processSelectedSortOption = () => {
     // Get the selected sort item via the store.
-    const selectedSortOption = this.state.viewConfig.sortOptions.options.filter((item) => item._id === this.props.sortItem);
+    const selectedSortOption = this.state.viewConfig.sortOptions.options.filter((item) => item.id === this.props.sortItem);
 
     const { searchbarValue } = this.state;
     // const { sortOrder } = selectedSortOption[0];
@@ -478,7 +480,7 @@ class _View extends Component {
     if (this.state.headerSelected) {
       updatedSelectedListItems = [];
     } else {
-      updatedSelectedListItems = this.state.listItems.map((item) => item._id);
+      updatedSelectedListItems = this.state.listItems.map((item) => item.id);
     }
 
     this.setState((prevState) => {
@@ -819,7 +821,7 @@ class _View extends Component {
 
         // Is it a radio or a checkbox?
         let classesCombinedSelected = null;
-        if (this.state.selectedListItems.indexOf(listItem._id) ===  -1) {
+        if (this.state.selectedListItems.indexOf(listItem.id) ===  -1) {
           if (multiSelect) {
             classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone].join(' ');
           } else {
@@ -854,11 +856,11 @@ class _View extends Component {
           </div>
 
         // Only onDoubleClick event in case of mulitple selection of rows and NOT a lookup context.
-        const doubleClick = (multiSelect && !this.props.lookup) ? () => this.onClickItemHandler(listItem._id) : null;
+        const doubleClick = (multiSelect && !this.props.lookup) ? () => this.onClickItemHandler(listItem.id) : null;
 
         const listItemDiv = (
           <div className={classesCombinedListItem}
-            onClick={(event) => this.toggleRowHandler(listItem._id)}
+            onClick={(event) => this.toggleRowHandler(listItem.id)}
             onDoubleClick={doubleClick}>
             {listItemsFixed}
             <div className={classes.Flex}>

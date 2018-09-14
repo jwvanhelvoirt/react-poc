@@ -3,7 +3,7 @@ import TabContent from '../../components/content/tabContent/project';
 
 export const screenConfig = {
   showTabs: false,
-  route: 'list', // This screen will contain one list, a click on a listrow, appends /list/row_id to the URL.
+  route: 'list', // This screen will contain one list, a click on a listrow, appends /list/:id to the URL.
   panes: [
     {
       id: 'panes1',

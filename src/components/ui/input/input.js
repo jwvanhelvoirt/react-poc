@@ -107,7 +107,7 @@ class Input extends Component {
 
       case ('multiAppend'):
         const multiLineItems = value.map((item, index) => {
-          const valueId = item._id;
+          const valueId = item.id;
           return (
             <div key={index} className={classes.Multiline}>
               <div className={classes.MultilineRemove} onClick={() => this.props.removeMultiValueItem(inputId, valueId)}>

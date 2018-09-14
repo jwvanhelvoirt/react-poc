@@ -30,7 +30,7 @@ class ModPersonalSettings extends Component {
   // User settings fetched successfully.
   successGetHandler = (response) => {
     this.setState({
-      id: response.data[0]._id,
+      id: response.data[0].id,
       loading: false,
       userSettings: response.data[0]
     });
