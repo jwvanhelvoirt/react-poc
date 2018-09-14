@@ -12,8 +12,6 @@ class Login extends Component {
 
   onSubmitHandler = (response) => {
     // Authorization was succesfull.
-    console.log(response.data);
-    console.log(this.props.formSubmitData);
 
     const { MAGIC, /*idmedewerker, internaluser*/ } = response.data;
     const { login, remember_login } = this.props.formSubmitData;
@@ -33,30 +31,7 @@ class Login extends Component {
   onErrorHandler = (error) => {
     // Authorization was NOT succesfull.
     console.log(error);
-    this.props.showUserInfo(true);
-  };
-
-  onSubmitHandler1 = (response) => {
-    console.log(response.data);
-    const { authorized, magic, rememberPrevLogin, username } = response.data;
-
-    if (authorized) {
-      // Authorization was succesfull.
-      localStorage.setItem("magic", magic);
-
-      if (rememberPrevLogin) {
-        localStorage.setItem("user", username);
-      } else {
-        localStorage.removeItem("user");
-      }
-
-      this.props.authenticateUser(true); // This will re-render the app component and show the dashboard.
-      this.props.showUserInfo(false);
-    } else {
-      // Login was not successfull. User must be informed.
-      // This re-renders the form, but now the user info message will be displayed.
-      this.props.showUserInfo(true);
-    }
+    this.props.showUserInfo(true); // This displays information to the user in the login form.
   };
 
   componentWillMount = () => {

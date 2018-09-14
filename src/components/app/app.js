@@ -77,31 +77,35 @@ class App extends Component {
   };
 
   componentWillMount = () => {
-    const magic = localStorage.getItem("magic"); // EZ2XS WE PROBABLY HAVE TO STORE IT IN THE STORE.
+    const magic = localStorage.getItem("magic");
 
     if (magic) {
       // There is a magic in the local storage. Make a server call to check if this is the correct magic.
       const submitData = { MAGIC: magic };
-      callServer('put', 'api.getMedewerkerInfo', (response) => this.successHandlerGetUserInfo(response), this.errorHandlerGetUserInfo, submitData);
+      callServer('put', 'api.getMedewerkerInfo',
+        (response) => this.successHandlerGetUserInfo(response),
+        (error) => this.errorHandlerGetUserInfo(error), submitData);
     } else {
       // No magic in local storage.
       // The default of the store variable 'authenticated' is 'false', so the login screen will appear.
-      this.props.magicChecked(true);
+      this.props.magicChecked(true); // TODO: this can probably become local state instead of store state.
+                                     // Same goes for authenticateUser.
     }
   };
 
   successHandlerGetUserInfo = (response) => {
-    this.props.authenticateUser(true);
-    this.props.magicChecked(true);
+    // A successfull response from an api endpoint implicitly indicates that the magic is correct.
+    this.props.authenticateUser(true); // This by-passes the login screen.
+    this.props.magicChecked(true); // This by-passes the initial spinner.
   };
 
   errorHandlerGetUserInfo = (error) => {
-    this.props.magicChecked(true);
+    this.props.magicChecked(true); // This by-passes the initial spinner.
   };
 
   render = () => {
     let layout = (
-      <Layout navItems={navItems} navIcons={navIcons} toolbar={false}>
+      <Layout toolbar={false}>
         <Switch>
           <Route path="/" component={Login} />
         </Switch>
