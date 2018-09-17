@@ -81,8 +81,8 @@ class _View extends Component {
       showModalSort: false,
       skip: 0,
       sort: this.props.viewConfig.sort,
-      sortedColumn: '',
-      sortOrder: 1,
+      sortedColumn: this.props.viewConfig.sort,
+      sortOrder: this.props.viewConfig.sortOrder,
       viewConfig: { ...viewConfig },
     };
 
@@ -359,9 +359,14 @@ class _View extends Component {
     //   { property: this.state.viewConfig.rowBindedAttribute, value: [this.props.match.params.id] }
     // ];
     const { sort, sortOrder, viewConfig } = this.state;
+
+    // Backend expects attribute name + '_asc' or '_desc' for the sort variable.
+    const sortAttribute = sortOrder === -1 ? sort + '_desc' : sort + '_asc';
+
     const { limit } = viewConfig;
     // const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search, searchIn };
-    const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search };
+    // const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search };
+    const params = { MAGIC: localStorage.getItem("magic"), sort: sortAttribute, skip, limit, search };
 
     // In case the list must be filtered based on a selected row in the previous view.
     if (this.state.viewConfig.rowBindedAttribute) {
@@ -513,7 +518,8 @@ class _View extends Component {
    * @brief   Resorts the listView if user clicks on a column header.
    */
   sortOnColumn = (id) => {
-    const { sortedColumn, sortOrder, searchbarValue } = this.state;
+    let { sortOrder } = this.state;
+    const { sortedColumn, searchbarValue } = this.state;
 
     if (sortedColumn === id) {
       // Previous column sort click was on the same header.
@@ -522,7 +528,13 @@ class _View extends Component {
           this.setState({sortOrder: -1}, () => { this.reloadListView(0, searchbarValue); });
           break;
         case -1: // descending
-          this.setState({sort: this.state.viewConfig.sort, sortedColumn: '', sortOrder: 1}, () => { this.reloadListView(0, searchbarValue); });
+          sortOrder = this.state.viewConfig.sort === id ? 1 : this.state.viewConfig.sortOrder;
+
+          this.setState({
+            sort: this.state.viewConfig.sort,
+            sortedColumn: this.state.viewConfig.sort,
+            sortOrder
+          }, () => { this.reloadListView(0, searchbarValue); });
           break;
         default:
           this.setState({sortOrder: -1}, () => { this.reloadListView(0, searchbarValue); });
@@ -759,7 +771,7 @@ class _View extends Component {
       [classes.Fixed1, classes.HeaderSelectZone].join(' ');
 
     let columnsFixedSelect = null;
-    if (row && row.selectable && !(this.props.route && this.props.route.length > 0)) {
+    if (row && row.selectable && !(this.props.route && this.props.route.length > 0 && viewConfig.routeView !== false)) {
       multiSelect ?
         // Only if the row is selectable and multiselect is enabled, we print the 'checkbox' to select/deselect all listItems.
         columnsFixedSelect = <div className={classesCombinedHeaderSelected} onClick={(event) => this.toggleAllRows(event)}></div> :
@@ -849,7 +861,7 @@ class _View extends Component {
         }
 
         let listItemsFixedSelect = null;
-        if (row && row.selectable && !(this.props.route && this.props.route.length > 0)) {
+        if (row && row.selectable && !(this.props.route && this.props.route.length > 0 && viewConfig.routeView !== false)) {
           // Only if the row is selectable, we print the 'checkbox' to select/deselect a listItems or 'radio' to select an item.
           listItemsFixedSelect = <div className={classesCombinedSelected}></div>;
         }
@@ -900,7 +912,7 @@ class _View extends Component {
 
         let listItemPrint = <Aux>{listItemDiv}</Aux>;
         // Check if we should display a new screen when clicking on a row.
-        if (this.props.route && this.props.route.length > 0) {
+        if (this.props.route && this.props.route.length > 0 && viewConfig.routeView !== false) {
           listItemPrint = (
             <Link to={this.props.match.url + '/' + this.props.route + '/' + listItem.id} key={index}>
               {listItemDiv}

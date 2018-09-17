@@ -4,7 +4,6 @@ const listViewConfig = {
       id: 'naam',
       label: 'keyName',
       sort: true,
-      data: 'naam',
       displayOn: 'always',
       show: true,
       size: 'Flex80'
@@ -13,7 +12,6 @@ const listViewConfig = {
       id: 'datumtijd',
       label: 'keyDate',
       sort: true,
-      data: 'datumtijd',
       displayOn: 'always',
       show: true,
       size: 'Flex20'

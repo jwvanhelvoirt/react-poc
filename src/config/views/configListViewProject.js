@@ -1,21 +1,19 @@
 const listViewConfig = {
   columns: [
     {
-			id: 'foto',
-			label: '',
-			sort: false,
-			data: 'foto',
-			displayOn: 'always',
-			show: true,
+      id: 'foto',
+      label: '',
+      sort: false,
+      displayOn: 'always',
+      show: true,
       contentType: 'avatar',
-			size: 'AvatarLarge',
-			avatarName: 'naam'
-		},
+      size: 'AvatarLarge',
+      avatarName: 'naam'
+    },
     {
-      id: 'naam',
+      id: 'code',
       label: 'keyName',
       sort: true,
-      data: 'naam',
       displayOn: 'always',
       show: true,
       size: 'Flex40'
@@ -23,16 +21,15 @@ const listViewConfig = {
     {
       id: 'niveau4',
       label: 'keyOrganisation',
-      sort: false,
-      data: 'niveau4',
+      sort: true,
       displayOn: 'always',
       show: true,
       size: 'Flex40'
     },
     {
-      id: 'period',
+      id: 'start',
       label: 'keyPeriod',
-      sort: false,
+      sort: true,
       displayOn: 'always',
       show: true,
       contentType: 'timespan',
@@ -43,7 +40,6 @@ const listViewConfig = {
     //   id: 'start',
     //   label: 'keyStart',
     //   sort: true,
-    //   data: 'start',
     //   displayOn: 'always',
     //   show: true,
     //   size: 'Flex10'
@@ -52,7 +48,6 @@ const listViewConfig = {
     //   id: 'eind',
     //   label: 'keyEnd',
     //   sort: true,
-    //   data: 'eind',
     //   displayOn: 'always',
     //   show: true,
     //   size: 'Flex10'
@@ -79,7 +74,23 @@ const listViewConfig = {
   showRowTitle: true,
   showSearchbar: true,
   showSort: true,
-  sort: 'nr_desc',
+  sort: 'niveau4',
+  sortOrder: -1,
+  sortOptions: {
+    translate: true,
+    options: [ // In this order the sort options will appear in the list.
+      { id: 'level1A', label: ['keyLevel1', 'keyAscending'], sortOn: 'niveau1', order: 1},
+      { id: 'level1D', label: ['keyLevel1', 'keyDescending'], sortOn: 'niveau1', order: -1},
+      { id: 'endDateA', label: ['keyEndDate', 'keyAscending'], sortOn: 'eind', order: 1},
+      { id: 'endDateD', label: ['keyEndDate', 'keyDescending'], sortOn: 'eind', order: -1},
+      { id: 'nrA', label: ['keyNo', 'keyAscending'], sortOn: 'nr', order: 1},
+      { id: 'nrD', label: ['keyNo', 'keyDescending'], sortOn: 'nr', order: -1},
+      { id: 'startDateA', label: ['keyStartDate', 'keyAscending'], sortOn: 'start', order: 1},
+      { id: 'startDateD', label: ['keyStartDate', 'keyDescending'], sortOn: 'start', order: -1},
+      { id: 'level4A', label: ['keyLevel4', 'keyAscending'], sortOn: 'niveau4', order: 1},
+      { id: 'level4D', label: ['keyLevel4', 'keyDescending'], sortOn: 'niveau4', order: -1},
+    ]
+  },
   title: 'keyProject',
   url: 'api.project.project.list'
 };
@@ -125,37 +136,37 @@ export default listViewConfig;
 // IK HEB HET IDEE DAT EEN ARRAY VEEL HANDIGER IS, WEET ALLEEN NOG NIET HOE HET VALT BIJ UPDATEN.
 // columns: {
 // 	name: {
+// 		id: 'name',
 // 		label: 'Naam',
 // 		sort: true,
-// 		data: 'name',
 // 		displayOn: 'always',
 // 		show: true
 // 	},
 // 	street: {
+// 		id: 'street',
 // 		label: 'Straat',
 // 		sort: false,
-// 		data: 'street',
 // 		displayOn: 'medium,large',
 // 		show: true
 // 	},
 // 	zip: {
+// 		id: 'zip',
 // 		label: 'Postcode',
 // 		sort: true,
-// 		data: 'zip',
 // 		displayOn: 'large',
 // 		show: false
 // 	},
 // 	country: {
+// 		id: 'country',
 // 		label: 'Land',
 // 		sort: true,
-// 		data: 'country',
 // 		displayOn: 'always',
 // 		show: true
 // 	},
 // 	email: {
+// 		id: 'email',
 // 		label: 'Email',
 // 		sort: false,
-// 		data: 'email',
 // 		displayOn: 'none',
 // 		show: false
 // 	}
