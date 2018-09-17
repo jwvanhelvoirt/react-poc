@@ -759,7 +759,7 @@ class _View extends Component {
       [classes.Fixed1, classes.HeaderSelectZone].join(' ');
 
     let columnsFixedSelect = null;
-    if (row && row.selectable) {
+    if (row && row.selectable && !(this.props.route && this.props.route.length > 0)) {
       multiSelect ?
         // Only if the row is selectable and multiselect is enabled, we print the 'checkbox' to select/deselect all listItems.
         columnsFixedSelect = <div className={classesCombinedHeaderSelected} onClick={(event) => this.toggleAllRows(event)}></div> :
@@ -849,8 +849,8 @@ class _View extends Component {
         }
 
         let listItemsFixedSelect = null;
-        if (row && row.selectable) {
-          // Only if the row is selectable, we print the 'checkbox' to select/deselect a listItems.
+        if (row && row.selectable && !(this.props.route && this.props.route.length > 0)) {
+          // Only if the row is selectable, we print the 'checkbox' to select/deselect a listItems or 'radio' to select an item.
           listItemsFixedSelect = <div className={classesCombinedSelected}></div>;
         }
 
