@@ -292,20 +292,32 @@
 
 .AvatarLarge {
   color: white;
-  width: 56px;
+  min-width: 56px;
   font-size: 24px;
 }
 
 .AvatarMedium {
   color: white;
-  width: 40px;
+  min-width: 40px;
   font-size: 16px;
 }
 
 .AvatarSmall {
   color: white;
-  width: 32px;
+  min-width: 32px;
   font-size: 12px;
+}
+
+.TimespanLarge {
+  min-width: 210px;
+}
+
+.TimespanMedium {
+  min-width: 160px;
+}
+
+.TimespanSmall {
+  min-width: 110px;
 }
 
 .ShowOnHover {

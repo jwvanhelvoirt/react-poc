@@ -7,8 +7,8 @@ const listViewConfig = {
 			data: 'foto',
 			displayOn: 'always',
 			show: true,
+      contentType: 'avatar',
 			size: 'AvatarLarge',
-			avatar: true,
 			avatarName: 'naam'
 		},
     {
@@ -28,6 +28,16 @@ const listViewConfig = {
       displayOn: 'always',
       show: true,
       size: 'Flex40'
+    },
+    {
+      id: 'period',
+      label: 'keyPeriod',
+      sort: false,
+      displayOn: 'always',
+      show: true,
+      contentType: 'timespan',
+      data: { start: 'start', end: 'eind' },
+      size: 'TimespanLarge'
     },
     {
       id: 'start',

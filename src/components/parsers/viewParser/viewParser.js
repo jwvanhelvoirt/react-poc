@@ -14,6 +14,7 @@ import Modal from '../../ui/modal/modal';
 import MessageBox from '../../ui/messageBox/messageBox';
 import Label from '../../ui/label/label';
 import Avatar from '../../ui/avatar/avatar';
+import Timespan from '../../ui/timespan/timespan';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
 import classes from './viewParser.scss';
@@ -878,9 +879,17 @@ class _View extends Component {
             <div className={classes.Flex}>
               {
                 columnsVisible.map((column, index) => {
-                  const listItemColumnContent = column.avatar ?
-                    <Avatar size={column.size} foto={listItem[column.id]} name={listItem[column.avatarName]} /> :
-                    listItem[column.id];
+                  let listItemColumnContent = null;
+                  switch (column.contentType) {
+                    case 'avatar':
+                      listItemColumnContent = <Avatar size={column.size} foto={listItem[column.id]} name={listItem[column.avatarName]} />
+                      break;
+                    case 'timespan':
+                      listItemColumnContent = <Timespan size={column.size} start={listItem[column.data.start]} end={listItem[column.data.end]} />;
+                      break;
+                    default:
+                      listItemColumnContent = listItem[column.id];
+                  };
 
                   return <div key={index} className={classes[column.size]}>{listItemColumnContent}</div>;
                 })

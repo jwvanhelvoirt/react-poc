@@ -2,6 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 // import { fab } from '@fortawesome/free-brands-svg-icons';
 
 import {
+	faAbacus,
 	faAddressCard,
 	faBars,
 	faBuilding,
@@ -39,9 +40,10 @@ import {
 	faUserCircle,
 	faUsers,
 	faUserShield,
-	faWindowClose} from '@fortawesome/free-solid-svg-icons';
+	faWindowClose} from '@fortawesome/pro-solid-svg-icons';
 
 export default library.add(
+	faAbacus,
 	faAddressCard,
 	faBars,
 	faBuilding,

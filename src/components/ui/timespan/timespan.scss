@@ -1,0 +1,48 @@
+.TimespanLarge, .TimespanMedium, .TimespanSmall {
+	display: flex;
+}
+
+.TimespanLarge .Past, .TimespanLarge .Future {
+  width: 100px;
+}
+
+.TimespanMedium .Past, .TimespanMedium .Future {
+  width: 75px;
+}
+
+.TimespanSmall .Past, .TimespanSmall .Future {
+  width: 50px;
+}
+
+.CurrentDay {
+	height: 16px;
+	width: 2px;
+	background-color: black;
+}
+
+.Past, .Future {
+	height: 16px;
+	border-bottom: 1px solid #ccc;
+	display: flex;
+	align-items: flex-end;
+}
+
+.Past {
+	justify-content: flex-end;
+}
+
+.Future {
+	justify-content: flex-start;
+}
+
+.PastFilled, .FutureFilled {
+	height: 12px;
+}
+
+.PastFilled {
+	background-color: red;
+}
+
+.FutureFilled {
+	background-color: green;
+}
