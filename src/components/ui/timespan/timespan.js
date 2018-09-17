@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
+import _ from 'lodash';
 import classes from './timespan.scss';
 
 const resize = (size, resizeTo) => {
@@ -7,10 +9,8 @@ const resize = (size, resizeTo) => {
   switch (resizeTo) {
     case 'TimespanMedium':
       return .75 * size;
-      break;
     case 'TimespanSmall':
       return .5 * size;
-      break;
     default:
       return size;
   }
@@ -20,6 +20,8 @@ const timespan = (props) => {
   const startDate = new Date(props.start);
   const endDate = new Date(props.end);
   const currentDate = new Date();
+
+  const tooltipId = _.uniqueId('timespan_');
 
   // Calculate the nummber of days between the start date and the current date (this can be a negative number).
   var timeDiffStart = startDate.getTime() - currentDate.getTime();
@@ -47,8 +49,8 @@ const timespan = (props) => {
     start = diffDaysStart - (totalDays/2) >= 0 ? 100 : (diffDaysStart / (totalDays/2)) * 100;
     end   = diffDaysEnd   - (totalDays/2) >= 0 ? 100 : (diffDaysEnd   / (totalDays/2)) * 100;
 
-    start = props.size != 'TimespanLarge' ? resize(start, props.size) : start;
-    end   = props.size != 'TimespanLarge' ? resize(end, props.size)   : end;
+    start = props.size !== 'TimespanLarge' ? resize(start, props.size) : start;
+    end   = props.size !== 'TimespanLarge' ? resize(end, props.size)   : end;
 
     width = end - start;
     styleFutureFilled.marginLeft = start + 'px';
@@ -59,8 +61,8 @@ const timespan = (props) => {
     start = (Math.abs(diffDaysStart) / (totalDays/2)) * 100;
     end = (diffDaysEnd / (totalDays/2)) * 100;
 
-    start = props.size != 'TimespanLarge' ? resize(start, props.size) : start;
-    end   = props.size != 'TimespanLarge' ? resize(end, props.size)   : end;
+    start = props.size !== 'TimespanLarge' ? resize(start, props.size) : start;
+    end   = props.size !== 'TimespanLarge' ? resize(end, props.size)   : end;
 
     stylePastFilled.width = start + 'px';
     styleFutureFilled.width = end + 'px';
@@ -70,8 +72,8 @@ const timespan = (props) => {
     start = Math.abs(diffDaysStart) - (totalDays/2) >= 0 ? 100 : (Math.abs(diffDaysStart) / (totalDays/2)) * 100;
     end   = Math.abs(diffDaysEnd)   - (totalDays/2) >= 0 ? 100 : (Math.abs(diffDaysEnd)   / (totalDays/2)) * 100;
 
-    start = props.size != 'TimespanLarge' ? resize(start, props.size) : start;
-    end   = props.size != 'TimespanLarge' ? resize(end, props.size)   : end;
+    start = props.size !== 'TimespanLarge' ? resize(start, props.size) : start;
+    end   = props.size !== 'TimespanLarge' ? resize(end, props.size)   : end;
 
     width = start - end;
     stylePastFilled.marginRight = end + 'px';
@@ -79,7 +81,7 @@ const timespan = (props) => {
   }
 
   return(
-    <div className={classes[props.size]}>
+    <div className={classes[props.size]} data-tip='React-tooltip' data-for={tooltipId}>
 			<div className={classes.Past}>
 				<div className={classes.PastFilled} style={stylePastFilled}></div>
 			</div>
@@ -87,6 +89,9 @@ const timespan = (props) => {
 			<div className={classes.Future}>
 				<div className={classes.FutureFilled} style={styleFutureFilled}></div>
 			</div>
+      <ReactTooltip id={tooltipId} place="bottom" type="dark" effect="solid">
+				{props.start + ' - ' + props.end}
+			</ReactTooltip>
 		</div>
   );
 };

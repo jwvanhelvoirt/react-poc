@@ -38,25 +38,25 @@ const listViewConfig = {
       contentType: 'timespan',
       data: { start: 'start', end: 'eind' },
       size: 'TimespanLarge'
-    },
-    {
-      id: 'start',
-      label: 'keyStart',
-      sort: true,
-      data: 'start',
-      displayOn: 'always',
-      show: true,
-      size: 'Flex10'
-    },
-    {
-      id: 'eind',
-      label: 'keyEnd',
-      sort: true,
-      data: 'eind',
-      displayOn: 'always',
-      show: true,
-      size: 'Flex10'
     }
+    // {
+    //   id: 'start',
+    //   label: 'keyStart',
+    //   sort: true,
+    //   data: 'start',
+    //   displayOn: 'always',
+    //   show: true,
+    //   size: 'Flex10'
+    // },
+    // {
+    //   id: 'eind',
+    //   label: 'keyEnd',
+    //   sort: true,
+    //   data: 'eind',
+    //   displayOn: 'always',
+    //   show: true,
+    //   size: 'Flex10'
+    // }
   ],
   limit: 25,
 
