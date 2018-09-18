@@ -1,6 +1,8 @@
 Dutch:
 - api.getMedewerkerInfo
+- datumbegin
 - naam
+- niveau1
 - niveau4
 - eind
 
@@ -10,3 +12,5 @@ Camelcase:
 - idmedewerker
 - internaluser
 - nr_desc
+- restbudget
+- salesstatus
