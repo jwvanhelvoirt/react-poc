@@ -19,9 +19,8 @@ import SpinnerInit from '../ui/spinners/spinnerInit/spinnerInit';
 import Login from '../navigation/login/login';
 import Logout from '../navigation/logout/logout';
 import Dashboard from '../navigation/dashboard/dashboard';
-import ModDocument from '../content/modules/modDocument';
+import ModProject from '../content/modules/modProject';
 import ModDocumentList from '../content/modules/modDocumentList';
-import ModTask from '../content/modules/modTask';
 import ModTaskList from '../content/modules/modTaskList';
 import ModPerson from '../content/modules/modPerson';
 
@@ -124,10 +123,10 @@ class App extends Component {
             <Route path="/dashboard" component={Dashboard} />
 
             {isAuthNavItems.document ? <Route path="/document/list/:id" component={ModDocumentList} /> : null}
-            {isAuthNavItems.document ? <Route path="/document" component={ModDocument} /> : null}
+            {isAuthNavItems.document ? <Route path="/document" component={ModProject} /> : null}
 
             {isAuthNavItems.task ? <Route path="/task/list/:id" component={ModTaskList} /> : null}
-            {isAuthNavItems.task ? <Route path="/task" component={ModTask} /> : null}
+            {isAuthNavItems.task ? <Route path="/task" component={ModProject} /> : null}
 
             {isAuthNavItems.person ? <Route path="/person" component={ModPerson} /> : null}
 
