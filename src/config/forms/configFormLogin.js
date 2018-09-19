@@ -1,8 +1,10 @@
+import * as trans from '../../libs/translates';
+
 const formConfig = {
 	buttons: 'butOk',
 	buttonsClass: 'FillSpace',
 	headerSize: 'HeaderMedium',
-	msgFailedSubmit: 'keyFailedLogin',
+	msgFailedSubmit: trans.KEY_FAILED_LOGIN,
 	noCreate: true,
 	okButtonLabel: 'keyLogin',
 	size: 'ModalSmall',

@@ -36,45 +36,6 @@ import { isAuthNavIcons, navIcons } from '../../config/navigation/configNavigati
 
 class App extends Component {
 
-  // loadPersonalSettings = () => {
-  //   callServer('get', '/usersettings/read',
-  //     (response) => this.successGetHandlerPersonalSettings(response), this.errorGetHandlerPersonalSettings);
-  // };
-  //
-  // successGetHandlerPersonalSettings = (response) => {
-  //   this.props.storeLanguage(response.data[0].language);
-  //   callServer('get', '/translates/read/' + response.data[0].language,
-  //     (response) => this.successGetHandlerTranslates(response), this.errorGetHandlerTranslates);
-  // };
-  //
-  // errorGetHandlerPersonalSettings = (error) => {
-  //   console.log(error);
-  // };
-  //
-  // successGetHandlerTranslates = (response) => {
-  //   this.props.storeTranslates(response.data[0].translates);
-  //   this.props.translatesLoaded();
-  // };
-  //
-  // errorGetHandlerTranslates = (error) => {
-  //   console.log(error);
-  // };
-
-  componentDidMount = () => {
-    // Redirect the root route to the starting module
-    if (this.props.location.pathname === "/") {
-      this.props.authenticated ? this.props.history.replace('/dashboard') : this.props.history.replace('/login');
-    }
-  };
-
-  componentDidUpdate = () => {
-    // In case the user successfully logged in, redirect to '/dashboard'.
-    if (this.props.authenticated && this.props.location.pathname === "/login") {
-      this.props.history.replace('/dashboard');
-    }
-    // this.loadPersonalSettings();
-  };
-
   componentWillMount = () => {
     const magic = localStorage.getItem("magic");
 
@@ -92,14 +53,45 @@ class App extends Component {
     }
   };
 
+  componentDidMount = () => {
+    // Redirect the root route to the starting module
+    if (this.props.location.pathname === "/") {
+      this.props.authenticated ? this.props.history.replace('/dashboard') : this.props.history.replace('/login');
+    }
+  };
+
+  componentDidUpdate = () => {
+    // In case the user successfully logged in, redirect to '/dashboard'.
+    if (this.props.authenticated && this.props.location.pathname === "/login") {
+      this.props.history.replace('/dashboard');
+    }
+  };
+
   successHandlerGetUserInfo = (response) => {
+    console.log(response.data.settings.language);
     // A successfull response from an api endpoint implicitly indicates that the magic is correct.
     this.props.authenticateUser(true); // This by-passes the login screen.
     this.props.magicChecked(true); // This by-passes the initial spinner.
+
+    this.props.storeLanguage(response.data.settings.language);
+    callServer('put', 'api.public.getTranslationTable?language=' + response.data.settings.language,
+      (response) => this.successGetHandlerTranslates(response),
+      (error) => this.errorGetHandlerTranslates);
   };
 
   errorHandlerGetUserInfo = (error) => {
     this.props.magicChecked(true); // This by-passes the initial spinner.
+    this.props.translatesLoaded();
+  };
+
+  successGetHandlerTranslates = (response) => {
+    console.log(response.data);
+    this.props.storeTranslates(response.data);
+    this.props.translatesLoaded();
+  };
+
+  errorGetHandlerTranslates = (error) => {
+    console.log(error);
   };
 
   render = () => {
@@ -111,8 +103,7 @@ class App extends Component {
       </Layout>
     );
 
-    // if (!this.props.initTranslatesLoaded || !this.props.initMagicChecked) {
-    if (!this.props.initMagicChecked) {
+    if (!this.props.initTranslatesLoaded || !this.props.initMagicChecked) {
       layout = (
         <SpinnerInit />
       );
