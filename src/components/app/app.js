@@ -17,6 +17,7 @@ import SpinnerInit from '../ui/spinners/spinnerInit/spinnerInit';
 
 // Import components for all navigation item routes.
 import Login from '../navigation/login/login';
+import Logout from '../navigation/logout/logout';
 import Dashboard from '../navigation/dashboard/dashboard';
 import ModDocument from '../content/modules/modDocument';
 import ModDocumentList from '../content/modules/modDocumentList';
@@ -27,7 +28,6 @@ import ModPerson from '../content/modules/modPerson';
 // Import components for all navigation icon routes.
 import ModSearch from '../content/modules/modSearch';
 import ModPersonalSettings from '../content/modules/modPersonalSettings';
-import ModLogout from '../content/modules/modLogout';
 import ModAdmin from '../content/modules/modAdmin';
 
 import Mod404 from '../content/modules/mod404';
@@ -133,7 +133,7 @@ class App extends Component {
 
             <Route path="/search" component={ModSearch} />
             <Route path="/personal" component={ModPersonalSettings} />
-            <Route path="/logout" component={ModLogout} />
+            <Route path="/logout" component={Logout} />
             {isAuthNavIcons.admin ? <Route path="/admin" component={ModAdmin} /> : null}
 
             {/* Every unexpected route results into a 404, except for the '/' route (the root) */}

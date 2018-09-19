@@ -6,8 +6,8 @@ const listViewConfig = {
       sort: false,
       displayOn: 'always',
       show: true,
+      contentType: 'avatar',
       size: 'AvatarLarge',
-      avatar: true,
       avatarName: 'naam'
     },
     {

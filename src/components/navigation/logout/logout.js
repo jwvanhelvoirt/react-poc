@@ -5,7 +5,7 @@ import * as types from '../../../store/actions';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import { callServer } from '../../../api/api';
 
-class ModLogout extends Component {
+class Logout extends Component {
 
   componentWillMount = () => {
     this.logout();
@@ -42,4 +42,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(ModLogout));
+export default withRouter(connect(null, mapDispatchToProps)(Logout));
