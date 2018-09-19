@@ -26,6 +26,7 @@ class Login extends Component {
 
     this.props.authenticateUser(true); // This will re-render the app component and show the dashboard.
     this.props.showUserInfo(false);
+    this.props.setLoadUserSettings(true);
   };
 
   onErrorHandler = (error) => {
@@ -64,13 +65,15 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    formSubmitData: state.redMain.formSubmitData
+    formSubmitData: state.redMain.formSubmitData,
+    language: state.redMain.transLanguage
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
+    setLoadUserSettings: (loadUserSettings) => dispatch( {type: types.LOAD_USER_SETTINGS, loadUserSettings } ),
     showUserInfo: (formShowUserInfo) => dispatch( {type: types.FORM_USER_INFO, formShowUserInfo } )
   }
 };

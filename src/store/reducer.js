@@ -7,6 +7,7 @@ const initialState = {
   formTouched: false,
   initTranslatesLoaded: false,
   initMagicChecked: false,
+  loadUserSettings: false,
   lookupListItems: [],
   lookupListItemsSelected: [],
   lookupInputId: '',
@@ -16,7 +17,7 @@ const initialState = {
   searchTextOverall: '',
   showModalLookup: false,
   sortItem: '',
-  transLanguage: 'nl',
+  transLanguage: 'en_US',
   transTranslates: {}
 };
 
@@ -43,11 +44,11 @@ const reducer = (state = initialState, action) => {
     //   };
     //
 
-  case types.FORM_SUBMIT_DATA_STORE: // Stores data of last submitted form.
-    return {
-      ...state,
-      formSubmitData: action.formSubmitData
-    };
+    case types.FORM_SUBMIT_DATA_STORE: // Stores data of last submitted form.
+      return {
+        ...state,
+        formSubmitData: action.formSubmitData
+      };
 
     case types.FORM_TOUCH: // Form is touched by the user.
       return {
@@ -143,6 +144,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: action.authenticate
+      };
+
+    case types.LOAD_USER_SETTINGS: // We use this to load user settings after a successfull login via the login component.
+      return {
+        ...state,
+        loadUserSettings: action.loadUserSettings
       };
 
     default:

@@ -6,9 +6,9 @@ const formConfig = {
 	headerSize: 'HeaderMedium',
 	msgFailedSubmit: trans.KEY_FAILED_LOGIN,
 	noCreate: true,
-	okButtonLabel: 'keyLogin',
+	okButtonLabel: trans.KEY_LOGIN,
 	size: 'ModalSmall',
-	title: 'keyLogin',
+	title: trans.KEY_LOGIN,
 	titleAlign: 'Left', // default
 	titleIcon: 'sign-in-alt',
 	url: 'login',
