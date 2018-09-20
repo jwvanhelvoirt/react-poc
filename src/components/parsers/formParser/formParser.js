@@ -12,11 +12,11 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
-import * as types from '../../../store/actions';
+import * as types from '../../../store/constActions';
 import Aux from '../../../hoc/auxiliary';
 import Input from '../../ui/input/input';
 import MessageBox from '../../ui/messageBox/messageBox';
-import * as trans from '../../../libs/translates';
+import * as trans from '../../../libs/constTranslates';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import * as types from '../../../store/actions';
+import * as types from '../../../store/constActions';
 import _ from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import ReactTooltip from 'react-tooltip';
@@ -17,8 +17,8 @@ import Avatar from '../../ui/avatar/avatar';
 import Timespan from '../../ui/timespan/timespan';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
-import * as icons from '../../../libs/icons';
-import * as trans from '../../../libs/translates';
+import * as icons from '../../../libs/constIcons';
+import * as trans from '../../../libs/constTranslates';
 import classes from './viewParser.scss';
 
 class _View extends Component {
@@ -366,9 +366,9 @@ class _View extends Component {
     const sortAttribute = sortOrder === -1 ? sort + '_desc' : sort + '_asc';
 
     const { limit } = viewConfig;
-    // const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search, searchIn };
-    // const params = { MAGIC: localStorage.getItem("magic"), sort, sortOrder, skip, limit, search };
-    const params = { MAGIC: localStorage.getItem("magic"), sort: sortAttribute, skip, limit, search };
+    // const params = { MAGIC: localStorage.getItem('magic'), sort, sortOrder, skip, limit, search, searchIn };
+    // const params = { MAGIC: localStorage.getItem('magic'), sort, sortOrder, skip, limit, search };
+    const params = { MAGIC: localStorage.getItem('magic'), sort: sortAttribute, skip, limit, search };
 
     // In case the list must be filtered based on a selected row in the previous view.
     if (this.state.viewConfig.rowBindedAttribute) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../../store/actions';
+import * as types from '../../../store/constActions';
 import Aux from '../../../hoc/auxiliary';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import FormParser from '../../parsers/formParser/formParser';

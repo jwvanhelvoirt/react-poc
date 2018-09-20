@@ -1,4 +1,4 @@
-import * as trans from '../../libs/translates';
+import * as trans from '../../libs/constTranslates';
 
 const listViewConfig = {
   columns: [

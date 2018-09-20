@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../button/button';
 import Aux from '../../../hoc/auxiliary';
-import * as trans from '../../../libs/translates';
+import * as trans from '../../../libs/constTranslates';
 import classes from './modalFooter.scss';
 
 const modalFooter = (props) => {

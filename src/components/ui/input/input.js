@@ -18,8 +18,8 @@ import Button from '../button/button';
 import Label from '../label/label';
 import Aux from '../../../hoc/auxiliary'
 import { getDisplayValue } from '../../../libs/generic';
-import * as icons from '../../../libs/icons';
-import * as trans from '../../../libs/translates';
+import * as icons from '../../../libs/constIcons';
+import * as trans from '../../../libs/constTranslates';
 import classes from './input.scss';
 
 class Input extends Component {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../store/actions';
+import * as types from '../../store/constActions';
+import * as routes from '../../libs/constRoutes';
 import '../../assets/fontAwesome/fontAwesome';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 import { Util } from 'reactstrap';
@@ -41,7 +42,7 @@ class App extends Component {
 
     const languageInit = this.getLanguage();
     this.props.storeLanguage(languageInit);
-    localStorage.setItem("language", languageInit);
+    localStorage.setItem('language', languageInit);
 
     callServer('put', 'api.public.getTranslationTable?language=' + languageInit,
       (response) => this.successGetHandlerTranslates(response),
@@ -51,7 +52,7 @@ class App extends Component {
   componentDidMount = () => {
     // Redirect the root route to the starting module
     if (this.props.location.pathname === "/") {
-      this.props.authenticated ? this.props.history.replace('/dashboard') : this.props.history.replace('/login');
+      this.props.authenticated ? this.props.history.replace(routes.ROUTE_DASHBOARD) : this.props.history.replace(routes.ROUTE_LOGIN);
     }
   };
 
@@ -63,14 +64,14 @@ class App extends Component {
     }
 
     // In case the user successfully logged in, redirect to '/dashboard'.
-    if (this.props.authenticated && this.props.location.pathname === "/login") {
-      this.props.history.replace('/dashboard');
+    if (this.props.authenticated && this.props.location.pathname === routes.ROUTE_LOGIN) {
+      this.props.history.replace(routes.ROUTE_DASHBOARD);
     }
   };
 
   getLanguage = () => {
     // Get the language from the localStorage or from an app wide default.
-    return localStorage.getItem("language") ? localStorage.getItem("language") : this.props.language;
+    return localStorage.getItem('language') ? localStorage.getItem('language') : this.props.language;
   };
 
   successGetHandlerTranslates = (response) => {
@@ -79,7 +80,7 @@ class App extends Component {
     this.props.storeTranslates(response.data);
     this.props.translatesLoaded();
 
-    const magic = localStorage.getItem("magic");
+    const magic = localStorage.getItem('magic');
     if (magic) {
       // There is a magic in the local storage. A server call to fetch user settings implicitly checks if this is the correct magic.
       this.getUserSettings();
@@ -98,7 +99,7 @@ class App extends Component {
 
   getUserSettings = () => {
     // Make a serve call to fetch user settings.
-    const magic = localStorage.getItem("magic");
+    const magic = localStorage.getItem('magic');
     const submitData = { MAGIC: magic };
     callServer('put', 'api.getMedewerkerInfo',
       (response) => this.successHandlerGetUserInfo(response),
@@ -114,7 +115,7 @@ class App extends Component {
     if (response.data.settings.language !== this.getLanguage()) {
       // User has another language configured than the current translates object, we have to fetch the translates object for this language.
       this.props.storeLanguage(response.data.settings.language);
-      localStorage.setItem("language", response.data.settings.language);
+      localStorage.setItem('language', response.data.settings.language);
       callServer('put', 'api.public.getTranslationTable?language=' + response.data.settings.language,
         (response) => this.successGetHandlerTranslatesReload(response),
         (error) => this.errorGetHandlerTranslatesReload);
@@ -122,7 +123,7 @@ class App extends Component {
       // User has the same language configured as the current translates object.
       this.props.translatesLoaded();
       this.props.storeLanguage(response.data.settings.language);
-      localStorage.setItem("language", response.data.settings.language);
+      localStorage.setItem('language', response.data.settings.language);
     }
   };
 
@@ -147,7 +148,7 @@ class App extends Component {
     let layout = (
       <Layout toolbar={false}>
         <Switch>
-          <Route path="/" component={Login} />
+          <Route path={routes.ROUTE_ROOT} component={Login} />
         </Switch>
       </Layout>
     );
@@ -160,20 +161,20 @@ class App extends Component {
       layout = (
         <Layout navItems={navItems} navIcons={navIcons} toolbar={true}>
           <Switch>
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path={routes.ROUTE_DASHBOARD} component={Dashboard} />
 
-            {isAuthNavItems.document ? <Route path="/document/list/:id" component={ModDocumentList} /> : null}
-            {isAuthNavItems.document ? <Route path="/document" component={ModProject} /> : null}
+            {isAuthNavItems.document ? <Route path={routes.ROUTE_DOCUMENT_LIST_ID} component={ModDocumentList} /> : null}
+            {isAuthNavItems.document ? <Route path={routes.ROUTE_DOCUMENT} component={ModProject} /> : null}
 
-            {isAuthNavItems.task ? <Route path="/task/list/:id" component={ModTaskList} /> : null}
-            {isAuthNavItems.task ? <Route path="/task" component={ModProject} /> : null}
+            {isAuthNavItems.task ? <Route path={routes.ROUTE_TASK_LIST_ID} component={ModTaskList} /> : null}
+            {isAuthNavItems.task ? <Route path={routes.ROUTE_TASK} component={ModProject} /> : null}
 
-            {isAuthNavItems.person ? <Route path="/person" component={ModPerson} /> : null}
+            {isAuthNavItems.person ? <Route path={routes.ROUTE_PERSON} component={ModPerson} /> : null}
 
-            <Route path="/search" component={ModSearch} />
-            <Route path="/personal" component={ModPersonalSettings} />
-            <Route path="/logout" component={Logout} />
-            {isAuthNavIcons.admin ? <Route path="/admin" component={ModAdmin} /> : null}
+            <Route path={routes.ROUTE_SEARCH} component={ModSearch} />
+            <Route path={routes.ROUTE_PERSONAL} component={ModPersonalSettings} />
+            <Route path={routes.ROUTE_LOGOUT} component={Logout} />
+            {isAuthNavIcons.admin ? <Route path={routes.ROUTE_ADMIN} component={ModAdmin} /> : null}
 
             {/* Every unexpected route results into a 404, except for the '/' route (the root) */}
             <Route component={Mod404} />

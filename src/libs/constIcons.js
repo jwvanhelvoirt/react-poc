@@ -17,6 +17,3 @@ export const ICON_TASKS = 'tasks';
 export const ICON_TIMES_CIRCLE = 'times-circle';
 export const ICON_TRASH = 'trash';
 export const ICON_USER = 'user';
-
-// export const ICON_XXX = 'xxx';
-// export const ICON_XXX = 'xxx';

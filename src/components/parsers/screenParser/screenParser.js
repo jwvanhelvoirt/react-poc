@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
-import * as types from '../../../store/actions';
+import * as types from '../../../store/constActions';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
 import Button from '../../ui/button/button';
@@ -11,8 +11,8 @@ import { Large, Medium, Small } from '../../../libs/responsive';
 import Aux from '../../../hoc/auxiliary';
 import { propercase, getDisplayValue } from '../../../libs/generic';
 import { callServer } from '../../../api/api';
-import * as icons from '../../../libs/icons';
-import * as trans from '../../../libs/translates';
+import * as icons from '../../../libs/constIcons';
+import * as trans from '../../../libs/constTranslates';
 import classes from './screenParser.scss';
 
 class Screen extends Component {

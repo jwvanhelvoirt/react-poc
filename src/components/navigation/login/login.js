@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from '../../../store/actions';
+import * as types from '../../../store/constActions';
 import FormParser from '../../parsers/formParser/formParser';
 import formLogin from '../../../config/forms/configFormLogin';
 import classes from './login.scss';
@@ -16,7 +16,7 @@ class Login extends Component {
     const { MAGIC, /*idmedewerker, internaluser*/ } = response.data;
     const { login, remember_login } = this.props.formSubmitData;
 
-    localStorage.setItem("magic", MAGIC);
+    localStorage.setItem('magic', MAGIC);
 
     if (remember_login === 1) {
       localStorage.setItem('user', login);

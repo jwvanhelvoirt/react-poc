@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from '../../../store/actions';
+import * as types from '../../../store/constActions';
 import Aux from '../../../hoc/auxiliary';
 import Backdrop from '../backdrop/backdrop';
 import classes from './modal.scss';

@@ -1,5 +1,5 @@
-import * as icons from '../../libs/icons';
-import * as trans from '../../libs/translates';
+import * as icons from '../../libs/constIcons';
+import * as trans from '../../libs/constTranslates';
 
 const formConfig = {
 	buttons: 'butOk',

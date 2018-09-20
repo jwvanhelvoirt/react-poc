@@ -1,7 +1,7 @@
 import React from 'react';
 import View from '../../components/parsers/viewParser/viewParser';
 import viewConfig from '../../config/views/configListViewPerson';
-import * as trans from '../../libs/translates';
+import * as trans from '../../libs/constTranslates';
 
 export const screenConfig = {
   showTabs: false,

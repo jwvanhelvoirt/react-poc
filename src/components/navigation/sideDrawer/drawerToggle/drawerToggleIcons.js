@@ -1,7 +1,7 @@
 import React from 'react';
 import ToolbarIcons from '../../toolbar/toolbarIcons/toolbarIcons';
-import * as icons from '../../../../libs/icons';
-import * as trans from '../../../../libs/translates';
+import * as icons from '../../../../libs/constIcons';
+import * as trans from '../../../../libs/constTranslates';
 
 const drawerToggleIcons = (props) => {
   const iconsNav = [

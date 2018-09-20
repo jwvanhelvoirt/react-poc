@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../../store/actions';
+import * as types from '../../../store/constActions';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import { callServer } from '../../../api/api';
 
@@ -18,7 +18,7 @@ class Logout extends Component {
   // Successfully logged out.
   successGetHandler = (response) => {
     console.log(response);
-    localStorage.removeItem("magic");
+    localStorage.removeItem('magic');
     this.props.history.replace('/login');
     this.props.authenticateUser(false);
   };
