@@ -36,7 +36,8 @@ const listViewConfig = {
   showRowTitle: true,
   showSearchbar: true,
   showSort: true,
-  sort: 'name',
+  sort: 'naam',
+  sortOrder: 1,
   title: trans.KEY_DOCUMENT,
   url: 'api.document.document.list'
 };

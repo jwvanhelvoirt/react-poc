@@ -23,7 +23,7 @@ const listViewConfig = {
     {
       id: 'niveau4',
       label: trans.KEY_ORGANISATION,
-      sort: true,
+      sort: false,
       displayOn: 'always',
       show: true,
       size: 'Flex40'
@@ -42,8 +42,18 @@ const listViewConfig = {
   showRowHeader: true,
   showRowTitle: true,
   showSearchbar: true,
-  // showSort: true,
+  showSort: true,
   sort: 'naam',
+  sortOrder: 1,
+  sortOptions: {
+    translate: true,
+    options: [ // In this order the sort options will appear in the list.
+      { id: 'contactA', label: [trans.KEY_CONTACT, trans.KEY_ASCENDING], sortOn: 'laatstecontact', order: 1},
+      { id: 'contactD', label: [trans.KEY_CONTACT, trans.KEY_DESCENDING], sortOn: 'laatstecontact', order: -1},
+      { id: 'wijzigingA', label: [trans.KEY_CHANGE, trans.KEY_ASCENDING], sortOn: 'wijziging', order: 1},
+      { id: 'wijzigingD', label: [trans.KEY_CHANGE, trans.KEY_DESCENDING], sortOn: 'wijziging', order: -1},
+    ]
+  },
   title: trans.KEY_PERSON,
   url: 'api.relatiebeheer.niveau9.list'
 };

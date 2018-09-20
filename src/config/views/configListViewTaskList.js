@@ -11,7 +11,7 @@ const listViewConfig = {
       size: 'Flex80'
     },
     {
-      id: 'datumtijd',
+      id: 'eind',
       label: trans.KEY_DATE,
       sort: true,
       displayOn: 'always',
@@ -36,7 +36,8 @@ const listViewConfig = {
   showRowTitle: true,
   showSearchbar: true,
   showSort: true,
-  sort: 'name',
+  sort: 'eind',
+  sortOrder: 1,
   title: trans.KEY_DOCUMENT,
   url: 'api.taken.taak.list'
 };

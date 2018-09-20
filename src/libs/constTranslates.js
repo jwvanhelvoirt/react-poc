@@ -5,6 +5,7 @@ export const KEY_BUDGET = 'KEY budget';
 export const KEY_CANCEL = 'KEY annuleren';
 export const KEY_CHANGE = 'KEY wijziging';
 export const KEY_CLOSE = 'KEY sluiten';
+export const KEY_CONTACT = 'KEY contact';
 export const KEY_DASHBOARD = 'KEY dashboard';
 export const KEY_DATE = 'KEY datum';
 export const KEY_DELETE = 'KEY verwijderen';
