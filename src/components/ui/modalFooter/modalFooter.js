@@ -1,12 +1,13 @@
 import React from 'react';
 import Button from '../button/button';
 import Aux from '../../../hoc/auxiliary';
+import * as trans from '../../../libs/translates';
 import classes from './modalFooter.scss';
 
 const modalFooter = (props) => {
   const okButDisabled = props.formIsValid === false  ? true : false;
-  const labelOk = props.okButtonLabel ? props.okButtonLabel : 'keyOk';
-  const labelCancel = props.cancelButtonLabel ? props.cancelButtonLabel : 'keyCancel';
+  const labelOk = props.okButtonLabel ? props.okButtonLabel : trans.KEY_OK;
+  const labelCancel = props.cancelButtonLabel ? props.cancelButtonLabel : trans.KEY_CANCEL;
   let but = null;
 
   const butOk =

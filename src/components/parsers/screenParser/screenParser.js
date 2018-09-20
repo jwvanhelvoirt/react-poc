@@ -11,6 +11,7 @@ import { Large, Medium, Small } from '../../../libs/responsive';
 import Aux from '../../../hoc/auxiliary';
 import { propercase, getDisplayValue } from '../../../libs/generic';
 import { callServer } from '../../../api/api';
+import * as trans from '../../../libs/translates';
 import classes from './screenParser.scss';
 
 class Screen extends Component {
@@ -133,7 +134,7 @@ class Screen extends Component {
             // First breadcrumb is a link to the dashboard.
             let breadcrumb = (
               <NavLink to='/dashboard'>
-                  <Label labelKey={'keyHome'} convertType={'propercase'} />
+                  <Label labelKey={trans.KEY_HOME} convertType={'propercase'} />
               </NavLink>
             );
 
@@ -234,7 +235,7 @@ class Screen extends Component {
       <Aux>
         {breadcrumb}
         <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
-          {' > ' + getDisplayValue('key' + propercase(item), 'propercase', true, this.props.translates)}
+          {' > ' + getDisplayValue(trans['KEY_' + item.toUpperCase()], 'propercase', true, this.props.translates)}
         </NavLink>
       </Aux>
     );

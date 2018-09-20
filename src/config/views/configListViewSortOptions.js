@@ -1,8 +1,10 @@
+import * as trans from '../../libs/translates';
+
 const listViewConfig = {
   columns: [
     {
       id: 'label',
-      label: 'Sorteer optie',
+      label: trans.KEY_SORT,
       displayOn: 'always',
       show: true,
       size: 'Flex100'

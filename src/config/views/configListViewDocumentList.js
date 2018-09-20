@@ -1,8 +1,10 @@
+import * as trans from '../../libs/translates';
+
 const listViewConfig = {
   columns: [
     {
       id: 'naam',
-      label: 'keyName',
+      label: trans.KEY_NAME,
       sort: true,
       displayOn: 'always',
       show: true,
@@ -10,7 +12,7 @@ const listViewConfig = {
     },
     {
       id: 'datumtijd',
-      label: 'keyDate',
+      label: trans.KEY_DATE,
       sort: true,
       displayOn: 'always',
       show: true,
@@ -35,7 +37,7 @@ const listViewConfig = {
   showSearchbar: true,
   showSort: true,
   sort: 'name',
-  title: 'keyDocument',
+  title: trans.KEY_DOCUMENT,
   url: 'api.document.document.list'
 };
 

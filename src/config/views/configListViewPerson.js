@@ -1,3 +1,5 @@
+import * as trans from '../../libs/translates';
+
 const listViewConfig = {
   columns: [
     {
@@ -12,7 +14,7 @@ const listViewConfig = {
     },
     {
       id: 'naam',
-      label: 'keyName',
+      label: trans.KEY_NAME,
       sort: true,
       displayOn: 'always',
       show: true,
@@ -20,7 +22,7 @@ const listViewConfig = {
     },
     {
       id: 'niveau4',
-      label: 'keyOrganisation',
+      label: trans.KEY_ORGANISATION,
       sort: true,
       displayOn: 'always',
       show: true,
@@ -42,7 +44,7 @@ const listViewConfig = {
   showSearchbar: true,
   // showSort: true,
   sort: 'naam',
-  title: 'keyPerson',
+  title: trans.KEY_PERSON,
   url: 'api.relatiebeheer.niveau9.list'
 };
 

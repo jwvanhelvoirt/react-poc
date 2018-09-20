@@ -16,6 +16,7 @@ import * as types from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import Input from '../../ui/input/input';
 import MessageBox from '../../ui/messageBox/messageBox';
+import * as trans from '../../../libs/translates';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {
@@ -332,7 +333,7 @@ class Form extends Component {
       </div>;
 
     // Title of the form.
-    const titleForm = (this.props.id || noCreate) ? [title] : ['keyNew', title];
+    const titleForm = (this.props.id || noCreate) ? [title] : [trans.KEY_NEW, title];
 
     return (
       <Aux>

@@ -18,6 +18,7 @@ import Button from '../button/button';
 import Label from '../label/label';
 import Aux from '../../../hoc/auxiliary'
 import { getDisplayValue } from '../../../libs/generic';
+import * as trans from '../../../libs/translates';
 import classes from './input.scss';
 
 class Input extends Component {
@@ -40,7 +41,7 @@ class Input extends Component {
     }
 
     if (!valid && validation && touched) {
-      validationError = <p className={classes.ValidationError}><Label labelKey={'keyValidValue'} convertType={'propercase'} /></p>
+      validationError = <p className={classes.ValidationError}><Label labelKey={trans.KEY_VALID_VALUE} convertType={'propercase'} /></p>
     }
 
     // Default focus.
@@ -125,9 +126,9 @@ class Input extends Component {
 
         inputElement = (
           <Aux>
-            <Button clicked={() => this.props.showModal('showModalLookup', 'ModalMedium', ['keySelect', lookupTitle], 'info',
+            <Button clicked={() => this.props.showModal('showModalLookup', 'ModalMedium', [trans.KEY_SELECT, lookupTitle], 'info',
               <View viewConfig={lookup} lookup={true} lookupBindedInputId={inputId} />, 'butOkCancel')}
-              color="primary" labelText={['keyPlus', lookupTitle]}
+              color="primary" labelText={[trans.KEY_PLUS, lookupTitle]}
             />
             {multiLines}
           </Aux>

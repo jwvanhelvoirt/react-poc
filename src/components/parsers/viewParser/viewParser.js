@@ -17,6 +17,7 @@ import Avatar from '../../ui/avatar/avatar';
 import Timespan from '../../ui/timespan/timespan';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
+import * as trans from '../../../libs/translates';
 import classes from './viewParser.scss';
 
 class _View extends Component {
@@ -158,10 +159,10 @@ class _View extends Component {
    */
   onCloseHandler = (userConfirmation) => {
     if (userConfirmation && this.props.formTouched) {
-      const content = <Label labelKey='keyWarningCloseForm' />
+      const content = <Label labelKey={trans.KEY_WARNING_CLOSE_FORM} />
 
       // Ask for user confirmation to lose all changes in the form.
-      this.showModal('showModalMessage', 'ModalSmall', ['keyClose'], 'warning', content, 'butOkCancel',
+      this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_CLOSE], 'warning', content, 'butOkCancel',
          () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
     } else {
       this.props.untouchForm();
@@ -190,8 +191,8 @@ class _View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    const content = <Label labelKey='keyErrorFetchItem' />
-    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', content, 'butOk');
+    const content = <Label labelKey={trans.KEY_ERROR_FETCH_ITEM} />
+    this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk');
   };
 
   /**
@@ -246,9 +247,9 @@ class _View extends Component {
    */
   deleteItems = (userConfirmation) => {
     if (userConfirmation) {
-      const content = <Label labelKey='keyWarningDeleteDocs' />
+      const content = <Label labelKey={trans.KEY_WARNING_DELETE_DOCS} />
       // Ask for user confirmation before deleting records from the database.
-      this.showModal('showModalMessage', 'ModalSmall', ['keyDelete'], 'warning', content, 'butOkCancel',
+      this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_DELETE], 'warning', content, 'butOkCancel',
          () => this.deleteItems(false), () => this.onModalMessageCloseHandler());
 
       this.setState({ showModalMessage: true });
@@ -283,8 +284,8 @@ class _View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    const content = <Label labelKey='keyErrorRemoveListItems' />;
-    this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', content, 'butOk');
+    const content = <Label labelKey={trans.KEY_ERROR_REMOVE_LIST_ITEMS} />;
+    this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk');
   };
 
   /**
@@ -426,7 +427,7 @@ class _View extends Component {
    * @brief   Shows a modal where the user can select on which attribute to sort the listView in which order.
    */
   onClickSortHandler = () => {
-    this.showModal('showModalSort', 'ModalWide', ['keySort'], 'info',
+    this.showModal('showModalSort', 'ModalWide', [trans.KEY_SORT], 'info',
       <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
        () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
   };
@@ -553,17 +554,17 @@ class _View extends Component {
         this.errorFaker, params);
   };
 
-  successFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Fake data succesvol aangemaakt.', 'butOk');
+  successFaker = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_INFO], 'info', 'Fake data succesvol aangemaakt.', 'butOk');
 
-  errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
+  errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
 
   // deleteAll = () => {
   //   callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
   //     (response) => this.successDeleteAll(response),
   //     this.errorDeleteAll);
   // };
-  // successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyInfo'], 'info', 'Bulk records succesvol verwijderd.', 'butOk');
-  // errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', ['keyError'], 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
+  // successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_INFO], 'info', 'Bulk records succesvol verwijderd.', 'butOk');
+  // errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
 
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
@@ -639,7 +640,7 @@ class _View extends Component {
     let navForw = null;
     let navForwMult = null;
 
-    const of = <Label labelKey='keyOf' />;
+    const of = <Label labelKey={trans.KEY_OF} />;
 
     if (viewConfig.showNavigation) {
         navBack =     <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div>;
@@ -686,10 +687,10 @@ class _View extends Component {
     // Actions bar: Filtering.
     const showFilterAction = filterOptions && filterOptions.length > 0 && showFilter ? true : false;
     const filter = showFilterAction ?
-      <div onClick={() => this.onClickFilterHandler()} data-tip="React-tooltip" data-for='keyFilterAction'>
+      <div onClick={() => this.onClickFilterHandler()} data-tip="React-tooltip" data-for={trans.KEY_FILTER_ACTION}>
         <FontAwesomeIcon icon='filter' />
-        <ReactTooltip id='keyFilterAction' place="bottom" type="dark" effect="solid">
-          <Label labelKey='keyFilterAction' convertType={'propercase'} />
+        <ReactTooltip id={trans.KEY_FILTER_ACTION} place="bottom" type="dark" effect="solid">
+          <Label labelKey={trans.KEY_FILTER_ACTION} convertType={'propercase'} />
         </ReactTooltip>
       </div> :
       null;
@@ -697,10 +698,10 @@ class _View extends Component {
     // Actions bar: Sorting.
     const showSortAction = sortOptions && sortOptions.options && sortOptions.options.length > 0 && showSort ? true : false;
     const sort = showSortAction ?
-      <div onClick={() => this.onClickSortHandler()} data-tip="React-tooltip" data-for='keySortAction'>
+      <div onClick={() => this.onClickSortHandler()} data-tip="React-tooltip" data-for={trans.KEY_SORT_ACTION}>
         <FontAwesomeIcon icon='sort' />
-        <ReactTooltip id='keySortAction' place="bottom" type="dark" effect="solid">
-          <Label labelKey='keySortAction' convertType={'propercase'} />
+        <ReactTooltip id={trans.KEY_SORT_ACTION} place="bottom" type="dark" effect="solid">
+          <Label labelKey={trans.KEY_SORT_ACTION} convertType={'propercase'} />
         </ReactTooltip>
       </div> :
       null;
@@ -736,7 +737,7 @@ class _View extends Component {
     // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
     // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
     const debounced = this.state.debounceFunction ? _.debounce(this.submitSearchHandler, 800) : null;
-    const search = getDisplayValue('keySearch', 'propercase', true, this.props.translates);
+    const search = getDisplayValue(trans.KEY_SEARCH, 'propercase', true, this.props.translates);
 
     let searchBar = null;
     if (viewConfig.showSearchbar) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import View from '../../components/parsers/viewParser/viewParser';
 import viewConfig from '../../config/views/configListViewProject';
+import * as trans from '../../libs/translates';
 
 export const screenConfig = {
   showTabs: false,
@@ -17,7 +18,7 @@ export const screenConfig = {
         {
           id: 'pane1',
           tabs: [
-            { id: 'project', label: 'keyProject', component: <View viewConfig={viewConfig} /> }
+            { id: 'project', label: trans.KEY_PROJECT, component: <View viewConfig={viewConfig} /> }
           ],
           activeTab: 'project'
         }

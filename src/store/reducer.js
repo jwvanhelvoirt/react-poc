@@ -68,6 +68,12 @@ const reducer = (state = initialState, action) => {
         formShowUserInfo: action.formShowUserInfo
       };
 
+    case types.LOAD_USER_SETTINGS: // We use this to load user settings after a successfull login via the login component.
+      return {
+        ...state,
+        loadUserSettings: action.loadUserSettings
+      };
+
     case types.LOOKUP_LIST_ITEMS_STORE: // Store the listItems array of objects of the current lookup view.
       return {
         ...state,
@@ -144,12 +150,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: action.authenticate
-      };
-
-    case types.LOAD_USER_SETTINGS: // We use this to load user settings after a successfull login via the login component.
-      return {
-        ...state,
-        loadUserSettings: action.loadUserSettings
       };
 
     default:

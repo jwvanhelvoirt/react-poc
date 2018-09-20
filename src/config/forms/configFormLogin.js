@@ -14,12 +14,12 @@ const formConfig = {
 	url: 'login',
 	inputs: {
 		login: {
-			label: 'keyUsername',
+			label: trans.KEY_USERNAME,
 			elementType: 'input',
 			elementConfig: {
 				type: 'text'
 			},
-			placeholder: 'keyUsername',
+			placeholder: trans.KEY_USERNAME,
 			value: '',
 			valueLocalStorage: 'user',
 			validation: {
@@ -30,12 +30,12 @@ const formConfig = {
 			defaultFocus: true
 		},
 		password: {
-			label: 'keyPassword',
+			label: trans.KEY_PASSWORD,
 			elementType: 'input',
 			elementConfig: {
 				type: 'password'
 			},
-			placeholder: 'keyPassword',
+			placeholder: trans.KEY_PASSWORD,
 			value: '',
 			validation: {
 				required: true
@@ -46,7 +46,7 @@ const formConfig = {
 		remember_login: {
 			// TODO : nu de functie niet meer nodig is, kan dit een normale checkbox worden, checkboxes en radios zijn echter nog niet ingeregeld.
 			// Moet straks dus wel omgezet worden naar een gewone checkbox.
-			label: 'keyRememberPrevLogin',
+			label: trans.KEY_REMEMBER_PREV_LOGIN,
 			elementType: 'triggerFunctionCheckbox',
 			value: 0,
 			valueLocalStorage: 'user'
@@ -54,7 +54,7 @@ const formConfig = {
 			// func: (event, configForm) => rememberPrevLogin(event, configForm)
 		},
 		forgotPassword: {
-			label: 'keyForgotPassword',
+			label: trans.KEY_FORGOT_PASSWORD,
 			elementType: 'triggerFunctionLink',
 			func: () => forgotPassword()
 		}

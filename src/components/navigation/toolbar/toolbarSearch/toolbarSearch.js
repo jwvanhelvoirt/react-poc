@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as types from '../../../../store/actions';
 import { withRouter } from 'react-router-dom';
 import { getDisplayValue } from '../../../../libs/generic';
+import * as trans from '../../../../libs/translates';
 import classes from './toolbarSearch.scss';
 
 class ToolbarSearch extends Component {
@@ -46,7 +47,7 @@ class ToolbarSearch extends Component {
     // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
     // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
     const debounced = this.state.debounceFunction ? _.debounce(this.submitSearchHandler, 500) : null;
-    const search = getDisplayValue('keySearch', 'propercase', true, this.props.translates);
+    const search = getDisplayValue(trans.KEY_SEARCH, 'propercase', true, this.props.translates);
 
     return (
       <div className={classesCombinedSearchbar}>

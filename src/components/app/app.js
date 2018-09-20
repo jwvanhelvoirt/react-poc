@@ -17,7 +17,6 @@ import SpinnerInit from '../ui/spinners/spinnerInit/spinnerInit';
 
 // Import components for all navigation item routes.
 import Login from '../navigation/login/login';
-import Logout from '../navigation/logout/logout';
 import Dashboard from '../navigation/dashboard/dashboard';
 import ModProject from '../content/modules/modProject';
 import ModDocumentList from '../content/modules/modDocumentList';
@@ -27,6 +26,7 @@ import ModPerson from '../content/modules/modPerson';
 // Import components for all navigation icon routes.
 import ModSearch from '../content/modules/modSearch';
 import ModPersonalSettings from '../content/modules/modPersonalSettings';
+import Logout from '../navigation/logout/logout';
 import ModAdmin from '../content/modules/modAdmin';
 
 import Mod404 from '../content/modules/mod404';
@@ -36,13 +36,8 @@ import { isAuthNavIcons, navIcons } from '../../config/navigation/configNavigati
 
 class App extends Component {
 
-  getLanguage = () => {
-    // Get the language from the localStorage or from an app wide default.
-    return localStorage.getItem("language") ? localStorage.getItem("language") : this.props.language;
-  };
-
   componentWillMount = () => {
-    // console.log('componentWillMount');
+    // Fetch the applicable translates object. Without knowing what user logs in, we need labels for the login screen.
 
     const languageInit = this.getLanguage();
     this.props.storeLanguage(languageInit);
@@ -53,38 +48,6 @@ class App extends Component {
       (error) => this.errorGetHandlerTranslates);
   };
 
-  successGetHandlerTranslates = (response) => {
-    // console.log(response.data);
-    // console.log('successGetHandlerTranslates');
-    this.props.storeTranslates(response.data);
-    this.props.translatesLoaded();
-
-    const magic = localStorage.getItem("magic");
-    if (magic) {
-      // There is a magic in the local storage. Make a server call to check if this is the correct magic.
-      this.getUserSettings();
-    } else {
-      // No magic in local storage.
-      // The default of the store variable 'authenticated' is 'false', so the login screen will appear.
-      this.props.magicChecked(true); // TODO: this can probably become local state instead of store state.
-                                     // Same goes for authenticateUser.
-    }
-  };
-
-  errorGetHandlerTranslates = (error) => {
-    console.log(error);
-  };
-
-
-  getUserSettings = () => {
-    // console.log('LOAD USER SETTINGS');
-    const magic = localStorage.getItem("magic");
-    const submitData = { MAGIC: magic };
-    callServer('put', 'api.getMedewerkerInfo',
-      (response) => this.successHandlerGetUserInfo(response),
-      (error) => this.errorHandlerGetUserInfo(error), submitData);
-  };
-
   componentDidMount = () => {
     // Redirect the root route to the starting module
     if (this.props.location.pathname === "/") {
@@ -93,10 +56,8 @@ class App extends Component {
   };
 
   componentDidUpdate = () => {
-    // console.log('componentDidUpdate');
-
+    // The usersettings have not been loaded yet if authentication was provided via the login screen.
     if (this.props.loadUserSettings) {
-      console.log('We have to load the usersettings yet!');
       this.getUserSettings();
       this.props.setLoadUserSettings(false);
     }
@@ -107,23 +68,58 @@ class App extends Component {
     }
   };
 
-  successHandlerGetUserInfo = (response) => {
-    // console.log('successHandlerGetUserInfo');
+  getLanguage = () => {
+    // Get the language from the localStorage or from an app wide default.
+    return localStorage.getItem("language") ? localStorage.getItem("language") : this.props.language;
+  };
 
+  successGetHandlerTranslates = (response) => {
+    // Translates object successfully fetched.
+
+    this.props.storeTranslates(response.data);
+    this.props.translatesLoaded();
+
+    const magic = localStorage.getItem("magic");
+    if (magic) {
+      // There is a magic in the local storage. A server call to fetch user settings implicitly checks if this is the correct magic.
+      this.getUserSettings();
+    } else {
+      // No magic in local storage.
+      // The default of the store variable 'authenticated' is 'false', so the login screen will appear.
+      this.props.magicChecked(true); // TODO: this can probably become local state instead of store state.
+                                     // Same goes for authenticateUser.
+    }
+  };
+
+  errorGetHandlerTranslates = (error) => {
+    // Translates object NOT successfully fetched.
+    console.log(error);
+  };
+
+  getUserSettings = () => {
+    // Make a serve call to fetch user settings.
+    const magic = localStorage.getItem("magic");
+    const submitData = { MAGIC: magic };
+    callServer('put', 'api.getMedewerkerInfo',
+      (response) => this.successHandlerGetUserInfo(response),
+      (error) => this.errorHandlerGetUserInfo(error), submitData);
+  };
+
+  successHandlerGetUserInfo = (response) => {
     // A successfull response from an api endpoint implicitly indicates that the magic is correct.
-    // this.props.setLoadUserSettings(false); // User settings have been loaded, do not load them again.
+
     this.props.authenticateUser(true); // This by-passes the login screen.
     this.props.magicChecked(true); // This by-passes the initial spinner.
 
     if (response.data.settings.language !== this.getLanguage()) {
-      console.log("USER LANG <> LOCAL LANG");
+      // User has another language configured than the current translates object, we have to fetch the translates object for this language.
       this.props.storeLanguage(response.data.settings.language);
       localStorage.setItem("language", response.data.settings.language);
       callServer('put', 'api.public.getTranslationTable?language=' + response.data.settings.language,
         (response) => this.successGetHandlerTranslatesReload(response),
         (error) => this.errorGetHandlerTranslatesReload);
     } else {
-      console.log("USER LANG = LOCAL LANG");
+      // User has the same language configured as the current translates object.
       this.props.translatesLoaded();
       this.props.storeLanguage(response.data.settings.language);
       localStorage.setItem("language", response.data.settings.language);
@@ -131,17 +127,19 @@ class App extends Component {
   };
 
   errorHandlerGetUserInfo = (error) => {
+    // Magic was not correct, the login screen will appear.
     this.props.magicChecked(true); // This by-passes the initial spinner.
     this.props.translatesLoaded();
   };
 
   successGetHandlerTranslatesReload = (response) => {
-console.log('successGetHandlerTranslatesReload');
+    // Second fetch of the translates object was succesfull, put it in the store.
     this.props.storeTranslates(response.data);
     this.props.translatesLoaded();
   };
 
   errorGetHandlerTranslatesReload = (error) => {
+    // Second fetch of the translates object was NOT succesfull.
     console.log(error);
   };
 
