@@ -11,6 +11,7 @@ import { Large, Medium, Small } from '../../../libs/responsive';
 import Aux from '../../../hoc/auxiliary';
 import { propercase, getDisplayValue } from '../../../libs/generic';
 import { callServer } from '../../../api/api';
+import * as icons from '../../../libs/icons';
 import * as trans from '../../../libs/translates';
 import classes from './screenParser.scss';
 
@@ -106,7 +107,7 @@ class Screen extends Component {
         <Button
           key={indexPane}
           color="success"
-          labelIcon="plus"
+          labelIcon={icons.ICON_PLUS}
           clicked={() => this.togglePane(pane.id)}
         />
       );
@@ -116,7 +117,7 @@ class Screen extends Component {
         <Button
             color="secondary"
             outline="true"
-            labelIcon="minus"
+            labelIcon={icons.ICON_MINUS}
             clicked={() => this.togglePane(pane.id)}
         />
       );

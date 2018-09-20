@@ -1,3 +1,4 @@
+import * as icons from '../../libs/icons';
 import * as trans from '../../libs/translates';
 
 const formConfig = {
@@ -10,7 +11,7 @@ const formConfig = {
 	size: 'ModalSmall',
 	title: trans.KEY_LOGIN,
 	titleAlign: 'Left', // default
-	titleIcon: 'sign-in-alt',
+	titleIcon: icons.ICON_SIGN_IN_ALT,
 	url: 'login',
 	inputs: {
 		login: {
@@ -68,9 +69,9 @@ const forgotPassword = () => {
 // Don't need this anymore, but leave it for reference. This function is triggered when clicking the checkbox of element type 'triggerFunctionCheckbox'.
 // const rememberPrevLogin = (event, configForm) => {
 // 	if (event.target.checked) {
-// 		localStorage.setItem("user", configForm.inputs.username.value);
+// 		localStorage.setItem('user', configForm.inputs.username.value);
 // 	} else {
-// 		localStorage.removeItem("user");
+// 		localStorage.removeItem('user');
 // 	}
 // };
 

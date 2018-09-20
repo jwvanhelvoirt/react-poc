@@ -18,6 +18,7 @@ import Button from '../button/button';
 import Label from '../label/label';
 import Aux from '../../../hoc/auxiliary'
 import { getDisplayValue } from '../../../libs/generic';
+import * as icons from '../../../libs/icons';
 import * as trans from '../../../libs/translates';
 import classes from './input.scss';
 
@@ -112,7 +113,7 @@ class Input extends Component {
           return (
             <div key={index} className={classes.Multiline}>
               <div className={classes.MultilineRemove} onClick={() => this.props.removeMultiValueItem(inputId, valueId)}>
-                <FontAwesomeIcon icon='times-circle' />
+                <FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} />
               </div>
               <div className={classes.DisplayValue}>{item[lookupFieldForDisplay]}</div>
             </div>

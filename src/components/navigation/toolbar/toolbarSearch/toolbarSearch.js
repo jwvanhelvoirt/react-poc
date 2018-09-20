@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as types from '../../../../store/actions';
+import * as icons from '../../../../libs/icons';
+import * as trans from '../../../../libs/translates';
 import { withRouter } from 'react-router-dom';
 import { getDisplayValue } from '../../../../libs/generic';
-import * as trans from '../../../../libs/translates';
 import classes from './toolbarSearch.scss';
 
 class ToolbarSearch extends Component {
@@ -51,7 +52,7 @@ class ToolbarSearch extends Component {
 
     return (
       <div className={classesCombinedSearchbar}>
-        <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon='times-circle' /></div>
+        <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} /></div>
         <input
           value={this.state.searchbarValue}
           onChange={(event) => {

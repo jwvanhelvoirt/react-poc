@@ -19,9 +19,9 @@ class Login extends Component {
     localStorage.setItem("magic", MAGIC);
 
     if (remember_login === 1) {
-      localStorage.setItem("user", login);
+      localStorage.setItem('user', login);
     } else {
-      localStorage.removeItem("user");
+      localStorage.removeItem('user');
     }
 
     this.props.authenticateUser(true); // This will re-render the app component and show the dashboard.

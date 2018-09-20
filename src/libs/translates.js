@@ -53,13 +53,6 @@ export const KEY_VALID_VALUE = 'KEY valide waarde';
 export const KEY_WARNING_CLOSE_FORM = 'KEY wijzigingen niet opgeslagen, toch sluiten ?';
 export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
 
-// export const KEY_XXX = 'KEY xxx';
-// export const KEY_XXX = 'KEY xxx';
-// export const KEY_XXX = 'KEY xxx';
-// export const KEY_XXX = 'KEY xxx';
-// export const KEY_XXX = 'KEY xxx';
-// export const KEY_XXX = 'KEY xxx';
-
 /*
  Labels die niet in api.public.getTranslationTable zitten:
 - KEY oplopend

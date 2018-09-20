@@ -17,6 +17,7 @@ import Avatar from '../../ui/avatar/avatar';
 import Timespan from '../../ui/timespan/timespan';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
+import * as icons from '../../../libs/icons';
 import * as trans from '../../../libs/translates';
 import classes from './viewParser.scss';
 
@@ -661,14 +662,14 @@ class _View extends Component {
     const columnConfig = viewConfig.showColumnConfigurator ?
       <div  onClick={() => this.onClickColumnConfiguratorHandler()}
             className={classes.ColumnConfigurator}>
-            <FontAwesomeIcon icon='ellipsis-v' />
+            <FontAwesomeIcon icon={icons.ICON_ELLIPSIS_V} />
       </div> : null;
 
     // Title bar: TEMPORARY TO DELETE ALL RECORDS FROM A COLLECTION, FOR TEST PURPOSES.
     // const deleteAll =
     //   <div onClick={() => this.deleteAll()}
     //        className={classes.ColumnConfigurator}>
-    //        <FontAwesomeIcon icon='trash' />
+    //        <FontAwesomeIcon icon={icons.ICON_TRASH} />
     //   </div>;
 
     // Title bar overall.
@@ -688,7 +689,7 @@ class _View extends Component {
     const showFilterAction = filterOptions && filterOptions.length > 0 && showFilter ? true : false;
     const filter = showFilterAction ?
       <div onClick={() => this.onClickFilterHandler()} data-tip="React-tooltip" data-for={trans.KEY_FILTER_ACTION}>
-        <FontAwesomeIcon icon='filter' />
+        <FontAwesomeIcon icon={icons.ICON_FILTER} />
         <ReactTooltip id={trans.KEY_FILTER_ACTION} place="bottom" type="dark" effect="solid">
           <Label labelKey={trans.KEY_FILTER_ACTION} convertType={'propercase'} />
         </ReactTooltip>
@@ -699,7 +700,7 @@ class _View extends Component {
     const showSortAction = sortOptions && sortOptions.options && sortOptions.options.length > 0 && showSort ? true : false;
     const sort = showSortAction ?
       <div onClick={() => this.onClickSortHandler()} data-tip="React-tooltip" data-for={trans.KEY_SORT_ACTION}>
-        <FontAwesomeIcon icon='sort' />
+        <FontAwesomeIcon icon={icons.ICON_SORT} />
         <ReactTooltip id={trans.KEY_SORT_ACTION} place="bottom" type="dark" effect="solid">
           <Label labelKey={trans.KEY_SORT_ACTION} convertType={'propercase'} />
         </ReactTooltip>
@@ -743,7 +744,7 @@ class _View extends Component {
     if (viewConfig.showSearchbar) {
       searchBar = (
         <div className={classesCombinedSearchbar}>
-          <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon='times-circle' /></div>
+          <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} /></div>
           <input
             value={this.state.searchbarValue}
             onChange={(event) => {
@@ -805,7 +806,7 @@ class _View extends Component {
             let sortIcon = <FontAwesomeIcon icon='sort' />;
             if (column.id === this.state.sortedColumn) {
               // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
-              sortIcon = this.state.sortOrder === 1 ? <FontAwesomeIcon icon='sort-up' /> : <FontAwesomeIcon icon='sort-down' />;
+              sortIcon = this.state.sortOrder === 1 ? <FontAwesomeIcon icon={icons.ICON_SORT_UP} /> : <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />;
             }
             const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
             const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
