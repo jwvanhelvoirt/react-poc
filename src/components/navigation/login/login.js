@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from '../../../store/constActions';
+import { authenticateUser, setLoadUserSettings, showUserInfo } from '../../../store/actions';
 import FormParser from '../../parsers/formParser/formParser';
 import formLogin from '../../../config/forms/configFormLogin';
 import classes from './login.scss';
@@ -70,9 +70,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
-    setLoadUserSettings: (loadUserSettings) => dispatch( {type: types.LOAD_USER_SETTINGS, loadUserSettings } ),
-    showUserInfo: (formShowUserInfo) => dispatch( {type: types.FORM_USER_INFO, formShowUserInfo } )
+    authenticateUser: (authenticate) => dispatch(authenticateUser(authenticate)),
+    setLoadUserSettings: (loadUserSettings) => dispatch(setLoadUserSettings(loadUserSettings)),
+    showUserInfo: (formShowUserInfo) => dispatch(showUserInfo(formShowUserInfo))
   }
 };
 

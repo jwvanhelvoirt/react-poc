@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as types from '../../../store/constActions';
+import { openMessageBox1, openMessageBox2, closeMessageBox1, closeMessageBox2 } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import Backdrop from '../backdrop/backdrop';
 import classes from './modal.scss';
@@ -77,10 +77,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_OPEN } ),
-    openMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_OPEN } ),
-    closeMessageBox1: () => dispatch( {type: types.MESSAGE_BOX1_CLOSE } ),
-    closeMessageBox2: () => dispatch( {type: types.MESSAGE_BOX2_CLOSE } )
+    openMessageBox1: () => dispatch(openMessageBox1()),
+    openMessageBox2: () => dispatch(openMessageBox2()),
+    closeMessageBox1: () => dispatch(closeMessageBox1()),
+    closeMessageBox2: () => dispatch(closeMessageBox2())
   };
 };
 

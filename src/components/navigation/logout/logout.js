@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../../store/constActions';
+import { authenticateUser } from '../../../store/actions';
 import * as routes from '../../../libs/constRoutes';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import { callServer } from '../../../api/api';
@@ -39,7 +39,7 @@ class Logout extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } )
+    authenticateUser: (authenticate) => dispatch(authenticateUser(authenticate))
   }
 };
 

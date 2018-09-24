@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../../store/constActions';
+import { storeLanguage } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import FormParser from '../../parsers/formParser/formParser';
@@ -76,7 +76,7 @@ class ModPersonalSettings extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } )
+    storeLanguage: (language) => dispatch(storeLanguage(language))
   }
 }
 

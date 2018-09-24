@@ -12,7 +12,7 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
-import * as types from '../../../store/constActions';
+import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId, touchForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import Input from '../../ui/input/input';
 import MessageBox from '../../ui/messageBox/messageBox';
@@ -369,11 +369,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    storeFormSubmitData: (formSubmitData) => dispatch( {type: types.FORM_SUBMIT_DATA_STORE, formSubmitData } ),
-    storeLookupListItems: (lookupListItems) => dispatch( {type: types.LOOKUP_LIST_ITEMS_STORE, lookupListItems } ),
-    storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch( {type: types.LOOKUP_LIST_ITEMS_SELECTED_STORE, lookupListItemsSelected } ),
-    storeLookupInputId: (lookupInputId) => dispatch( {type: types.LOOKUP_INPUT_ID_STORE, lookupInputId } ),
-    touchForm: () => dispatch( {type: types.FORM_TOUCH } )
+    storeFormSubmitData: (formSubmitData) => dispatch(storeFormSubmitData(formSubmitData)),
+    storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
+    storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch(storeLookupListItemsSelected(lookupListItemsSelected)),
+    storeLookupInputId: (lookupInputId) => dispatch(storeLookupInputId(lookupInputId)),
+    touchForm: () => dispatch(touchForm())
   }
 };
 

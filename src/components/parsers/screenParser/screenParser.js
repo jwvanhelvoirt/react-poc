@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
-import * as types from '../../../store/constActions';
+import { storeRoute } from '../../../store/actions';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
 import Button from '../../ui/button/button';
@@ -267,7 +267,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     // storeFollowUpScreenId: (followUpScreenData) => dispatch( {type: types.FOLLOW_UP_SCREEN_ID_STORE, followUpScreenData } ),
-    storeRoute: (route) => dispatch( {type: types.ROUTE_STORE, route } )
+    storeRoute: (route) => dispatch(storeRoute(route))
   }
 };
 

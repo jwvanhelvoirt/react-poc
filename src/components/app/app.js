@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as types from '../../store/constActions';
+import { authenticateUser, magicChecked, setLoadUserSettings, storeLanguage, storeTranslates, translatesLoaded } from '../../store/actions';
 import * as routes from '../../libs/constRoutes';
 import '../../assets/fontAwesome/fontAwesome';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
@@ -198,12 +198,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authenticateUser: (authenticate) => dispatch( {type: types.USER_AUTHENTICATE, authenticate } ),
-    magicChecked: (initMagicChecked) => dispatch( {type: types.INIT_MAGIC_CHECKED, initMagicChecked } ),
-    translatesLoaded: () => dispatch( {type: types.INIT_TRANSLATES_LOADED } ),
-    setLoadUserSettings: (loadUserSettings) => dispatch( {type: types.LOAD_USER_SETTINGS, loadUserSettings } ),
-    storeLanguage: (language) => dispatch( {type: types.TRANS_LANGUAGE_STORE, language } ),
-    storeTranslates: (translates) => dispatch( {type: types.TRANS_TRANSLATES_STORE, translates } )
+    authenticateUser: (authenticate) => dispatch(authenticateUser(authenticate)),
+    magicChecked: (initMagicChecked) => dispatch(magicChecked(initMagicChecked)),
+    setLoadUserSettings: (loadUserSettings) => dispatch(setLoadUserSettings(loadUserSettings)),
+    storeLanguage: (language) => dispatch(storeLanguage(language)),
+    storeTranslates: (translates) => dispatch(storeTranslates(translates)),
+    translatesLoaded: () => dispatch(translatesLoaded())
   }
 };
 

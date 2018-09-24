@@ -7,6 +7,7 @@ const initialState = {
   formTouched: false,
   initTranslatesLoaded: false,
   initMagicChecked: false,
+  language: 'en_US',
   loadUserSettings: false,
   lookupListItems: [],
   lookupListItemsSelected: [],
@@ -17,7 +18,6 @@ const initialState = {
   searchTextOverall: '',
   showModalLookup: false,
   sortItem: '',
-  language: 'en_US',
   translates: {}
 };
 

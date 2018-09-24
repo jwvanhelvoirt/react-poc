@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import * as types from '../../../../store/constActions';
+import { onSearch } from '../../../../store/actions';
 import * as icons from '../../../../libs/constIcons';
 import * as trans from '../../../../libs/constTranslates';
 import { withRouter } from 'react-router-dom';
@@ -75,7 +75,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSearch: (searchbarValue) => dispatch( {type: types.SEARCHTEXT_OVERALL_STORE, searchbarValue } )
+    onSearch: (searchbarValue) => dispatch(onSearch(searchbarValue))
   }
 };
 
