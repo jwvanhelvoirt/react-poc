@@ -9,7 +9,7 @@ import Button from '../../ui/button/button';
 import Label from '../../ui/label/label';
 import { Large, Medium, Small } from '../../../libs/responsive';
 import Aux from '../../../hoc/auxiliary';
-import { propercase, getDisplayValue } from '../../../libs/generic';
+import { getDisplayValue } from '../../../libs/generic';
 import { callServer } from '../../../api/api';
 import * as icons from '../../../libs/constIcons';
 import * as trans from '../../../libs/constTranslates';

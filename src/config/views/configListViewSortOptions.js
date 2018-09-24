@@ -3,7 +3,7 @@ import * as trans from '../../libs/constTranslates';
 const listViewConfig = {
   columns: [
     {
-      id: 'label',
+      content: 'label',
       label: trans.KEY_SORT,
       displayOn: 'always',
       show: true,

@@ -5,6 +5,18 @@ const avatar = (props) => {
 
   const { size, foto, name } = props;
 
+  /*
+  ES6 destructuring vs non-destructuring.
+
+  const { size, foto, name } = props;
+
+  versus
+
+  const size = props.size;
+  const foto = props.foto;
+  const name = props.name;
+  */
+
   let avatarSize = 48;
   if (size === 'AvatarMedium') {
     avatarSize = 32;

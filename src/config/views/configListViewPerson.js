@@ -3,7 +3,7 @@ import * as trans from '../../libs/constTranslates';
 const listViewConfig = {
   columns: [
     {
-      id: 'foto',
+      content: 'foto',
       label: '',
       sort: false,
       displayOn: 'always',
@@ -13,15 +13,47 @@ const listViewConfig = {
       avatarName: 'naam'
     },
     {
-      id: 'naam',
+      content1: 'naam',
+      content: {
+        lines: [
+          {
+            lineData: [
+              { type: 'prop', value: 'completenaam' }
+            ]
+          },
+          {
+            lineData: [
+              { type: 'prop', value: 'email', classes: ['smallFont', 'preSpace'] }
+            ]
+          },
+          {
+            lineData: [
+              { type: 'prop', value: 'tel', classes: ['smallFont', 'preSpace'] }
+            ]
+          }
+        ]
+      },
       label: trans.KEY_NAME,
       sort: true,
+      sortOn: 'naam',
       displayOn: 'always',
       show: true,
       size: 'Flex40'
     },
     {
-      id: 'niveau4',
+      content1: 'niveau4',
+      content: {
+        lines: [
+          {
+            lineData: [
+              { type: 'prop', value: 'niveau4' },
+              { type: 'string', value: '(', classes: ['preSpace'] },
+              { type: 'prop', value: 'niveau4debiteurnr' },
+              { type: 'string', value: ')' },
+            ]
+          }
+        ]
+      },
       label: trans.KEY_ORGANISATION,
       sort: false,
       displayOn: 'always',
@@ -59,3 +91,61 @@ const listViewConfig = {
 };
 
 export default listViewConfig;
+
+
+
+/*
+
+
+// Multiline:
+{
+  lines: [
+    {
+      lineData: [
+        { type: 'prop', value: 'completenaam' }
+      ]
+    },
+    {
+      lineData: [
+        { type: 'prop', value: 'email', size: 'small' }
+      ]
+    },
+    {
+      lineData: [
+        { type: 'prop', value: 'tel', size: 'small' }
+      ]
+    }
+  ]
+}
+
+
+// Concatenated items on one line:
+{
+  lines: [
+    {
+      lineData: [
+        { type: 'prop', value: 'niveau4' },
+        { type: 'string', value: '(', preSpace: true },
+        { type: 'prop', value: 'niveau4debiteurnr' },
+        { type: 'string', value: ')' },
+      ]
+    }
+  ]
+}
+
+
+
+// How it is now:
+  id: 'niveau4',
+  label: trans.KEY_ORGANISATION,
+  sort: false,
+  displayOn: 'always',
+  show: true,
+  size: 'Flex40'
+}
+
+
+In de view parser gaat het alleen om column.id, daar moet de aanpassing plaatsvinden
+Voor het sorteren wordt nu ook column.id gebruikt, dat wil ik vervangen door column.sortOn
+
+*/

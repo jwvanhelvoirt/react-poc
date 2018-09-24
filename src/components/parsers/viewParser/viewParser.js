@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import * as types from '../../../store/constActions';
@@ -13,8 +13,7 @@ import Spinner from '../../ui/spinners/spinner/spinner';
 import Modal from '../../ui/modal/modal';
 import MessageBox from '../../ui/messageBox/messageBox';
 import Label from '../../ui/label/label';
-import Avatar from '../../ui/avatar/avatar';
-import Timespan from '../../ui/timespan/timespan';
+import Rows from '../../view/rows/rows';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
 import * as icons from '../../../libs/constIcons';
@@ -804,13 +803,13 @@ class _View extends Component {
         {
           columnsVisible.map((column, index) => {
             let sortIcon = <FontAwesomeIcon icon='sort' />;
-            if (column.id === this.state.sortedColumn) {
+            if (column.sortOn === this.state.sortedColumn) {
               // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
               sortIcon = this.state.sortOrder === 1 ? <FontAwesomeIcon icon={icons.ICON_SORT_UP} /> : <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />;
             }
             const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
             const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
-            const onColumn = column.sort ? () => this.sortOnColumn(column.id) : null;
+            const onColumn = column.sort ? () => this.sortOnColumn(column.sortOn) : null;
             const classesCombinedHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
             return(
               <div key={index} onClick={onColumn} className={classesCombinedHeader}>
@@ -839,94 +838,22 @@ class _View extends Component {
         {headerBar}
       </div> : null;
 
-    // Listitems.
-    let listItems = <div className={classes.Row}>Geen documenten gevonden.</div>;
-    if (this.state.listItems.length > 0) {
-      listItems = this.state.listItems.map((listItem, index) => {
-        // In case the listItem has been edited during this client session, it gets additional styling.
-        const classesCombinedListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
-
-        // Is it a radio or a checkbox?
-        let classesCombinedSelected = null;
-        if (this.state.selectedListItems.indexOf(listItem.id) ===  -1) {
-          if (multiSelect) {
-            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone].join(' ');
-          } else {
-            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.Radio].join(' ');
-          }
-        } else {
-          if (multiSelect) {
-            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.RowSelected].join(' ');
-          } else {
-            classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.RowSelected, classes.Radio].join(' ');
-          }
-        }
-
-        let listItemsFixedSelect = null;
-        if (row && row.selectable && !(this.props.route && this.props.route.length > 0 && viewConfig.routeView !== false)) {
-          // Only if the row is selectable, we print the 'checkbox' to select/deselect a listItems or 'radio' to select an item.
-          listItemsFixedSelect = <div className={classesCombinedSelected}></div>;
-        }
-
-        // Header bar: fixed columns menu.
-        let listItemsFixedMenu = <div className={classes.Fixed0}></div>;
-        if (row && row.menu) {
-          // Only if the row contains a click menu, we print a div in the row to align equally with the listItems.
-          listItemsFixedMenu = <div className={classes.Fixed2}></div>;
-        }
-
-        // Header bar: fixed columns overall.
-        const listItemsFixed =
-          <div className={classes.Fixed}>
-            {listItemsFixedSelect}
-            {listItemsFixedMenu}
-          </div>
-
-        // Only onDoubleClick event in case of mulitple selection of rows and NOT a lookup context.
-        const doubleClick = (multiSelect && !this.props.lookup) ? () => this.onClickItemHandler(listItem.id) : null;
-
-        const listItemDiv = (
-          <div className={classesCombinedListItem}
-            onClick={(event) => this.toggleRowHandler(listItem.id)}
-            onDoubleClick={doubleClick}>
-            {listItemsFixed}
-            <div className={classes.Flex}>
-              {
-                columnsVisible.map((column, index) => {
-                  let listItemColumnContent = null;
-                  switch (column.contentType) {
-                    case 'avatar':
-                      listItemColumnContent = <Avatar size={column.size} foto={listItem[column.id]} name={listItem[column.avatarName]} />
-                      break;
-                    case 'timespan':
-                      listItemColumnContent = <Timespan size={column.size} start={listItem[column.data.start]} end={listItem[column.data.end]} />;
-                      break;
-                    default:
-                      listItemColumnContent = listItem[column.id];
-                  };
-
-                  return <div key={index} className={classes[column.size]}>{listItemColumnContent}</div>;
-                })
-              }
-            </div>
-          </div>
-        );
-
-        let listItemPrint = <Aux>{listItemDiv}</Aux>;
-        // Check if we should display a new screen when clicking on a row.
-        if (this.props.route && this.props.route.length > 0 && viewConfig.routeView !== false) {
-          listItemPrint = (
-            <Link to={this.props.match.url + '/' + this.props.route + '/' + listItem.id} key={index}>
-              {listItemDiv}
-            </Link>
-          );
-        }
-
-        return(
-          <Aux key={index}>{listItemPrint}</Aux>
-        );
-      });
-    }
+    // ListItems.
+    let listItems = (
+      <Rows
+        listItems={this.state.listItems}
+        selectedListItems={this.state.selectedListItems}
+        row={row}
+        route={this.props.route}
+        routeView={viewConfig.routeView}
+        multiSelect={multiSelect}
+        lookup={this.props.lookup}
+        onClickItemHandler={this.onClickItemHandler}
+        toggleRowHandler={this.toggleRowHandler}
+        columnsVisible={columnsVisible}
+        currentUrl={this.props.match.url}
+      />
+    );
 
     // In case the listItems are still fetched, we display a spinner.
     if (this.state.loading) {

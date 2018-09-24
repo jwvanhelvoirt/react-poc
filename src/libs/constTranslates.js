@@ -28,6 +28,7 @@ export const KEY_LOGOUT = 'KEY uitloggen';
 export const KEY_MENU = 'KEY menu';
 export const KEY_NAME = 'KEY naam';
 export const KEY_NEW = 'KEY nieuw';
+export const KEY_NO_RESULTS_FOUND = 'KEY geen resultaten gevonden';
 export const KEY_NR = 'KEY nummer';
 export const KEY_OF = 'KEY van';
 export const KEY_OK = 'KEY ok';
@@ -53,6 +54,8 @@ export const KEY_USERNAME = 'KEY gebruikersnaam';
 export const KEY_VALID_VALUE = 'KEY valide waarde';
 export const KEY_WARNING_CLOSE_FORM = 'KEY wijzigingen niet opgeslagen, toch sluiten ?';
 export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
+
+
 
 /*
  Labels die niet in api.public.getTranslationTable zitten:

@@ -3,7 +3,7 @@ import * as trans from '../../libs/constTranslates';
 const listViewConfig = {
   columns: [
     {
-      id: 'foto',
+      content: 'foto',
       label: '',
       sort: false,
       displayOn: 'always',
@@ -13,25 +13,28 @@ const listViewConfig = {
       avatarName: 'naam'
     },
     {
-      id: 'code',
+      content: 'code',
       label: trans.KEY_NAME,
       sort: true,
+      sortOn: 'code',
       displayOn: 'always',
       show: true,
       size: 'Flex40'
     },
     {
-      id: 'niveau4',
+      content: 'niveau4',
       label: trans.KEY_ORGANISATION,
       sort: true,
+      sortOn: 'niveau4',
       displayOn: 'always',
       show: true,
       size: 'Flex40'
     },
     {
-      id: 'start',
+      content: 'start',
       label: trans.KEY_PERIOD,
       sort: true,
+      sortOn: 'start',
       displayOn: 'always',
       show: true,
       contentType: 'timespan',

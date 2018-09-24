@@ -3,17 +3,19 @@ import * as trans from '../../libs/constTranslates';
 const listViewConfig = {
   columns: [
     {
-      id: 'naam',
+      content: 'naam',
       label: trans.KEY_NAME,
       sort: true,
+      sortOn: 'naam',
       displayOn: 'always',
       show: true,
       size: 'Flex80'
     },
     {
-      id: 'eind',
+      content: 'eind',
       label: trans.KEY_DATE,
       sort: true,
+      sortOn: 'eind',
       displayOn: 'always',
       show: true,
       size: 'Flex20'

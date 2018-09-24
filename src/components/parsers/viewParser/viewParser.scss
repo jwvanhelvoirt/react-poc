@@ -198,67 +198,62 @@
   margin-left: 5px;
 }
 
-.Row {
-  padding: 8px 0 8px 10px;
-  display: flex;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-}
 
-.Row:hover {
-  background-color: #eee;
-  color: inherit;
-}
 
-.RowEdit {
-  background-color: #28a745;
-  color: white;
-}
 
-.RowSelectZone, .HeaderSelectZone {
+
+
+
+
+/*SAME CSS AS RowSelectZone in view.scss*/
+.HeaderSelectZone {
   border: 1px solid #bbb;
   width: 12px;
   height: 12px;
 }
 
-.RowSelected, .HeaderSelected {
+/*SAME CSS AS RowSelected in view.scss*/
+.HeaderSelected {
   background-color: #dc3545;
 }
 
-.Radio {
-  border-radius: 30px;
-}
-
+/*SAME CSS as in view.scss*/
 .Fixed {
   display: flex;
   align-items: center;
 }
 
+/*SAME CSS as in view.scss*/
 .Flex {
   width: 100%;
   display: flex;
   align-items: center;
 }
 
+/*SAME CSS as in view.scss*/
 .Flex>*, .Title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/*ALL Fixed classes SAME AS IN  in view.scss*/
 .Fixed0 {
   width: 8px;
   min-width: 8px;
 }
+
 .Fixed1 {
   width: 12px;
   min-width: 12px;
 }
+
 .Fixed2 {
   width: 26px;
   min-width: 26px;
 }
 
+/*ALL Flex classes SAME AS IN  in view.scss*/
 .Flex10 {
   width: 10%;
 }
@@ -290,6 +285,7 @@
   width: 100%;
 }
 
+/*ALL Avatar classes SAME AS IN  in view.scss*/
 .AvatarLarge {
   color: white;
   min-width: 56px;
@@ -308,6 +304,7 @@
   font-size: 12px;
 }
 
+/*ALL Timespan classes SAME AS IN  in view.scss*/
 .TimespanLarge {
   min-width: 210px;
 }
@@ -320,14 +317,18 @@
   min-width: 110px;
 }
 
+/* Not implemented yet
 .ShowOnHover {
   display: none;
 }
+*/
 
+/*ALL SAME AS IN  in view.scss*/
 .Small {
   flex-grow: 1;
 }
 
+/*ALL SAME AS IN  in view.scss*/
 .Medium {
   flex-grow: 2;
 }

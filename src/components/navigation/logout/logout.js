@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as types from '../../../store/constActions';
+import * as routes from '../../../libs/constRoutes';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import { callServer } from '../../../api/api';
 
@@ -19,7 +20,7 @@ class Logout extends Component {
   successGetHandler = (response) => {
     console.log(response);
     localStorage.removeItem('magic');
-    this.props.history.replace('/login');
+    this.props.history.replace(routes.ROUTE_LOGIN);
     this.props.authenticateUser(false);
   };
 
