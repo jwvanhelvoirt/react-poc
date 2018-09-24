@@ -16,9 +16,8 @@ const userInfo = (props) => {
 };
 
 const mapStateToProps = state => {
-  return {
-    formShowUserInfo: state.redMain.formShowUserInfo
-  };
+  const { formShowUserInfo } = state.redMain;
+  return { formShowUserInfo };
 };
 
 export default connect(mapStateToProps)(userInfo);

@@ -166,9 +166,8 @@ class Input extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    translates: state.redMain.transTranslates
-  };
+  const { translates } = state.redMain;
+  return { translates };
 };
 
 export default connect(mapStateToProps)(Input);

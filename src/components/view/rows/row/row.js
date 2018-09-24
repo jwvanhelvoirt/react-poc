@@ -74,34 +74,12 @@ const row = (props) => {
                   listItemColumnContent = listItem[column.content];
                 } else {
                   // Printing concatenated attributes or multiple lines.
+
                   // Loop through all lines.
-
-                  // listItemColumnContent = (
-                  //   <Aux>
-                  //     <div>
-                  //       <span className={classes.smallFont}>KLM Health Services</span>
-                  //       <span className={[classes.preSpace, classes.smallFont].join(' ')}>(</span>
-                  //       <span className={classes.smallFont}>14747</span>
-                  //       <span className={classes.smallFont}>)</span>
-                  //     </div>
-                  //     <div>
-                  //       <span>KLM Health Services</span>
-                  //       <span className={classes.preSpace}>(</span>
-                  //       <span>14747</span>
-                  //       <span>)</span>
-                  //     </div>
-                  //     <div>
-                  //       <span className={classes.largeFont}>KLM Health Services</span>
-                  //       <span className={[classes.preSpace, classes.largeFont].join(' ')}>(</span>
-                  //       <span className={classes.largeFont}>14747</span>
-                  //       <span className={classes.largeFont}>)</span>
-                  //     </div>
-                  //   </Aux>
-                  // );
-
                   listItemColumnContent = column.content.lines.map((line, index) => {
+
                     // Loop through all parts of data to be printed on a single line.
-                    const lineParts = line.lineData.map((part, i) => {
+                    const lineParts = line.lineData.map((part, index) => {
                       let additionalClasses = null;
                       if (part.classes) {
                         const arrayAdditionalClasses = part.classes.map((className) => {
@@ -112,16 +90,14 @@ const row = (props) => {
 
                       switch (part.type) {
                         case 'prop':
-                          return <span key={i} className={additionalClasses}>{listItem[part.value]}</span>;
+                          return <span key={index} className={additionalClasses}>{listItem[part.value]}</span>;
                         default:
-                          return <span key={i} className={additionalClasses}>{part.value}</span>;
+                          return <span key={index} className={additionalClasses}>{part.value}</span>;
                       }
                     });
 
                     return <div key={index}>{lineParts}</div>
                   });
-
-
 
                 }
             };

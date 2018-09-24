@@ -260,9 +260,8 @@ class Screen extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    translates: state.redMain.transTranslates
-  };
+  const { translates } = state.redMain;
+  return { translates };
 };
 
 const mapDispatchToProps = dispatch => {

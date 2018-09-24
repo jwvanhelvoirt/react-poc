@@ -22,9 +22,8 @@ const label = (props) => {
 };
 
 const mapStateToProps = state => {
-  return {
-    translates: state.redMain.transTranslates
-  };
+  const { translates } = state.redMain;
+  return { translates };
 };
 
 export default connect(mapStateToProps)(label);

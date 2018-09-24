@@ -71,10 +71,8 @@ class Modal extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    messageBox1: state.redMain.messageBox1,
-    messageBox2: state.redMain.messageBox2
-  };
+  const { messageBox1, messageBox2 } = state.redMain;
+  return { messageBox1, messageBox2 };
 };
 
 const mapDispatchToProps = dispatch => {

@@ -883,12 +883,8 @@ class _View extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    formTouched: state.redMain.formTouched,
-    route: state.redMain.route,
-    sortItem: state.redMain.sortItem,
-    translates: state.redMain.transTranslates
-  };
+  const { formTouched, route, sortItem, translates } = state.redMain;
+  return { formTouched, route, sortItem, translates };
 };
 
 const mapDispatchToProps = dispatch => {

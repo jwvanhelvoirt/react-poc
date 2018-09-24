@@ -13,7 +13,6 @@ const listViewConfig = {
       avatarName: 'naam'
     },
     {
-      content1: 'naam',
       content: {
         lines: [
           {
@@ -23,12 +22,12 @@ const listViewConfig = {
           },
           {
             lineData: [
-              { type: 'prop', value: 'email', classes: ['smallFont', 'preSpace'] }
+              { type: 'prop', value: 'email', classes: ['smallFont'] }
             ]
           },
           {
             lineData: [
-              { type: 'prop', value: 'tel', classes: ['smallFont', 'preSpace'] }
+              { type: 'prop', value: 'tel', classes: ['smallFont'] }
             ]
           }
         ]
@@ -41,7 +40,6 @@ const listViewConfig = {
       size: 'Flex40'
     },
     {
-      content1: 'niveau4',
       content: {
         lines: [
           {

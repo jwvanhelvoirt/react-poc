@@ -64,10 +64,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    formSubmitData: state.redMain.formSubmitData,
-    language: state.redMain.transLanguage
-  };
+  const { formSubmitData, language } = state.redMain;
+  return { formSubmitData, language };
 };
 
 const mapDispatchToProps = dispatch => {

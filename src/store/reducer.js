@@ -17,8 +17,8 @@ const initialState = {
   searchTextOverall: '',
   showModalLookup: false,
   sortItem: '',
-  transLanguage: 'en_US',
-  transTranslates: {}
+  language: 'en_US',
+  translates: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -137,13 +137,13 @@ const reducer = (state = initialState, action) => {
     case types.TRANS_LANGUAGE_STORE: // Language of the interface.
       return {
         ...state,
-        transLanguage: action.language
+        language: action.language
       };
 
     case types.TRANS_TRANSLATES_STORE: // Object with key/value pairs for the interface language.
       return {
         ...state,
-        transTranslates: action.translates
+        translates: action.translates
       };
 
     case types.USER_AUTHENTICATE: // Is the user authenticated or not?.

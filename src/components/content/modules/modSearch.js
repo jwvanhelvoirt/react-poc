@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 class ModSearch extends Component {
   render = () => {
     return (
-      <div>Zoekresultaten voor : {this.props.searchText}</div>
+      <div>Zoekresultaten voor : {this.props.searchTextOverall}</div>
     );
   };
 }
 
 const mapStateToProps = state => {
-  return {
-    searchText: state.redMain.searchTextOverall
-  };
+  const { searchTextOverall } = state.redMain;
+  return { searchTextOverall };
 };
 
 export default connect(mapStateToProps)(ModSearch);

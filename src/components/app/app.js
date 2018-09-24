@@ -192,13 +192,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    authenticated: state.redMain.authenticated,
-    initTranslatesLoaded: state.redMain.initTranslatesLoaded,
-    initMagicChecked: state.redMain.initMagicChecked,
-    language: state.redMain.transLanguage,
-    loadUserSettings: state.redMain.loadUserSettings
-  };
+  const { authenticated, initTranslatesLoaded, initMagicChecked, language, loadUserSettings } = state.redMain;
+  return { authenticated, initTranslatesLoaded, initMagicChecked, language, loadUserSettings };
 };
 
 const mapDispatchToProps = dispatch => {

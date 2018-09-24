@@ -363,11 +363,8 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    lookupListItems: state.redMain.lookupListItems,
-    lookupListItemsSelected: state.redMain.lookupListItemsSelected,
-    lookupInputId: state.redMain.lookupInputId
-  };
+  const { lookupListItems, lookupListItemsSelected, lookupInputId } = state.redMain;
+  return { lookupListItems, lookupListItemsSelected, lookupInputId };
 };
 
 const mapDispatchToProps = dispatch => {
