@@ -23,9 +23,7 @@ class Screen extends Component {
     // Store active tabs per pane in an object.
     const activeTabs = {};
     this.props.screenConfig.panes.forEach((pane) => {
-      pane.blocks.forEach((block) => {
-        activeTabs[block.id] = block.activeTab;
-      });
+      activeTabs[pane.content.id] = pane.content.activeTab;
     });
 
     this.state = {
@@ -130,92 +128,92 @@ class Screen extends Component {
 
       if (pane.show) {
         // Pane is NOT hidden ('toggleable' panes can be in 'display mode' or 'hide mode').
-        html = pane.blocks.map((block, indexBlock) => {
-          // Check if we should display a breadcrumb zone instead of a tab zone.
-          if (this.state.screenConfig.showTabs === false) {
-            // Show breadcrumb.
 
-            // First breadcrumb is a link to the dashboard.
-            let breadcrumb = (
-              <NavLink to='/dashboard'>
-                  <Label labelKey={trans.KEY_HOME} convertType={'propercase'} />
-              </NavLink>
-            );
+        // Check if we should display a breadcrumb zone instead of a tab zone.
+        if (this.state.screenConfig.showTabs === false) {
+          // Show breadcrumb.
 
-            // Via the URL we calculate the other breadcrumbs.
-            // The URL might have params in it, for instance /project/document/5b7fb7c6495a102ff856dc3
-            // The path of such URL might be something like: /project/document/:id
-            // The :id part and it's predecessor are treated as ONE breadcrumb.
-            let prevItem = '';
-            let arrayUrlParts = [];
-            let lastItem = '';
+          // First breadcrumb is a link to the dashboard.
+          let breadcrumb = (
+            <NavLink to='/dashboard'>
+                <Label labelKey={trans.KEY_HOME} convertType={'propercase'} />
+            </NavLink>
+          );
 
-            this.props.match.path.split('/').forEach((item) => {
+          // Via the URL we calculate the other breadcrumbs.
+          // The URL might have params in it, for instance /project/document/5b7fb7c6495a102ff856dc3
+          // The path of such URL might be something like: /project/document/:id
+          // The :id part and it's predecessor are treated as ONE breadcrumb.
+          let prevItem = '';
+          let arrayUrlParts = [];
+          let lastItem = '';
 
-              if (prevItem) {
-                if (item.indexOf(':') === 0) {
-                  const param = item.replace(':', '');
-                  breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param);
-                } else {
-                  breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts);
-                }
+          this.props.match.path.split('/').forEach((item) => {
+
+            if (prevItem) {
+              if (item.indexOf(':') === 0) {
+                const param = item.replace(':', '');
+                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param);
+              } else {
+                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts);
               }
-
-              if (item) {
-                lastItem = prevItem = item.indexOf(':') === 0 ? '' : item;
-                arrayUrlParts.push(item);
-              }
-
-            });
-
-            if (lastItem) {
-              breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts);
             }
 
-            // Print identifying data from the row selected in the previous screen or not.
-            const followUpScreenData = this.state.followUpScreenData ?
-              <span>{' (' + this.state.followUpScreenData + ')'}</span> :
-              null;
+            if (item) {
+              lastItem = prevItem = item.indexOf(':') === 0 ? '' : item;
+              arrayUrlParts.push(item);
+            }
 
-            // Print breadcrumb zone.
-            upperZone = (
-              <div className={classes.Header}>
-                <div>{breadcrumb}</div>
-                {followUpScreenData}
-              </div>
-            );
-          } else {
-            // Show tab bar
+          });
 
-            // Get all tabs for this pane.
-            const links = getTabRow(this.state.activeTabs[block.id], block.tabs, block.id, this);
-
-            // Should we show the toggle hide button?
-            const toggle = pane.toggle ? buttonHide : "";
-
-            // The tab bar.
-            upperZone = (
-              <div className={classes.TabBar}>
-                {toggle}
-                <Nav tabs>{links}</Nav>
-              </div>
-            );
-
+          if (lastItem) {
+            breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts);
           }
 
-          // Get the content of the active tab (in breadcrumb modus there's the one tab is always active).
-          const content = getTabComponent(this.state.activeTabs[block.id], block.tabs);
+          // Print identifying data from the row selected in the previous screen or not.
+          const followUpScreenData = this.state.followUpScreenData ?
+            <span>{' (' + this.state.followUpScreenData + ')'}</span> :
+            null;
 
-          // Return html for this pane.
-          return (
-            <div key={indexBlock} className={classes.Pane}>
-              {upperZone}
-              <div className={classes.ListviewContainer}>
-                {content}
-              </div>
+          // Print breadcrumb zone.
+          upperZone = (
+            <div className={classes.Header}>
+              <div>{breadcrumb}</div>
+              {followUpScreenData}
             </div>
           );
-        });
+        } else {
+          // Show tab bar
+
+          // Get all tabs for this pane.
+          const links = getTabRow(this.state.activeTabs[pane.content.id], pane.content.tabs, pane.content.id, this);
+
+          // Should we show the toggle hide button?
+          const toggle = pane.toggle ? buttonHide : "";
+
+          // The tab bar.
+          upperZone = (
+            <div className={classes.TabBar}>
+              {toggle}
+              <Nav tabs>{links}</Nav>
+            </div>
+          );
+
+        }
+
+        // Get the content of the active tab (in breadcrumb modus there's the one tab is always active).
+        const content = getTabComponent(this.state.activeTabs[pane.content.id], pane.content.tabs);
+
+        // Return html for this pane.
+        html = (
+          <div className={classes.Pane}>
+            {upperZone}
+            <div className={classes.ListviewContainer}>
+              {content}
+            </div>
+          </div>
+        );
+
       }
 
       // Wrap the pane html in a div with a special class.

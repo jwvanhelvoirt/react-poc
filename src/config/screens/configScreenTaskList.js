@@ -15,15 +15,13 @@ export const screenConfig = {
       displayLarge: true,
       toggle: false,
       show: true,
-      blocks: [
-        {
-          id: 'pane1',
-          tabs: [
-            { id: 'taskList', label: trans.KEY_TASK, component: <View viewConfig={viewConfig} /> }
-          ],
-          activeTab: 'taskList'
-        }
-      ]
+      content: {
+        id: 'pane1',
+        tabs: [
+          { id: 'taskList', label: trans.KEY_TASK, component: <View viewConfig={viewConfig} /> }
+        ],
+        activeTab: 'taskList'
+      }
     }
   ]
 };
