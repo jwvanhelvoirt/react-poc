@@ -18,7 +18,6 @@ class Logout extends Component {
 
   // Successfully logged out.
   successGetHandler = (response) => {
-    console.log(response);
     localStorage.removeItem('magic');
     this.props.history.replace(routes.ROUTE_LOGIN);
     this.props.authenticateUser(false);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { storeLookupInputId, storeLookupListItems, storeLookupListItemsSelected, storeSortItem, touchedForm } from '../../../store/actions';
+import { authenticateUser, storeLookupInputId, storeLookupListItems, storeLookupListItemsSelected, storeSortItem, touchedForm } from '../../../store/actions';
 import _ from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import ReactTooltip from 'react-tooltip';
@@ -17,6 +17,7 @@ import Rows from '../../view/rows/rows';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
 import * as icons from '../../../libs/constIcons';
+import * as routes from '../../../libs/constRoutes';
 import * as trans from '../../../libs/constTranslates';
 import classes from './viewParser.scss';
 
@@ -227,6 +228,15 @@ class _View extends Component {
     // List items NOT successfully loaded, show the error in a modal.
     // Remove the spinner.
     this.setState({ loading: false });
+
+    switch (error.response.status) {
+      case 401: // Unauthorized. Login failed.
+        // User not authenticated anymore, MAGIC probabbly expired, show the login screen again.
+        localStorage.removeItem('magic');
+        this.props.authenticateUser(false);
+        break;
+      default:
+    };
   };
 
   /**
@@ -889,6 +899,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    authenticateUser: (authenticate) => dispatch(authenticateUser(authenticate)),
     touchedForm: (formTouched) => dispatch(touchedForm(formTouched)),
     storeSortItem: (sortItem) => dispatch(storeSortItem(sortItem)),
     storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
