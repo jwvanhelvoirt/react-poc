@@ -50,16 +50,10 @@ const reducer = (state = initialState, action) => {
         formSubmitData: action.formSubmitData
       };
 
-    case types.FORM_TOUCH: // Form is touched by the user.
+    case types.FORM_TOUCHED: // Form is touched by the user yes or no.
       return {
         ...state,
-        formTouched: true
-      };
-
-    case types.FORM_UNTOUCH: // Form is untouched again.
-      return {
-        ...state,
-        formTouched: false
+        formTouched: action.formTouched
       };
 
     case types.FORM_USER_INFO: // Show user info message in a form yes or no.

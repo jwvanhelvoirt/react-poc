@@ -12,7 +12,7 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
-import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId, touchForm } from '../../../store/actions';
+import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId, touchedForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import Input from '../../ui/input/input';
 import MessageBox from '../../ui/messageBox/messageBox';
@@ -118,7 +118,7 @@ class Form extends Component {
 
   inputChangedHandler = (event, id) => {
     // Set the state 'formTouched' in the store to 'true'.
-    this.props.touchForm(); // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
+    this.props.touchedForm(true); // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
 
     const clone = cloneDeep(this.state.configForm);
     const updatedFormInputs = clone.inputs;
@@ -269,7 +269,7 @@ class Form extends Component {
       this.setState({ configForm: clone, isValidForm });
 
       // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
-      this.props.touchForm();
+      this.props.touchedForm(true);
     }
 
     // Close the lookup selection.
@@ -373,7 +373,7 @@ const mapDispatchToProps = dispatch => {
     storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch(storeLookupListItemsSelected(lookupListItemsSelected)),
     storeLookupInputId: (lookupInputId) => dispatch(storeLookupInputId(lookupInputId)),
-    touchForm: () => dispatch(touchForm())
+    touchedForm: (formTouched) => dispatch(touchedForm(formTouched))
   }
 };
 

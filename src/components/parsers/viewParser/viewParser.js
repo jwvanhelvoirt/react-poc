@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { storeLookupInputId, storeLookupListItems, storeLookupListItemsSelected, storeSortItem, untouchForm } from '../../../store/actions';
+import { storeLookupInputId, storeLookupListItems, storeLookupListItemsSelected, storeSortItem, touchedForm } from '../../../store/actions';
 import _ from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
 import ReactTooltip from 'react-tooltip';
@@ -165,7 +165,7 @@ class _View extends Component {
       this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_CLOSE], 'warning', content, 'butOkCancel',
          () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
     } else {
-      this.props.untouchForm();
+      this.props.touchedForm(false);
       this.setState({ loadedListItem: null, configForm: { ...this.props.viewConfig.relatedForm } });
     }
   };
@@ -889,7 +889,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    untouchForm: () => dispatch(untouchForm()),
+    touchedForm: (formTouched) => dispatch(touchedForm(formTouched)),
     storeSortItem: (sortItem) => dispatch(storeSortItem(sortItem)),
     storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch(storeLookupListItemsSelected(lookupListItemsSelected)),

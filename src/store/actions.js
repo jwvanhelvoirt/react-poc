@@ -115,22 +115,16 @@ export const storeSortItem = (sortItem) => {
   };
 };
 
-export const touchForm = () => {
+export const touchedForm = (formTouched) => {
   return {
-    type: types.FORM_TOUCH
+    type: types.FORM_TOUCHED,
+    formTouched
   };
 };
-
 
 export const translatesLoaded = () => {
   return {
     type: types.INIT_TRANSLATES_LOADED
-  };
-};
-
-export const untouchForm = () => {
-  return {
-    type: types.FORM_UNTOUCH
   };
 };
 

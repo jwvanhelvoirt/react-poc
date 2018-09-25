@@ -1,8 +1,7 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
 export const FORM_SUBMIT_DATA_STORE = 'FORM_SUBMIT_DATA_STORE';
-export const FORM_TOUCH = 'FORM_TOUCH';
-export const FORM_UNTOUCH = 'FORM_UNTOUCH';
+export const FORM_TOUCHED = 'FORM_TOUCHED';
 export const FORM_USER_INFO = 'FORM_USER_INFO';
 // export const FOLLOW_UP_SCREEN_ID_STORE = 'FOLLOW_UP_SCREEN_ID_STORE';
 export const INIT_TRANSLATES_LOADED = 'INIT_TRANSLATES_LOADED';
