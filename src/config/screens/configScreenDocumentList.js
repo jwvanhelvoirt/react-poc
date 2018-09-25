@@ -5,8 +5,8 @@ import * as trans from '../../libs/constTranslates';
 
 export const screenConfig = {
   showTabs: false,
-  searchIdIn: 'organisations',
-  searchIdFor: 'name',
+  searchIdIn: 'api.project.project.get',
+  searchIdFor: 'code',
   panes: [
     {
       id: 'panes1',

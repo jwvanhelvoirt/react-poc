@@ -44,7 +44,8 @@ class Screen extends Component {
 
     if (searchIdIn) {
       // In a follow-up screen we need information from the record selected in the previous screen. Fetch it!
-      callServer('get', '/' + searchIdIn + '/read/' + id, this.successGetSingleHandler, this.errorGetSingleHandler);
+      const params = { MAGIC: localStorage.getItem('magic'), id };
+      callServer('put', '/' + searchIdIn, this.successGetSingleHandler, this.errorGetSingleHandler, params);
     }
   };
 
@@ -58,8 +59,10 @@ class Screen extends Component {
     // // Item succssfully loaded from the server. Store a particular property (as configured in screenConfig) in the store.
     // this.props.storeFollowUpScreenId(response.data[this.props.screenConfig.searchIdFor]); // If we want to print it in the <View> component.
 
+    const { id } = this.props.match.params; // id on the url.
+
     // For the time being we print the identifying data from the selection in the previous screen, behind the breadcrumb.
-    this.setState({ followUpScreenData: response.data[this.props.screenConfig.searchIdFor] });
+    this.setState({ followUpScreenData: response.data[id][this.props.screenConfig.searchIdFor] });
   };
 
   errorGetSingleHandler = (error) => {
