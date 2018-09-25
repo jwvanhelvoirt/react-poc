@@ -17,11 +17,10 @@ class Screen extends Component {
   constructor(props) {
     super(props);
 
+    // Store active tabs per pane in an object.
     const activeTabs = {};
     this.props.tabsConfig.panes.forEach((pane) => {
-      pane.blocks.forEach((block) => {
-        activeTabs[block.id] = block.activeTab;
-      });
+      activeTabs[pane.content.id] = pane.content.activeTab;
     });
 
     this.state = {
@@ -35,8 +34,8 @@ class Screen extends Component {
     // Initialize the route data in the store.
     this.props.storeRoute('');
 
-    const { searchIdIn } = this.props.tabsConfig;
-    const { id } = this.props.match.params;
+    const { searchIdIn } = this.props.tabsConfig; // the api to search the id for.
+    const { id } = this.props.match.params; // id on the url.
 
     if (searchIdIn) {
       // In a follow-up screen we need information from the record selected in the previous screen. Fetch it!
@@ -46,12 +45,13 @@ class Screen extends Component {
 
   componentDidMount = () => {
     // We need to store route data in the store as input for the follow-up screen.
+    // Via this route we inform the viewParser that a click on a row should change the url.
     this.props.storeRoute(this.props.tabsConfig.route);
   };
 
   successGetSingleHandler = (response) => {
-    // // Item succssfully loaded from the server. Store a particular property (as configured in tabsConfig) in the store.
-    // this.props.storeFollowUpScreenId(response.data[this.props.tabsConfig.searchIdFor]);
+    // // Item succssfully loaded from the server. Store a particular property (as configured in screenConfig) in the store.
+    // this.props.storeFollowUpScreenId(response.data[this.props.tabsConfig.searchIdFor]); // If we want to print it in the <View> component.
 
     // For the time being we print the identifying data from the selection in the previous screen, behind the breadcrumb.
     this.setState({ followUpScreenData: response.data[this.props.tabsConfig.searchIdFor] });
@@ -62,6 +62,8 @@ class Screen extends Component {
   };
 
   togglePane = (id) => {
+    // Toggles the panes that are configured as 'toggleable' from visible to hidden and vice versa.
+
     // Clone the state.
     const updatedTabsConfig = cloneDeep(this.state.tabsConfig);
 
@@ -106,79 +108,78 @@ class Screen extends Component {
 
       let html = "";
       if (pane.show) {
-        html = pane.blocks.map((block, indexBlock) => {
-          const links = getTabRow(this.state.activeTabs[block.id], block.tabs, block.id, this);
-          const content = getTabComponent(this.state.activeTabs[block.id], block.tabs);
+        const links = getTabRow(this.state.activeTabs[pane.content.id], pane.content.tabs, pane.content.id, this);
+        const content = getTabComponent(this.state.activeTabs[pane.content.id], pane.content.tabs);
 
-          const toggle = pane.toggle ? (pane.show ? buttonHide : "") : "";
+        const toggle = pane.toggle ? (pane.show ? buttonHide : "") : "";
 
-          let upperZone = (
-            <div className={classes.TabBar}>
-              {toggle}
-              <Nav tabs>{links}</Nav>
-            </div>
+        let upperZone = (
+          <div className={classes.TabBar}>
+            {toggle}
+            <Nav tabs>{links}</Nav>
+          </div>
+        );
+
+        // Check if we should display a breadcrumb zone instead of a tab zone.
+        if (this.state.tabsConfig.showTabs === false) {
+
+          // First breadcrumb is a link to the dashboard.
+          let breadcrumb = (
+            <NavLink to='/dashboard'>
+              {propercase('home')}
+            </NavLink>
           );
 
-          // Check if we should display a breadcrumb zone instead of a tab zone.
-          if (this.state.tabsConfig.showTabs === false) {
+          // Via the URL we calculate the other breadcrumbs.
+          // The URL might have params in it, for instance /project/document/5b7fb7c6495a102ff856dc3
+          // The path of such URL might be something like: /project/document/:id
+          // The :id part and it's predecessor are treated as ONE breadcrumb.
+          let prevItem = '';
+          let arrayUrlParts = [];
+          let lastItem = '';
 
-            // First breadcrumb is a link to the dashboard.
-            let breadcrumb = (
-              <NavLink to='/dashboard'>
-                {propercase('home')}
-              </NavLink>
-            );
+          this.props.match.path.split('/').forEach((item) => {
 
-            // Via the URL we calculate the other breadcrumbs.
-            // The URL might have params in it, for instance /project/document/5b7fb7c6495a102ff856dc3
-            // The path of such URL might be something like: /project/document/:id
-            // The :id part and it's predecessor are treated as ONE breadcrumb.
-            let prevItem = '';
-            let arrayUrlParts = [];
-            let lastItem = '';
-
-            this.props.match.path.split('/').forEach((item) => {
-
-              if (prevItem) {
-                if (item.indexOf(':') === 0) {
-                  const param = item.replace(':', '');
-                  breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param);
-                } else {
-                  breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts);
-                }
+            if (prevItem) {
+              if (item.indexOf(':') === 0) {
+                const param = item.replace(':', '');
+                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param);
+              } else {
+                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts);
               }
-
-              if (item) {
-                lastItem = prevItem = item.indexOf(':') === 0 ? '' : item;
-                arrayUrlParts.push(item);
-              }
-
-            });
-
-            if (lastItem) {
-              breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts);
             }
 
-            const followUpScreenData = this.state.followUpScreenData ? <span>{' (' + this.state.followUpScreenData + ')'}</span> : null;
+            if (item) {
+              lastItem = prevItem = item.indexOf(':') === 0 ? '' : item;
+              arrayUrlParts.push(item);
+            }
 
-            // Print breadcrumb zone.
-            upperZone = (
-              <div className={classes.Header}>
-                <div>{breadcrumb}</div>
-                {followUpScreenData}
-              </div>
-            );
+          });
+
+          if (lastItem) {
+            breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts);
           }
 
-          return (
-            <div key={indexBlock} className={classes.Pane}>
-              {upperZone}
-              <div className={classes.ListviewContainer}>
-                {content}
-              </div>
+          const followUpScreenData = this.state.followUpScreenData ? <span>{' (' + this.state.followUpScreenData + ')'}</span> : null;
+
+          // Print breadcrumb zone.
+          upperZone = (
+            <div className={classes.Header}>
+              <div>{breadcrumb}</div>
+              {followUpScreenData}
             </div>
           );
-        });
+        }
+
+        html = (
+          <div className={classes.Pane}>
+            {upperZone}
+            <div className={classes.ListviewContainer}>
+              {content}
+            </div>
+          </div>
+        );
+
       }
 
       const PaneWrapper = <div key={indexPane} className={classes.PaneWrapper}>{html}</div>

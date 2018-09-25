@@ -13,15 +13,13 @@ export const tabsConfig = {
       displayLarge: true,
       toggle: false,
       show: true,
-      blocks: [
-        {
-          id: 'pane1',
-          tabs: [
-            { id: 'projectDocument', label: 'keyDocument', component: <TabContentProjectDocument /> }
-          ],
-          activeTab: 'projectDocument'
-        }
-      ]
+      content: {
+        id: 'pane1',
+        tabs: [
+          { id: 'projectDocument', label: 'keyDocument', component: <TabContentProjectDocument /> }
+        ],
+        activeTab: 'projectDocument'
+      }
     }
   ]
 };
