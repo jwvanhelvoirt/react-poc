@@ -5,8 +5,8 @@ import * as trans from '../../../libs/constTranslates';
 import classes from './rows.scss';
 
 const rows = (props) => {
-  const { listItems, selectedListItems, row, route, routeView, multiSelect, lookup, onClickItemHandler,
-    toggleRowHandler, columnsVisible, currentUrl } = props;
+  const { viewConfig, _this } = props;
+  const { listItems } = _this.state;
 
   let listItemsHtml = (
     <div className={classes.NoResults}>
@@ -17,22 +17,7 @@ const rows = (props) => {
   if (listItems.length > 0) {
     // Process all listItems.
     listItemsHtml = listItems.map((listItem, index) => {
-      return (
-        <Row
-          key={listItem.id}
-          listItem={listItem}
-          selectedListItems={selectedListItems}
-          row={row}
-          route={route}
-          routeView={routeView}
-          multiSelect={multiSelect}
-          lookup={lookup}
-          onClickItemHandler={onClickItemHandler}
-          toggleRowHandler={toggleRowHandler}
-          columnsVisible={columnsVisible}
-          currentUrl={currentUrl}
-        />
-      );
+      return <Row key={listItem.id} viewConfig={viewConfig} _this={_this} listItem={listItem} />;
     });
   }
 

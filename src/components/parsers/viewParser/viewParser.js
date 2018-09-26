@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { authenticateUser, storeLookupInputId, storeLookupListItems, storeLookupListItemsSelected, storeSortItem, touchedForm } from '../../../store/actions';
-import _ from 'lodash';
 import cloneDeep from 'lodash/cloneDeep';
-import ReactTooltip from 'react-tooltip';
 import Aux from '../../../hoc/auxiliary';
 import viewConfigSort from '../../../config/views/configListViewSortOptions';
 import FormParser from '../formParser/formParser';
 import Spinner from '../../ui/spinners/spinner/spinner';
-import Modal from '../../ui/modal/modal';
-import MessageBox from '../../ui/messageBox/messageBox';
 import Label from '../../ui/label/label';
+import ViewModal from '../../view/viewModal/viewModal';
+import ViewBars from '../../view/viewBars/viewBars';
 import Rows from '../../view/rows/rows';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
-import * as icons from '../../../libs/constIcons';
-import * as routes from '../../../libs/constRoutes';
 import * as trans from '../../../libs/constTranslates';
 import classes from './viewParser.scss';
 
@@ -375,8 +370,6 @@ class _View extends Component {
     const sortAttribute = sortOrder === -1 ? sort + '_desc' : sort + '_asc';
 
     const { limit } = viewConfig;
-    // const params = { MAGIC: localStorage.getItem('magic'), sort, sortOrder, skip, limit, search, searchIn };
-    // const params = { MAGIC: localStorage.getItem('magic'), sort, sortOrder, skip, limit, search };
     const params = { MAGIC: localStorage.getItem('magic'), sort: sortAttribute, skip, limit, search };
 
     // In case the list must be filtered based on a selected row in the previous view.
@@ -384,7 +377,6 @@ class _View extends Component {
       params[this.state.viewConfig.rowBindedAttribute] = this.props.match.params.id;
     }
 
-    // callServer('post', '/' + this.state.viewConfig.url + '/read_multiple', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
     callServer('put', '/' + this.state.viewConfig.url, (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
     // In case this reload is triggered from the view refresh action, text in the searchbar must be removed.
@@ -557,25 +549,6 @@ class _View extends Component {
     }
   };
 
-  createFakeData = () => {
-      const params = {};
-      callServer('post', '/' + this.state.viewConfig.url + '/create_fake_data',
-        (response) => this.successFaker(response),
-        this.errorFaker, params);
-  };
-
-  successFaker = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_INFO], 'info', 'Fake data succesvol aangemaakt.', 'butOk');
-
-  errorFaker = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', 'Er is iets misgegaan met het aanmaken van fake data.', 'butOk');
-
-  // deleteAll = () => {
-  //   callServer('delete', '/' + this.state.viewConfig.url + '/delete_all',
-  //     (response) => this.successDeleteAll(response),
-  //     this.errorDeleteAll);
-  // };
-  // successDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_INFO], 'info', 'Bulk records succesvol verwijderd.', 'butOk');
-  // errorDeleteAll = () => this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', 'Er is iets misgegaan met het bulk verwijderen van records.', 'butOk');
-
   /**
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
    */
@@ -597,273 +570,23 @@ class _View extends Component {
       );
     }
 
-    // Display the filter modal.
-    let filterModal = null;
-    if (this.state.showModalFilter) {
-      filterModal = (
-        <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalFilterCloseHandler()}>
-          <div style={{ 'padding':'20px' }}>FILTER MODAL</div>
-        </Modal>
-      );
-    }
+    // Modals that can be opened from this view depending on state.
+    const viewModalData = { modalClass, messageTitle, type: messageType, messageContent,
+      buttons: messageButtons, callBackOk, callBackCancel, modal: true
+    };
+    const sortModal = <ViewModal show={this.state.showModalSort} viewModalData={viewModalData} />;
+    const messageModal = <ViewModal show={this.state.showModalMessage} viewModalData={viewModalData} />;
+    // const filterModal = <ViewModal show={this.state.showModalFilter} viewModalData={viewModalData} />;
+    // const columnConfiguratorModal = <ViewModal show={this.state.showModalColumnConfigurator} viewModalData={viewModalData} />;
 
-    let sortModal = null;
-    if (this.state.showModalSort) {
-      sortModal = (
-        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
-          messageContent={messageContent} buttons={messageButtons}
-          callBackOk={callBackOk} callBackCancel={callBackCancel} modal={true}
-        />
-      );
-    }
+    // Start building the listView.
+    // It contains many elements that can be shown or not, depending on configuration in the viewConfig.
 
-    // Display the message modal.
-    let messageModal = null;
-    if (this.state.showModalMessage) {
-      messageModal = (
-        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
-          messageContent={messageContent} buttons={messageButtons}
-          callBackOk={callBackOk} callBackCancel={callBackCancel} modal={true}
-        />
-      );
-    }
-
-    // Display the column configurator modal.
-    let columnConfiguratorModal = null;
-    if (this.state.showModalColumnConfigurator) {
-      columnConfiguratorModal = (
-        <Modal show modalClass='ModalSmall' modalClosed={() => this.onModalColumnConfiguratorCloseHandler()}>
-          <div style={{ 'padding':'20px' }}>COLUMN CONFIGURATOR MODAL</div>
-        </Modal>
-      );
-    }
-
-    // Start building the listView. It contains many elements that can be shown or not, depending on configuration in the viewConfig.
-    const { viewConfig, count, skip } = this.state;
-    const { limit, row, multiSelect, filterOptions, sortOptions, showFilter, showSort } = viewConfig;
-    const step = this.navStep;
-
-    // Title bar: Navigation element.
-    let navInfo = null;
-    let navBack = null;
-    let navBackMult = null;
-    let navForw = null;
-    let navForwMult = null;
-
-    const of = <Label labelKey={trans.KEY_OF} />;
-
-    if (viewConfig.showNavigation) {
-        navBack =     <div key="2" className={classes.PreviousNext} onClick={() => this.nav(false, false)}>&lt;</div>;
-        navBackMult = <div key="3" className={classes.PreviousNext} onClick={() => this.nav(false, true)}>&lt;{step}</div>;
-        navForwMult = <div key="4" className={classes.PreviousNext} onClick={() => this.nav(true, true)}>&gt;{step}</div>;
-        navForw =     <div key="5" className={classes.PreviousNext} onClick={() => this.nav(true, false)}>&gt;</div>;
-        if (count > skip) {
-            navInfo = <div key="1" className={classes.Counter}>{skip + 1}-{skip + limit > count ? count : skip + limit} {of} {count}</div>;
-        } else if (count === 0) {
-          navInfo = <div key="1" className={classes.Counter}>0</div>;
-        } else {
-          navInfo = <div key="1" className={classes.Counter}>1-{count} {of} {count}</div>;
-        }
-    }
-    const nav = [navInfo, navBack, navBackMult, navForwMult, navForw];
-
-    // Title bar: Column configurator.
-    const columnConfig = viewConfig.showColumnConfigurator ?
-      <div  onClick={() => this.onClickColumnConfiguratorHandler()}
-            className={classes.ColumnConfigurator}>
-            <FontAwesomeIcon icon={icons.ICON_ELLIPSIS_V} />
-      </div> : null;
-
-    // Title bar: TEMPORARY TO DELETE ALL RECORDS FROM A COLLECTION, FOR TEST PURPOSES.
-    // const deleteAll =
-    //   <div onClick={() => this.deleteAll()}
-    //        className={classes.ColumnConfigurator}>
-    //        <FontAwesomeIcon icon={icons.ICON_TRASH} />
-    //   </div>;
-
-    // Title bar overall.
-    const titleBar = viewConfig.showRowTitle ?
-      <div className={classes.TitleRow}>
-        <div onClick={() => this.createFakeData()} className={classes.Title}>
-          <Label labelKey={this.state.viewConfig.title} convertType={'propercase'} />
-        </div>
-        <div className={classes.Navigation}>
-          {/*deleteAll*/}
-          {columnConfig}
-          {nav}
-        </div>
-      </div> : null;
-
-    // Actions bar: Filtering.
-    const showFilterAction = filterOptions && filterOptions.length > 0 && showFilter ? true : false;
-    const filter = showFilterAction ?
-      <div onClick={() => this.onClickFilterHandler()} data-tip="React-tooltip" data-for={trans.KEY_FILTER_ACTION}>
-        <FontAwesomeIcon icon={icons.ICON_FILTER} />
-        <ReactTooltip id={trans.KEY_FILTER_ACTION} place="bottom" type="dark" effect="solid">
-          <Label labelKey={trans.KEY_FILTER_ACTION} convertType={'propercase'} />
-        </ReactTooltip>
-      </div> :
-      null;
-
-    // Actions bar: Sorting.
-    const showSortAction = sortOptions && sortOptions.options && sortOptions.options.length > 0 && showSort ? true : false;
-    const sort = showSortAction ?
-      <div onClick={() => this.onClickSortHandler()} data-tip="React-tooltip" data-for={trans.KEY_SORT_ACTION}>
-        <FontAwesomeIcon icon={icons.ICON_SORT} />
-        <ReactTooltip id={trans.KEY_SORT_ACTION} place="bottom" type="dark" effect="solid">
-          <Label labelKey={trans.KEY_SORT_ACTION} convertType={'propercase'} />
-        </ReactTooltip>
-      </div> :
-      null;
-
-    // Filtering and sorting overall.
-    const filterSort = showFilterAction || showSortAction ? <div className={classes.FilterSort}>{filter}{sort}</div> : null;
-
-    // Action bar: Actions.
-    let actions = null;
-    if (viewConfig.showActions) {
-      const actionsPrimary = viewConfig.actions.filter((action) => action.showInBarPrimary);
-      if (actionsPrimary.length > 0) {
-        actions = (
-          <div className={classes.ActionRowActions}>
-            {
-              actionsPrimary.map((action, index) => {
-                return <div key={index} onClick={() => action.callback(this)} data-tip="React-tooltip" data-for={action.id}>
-                  <FontAwesomeIcon icon={action.labelIcon} />
-                  <ReactTooltip id={action.id} place="bottom" type="dark" effect="solid">
-                    <Label labelKey={action.tooltip} convertType={'propercase'} />
-                  </ReactTooltip>
-                </div>
-              })
-            }
-          </div>
-        );
-      }
-    }
-
-    // Action bar: Searchbar.
-    const classesCombinedSearchbar = [classes.Search, classes.Medium].join(' ');
-
-    // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
-    // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
-    const debounced = this.state.debounceFunction ? _.debounce(this.submitSearchHandler, 800) : null;
-    const search = getDisplayValue(trans.KEY_SEARCH, 'propercase', true, this.props.translates);
-
-    let searchBar = null;
-    if (viewConfig.showSearchbar) {
-      searchBar = (
-        <div className={classesCombinedSearchbar}>
-          <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} /></div>
-          <input
-            value={this.state.searchbarValue}
-            onChange={(event) => {
-              this.inputSearchbarHandler(event);
-              if (debounced) {
-                debounced(this)
-              }
-            }}
-            autoFocus
-            className={classes.SearchInput} type="text" placeholder={search} />
-        </div>
-      );
-    }
-
-    // Action bar overall.
-    const actionBar = viewConfig.showRowActions ?
-      <div className={classes.ActionRow}>
-        {filterSort}
-        {actions}
-        {searchBar}
-      </div> : null;
-
-    // Header bar: fixed columns selectable.
-    const classesCombinedHeaderSelected = this.state.headerSelected ?
-      [classes.Fixed1, classes.HeaderSelectZone, classes.HeaderSelected].join(' ') :
-      [classes.Fixed1, classes.HeaderSelectZone].join(' ');
-
-    let columnsFixedSelect = null;
-    if (row && row.selectable && !(this.props.route && this.props.route.length > 0 && viewConfig.routeView !== false)) {
-      multiSelect ?
-        // Only if the row is selectable and multiselect is enabled, we print the 'checkbox' to select/deselect all listItems.
-        columnsFixedSelect = <div className={classesCombinedHeaderSelected} onClick={(event) => this.toggleAllRows(event)}></div> :
-        columnsFixedSelect = <div className={classes.Fixed1}></div>
-    }
-
-    // Header bar: fixed columns menu.
-    let columnsFixedMenu = <div className={classes.Fixed0}></div>;
-    if (row && row.menu) {
-      // Only if the row contains a click menu, we print a div in the header to align equally with the listItems.
-      columnsFixedMenu = <div className={classes.Fixed2}></div>;
-    }
-
-    // Header bar: fixed columns overall.
-    const columnsFixed =
-      <div className={classes.Fixed}>
-        {columnsFixedSelect}
-        {columnsFixedMenu}
-      </div>
-
-    // Header bar: columns.
-    const classesCombinedHeaders = [classes.Headers, classes.Flex].join(' ');
-    let columnHeaders = null;
-    const columnsVisible = viewConfig.columns.filter((column) => column.show);
-    if (columnsVisible.length > 0) {
-      columnHeaders = (
-        <div className={classesCombinedHeaders}>
-        {
-          columnsVisible.map((column, index) => {
-            let sortIcon = <FontAwesomeIcon icon='sort' />;
-            if (column.sortOn === this.state.sortedColumn) {
-              // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
-              sortIcon = this.state.sortOrder === 1 ? <FontAwesomeIcon icon={icons.ICON_SORT_UP} /> : <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />;
-            }
-            const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
-            const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
-            const onColumn = column.sort ? () => this.sortOnColumn(column.sortOn) : null;
-            const classesCombinedHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
-            return(
-              <div key={index} onClick={onColumn} className={classesCombinedHeader}>
-                {labelColumn}
-                {sortColumn}
-              </div>
-            );
-          })
-        }
-        </div>
-      );
-    }
-
-    // Header bar overall.
-    const headerBar = viewConfig.showRowHeader ?
-      <div className={classes.HeaderRow}>
-        {columnsFixed}
-        {columnHeaders}
-      </div> : null;
-
-    // ListviewHeader overall
-    const listviewHeader = viewConfig.showListViewHeader ?
-      <div className={classes.ListviewHeader}>
-        {titleBar}
-        {actionBar}
-        {headerBar}
-      </div> : null;
+    // Listview header.
+    const listviewHeader = <ViewBars viewConfig={this.state.viewConfig} _this={this} />;
 
     // ListItems.
-    let listItems = (
-      <Rows
-        listItems={this.state.listItems}
-        selectedListItems={this.state.selectedListItems}
-        row={row}
-        route={this.props.route}
-        routeView={viewConfig.routeView}
-        multiSelect={multiSelect}
-        lookup={this.props.lookup}
-        onClickItemHandler={this.onClickItemHandler}
-        toggleRowHandler={this.toggleRowHandler}
-        columnsVisible={columnsVisible}
-        currentUrl={this.props.match.url}
-      />
-    );
+    let listItems = <Rows viewConfig={this.state.viewConfig} _this={this} />;
 
     // In case the listItems are still fetched, we display a spinner.
     if (this.state.loading) {
@@ -872,20 +595,17 @@ class _View extends Component {
 
     return(
       <Aux>
-
         <div className={classes.ListviewContainer}>
           {listviewHeader}
           <div className={classes.ListviewContent}>
             {listItems}
           </div>
         </div>
-
         {formModal}
-        {filterModal}
+        {/*filterModal*/}
         {sortModal}
-        {columnConfiguratorModal}
+        {/*columnConfiguratorModal*/}
         {messageModal}
-
       </Aux>
     );
   };

@@ -3,27 +3,36 @@ import { Link } from 'react-router-dom';
 import Avatar from '../../../ui/avatar/avatar';
 import Timespan from '../../../ui/timespan/timespan';
 import Aux from '../../../../hoc/auxiliary';
-import classes from '../../../../scss/view.scss';
+import classes from '../../view.scss';
 
 const row = (props) => {
-  const { listItem, selectedListItems, row, route, routeView, multiSelect, lookup, onClickItemHandler,
-    toggleRowHandler, columnsVisible, currentUrl } = props;
+  const { viewConfig, _this, listItem } = props;
+  const { row, routeView, multiSelect, columns } = viewConfig;
+  const { route, lookup } = _this.props;
+  const currentUrl = _this.props.match.url;
+  const columnsVisible = columns.filter((column) => column.show);
 
   // In case the listItem has been edited during this client session, it gets additional styling.
   const classesCombinedListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
 
   // Is it a radio or a checkbox?
   let classesCombinedSelected = null;
-  if (selectedListItems.indexOf(listItem.id) ===  -1) {
+  if (_this.state.selectedListItems.indexOf(listItem.id) ===  -1) {
+    // Non-selected.
     if (multiSelect) {
+      // Checkbox.
       classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone].join(' ');
     } else {
+      // Radio.
       classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.Radio].join(' ');
     }
   } else {
+    // Selected.
     if (multiSelect) {
+      // Checkbox.
       classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.RowSelected].join(' ');
     } else {
+      // Radio.
       classesCombinedSelected = [classes.Fixed1, classes.RowSelectZone, classes.RowSelected, classes.Radio].join(' ');
     }
   }
@@ -50,11 +59,11 @@ const row = (props) => {
   );
 
   // Only onDoubleClick event in case of mulitple selection of rows and NOT a lookup context.
-  const doubleClick = (multiSelect && !lookup) ? () => onClickItemHandler(listItem.id) : null;
+  const doubleClick = (multiSelect && !lookup) ? () => _this.onClickItemHandler(listItem.id) : null;
 
   const listItemDiv = (
     <div className={classesCombinedListItem}
-      onClick={(event) => toggleRowHandler(listItem.id)}
+      onClick={(event) => _this.toggleRowHandler(listItem.id)}
       onDoubleClick={doubleClick}>
       {listItemsFixed}
       <div className={classes.Flex}>
