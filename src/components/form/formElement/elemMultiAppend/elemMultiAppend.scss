@@ -1,0 +1,28 @@
+.MultilineWrapper {
+	width: 100%;
+	margin-top: 5px;
+}
+
+.Multiline {
+	display: flex;
+	align-items: center;
+	height: 32px;
+}
+
+.Multiline {
+	margin-right: 5px;
+}
+
+.MultilineRemove {
+	color: #dc3545;
+	padding: 0 3px;
+}
+
+.MultilineRemove:hover {
+	color: white;
+	background-color: #dc3545;
+}
+
+.DisplayValue {
+	margin-left: 5px;
+}

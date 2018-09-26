@@ -14,7 +14,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
 import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId, touchedForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
-import Input from '../../ui/input/input';
+import FormElement from '../../form/formElement/formElement';
 import MessageBox from '../../ui/messageBox/messageBox';
 import * as trans from '../../../libs/constTranslates';
 import { callServer } from '../../../api/api';
@@ -55,7 +55,7 @@ class Form extends Component {
 
       // Get the initial value.
       if (updatedFormElement.valueLocalStorage && localStorage.getItem(updatedFormElement.valueLocalStorage)) {
-        if (updatedFormElement.elementType === 'triggerFunctionCheckbox') {
+        if (updatedFormElement.elementType === 'singleCheckbox') {
           updatedFormElement.value = 1;
         } else {
           updatedFormElement.value = localStorage.getItem(updatedFormElement.valueLocalStorage);
@@ -317,7 +317,7 @@ class Form extends Component {
         {formElementsArray.map(formElement => {
             return (
               (
-                <Input
+                <FormElement
                   key={formElement.inputId}
                   inputId={formElement.inputId}
                   changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
