@@ -1,7 +1,7 @@
 import * as icons from '../../libs/constIcons';
 import * as trans from '../../libs/constTranslates';
 
-import configLookupPerson from '../views/configListViewPerson';
+// import configLookupPerson from '../views/configListViewPerson';
 
 const formConfig = {
 	buttons: 'butOk',

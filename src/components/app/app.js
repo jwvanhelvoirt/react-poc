@@ -186,7 +186,7 @@ class App extends Component {
     return (
       Util.setGlobalCssModule(bootstrap),
       <Aux>{layout}</Aux>
-    )
+    );
   };
 
 }

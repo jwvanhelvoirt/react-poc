@@ -17,7 +17,7 @@ const rows = (props) => {
   if (listItems.length > 0) {
     // Process all listItems.
     listItemsHtml = listItems.map((listItem, index) => {
-      return <Row key={listItem.id} viewConfig={viewConfig} _this={_this} listItem={listItem} />;
+      return <Row key={index} viewConfig={viewConfig} _this={_this} listItem={listItem} />;
     });
   }
 
