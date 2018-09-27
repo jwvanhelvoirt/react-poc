@@ -309,6 +309,11 @@ class _View extends Component {
     this.setState({ [modalState]: true });
   };
 
+  showRowMenu = (event, id) => {
+    event.preventDefault();
+    console.log(id);
+  };
+
   /**
    * @brief   Manages state containing an array of all selected rows in the listView.
    */

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as icons from '../../../../libs/constIcons';
 import Avatar from '../../../ui/avatar/avatar';
 import Timespan from '../../../ui/timespan/timespan';
 import Aux from '../../../../hoc/auxiliary';
@@ -47,7 +49,11 @@ const row = (props) => {
   let listItemsFixedMenu = <div className={classes.Fixed0}></div>;
   if (row && row.menu) {
     // Only if the row contains a click menu, we print a div in the row to align equally with the listItems.
-    listItemsFixedMenu = <div className={classes.Fixed2}></div>;
+    listItemsFixedMenu = (
+      <div className={classes.Fixed2} onClick={(event) => _this.showRowMenu(event, listItem.id)}>
+        <FontAwesomeIcon icon={icons.ICON_ELLIPSIS_V} />
+      </div>
+    );
   }
 
   // Fixed columns overall.
@@ -64,7 +70,8 @@ const row = (props) => {
   const listItemDiv = (
     <div className={classesCombinedListItem}
       onClick={(event) => _this.toggleRowHandler(listItem.id)}
-      onDoubleClick={doubleClick}>
+      onDoubleClick={doubleClick}
+      onContextMenu={(event) => _this.showRowMenu(event, listItem.id)}>
       {listItemsFixed}
       <div className={classes.Flex}>
         {

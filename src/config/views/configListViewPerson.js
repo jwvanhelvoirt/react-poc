@@ -60,7 +60,7 @@ const listViewConfig = {
       size: 'Flex40'
     }
   ],
-  row: { selectable: true, menu: false },
+  row: { selectable: true, menu: true, hoverMenu: true },
   showActions: false,
   sort: 'naam',
   sortOrder: 1,
