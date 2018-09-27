@@ -1,18 +1,17 @@
 import * as icons from '../../libs/constIcons';
 import * as trans from '../../libs/constTranslates';
+import baseConfig from './configFormBase';
 
 // import configLookupPerson from '../views/configListViewPerson';
 
 const formConfig = {
 	buttons: 'butOk',
 	buttonsClass: 'FillSpace',
-	headerSize: 'HeaderMedium',
 	msgFailedSubmit: trans.KEY_FAILED_LOGIN,
 	noCreate: true,
 	okButtonLabel: trans.KEY_LOGIN,
 	size: 'ModalSmall',
 	title: trans.KEY_LOGIN,
-	titleAlign: 'Left', // default
 	titleIcon: icons.ICON_SIGN_IN_ALT,
 	url: 'login',
 	inputs: {
@@ -100,7 +99,8 @@ const forgotPassword = () => {
 	console.log('user forgot password');
 };
 
-// Don't need this anymore, but leave it for reference. This function is triggered when clicking the checkbox of element type 'singleCheckbox'.
+// Don't need this anymore, but I'll leave it for reference. 
+// This function is triggered when clicking the checkbox of element type 'singleCheckbox'.
 // const rememberPrevLogin = (event, configForm) => {
 // 	if (event.target.checked) {
 // 		localStorage.setItem('user', configForm.inputs.username.value);
@@ -109,4 +109,4 @@ const forgotPassword = () => {
 // 	}
 // };
 
-export default formConfig;
+export default { ...baseConfig, ...formConfig };

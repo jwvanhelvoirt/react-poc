@@ -12,7 +12,7 @@ const baseConfig = {
   showRowHeader: true,
   showRowTitle: true,
   showSearchbar: true,
-  showSort: true,
+  showSort: true
 };
 
 export default baseConfig;

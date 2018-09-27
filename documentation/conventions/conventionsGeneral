@@ -19,3 +19,6 @@
     - hoc (contains higher order components that act as a wrapper for normal React components)
     - libs (contains JavaScript libraries for generic use)
     - store (contains action constants and reducers to manage to Redux store)
+7. Use base objects for the config of Forms and Views and overwrite these settings if needed in the decentral config object.
+    - Base object Forms: configFormBase.js
+    - Base object Views: configListViewBase.js
