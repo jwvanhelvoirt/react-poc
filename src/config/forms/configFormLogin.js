@@ -6,14 +6,14 @@ import baseConfig from './configFormBase';
 
 const formConfig = {
 	buttons: 'butOk',
-	buttonsClass: 'FillSpace',
 	msgFailedSubmit: trans.KEY_FAILED_LOGIN,
 	noCreate: true,
 	okButtonLabel: trans.KEY_LOGIN,
 	size: 'ModalSmall',
 	title: trans.KEY_LOGIN,
 	titleIcon: icons.ICON_SIGN_IN_ALT,
-	url: 'login',
+	url: 'api.login',
+	urlSuffix: false,
 	inputs: {
 		login: {
 			label: trans.KEY_USERNAME,
@@ -99,7 +99,7 @@ const forgotPassword = () => {
 	console.log('user forgot password');
 };
 
-// Don't need this anymore, but I'll leave it for reference. 
+// Don't need this anymore, but I'll leave it for reference.
 // This function is triggered when clicking the checkbox of element type 'singleCheckbox'.
 // const rememberPrevLogin = (event, configForm) => {
 // 	if (event.target.checked) {

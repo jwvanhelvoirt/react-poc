@@ -30,7 +30,7 @@ const listViewConfig = {
   sort: 'naam',
   sortOrder: 1,
   title: trans.KEY_DOCUMENT,
-  url: 'api.document.document.list'
+  url: 'api.document.document'
 };
 
 export default { ...baseConfig, ...listViewConfig };

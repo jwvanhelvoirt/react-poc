@@ -78,7 +78,7 @@ const listViewConfig = {
     ]
   },
   title: trans.KEY_PROJECT,
-  url: 'api.project.project.list'
+  url: 'api.project.project'
 };
 
 export default { ...baseConfig, ...listViewConfig };

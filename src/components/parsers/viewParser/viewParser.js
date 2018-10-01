@@ -111,23 +111,22 @@ class _View extends Component {
     }
   }
 
-  /**
-   * @brief   Updates listItems after a new listItem or an update of a selected listItem.
-   */
   onSubmitHandler = (response) => {
-    if (this.localData.addRecordToView || this.state.selectedListItemId) {
+    const { selectedListItemId, listItems } = this.state;
+
+    if (this.localData.addRecordToView || selectedListItemId) {
       let updatedListItems = [];
 
       // Edited view entries are marked, so that we can emphasize them in the listview.
       const editedResponse = {
-        ...response.data,
+        ...response.data.list[0],
         edit: true
       }
 
-      if (this.state.selectedListItemId) {
+      if (selectedListItemId) {
         // Put all current listItems in a variable, except the updated one.
         // For the updated we include the response.
-        updatedListItems = this.state.listItems.map(item => item.id === response.data.id ? editedResponse : item);
+        updatedListItems = listItems.map(item => item.id === selectedListItemId ? editedResponse : item);
       } else {
         // Append the object of the new entry to the state.
         updatedListItems = [
@@ -171,15 +170,18 @@ class _View extends Component {
    */
   onClickItemHandler = (id) => {
     this.setState({ selectedListItemId: id });
-    callServer('get', '/' + this.state.viewConfig.url + '/read/' + id, this.successGetSingleHandler, this.errorGetSingleHandler);
+
+    const params = { MAGIC: localStorage.getItem('magic'), id };
+    callServer('put', '/' + this.state.viewConfig.url + '.get',
+      (response)=> this.successGetSingleHandler(response, id), this.errorGetSingleHandler, params);
   };
 
   /**
    * @brief   Callback that is triggered once data for a selected listItem has been successfully pulled from the server.
    */
-  successGetSingleHandler = (response) => {
+  successGetSingleHandler = (response, id) => {
     // Item succssfully loaded from the server, setting state 'loadedListItem', will render form dialog.
-    this.setState({ loadedListItem: response.data });
+    this.setState({ loadedListItem: response.data[id] });
   };
 
   /**
@@ -261,8 +263,9 @@ class _View extends Component {
     } else {
       this.onModalMessageCloseHandler();
       // Delete records from the database.
-      const params = { selectedListItems: this.state.selectedListItems };
-      callServer('post', '/' + this.state.viewConfig.url + '/delete_multiple',
+      // const params = { selectedListItems: this.state.selectedListItems };
+      const params = { MAGIC: localStorage.getItem('magic'), id: this.state.selectedListItems[0] };
+      callServer('put', '/' + this.state.viewConfig.url + '.del',
         (response) => this.successDeleteHandler(response),
         (error) => this.errorDeleteHandler(error), params
       );
@@ -274,7 +277,7 @@ class _View extends Component {
    */
   successDeleteHandler = (response) => {
     const { selectedListItems } = this.state;
-    if (response.data.ok === 1 && response.data.n === selectedListItems.length) {
+    // if (response.data.ok === 1 && response.data.n === selectedListItems.length) {
       // All records successfully deleted. Modify state.listItems
       let updatedListItems = [...this.state.listItems];
       updatedListItems = updatedListItems.filter((item) => {
@@ -282,7 +285,7 @@ class _View extends Component {
       });
 
       this.setState({ listItems: updatedListItems, selectedListItems: [] });
-    }
+    // }
   };
 
   /**
@@ -382,7 +385,7 @@ class _View extends Component {
       params[this.state.viewConfig.rowBindedAttribute] = this.props.match.params.id;
     }
 
-    callServer('put', '/' + this.state.viewConfig.url, (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
+    callServer('put', '/' + this.state.viewConfig.url + '.list', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
     // In case this reload is triggered from the view refresh action, text in the searchbar must be removed.
     if (emptySearchbar) {

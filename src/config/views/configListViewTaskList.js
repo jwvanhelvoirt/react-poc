@@ -30,7 +30,7 @@ const listViewConfig = {
   sort: 'eind',
   sortOrder: 1,
   title: trans.KEY_DOCUMENT,
-  url: 'api.taken.taak.list'
+  url: 'api.taken.taak'
 };
 
 export default { ...baseConfig, ...listViewConfig };

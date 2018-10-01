@@ -16,9 +16,11 @@ import {
 	faSort,
 	faSortUp,
 	faSortDown,
+	faSyncAlt,
 	faTasks,
 	faTimesCircle,
 	faTrash,
+	faTrashAlt,
 	faUser
 } from '@fortawesome/pro-solid-svg-icons';
 
@@ -37,8 +39,10 @@ export default library.add(
 	faSort,
 	faSortUp,
 	faSortDown,
+	faSyncAlt,
 	faTasks,
 	faTimesCircle,
 	faTrash,
+	faTrashAlt,
 	faUser
 );

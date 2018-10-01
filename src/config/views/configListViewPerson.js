@@ -1,7 +1,46 @@
 import * as trans from '../../libs/constTranslates';
 import baseConfig from './configListViewBase';
+import formConfigPerson from '../forms/configFormPerson';
 
 const listViewConfig = {
+  actions: [
+		{
+			id: 'createPerson',
+			labelIcon: 'plus',
+			multiDoc: true,
+			zeroDoc: true,
+			showOnHover: false,
+			showInBarPrimary: true,
+			showInBarMenu: true,
+			showInRowMenu: true,
+			tooltip: 'keyAddPerson',
+			callback: (_this) => { _this.addItem(formConfigPerson, true) }
+		},
+		{
+			id: 'delete',
+			labelIcon: 'trash-alt', /* kan ook labelText zijn */
+			multiDoc: true,
+			zeroDoc: false,
+			showOnHover: true,
+			showInBarPrimary: true,
+			showInBarMenu: true,
+			showInRowMenu: true,
+			tooltip: 'keyDeleteSelectedItems',
+			callback: (_this) => { _this.deleteItems(true) }
+		},
+		{
+			id: 'refresh',
+			labelIcon: 'sync-alt',
+			multiDoc: true,
+			zeroDoc: true,
+			showOnHover: false,
+			showInBarPrimary: true,
+			showInBarMenu: true,
+			showInRowMenu: false,
+			tooltip: 'keyRefreshListView',
+			callback: (_this) => _this.reloadListView(0, null, true)
+		}
+	],
   columns: [
     {
       content: 'foto',
@@ -60,8 +99,9 @@ const listViewConfig = {
       size: 'Flex40'
     }
   ],
+  relatedForm: formConfigPerson,
   row: { selectable: true, menu: true, hoverMenu: true },
-  showActions: false,
+  showActions: true,
   sort: 'naam',
   sortOrder: 1,
   sortOptions: {
@@ -74,7 +114,7 @@ const listViewConfig = {
     ]
   },
   title: trans.KEY_PERSON,
-  url: 'api.relatiebeheer.niveau9.list'
+  url: 'api.relatiebeheer.niveau9'
 };
 
 export default { ...baseConfig, ...listViewConfig };

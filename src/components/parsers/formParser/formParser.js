@@ -43,45 +43,48 @@ class Form extends Component {
 
   componentWillMount = () => {
     // state property 'configForm' contains default values, update these with the values of the selected entry and update state.
-
     const clone = cloneDeep(this.state.configForm);
     const updatedFormInputs = clone.inputs;
 
     const arrayRecords = Object.keys(this.props.data);
     for (let index in arrayRecords) {
-      let updatedFormElement = {
-        ...updatedFormInputs[arrayRecords[index]]
-      }
+      // Only print the attributes configured in the configForm, somehow the deepclone contains all
+      // attributes, so we use this.state.configForm to check if the attribute is expected on the client.
+      if (this.state.configForm.inputs[arrayRecords[index]]) {
+        let updatedFormElement = {
+          ...updatedFormInputs[arrayRecords[index]]
+        }
 
-      // Get the initial value.
-      if (updatedFormElement.valueLocalStorage && localStorage.getItem(updatedFormElement.valueLocalStorage)) {
-        if (updatedFormElement.elementType === 'singleCheckbox') {
-          updatedFormElement.value = 1;
+        // Get the initial value.
+        if (updatedFormElement.valueLocalStorage && localStorage.getItem(updatedFormElement.valueLocalStorage)) {
+          if (updatedFormElement.elementType === 'singleCheckbox') {
+            updatedFormElement.value = 1;
+          } else {
+            updatedFormElement.value = localStorage.getItem(updatedFormElement.valueLocalStorage);
+          }
         } else {
-          updatedFormElement.value = localStorage.getItem(updatedFormElement.valueLocalStorage);
+          updatedFormElement.value = this.props.data[arrayRecords[index]];
         }
-      } else {
-        updatedFormElement.value = this.props.data[arrayRecords[index]];
-      }
 
-      // Check for validity.
-      if (Array.isArray(updatedFormElement.value)) {
-        if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
-          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-          if (!updatedFormElement.valid) {
-            updatedFormElement.touched = true;
+        // Check for validity.
+        if (Array.isArray(updatedFormElement.value)) {
+          if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
+            updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+            if (!updatedFormElement.valid) {
+              updatedFormElement.touched = true;
+            }
+          }
+        } else {
+          if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
+            updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+            if (!updatedFormElement.valid) {
+              updatedFormElement.touched = true;
+            }
           }
         }
-      } else {
-        if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
-          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-          if (!updatedFormElement.valid) {
-            updatedFormElement.touched = true;
-          }
-        }
-      }
 
-      updatedFormInputs[arrayRecords[index]] = updatedFormElement;
+        updatedFormInputs[arrayRecords[index]] = updatedFormElement;
+      }
     }
 
     clone.inputs = updatedFormInputs;
@@ -156,26 +159,37 @@ class Form extends Component {
   submitHandler = (event) => {
     event.preventDefault();
 
+    const { inputs, urlSuffix, url } = this.state.configForm;
+
     const submitData = {};
-    for (let id in this.state.configForm.inputs) {
-      submitData[id] = this.state.configForm.inputs[id].value;
+    for (let id in inputs) {
+      submitData[id] = inputs[id].value;
     }
 
-    let url = '';
-    if (this.props.submitUrl) {
-      url = this.props.submitUrl;
+    let params = {};
+    if (urlSuffix) {
+      // Normal forms.
+      const id = this.props.id ? this.props.id : -1;
+      params = {
+        MAGIC: localStorage.getItem('magic'),
+        data: {
+          [id]: {
+            ...submitData
+          }
+        }
+      }
     } else {
-      url = this.props.id ?
-      '/' + this.state.configForm.url + '/update/' + this.props.id :
-      '/' + this.state.configForm.url + '/create';
+      // Login form (for instance).
+      params = submitData;
     }
-
-    const type = this.props.id ? 'put' : 'post';
 
     // Store submitData in store for processing in other components in general.
     this.props.storeFormSubmitData(submitData);
+    // this.props.storeFormSubmitData(params);
 
-    callServer(type, url, this.successSubmitHandler, this.errorSubmitHandler, submitData);
+    const urlAddition = urlSuffix ? '.set' : '';
+
+    callServer('put', '/' + url + urlAddition, this.successSubmitHandler, this.errorSubmitHandler, params);
   };
 
   successSubmitHandler = response => this.props.onSubmit(response);

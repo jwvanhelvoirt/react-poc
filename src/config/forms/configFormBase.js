@@ -1,9 +1,11 @@
 const baseConfig = {
   buttons: 'butOkCancel',
-	headerSize: 'HeaderSmall',
+  buttonsClass: 'FillSpace',
+  headerSize: 'HeaderSmall',
   noCreate: false,
   size: 'ModalMedium',
-  titleAlign: 'Left'
+  titleAlign: 'Left',
+  urlSuffix: true
 };
 
 export default baseConfig;
