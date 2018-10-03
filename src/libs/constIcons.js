@@ -1,7 +1,10 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
+export const ICON_ANGLE_DOWN = 'angle-down';
+export const ICON_ANGLE_RIGHT = 'angle-right';
 export const ICON_BARS = 'bars';
 export const ICON_COG = 'cog';
+export const ICON_EDIT = 'edit';
 export const ICON_ELLIPSIS_V = 'ellipsis-v';
 export const ICON_FILE_ALT = 'file-alt';
 export const ICON_FILTER = 'filter';
@@ -13,7 +16,9 @@ export const ICON_SIGN_IN_ALT = 'sign-in-alt';
 export const ICON_SORT = 'sort';
 export const ICON_SORT_DOWN = 'sort-down';
 export const ICON_SORT_UP = 'sort-up';
+export const ICON_SYNC_ALT = 'sync-alt';
 export const ICON_TASKS = 'tasks';
 export const ICON_TIMES_CIRCLE = 'times-circle';
 export const ICON_TRASH = 'trash';
+export const ICON_TRASH_ALT = 'trash-alt';
 export const ICON_USER = 'user';

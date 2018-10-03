@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from '../tooltip/tooltip';
 import _ from 'lodash';
 import classes from './timespan.scss';
 
@@ -8,11 +8,11 @@ const resize = (size, resizeTo) => {
   // Check if there's another size applicable and adjust the size accordingly.
   switch (resizeTo) {
     case 'TimespanMedium':
-      return .75 * size;
+    return .75 * size;
     case 'TimespanSmall':
-      return .5 * size;
+    return .5 * size;
     default:
-      return size;
+    return size;
   }
 };
 
@@ -82,17 +82,17 @@ const timespan = (props) => {
 
   return(
     <div className={classes[props.size]} data-tip='React-tooltip' data-for={tooltipId}>
-			<div className={classes.Past}>
-				<div className={classes.PastFilled} style={stylePastFilled}></div>
-			</div>
-			<div className={classes.CurrentDay}></div>
-			<div className={classes.Future}>
-				<div className={classes.FutureFilled} style={styleFutureFilled}></div>
-			</div>
-      <ReactTooltip id={tooltipId} place="bottom" type="dark" effect="solid">
-				{props.start + ' - ' + props.end}
-			</ReactTooltip>
-		</div>
+      <div className={classes.Past}>
+        <div className={classes.PastFilled} style={stylePastFilled}></div>
+      </div>
+      <div className={classes.CurrentDay}></div>
+      <div className={classes.Future}>
+        <div className={classes.FutureFilled} style={styleFutureFilled}></div>
+      </div>
+      <Tooltip id={tooltipId}>
+        {props.start + ' - ' + props.end}
+      </Tooltip>
+    </div>
   );
 };
 
@@ -104,39 +104,39 @@ export default timespan;
 /*
 Varianten:
 1. Start ligt in de toekomst (52). End natuurlijk dan ook in de toekomst (282).
-    52/365 = 14%
-    14% van 100px =  14px
-    14% van 75px =   10px
-    14% van 50px =   7px
+52/365 = 14%
+14% van 100px =  14px
+14% van 75px =   10px
+14% van 50px =   7px
 
-    282/365 = 77%
-    77% van 100px =  77px
-    77% van 75px =   57px
-    77% van 50px =   38px
+282/365 = 77%
+77% van 100px =  77px
+77% van 75px =   57px
+77% van 50px =   38px
 
-    De margin-left is dus 14px (uitgaande van de 100px grootte)
-    De width is nu 77px - 14px = 63px.
-    Dus:  .FutureFilled { width: 63px; margin-left: 14px }
+De margin-left is dus 14px (uitgaande van de 100px grootte)
+De width is nu 77px - 14px = 63px.
+Dus:  .FutureFilled { width: 63px; margin-left: 14px }
 
 2. Start ligt in het verleden (-195), end ligt in toekomst (23)
-    195/365 = 53%
-    53% van 100px = 53px
+195/365 = 53%
+53% van 100px = 53px
 
-    23/365 = 6%
-    6% van 100px = 6px
+23/365 = 6%
+6% van 100px = 6px
 
-    Dus:  .PastFilled { width: 53px }
-          .FutureFilled { width: 6px; }
-          3. Start ligt in het verleden (560), end ligt ook in het verleden (98)
-              560/365 = 100%
-              100% van 100px = 100px
+Dus:  .PastFilled { width: 53px }
+.FutureFilled { width: 6px; }
+3. Start ligt in het verleden (560), end ligt ook in het verleden (98)
+560/365 = 100%
+100% van 100px = 100px
 
-              98/365 = 26%
-              26% van 100px = 26px
+98/365 = 26%
+26% van 100px = 26px
 
-              De margin-right is dus 26px
-              De width is nu 100px - 26px = 74px
-              Dus:  .PastFilled { width: 74px; margin-right: 26px }
+De margin-right is dus 26px
+De width is nu 100px - 26px = 74px
+Dus:  .PastFilled { width: 74px; margin-right: 26px }
 
 3 sizes:
 TimespanLarge   100px = 100%
@@ -144,12 +144,12 @@ TimespanMedium  75px  = 100%
 TimespanSmall   50px  = 100%
 
 1. Verschil in dagen berekenen tussen start en current. (start - current)
-    a. Als negatief, dan gedeelte in the past (rood)
-    b. Als positief, dan alles in the future (groen)
+a. Als negatief, dan gedeelte in the past (rood)
+b. Als positief, dan alles in the future (groen)
 2. Verschil in dagen berekenen tussen end en current. (end - current)
-    a. Als negatief, dan rood
-    b. Als positief, dan groen
+a. Als negatief, dan rood
+b. Als positief, dan groen
 
 margin-left : als einddatum reeds in het verleden ligt
 margin-right: als startdatum in de toekomst ligt
-  */
+*/

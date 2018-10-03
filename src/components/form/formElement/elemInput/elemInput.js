@@ -1,7 +1,7 @@
 import React from 'react';
 
 const elemInput = (props) => {
-  const { configInput, inputClasses, placeholderInput, autoFocus, changed } = props;
+  const { configInput, inputClasses, placeholderInput, autoFocus, changed, keyUp } = props;
   const { elementConfig, value } = configInput;
 
   return (
@@ -13,6 +13,7 @@ const elemInput = (props) => {
       autoFocus={autoFocus}
       autoComplete='off'
       onChange={changed}
+      onKeyUp={keyUp}
     />
   );
 };

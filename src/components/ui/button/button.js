@@ -16,7 +16,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from '../../ui/tooltip/tooltip';
 import Label from '../../ui/label/label';
 import Aux from '../../../hoc/auxiliary';
 import classes from './button.scss';
@@ -71,9 +71,9 @@ const button = (props) => {
     );
 
     reactTooltip = (
-      <ReactTooltip id={props.id} place="bottom" type="dark" effect="solid">
+      <Tooltip id={props.id}>
         <Label labelKey={props.tooltip} convertType={'propercase'} />
-      </ReactTooltip>
+      </Tooltip>
     );
   }
 

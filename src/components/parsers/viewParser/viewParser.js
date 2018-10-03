@@ -8,6 +8,7 @@ import viewConfigSort from '../../../config/views/configListViewSortOptions';
 import FormParser from '../formParser/formParser';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import Label from '../../ui/label/label';
+import ActionMenu from '../../view/actionMenu/actionMenu';
 import ViewModal from '../../view/viewModal/viewModal';
 import ViewBars from '../../view/viewBars/viewBars';
 import Rows from '../../view/rows/rows';
@@ -69,9 +70,13 @@ class _View extends Component {
       listItems,
       loadedListItem: null,
       loading,
+      mousePosX: 0, // Horizontal positioning of the action menu.
+      mousePosY: 0, // Vertical postioning of the action menu.
       searchbarValue: '',
       selectedListItemId: null,
       selectedListItems: [],
+      showMenu: false,
+      showMenuType: '',
       showModalColumnConfigurator: false,
       showModalFilter: false,
       showModalMessage: false,
@@ -80,18 +85,19 @@ class _View extends Component {
       sort: this.props.viewConfig.sort,
       sortedColumn: this.props.viewConfig.sort,
       sortOrder: this.props.viewConfig.sortOrder,
-      viewConfig: { ...viewConfig },
+      subActions: [],
+      viewConfig: { ...viewConfig }
     };
 
     this.localData = {
       addRecordToView: false,
+      callBackOk: null,
+      callBackCancel: null,
       modalClass: '',
       messageTitle: [],
       messageType: '',
       messageContent: '',
-      messageButtons: '',
-      callBackOk: null,
-      callBackCancel: null
+      messageButtons: ''
     }
 
     // For multiple view skips, back- and forward.
@@ -314,7 +320,27 @@ class _View extends Component {
 
   showRowMenu = (event, id) => {
     event.preventDefault();
-    console.log(id);
+    event.stopPropagation();
+
+    this.setState(
+      {
+        showMenu: true, showMenuType: 'showInRowMenu',
+        mousePosX: event.clientX, mousePosY: event.clientY, selectedListItems: [id]
+      }
+    );
+  };
+
+  showBarMenu = (event) => {
+    this.setState({ showMenu: true, showMenuType: 'showInBarMenu', mousePosX: event.clientX, mousePosY: event.clientY });
+  };
+
+  showBarMenuPrimary = (event, subActions) => {
+    this.setState({ showMenu: true, showMenuType: 'showInBarMenu', mousePosX: event.clientX, mousePosY: event.clientY,
+    subActions: subActions });
+  };
+
+  editItem = () => {
+    this.onClickItemHandler(this.state.selectedListItems[0]);
   };
 
   /**
@@ -449,6 +475,13 @@ class _View extends Component {
     this.setState({ showModalSort: false });
   };
 
+  /**
+   * @brief   Closes the actions menu.
+   */
+  onActionsMenuCloseHandler = () => {
+    this.setState({ showMenu: false, subActions: [] });
+  };
+
   processSelectedSortOption = () => {
     // Get the selected sort item via the store.
     const selectedSortOption = this.state.viewConfig.sortOptions.options.filter((item) => item.id === this.props.sortItem);
@@ -562,17 +595,19 @@ class _View extends Component {
    */
   render = () => {
     const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
+    const { loadedListItem, configForm, selectedListItemId, showModalSort, showModalMessage, showMenu, subActions,
+      showMenuType, viewConfig, loading, selectedListItems, mousePosX, mousePosY } = this.state;
 
     // Display the form modal in case loadedListItem is filled with form data.
     let formModal = null;
-    if (this.state.loadedListItem) {
+    if (loadedListItem) {
       formModal = (
         <FormParser
-          configForm={this.state.configForm}
-          data={this.state.loadedListItem}
+          configForm={configForm}
+          data={loadedListItem}
           onCancel={() => this.onCloseHandler(true)}
           onSubmit={this.onSubmitHandler}
-          id={this.state.selectedListItemId}
+          id={selectedListItemId}
           modal={true}
         />
       );
@@ -582,8 +617,21 @@ class _View extends Component {
     const viewModalData = { modalClass, messageTitle, type: messageType, messageContent,
       buttons: messageButtons, callBackOk, callBackCancel, modal: true
     };
-    const sortModal = <ViewModal show={this.state.showModalSort} viewModalData={viewModalData} />;
-    const messageModal = <ViewModal show={this.state.showModalMessage} viewModalData={viewModalData} />;
+    const sortModal = <ViewModal show={showModalSort} viewModalData={viewModalData} />;
+    const messageModal = <ViewModal show={showModalMessage} viewModalData={viewModalData} />;
+    const actionMenu = (
+      <ActionMenu
+        actions={viewConfig.actions}
+        subActions={subActions}
+        show={showMenu}
+        showType={showMenuType}
+        actionMenuClosed={this.onActionsMenuCloseHandler}
+        selectedListItems={selectedListItems}
+        mousePosX={mousePosX}
+        mousePosY={mousePosY}
+        _this={this}
+      />
+    );
     // const filterModal = <ViewModal show={this.state.showModalFilter} viewModalData={viewModalData} />;
     // const columnConfiguratorModal = <ViewModal show={this.state.showModalColumnConfigurator} viewModalData={viewModalData} />;
 
@@ -591,13 +639,13 @@ class _View extends Component {
     // It contains many elements that can be shown or not, depending on configuration in the viewConfig.
 
     // Listview header.
-    const listviewHeader = <ViewBars viewConfig={this.state.viewConfig} _this={this} />;
+    const listviewHeader = <ViewBars viewConfig={viewConfig} _this={this} />;
 
     // ListItems.
-    let listItems = <Rows viewConfig={this.state.viewConfig} _this={this} />;
+    let listItems = <Rows viewConfig={viewConfig} _this={this} />;
 
     // In case the listItems are still fetched, we display a spinner.
-    if (this.state.loading) {
+    if (loading) {
       listItems = <Spinner />;
     }
 
@@ -614,6 +662,7 @@ class _View extends Component {
         {sortModal}
         {/*columnConfiguratorModal*/}
         {messageModal}
+        {actionMenu}
       </Aux>
     );
   };

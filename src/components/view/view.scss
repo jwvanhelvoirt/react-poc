@@ -92,7 +92,7 @@
 
 .ActionRow {
   min-height: 100%;
-  border-bottom: 1px solid #ccc;
+  // border-bottom: 1px solid #ccc;
   box-sizing: border-box;
   padding-left: 0;
   justify-content: space-between;
@@ -115,7 +115,7 @@
 }
 
 .ActionRowActions>*  {
-  border-right: 1px solid #ccc;
+  // border-right: 1px solid #ccc;
   color: white;
   background-color: #007bff;
 }
@@ -125,7 +125,7 @@
 }
 
 .FilterSort>*  {
-  border-right: 1px solid #ccc;
+  // border-right: 1px solid #ccc;
   color: white;
   background-color: #28a745;
 }
@@ -238,10 +238,33 @@
 .Flex {
   width: 100%;
   display: flex;
+  flex-direction: column;
+}
+
+.FlexRow {
+  width: 100%;
+  display: flex;
   align-items: center;
 }
 
-.Flex>*, .Title {
+.RowHover {
+  display: none;
+}
+
+.Row:hover>.Flex>.RowHover {
+  display: flex;
+}
+
+.RowHover>* {
+  padding: 0 5px;
+  color: #bbb;
+}
+
+.RowHover>*:hover {
+  color: black;
+}
+
+.FlexRow>*, .Title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

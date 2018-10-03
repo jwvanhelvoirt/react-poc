@@ -18,8 +18,12 @@ const backdrop = (props) => {
       [classes.Backdrop, classes.Pos1].join(' '));
 
   return (
-    props.show ? <div className={classNames} onClick={props.clicked}></div> : null
+    props.show ?
+      <div className={classNames} onClick={props.clicked} onContextMenu={(event) => rightMouseClick(event)}></div> :
+      null
   );
 };
+
+const rightMouseClick = (event) => event.preventDefault();
 
 export default backdrop;

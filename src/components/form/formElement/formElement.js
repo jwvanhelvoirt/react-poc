@@ -26,7 +26,7 @@ import classes from './formElement.scss';
 class Input extends Component {
 
   render = () => {
-    const { inputId, configInput, changed, translates, configForm, removeMultiValueItem, showModal } = this.props;
+    const { inputId, configInput, changed, keyUp, translates, configForm, removeMultiValueItem, showModal } = this.props;
     const { elementType, valid, validation, touched, label, defaultFocus, placeholder } = configInput;
     const placeholderInput = placeholder ? getDisplayValue(placeholder, 'propercase', true, translates): null;
 
@@ -41,7 +41,7 @@ class Input extends Component {
     // Default element is a text input.
     let inputElement = (
       <ElemInput configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-        autoFocus={autoFocus} changed={changed} />
+        autoFocus={autoFocus} changed={changed} keyUp={keyUp} />
     );
 
     // Check for the applicable element type for this form element.
@@ -53,14 +53,14 @@ class Input extends Component {
       case ('textarea'):
         inputElement = (
           <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-            autoFocus={autoFocus} changed={changed} />
+            autoFocus={autoFocus} changed={changed} keyUp={keyUp} />
         );
         break;
 
       case ('select'):
         inputElement = (
           <ElemSelect configInput={configInput} inputClasses={inputClasses} autoFocus={autoFocus}
-            changed={changed} translates={translates} />
+            changed={changed} keyUp={keyUp} translates={translates} />
         );
         break;
 
@@ -69,7 +69,8 @@ class Input extends Component {
         break;
 
       case ('singleCheckbox'):
-        inputElement = <ElemSingleCheckbox configInput={configInput} configForm={configForm} changed={changed} />;
+        inputElement = <ElemSingleCheckbox configInput={configInput} configForm={configForm}
+          changed={changed} keyUp={keyUp} />;
         break;
 
       case ('multiAppend'):

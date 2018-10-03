@@ -1,5 +1,6 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
+export const KEY_ADD_PERSON = 'KEY persoon toevoegen';
 export const KEY_ASCENDING = 'KEY oplopend';
 export const KEY_BUDGET = 'KEY budget';
 export const KEY_CANCEL = 'KEY annuleren';
@@ -44,6 +45,8 @@ export const KEY_PERSON = 'KEY persoon';
 export const KEY_PERSONAL_SETTINGS = 'KEY instellingen';
 export const KEY_PLUS = 'KEY plus';
 export const KEY_PROJECT = 'KEY project';
+export const KEY_PROPERTIES = 'KEY eigenschappen';
+export const KEY_REFRESH = 'KEY verversen';
 export const KEY_REMEMBER_PREV_LOGIN = 'KEY onthouden';
 export const KEY_RESTBUDGET = 'KEY restbudget';
 export const KEY_SALESSTATUS = 'KEY salesstatus';
@@ -77,4 +80,6 @@ export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
 - KEY sort view
 - KEY valide waarde
 - KEY plus
+- KEY verversen
+- KEY persoon toevoegen
 */

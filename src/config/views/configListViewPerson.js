@@ -1,44 +1,78 @@
+import * as actions from './centralViewActions';
+import * as icons from '../../libs/constIcons';
 import * as trans from '../../libs/constTranslates';
 import baseConfig from './configListViewBase';
+import baseConfigActions from './centralViewActionsBase';
 import formConfigPerson from '../forms/configFormPerson';
 
 const listViewConfig = {
   actions: [
 		{
+      ...actions.ACTION_ADD,
 			id: 'createPerson',
-			labelIcon: 'plus',
-			multiDoc: true,
-			zeroDoc: true,
-			showOnHover: false,
-			showInBarPrimary: true,
-			showInBarMenu: true,
-			showInRowMenu: true,
-			tooltip: 'keyAddPerson',
+      label: trans.KEY_ADD_PERSON,
+      tooltip: trans.KEY_ADD_PERSON,
 			callback: (_this) => { _this.addItem(formConfigPerson, true) }
 		},
-		{
-			id: 'delete',
-			labelIcon: 'trash-alt', /* kan ook labelText zijn */
-			multiDoc: true,
-			zeroDoc: false,
-			showOnHover: true,
-			showInBarPrimary: true,
-			showInBarMenu: true,
-			showInRowMenu: true,
-			tooltip: 'keyDeleteSelectedItems',
-			callback: (_this) => { _this.deleteItems(true) }
+    {
+      ...actions.ACTION_EDIT
 		},
-		{
-			id: 'refresh',
-			labelIcon: 'sync-alt',
-			multiDoc: true,
-			zeroDoc: true,
-			showOnHover: false,
-			showInBarPrimary: true,
-			showInBarMenu: true,
-			showInRowMenu: false,
-			tooltip: 'keyRefreshListView',
-			callback: (_this) => _this.reloadListView(0, null, true)
+    {
+      ...actions.ACTION_DELETE
+		},
+    {
+      ...actions.ACTION_REFRESH,
+			showInRowMenu: false
+		},
+    {
+      ...actions.ACTION_TEST_SUBS,
+      subActions: [
+        {
+          ...actions.ACTION_EDIT
+    		},
+        {
+          ...actions.ACTION_DELETE
+    		},
+        {
+          ...actions.ACTION_REFRESH,
+    			showInRowMenu: false
+    		},
+        {
+          ...baseConfigActions,
+          id: 'sub1',
+          multiDoc: false,
+          label: 'test met subitems',
+          labelIcon: icons.ICON_TRASH_ALT,
+          tooltip: 'Een subitem',
+          zeroDoc: false,
+          callback: () => { testSubs() }
+        },
+        {
+          ...actions.ACTION_TEST_SUBS,
+          subActions: [
+            {
+              ...actions.ACTION_EDIT
+        		},
+            {
+              ...actions.ACTION_DELETE
+        		},
+            {
+              ...actions.ACTION_REFRESH,
+        			showInRowMenu: false
+        		},
+            {
+              ...baseConfigActions,
+              id: 'sub1',
+              multiDoc: false,
+              label: 'test met subitems',
+              labelIcon: icons.ICON_TRASH_ALT,
+              tooltip: 'Een subitem',
+              zeroDoc: false,
+              callback: () => { testSubs() }
+            }
+          ]
+        }
+      ]
 		}
 	],
   columns: [
@@ -115,6 +149,10 @@ const listViewConfig = {
   },
   title: trans.KEY_PERSON,
   url: 'api.relatiebeheer.niveau9'
+};
+
+const testSubs = () => {
+  alert('Voor test doeleinden!');
 };
 
 export default { ...baseConfig, ...listViewConfig };

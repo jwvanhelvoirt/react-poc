@@ -119,6 +119,16 @@ class Form extends Component {
     return isValid;
   };
 
+  onKeyUpHandler = (event, formElement) => {
+    // 2-10-2018: dit fundamentje is gebouwd om tabs (keyCode === 9) binnen een form te houden.
+    // Daar moet nog veel meer voor gebeuren, maar dit is een begin.
+    // Voor input elementen van het type text input werkt het, bij elke toetsaanslag wordt deze method uitgevoerd.
+    // De bedoeling is om op een TAB van de laaste input, het veld te focussen, dat autofocus op true heeft staan.
+
+    // console.log(event.keyCode);
+    // console.log(formElement);
+  };
+
   inputChangedHandler = (event, id) => {
     // Set the state 'formTouched' in the store to 'true'.
     this.props.touchedForm(true); // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
@@ -335,6 +345,7 @@ class Form extends Component {
                   key={formElement.inputId}
                   inputId={formElement.inputId}
                   changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
+                  keyUp={(event) => this.onKeyUpHandler(event, formElement)}
                   configInput={formElement.configInput}
                   showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) =>
                     this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}

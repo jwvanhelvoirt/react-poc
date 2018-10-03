@@ -2,7 +2,7 @@ import React from 'react';
 import { getDisplayValue } from '../../../../libs/generic';
 
 const elemSelect = (props) => {
-  const { configInput, inputClasses, autoFocus, changed, translates } = props;
+  const { configInput, inputClasses, autoFocus, changed, keyUp, translates } = props;
   const { elementConfig, value, convertDisplayValues, translateDisplayValues } = configInput;
 
   return (
@@ -10,7 +10,8 @@ const elemSelect = (props) => {
       className={inputClasses.join(' ')}
       value={value}
       autoFocus={autoFocus}
-      onChange={changed}>
+      onChange={changed}
+      onKeyUp={keyUp}>
       {elementConfig.options.map(option => {
         const displayValue = getDisplayValue(option.displayValue, convertDisplayValues, translateDisplayValues, translates);
         return <option key={option.value} value={option.value}>

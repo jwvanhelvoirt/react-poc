@@ -1,0 +1,56 @@
+.ActionMenu, .SubMenu {
+  position: absolute;
+  background: white;
+  box-shadow: 1px 1px 20px 8px rgba(0,0,0,0.35);
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+}
+
+.SubMenu {
+  display: none;
+}
+
+.Action {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+}
+
+.Action:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.Icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Label {
+  display: flex;
+  align-items: center;
+}
+
+.Label>* {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.SubMenuIndicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.HasSubMenu {
+  position: relative;
+}
+
+.HasSubMenu:hover>.SubMenu {
+  display: flex;
+  flex-direction: column;
+}

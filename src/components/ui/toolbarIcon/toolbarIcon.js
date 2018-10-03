@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { NavLink } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from '../tooltip/tooltip';
 import Label from '../label/label';
 import classes from './toolbarIcon.scss';
 
@@ -36,9 +36,9 @@ const toolbarIcon = (props) => {
 	return (
 		<li className={classes.ToolbarIcon}>
 			{containerLink}
-			<ReactTooltip id={tooltipId} place="bottom" type="dark" effect="solid">
+			<Tooltip id={tooltipId}>
 				  <Label labelKey={props.label} convertType={'propercase'} />
-			</ReactTooltip>
+			</Tooltip>
 		</li>
 	);
 };

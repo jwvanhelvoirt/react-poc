@@ -37,32 +37,36 @@ const headerBar = (props) => {
     </div>
 
   // Header bar: columns.
-  const classesCombinedHeaders = [classes.Headers, classes.Flex].join(' ');
+  const classesCombinedHeaders = [classes.Headers, classes.FlexRow].join(' ');
   let columnHeaders = null;
   const columnsVisible = columns.filter((column) => column.show);
   if (columnsVisible.length > 0) {
     columnHeaders = (
-      <div className={classesCombinedHeaders}>
-      {
-        columnsVisible.map((column, index) => {
-          let sortIcon = <FontAwesomeIcon icon='sort' />;
-          if (column.sortOn === _this.state.sortedColumn) {
-            // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
-            sortIcon = _this.state.sortOrder === 1 ? <FontAwesomeIcon icon={icons.ICON_SORT_UP} /> : <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />;
-          }
-          const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
-          const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
-          const onColumn = column.sort ? () => _this.sortOnColumn(column.sortOn) : null;
-          const classesCombinedHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
-          return(
-            <div key={index} onClick={onColumn} className={classesCombinedHeader}>
-              {labelColumn}
-              {sortColumn}
-            </div>
-          );
-        })
-      }
+      <div className={classes.Flex}>
+        <div className={classesCombinedHeaders}>
+        {
+          columnsVisible.map((column, index) => {
+            let sortIcon = <FontAwesomeIcon icon='sort' />;
+            if (column.sortOn === _this.state.sortedColumn) {
+              // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
+              sortIcon = _this.state.sortOrder === 1 ? <FontAwesomeIcon icon={icons.ICON_SORT_UP} /> : <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />;
+            }
+            const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
+            const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
+            const onColumn = column.sort ? () => _this.sortOnColumn(column.sortOn) : null;
+            const classesCombinedHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
+            return(
+              <div key={index} onClick={onColumn} className={classesCombinedHeader}>
+                {labelColumn}
+                {sortColumn}
+              </div>
+            );
+          })
+        }
+        </div>
       </div>
+
+
     );
   }
 
