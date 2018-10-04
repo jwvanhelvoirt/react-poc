@@ -73,9 +73,12 @@ const row = (props) => {
   const doubleClick = (multiSelect && !lookup) ? () => _this.onClickItemHandler(listItem.id) : null;
 
   // Hover actions.
-  const actionsHover = getViewActions(actions, 'showOnRowHover', selectedListItems, _this);
-  const actionsHoverOutput = actionsHover.map((action, index) =>
-    <RowHoverIcon key={index} index={index.toString()} action={action} _this={_this} id={listItem.id} />);
+  let actionsHoverOutput = null;
+  if (actions) {
+    const actionsHover = getViewActions(actions, 'showOnRowHover', selectedListItems, _this);
+    const actionsHoverOutput = actionsHover.map((action, index) =>
+      <RowHoverIcon key={index} index={index.toString()} action={action} _this={_this} id={listItem.id} />);
+  }
 
   const listItemDiv = (
     <div className={classesCombinedListItem}

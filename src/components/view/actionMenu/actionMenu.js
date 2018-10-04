@@ -101,9 +101,11 @@ const getActions = (actions, subActions, _this, subMenu, mousePosY, mousePosX, s
         indexSubAction + index + 1, subMenuLevel + 1) :
       null;
 
+    const callback = action.callback ? (event) => closeActionMenu(event, _this, action.callback) : null;
+
     return (
       <div key={index} className={classesMenuItem} style={dynamicStylesAction}
-        onClick={(event) => closeActionMenu(event, _this, action.callback)}>
+        onClick={callback}>
         <div className={classes.Icon} style={dynamicStylesIcon}>
           <FontAwesomeIcon icon={action.labelIcon} />
         </div>
