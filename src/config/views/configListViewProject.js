@@ -43,7 +43,6 @@ const listViewConfig = {
     },
     {
       columnClasses: ['ScreenSmallOnly'],
-      content: 'code',
       content: {
         lines: [
           {

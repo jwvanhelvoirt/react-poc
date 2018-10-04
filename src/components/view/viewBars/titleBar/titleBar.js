@@ -25,9 +25,9 @@ const titleBar = (props) => {
       navForwMult = <div key="4" className={classes.PreviousNext} onClick={() => _this.nav(true, true)}>&gt;{_this.navStep}</div>;
       navForw =     <div key="5" className={classes.PreviousNext} onClick={() => _this.nav(true, false)}>&gt;</div>;
       if (count > skip) {
-          navInfo = <div key="1" className={classes.Counter}>{skip + 1}-{skip + viewConfig.limit > count ?
+          navInfo = <div key="1" className={classes.Counter}><div>{skip + 1}-{skip + viewConfig.limit > count ?
             count :
-            skip + viewConfig.limit} {of} {count}</div>;
+            skip + viewConfig.limit} {of} {count}</div></div>;
       } else if (count === 0) {
         navInfo = <div key="1" className={classes.Counter}>0</div>;
       } else {
