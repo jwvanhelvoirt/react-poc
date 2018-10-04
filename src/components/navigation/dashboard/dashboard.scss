@@ -22,7 +22,12 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
 	}
+
   .Dashboard>* {
     width: 100%;
   }
+
+	.Wrapper {
+		justify-content: flex-start;
+	}
 }

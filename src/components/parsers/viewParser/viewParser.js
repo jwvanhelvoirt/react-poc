@@ -15,7 +15,7 @@ import Rows from '../../view/rows/rows';
 import { callServer } from '../../../api/api';
 import { getDisplayValue } from '../../../libs/generic';
 import * as trans from '../../../libs/constTranslates';
-import classes from './viewParser.scss';
+import classes from '../../view/view.scss';
 
 class _View extends Component {
 

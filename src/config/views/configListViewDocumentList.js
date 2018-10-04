@@ -10,7 +10,7 @@ const listViewConfig = {
       sortOn: 'naam',
       columnClasses: ['ScreenAll'],
       show: true,
-      size: 'Flex80'
+      size: 'Flex60'
     },
     {
       content: 'datumtijd',
@@ -19,7 +19,7 @@ const listViewConfig = {
       sortOn: 'datumtijd',
       columnClasses: ['ScreenAll'],
       show: true,
-      size: 'Flex20'
+      size: 'Flex40'
     }
   ],
   row: { selectable: true, menu: false },

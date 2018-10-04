@@ -40,7 +40,7 @@
 .TitleRow {
   border-bottom: 1px solid #ccc;
   box-sizing: border-box;
-  min-height: 100%;
+  // min-height: 100%; /* 4-10-2018: Multiplies heigth of 40px with 3 in Firefox ESR 52.9.0 */
   justify-content: space-between;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .ActionRow {
-  min-height: 100%;
+  // min-height: 100%; /* 4-10-2018: Multiplies heigth of 40px with 3 in Firefox ESR 52.9.0 */
   // border-bottom: 1px solid #ccc;
   box-sizing: border-box;
   padding-left: 0;
@@ -177,7 +177,7 @@
 .HeaderRow {
   background-color: #ddd;
   box-sizing: border-box;
-  min-height: 100%;
+  // min-height: 100%; /* 4-10-2018: Multiplies heigth of 40px with 3 in Firefox ESR 52.9.0 */
 }
 
 .Headers>* {
