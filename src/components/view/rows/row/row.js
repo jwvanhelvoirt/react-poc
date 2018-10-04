@@ -76,7 +76,7 @@ const row = (props) => {
   let actionsHoverOutput = null;
   if (actions) {
     const actionsHover = getViewActions(actions, 'showOnRowHover', selectedListItems, _this);
-    const actionsHoverOutput = actionsHover.map((action, index) =>
+    actionsHoverOutput = actionsHover.map((action, index) =>
       <RowHoverIcon key={index} index={index.toString()} action={action} _this={_this} id={listItem.id} />);
   }
 

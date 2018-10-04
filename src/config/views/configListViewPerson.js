@@ -40,11 +40,11 @@ const listViewConfig = {
         {
           ...baseConfigActions,
           id: 'sub1',
-          multiDoc: false,
+          multiRow: false,
           label: 'test met subitems',
           labelIcon: icons.ICON_TRASH_ALT,
           tooltip: 'Een subitem',
-          zeroDoc: false,
+          zeroRow: false,
           callback: () => { testSubs() }
         },
         {
@@ -63,11 +63,11 @@ const listViewConfig = {
             {
               ...baseConfigActions,
               id: 'sub1',
-              multiDoc: false,
+              multiRow: false,
               label: 'test met subitems',
               labelIcon: icons.ICON_TRASH_ALT,
               tooltip: 'Een subitem',
-              zeroDoc: false,
+              zeroRow: false,
               callback: () => { testSubs() }
             }
           ]

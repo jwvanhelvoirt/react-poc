@@ -1,10 +1,10 @@
 const baseConfig = {
-  multiDoc: true,
+  multiRow: true,
   showInBarPrimary: true,
   showInBarMenu: true,
   showInRowMenu: true,
   showOnRowHover: false,
-  zeroDoc: true
+  zeroRow: true
 };
 
 export default baseConfig;

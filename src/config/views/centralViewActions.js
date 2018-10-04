@@ -10,24 +10,24 @@ const ACTION_ADD = {
 const ACTION_EDIT = {
   ...baseConfigActions,
   id: 'edit',
-  multiDoc: false,
+  multiRow: false,
   label: trans.KEY_PROPERTIES,
   labelIcon: icons.ICON_EDIT,
   showOnRowHover: true,
   tooltip: trans.KEY_PROPERTIES,
-  zeroDoc: false,
+  zeroRow: false,
   callback: (_this) => { _this.editItem() }
 };
 
 const ACTION_DELETE = {
   ...baseConfigActions,
   id: 'delete',
-  multiDoc: false,
+  multiRow: false,
   label: trans.KEY_DELETE,
   labelIcon: icons.ICON_TRASH_ALT,
   showOnRowHover: true,
   tooltip: trans.KEY_DELETE,
-  zeroDoc: false,
+  zeroRow: false,
   callback: (_this) => { _this.deleteItems(true) }
 };
 

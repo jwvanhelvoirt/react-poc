@@ -160,7 +160,7 @@ class _View extends Component {
    */
   onCloseHandler = (userConfirmation) => {
     if (userConfirmation && this.props.formTouched) {
-      const content = <Label labelKey={trans.KEY_WARNING_CLOSE_FORM} />
+      const content = <Label labelKey={trans.KEY_WARNING_CLOSE_FORM} convertType={'propercase'} />
 
       // Ask for user confirmation to lose all changes in the form.
       this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_CLOSE], 'warning', content, 'butOkCancel',
@@ -195,7 +195,7 @@ class _View extends Component {
    */
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
-    const content = <Label labelKey={trans.KEY_ERROR_FETCH_ITEM} />
+    const content = <Label labelKey={trans.KEY_ERROR_FETCH_ITEM} convertType={'propercase'} />
     this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk');
   };
 
@@ -260,7 +260,7 @@ class _View extends Component {
    */
   deleteItems = (userConfirmation) => {
     if (userConfirmation) {
-      const content = <Label labelKey={trans.KEY_WARNING_DELETE_DOCS} />
+      const content = <Label labelKey={trans.KEY_WARNING_DELETE_DOCS} convertType={'propercase'} />
       // Ask for user confirmation before deleting records from the database.
       this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_DELETE], 'warning', content, 'butOkCancel',
          () => this.deleteItems(false), () => this.onModalMessageCloseHandler());
@@ -298,7 +298,7 @@ class _View extends Component {
    * @brief   Callback that is triggered once a delete action has NOT been successfully executed on the server.
    */
   errorDeleteHandler = (error) => {
-    const content = <Label labelKey={trans.KEY_ERROR_REMOVE_LIST_ITEMS} />;
+    const content = <Label labelKey={trans.KEY_ERROR_REMOVE_LIST_ITEMS} convertType={'propercase'} />;
     this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk');
   };
 
