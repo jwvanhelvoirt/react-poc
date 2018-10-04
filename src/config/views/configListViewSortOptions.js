@@ -5,7 +5,7 @@ const listViewConfig = {
     {
       content: 'label',
       label: trans.KEY_SORT,
-      displayOn: 'always',
+      columnClasses: ['ScreenAll'],
       show: true,
       size: 'Flex100'
     }

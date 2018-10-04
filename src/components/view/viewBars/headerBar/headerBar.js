@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '../../../../libs/constIcons';
+import { getColumnClasses } from '../../../../libs/views';
 import Label from '../../../ui/label/label';
 import Aux from '../../../../hoc/auxiliary';
 import classes from '../../view.scss';
@@ -39,7 +40,7 @@ const headerBar = (props) => {
   // Header bar: columns.
   const classesCombinedHeaders = [classes.Headers, classes.FlexRow].join(' ');
   let columnHeaders = null;
-  const columnsVisible = columns.filter((column) => column.show);
+  const columnsVisible = columns.filter((column) => column.show); // TODO : Willen we dit straks nog, als de Screen classes erin zitten?
   if (columnsVisible.length > 0) {
     columnHeaders = (
       <div className={classes.Flex}>
@@ -51,12 +52,15 @@ const headerBar = (props) => {
               // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
               sortIcon = _this.state.sortOrder === 1 ? <FontAwesomeIcon icon={icons.ICON_SORT_UP} /> : <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />;
             }
-            const sortColumn = column.sort ? <div className={classes.Sort}>{sortIcon}</div> : null;
+            const sortColumn = column.sort ? <span className={classes.Sort}>{sortIcon}</span> : null;
             const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
             const onColumn = column.sort ? () => _this.sortOnColumn(column.sortOn) : null;
-            const classesCombinedHeader = column.sort ? [classes[column.size], classes.HeaderSortable].join(' ') : classes[column.size];
+
+            const classesDefault = column.sort ? [classes[column.size], classes.HeaderSortable] : [classes[column.size]];
+            const columnClasses = getColumnClasses(column, classesDefault, classes);
+
             return(
-              <div key={index} onClick={onColumn} className={classesCombinedHeader}>
+              <div key={index} onClick={onColumn} className={columnClasses}>
                 {labelColumn}
                 {sortColumn}
               </div>

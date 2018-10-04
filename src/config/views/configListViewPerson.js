@@ -5,47 +5,82 @@ import formConfigPerson from '../forms/configFormPerson';
 
 const listViewConfig = {
   actions: [
-		{
+    {
       ...actions.ACTION_ADD,
-			id: 'createPerson',
+      id: 'createPerson',
       label: trans.KEY_ADD_PERSON,
       tooltip: trans.KEY_ADD_PERSON,
-			callback: (_this) => { _this.addItem(formConfigPerson, true) }
-		},
+      callback: (_this) => { _this.addItem(formConfigPerson, true) }
+    },
     {
       ...actions.ACTION_EDIT
-		},
+    },
     {
       ...actions.ACTION_DELETE
-		},
+    },
     {
       ...actions.ACTION_REFRESH,
-			showInRowMenu: false
-		},
+      showInRowMenu: false
+    },
     {
       ...actions.ACTION_REPORT,
       subActions: [
         {
           ...actions.ACTION_REPORT_CERTIFICATIONS
-    		},
+        },
         {
           ...actions.ACTION_REPORT_CORRESPONDENCE
-    		}
+        }
       ]
-		}
-	],
+    }
+  ],
   columns: [
     {
+      avatarName: 'naam',
       content: 'foto',
-      label: '',
-      sort: false,
-      displayOn: 'always',
-      show: true,
       contentType: 'avatar',
+      label: '',
+      show: true,
       size: 'AvatarLarge',
-      avatarName: 'naam'
+      sort: false
     },
     {
+      columnClasses: ['ScreenSmallOnly'],
+      content: {
+        lines: [
+          {
+            lineData: [
+              { type: 'prop', value: 'completenaam' }
+            ]
+          },
+          {
+            lineData: [
+              { type: 'prop', value: 'email', classes: ['smallFont'] }
+            ]
+          },
+          {
+            lineData: [
+              { type: 'prop', value: 'tel', classes: ['smallFont'] }
+            ]
+          },
+          {
+            lineData: [
+              { type: 'prop', value: 'niveau4' },
+              { type: 'string', value: '(', classes: ['preSpace'] },
+              { type: 'prop', value: 'niveau4debiteurnr' },
+              { type: 'string', value: ')' },
+            ]
+          }
+        ]
+      },
+      label: trans.KEY_NAME,
+      show: true,
+      size: 'Flex100',
+      sort: true,
+      sortOn: 'naam'
+    },
+    {
+      columnClasses: ['ScreenMedium'],
       content: {
         lines: [
           {
@@ -66,13 +101,13 @@ const listViewConfig = {
         ]
       },
       label: trans.KEY_NAME,
-      sort: true,
-      sortOn: 'naam',
-      displayOn: 'always',
       show: true,
-      size: 'Flex40'
+      size: 'Flex40',
+      sort: true,
+      sortOn: 'naam'
     },
     {
+      columnClasses: ['ScreenMedium'],
       content: {
         lines: [
           {
@@ -86,10 +121,9 @@ const listViewConfig = {
         ]
       },
       label: trans.KEY_ORGANISATION,
-      sort: false,
-      displayOn: 'always',
       show: true,
-      size: 'Flex40'
+      size: 'Flex40',
+      sort: false
     }
   ],
   relatedForm: formConfigPerson,

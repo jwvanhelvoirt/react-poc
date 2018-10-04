@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '../../../../libs/constIcons';
-import { getViewActions } from '../../../../libs/views';
+import { getViewActions, getColumnClasses } from '../../../../libs/views';
 import Avatar from '../../../ui/avatar/avatar';
 import Timespan from '../../../ui/timespan/timespan';
 import RowHoverIcon from './rowHoverIcon/rowHoverIcon';
@@ -15,7 +15,7 @@ const row = (props) => {
   const { route, lookup } = _this.props;
   const { selectedListItems } = _this.state;
   const currentUrl = _this.props.match.url;
-  const columnsVisible = columns.filter((column) => column.show);
+  const columnsVisible = columns.filter((column) => column.show); // TODO : Willen we dit straks nog, als de Screen classes erin zitten?
 
   // In case the listItem has been edited during this client session, it gets additional styling.
   const classesCombinedListItem = listItem.edit ? [classes.Row, classes.RowEdit].join(' ') : classes.Row;
@@ -91,6 +91,7 @@ const row = (props) => {
         <div className={classes.FlexRow}>
           {
             columnsVisible.map((column, index) => {
+
               let listItemColumnContent = null;
               switch (column.contentType) {
                 case 'avatar':
@@ -133,7 +134,8 @@ const row = (props) => {
                   }
               };
 
-              return <div key={index} className={classes[column.size]}>{listItemColumnContent}</div>;
+              const columnClasses = getColumnClasses(column, [classes[column.size]], classes);
+              return <div key={index} className={columnClasses}>{listItemColumnContent}</div>;
             })
           }
         </div>
@@ -141,10 +143,6 @@ const row = (props) => {
           {actionsHoverOutput}
         </div>
       </div>
-
-
-
-
 
     </div>
   );

@@ -4,43 +4,76 @@ import baseConfig from './configListViewBase';
 const listViewConfig = {
   columns: [
     {
+      avatarName: 'naam',
       content: 'foto',
-      label: '',
-      sort: false,
-      displayOn: 'always',
-      show: true,
       contentType: 'avatar',
+      label: '',
+      show: true,
       size: 'AvatarLarge',
-      avatarName: 'naam'
+      sort: false
     },
     {
+      columnClasses: ['ScreenMedium'],
       content: 'code',
       label: trans.KEY_NAME,
-      sort: true,
-      sortOn: 'code',
-      displayOn: 'always',
       show: true,
-      size: 'Flex40'
+      size: 'Flex40',
+      sort: true,
+      sortOn: 'code'
     },
     {
+      columnClasses: ['ScreenMedium'],
       content: 'niveau4',
       label: trans.KEY_ORGANISATION,
-      sort: true,
-      sortOn: 'niveau4',
-      displayOn: 'always',
       show: true,
-      size: 'Flex40'
+      size: 'Flex40',
+      sort: true,
+      sortOn: 'niveau4'
     },
     {
+      columnClasses: ['ScreenMedium'],
       content: 'start',
-      label: trans.KEY_PERIOD,
-      sort: true,
-      sortOn: 'start',
-      displayOn: 'always',
-      show: true,
       contentType: 'timespan',
       data: { start: 'start', end: 'eind' },
-      size: 'TimespanLarge'
+      label: trans.KEY_PERIOD,
+      show: true,
+      size: 'TimespanLarge',
+      sort: true,
+      sortOn: 'start'
+    },
+    {
+      columnClasses: ['ScreenSmallOnly'],
+      content: 'code',
+      content: {
+        lines: [
+          {
+            lineData: [
+              { type: 'prop', value: 'code' }
+            ]
+          },
+          {
+            lineData: [
+              { type: 'prop', value: 'niveau4', classes: ['smallFont'] }
+            ]
+          }
+        ]
+      },
+      label: trans.KEY_NAME,
+      show: true,
+      size: 'Flex100',
+      sort: true,
+      sortOn: 'code'
+    },
+    {
+      columnClasses: ['ScreenSmallOnly'],
+      content: 'start',
+      contentType: 'timespan',
+      data: { start: 'start', end: 'eind' },
+      label: trans.KEY_PERIOD,
+      show: true,
+      size: 'TimespanSmall',
+      sort: true,
+      sortOn: 'start'
     }
   ],
   multiSelect: false,

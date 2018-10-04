@@ -19,3 +19,21 @@ export const getViewActions = (actions, show, selectedListItems) => {
   // Actions have an order attribute, so they have a consistent order in every listView. Sort the actions.
   return actionsPrimary.sort((action1, action2) => action1.order - action2.order);
 };
+
+export const getColumnClasses = (column, defaultClasses, classes) => {
+  // Calculate column classes.
+  let arrayClassesScreen = [];
+
+  if (column.columnClasses) {
+    arrayClassesScreen = column.columnClasses.map((className) => {
+      return classes[className];
+    });
+  }
+
+  const arrayClasses = [
+    ...arrayClassesScreen,
+    ...defaultClasses
+  ];
+
+  return arrayClasses.join(' ');
+}

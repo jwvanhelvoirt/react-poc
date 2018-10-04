@@ -372,3 +372,27 @@
 .largeFont {
   font-size: 16px;
 }
+.ScreenSmall, .ScreenMedium, .ScreenLarge, .ScreenSmallOnly, .ScreenMediumOnly, .ScreenLargeOnly { display: none; }
+
+@media(min-width: 1px) {
+  .ScreenSmall { display: block; }
+}
+
+@media(max-width: 767px) {
+  .ScreenSmallOnly { display: block; }
+  .RowHover>* {
+    font-size: 30px;
+  }
+}
+
+@media(min-width: 768px) {
+  .ScreenSmall, .ScreenMedium { display: block; }
+}
+
+@media(min-width: 768px) and (max-width: 1279px) {
+  .ScreenMediumOnly { display: block; }
+}
+
+@media(min-width: 1280px) {
+  .ScreenSmall, .ScreenMedium, .ScreenLarge, .ScreenLargeOnly { display: block; }
+}

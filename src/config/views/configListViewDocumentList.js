@@ -8,7 +8,7 @@ const listViewConfig = {
       label: trans.KEY_NAME,
       sort: true,
       sortOn: 'naam',
-      displayOn: 'always',
+      columnClasses: ['ScreenAll'],
       show: true,
       size: 'Flex80'
     },
@@ -17,7 +17,7 @@ const listViewConfig = {
       label: trans.KEY_DATE,
       sort: true,
       sortOn: 'datumtijd',
-      displayOn: 'always',
+      columnClasses: ['ScreenAll'],
       show: true,
       size: 'Flex20'
     }
