@@ -12,6 +12,7 @@ export const ICON_HOME = 'home';
 export const ICON_MINUS = 'minus';
 export const ICON_PLUS = 'plus';
 export const ICON_POWER_OFF = 'power-off';
+export const ICON_REPORT = 'file-chart-line';
 export const ICON_SIGN_IN_ALT = 'sign-in-alt';
 export const ICON_SORT = 'sort';
 export const ICON_SORT_DOWN = 'sort-down';

@@ -41,18 +41,43 @@ const ACTION_REFRESH = {
   callback: (_this) => _this.reloadListView(0, null, true)
 };
 
-const ACTION_TEST_SUBS = {
+const ACTION_REPORT = {
   ...baseConfigActions,
-  id: 'test',
-  label: 'Test subitems',
-  labelIcon: icons.ICON_SIGN_IN_ALT,
-  tooltip: 'Test subitems'
+  id: 'report',
+  label: trans.KEY_REPORT,
+  labelIcon: icons.ICON_REPORT,
+  multiRow: false,
+  tooltip: trans.KEY_REPORT,
+  zeroRow: false
+};
+
+const ACTION_REPORT_CERTIFICATIONS = {
+  ...baseConfigActions,
+  id: 'report',
+  label: trans.KEY_CERTIFICATIONS,
+  labelIcon: icons.ICON_REPORT,
+  multiRow: false,
+  tooltip: trans.KEY_CERTIFICATIONS,
+  zeroRow: false
+};
+
+const ACTION_REPORT_CORRESPONDENCE = {
+  ...baseConfigActions,
+  id: 'report',
+  label: trans.KEY_CORRESPONDENCE,
+  labelIcon: icons.ICON_REPORT,
+  multiRow: false,
+  tooltip: trans.KEY_CORRESPONDENCE,
+  zeroRow: false
 };
 
 ACTION_ADD['order'] = 10;
 ACTION_EDIT['order'] = 20;
 ACTION_DELETE['order'] = 30;
 ACTION_REFRESH['order'] = 40;
-ACTION_TEST_SUBS['order'] = 50;
+ACTION_REPORT['order'] = 50;
+ACTION_REPORT_CERTIFICATIONS['order'] = 51;
+ACTION_REPORT_CORRESPONDENCE['order'] = 52;
 
-export {ACTION_ADD, ACTION_EDIT, ACTION_DELETE, ACTION_REFRESH, ACTION_TEST_SUBS};
+export {ACTION_ADD, ACTION_EDIT, ACTION_DELETE, ACTION_REFRESH, ACTION_REPORT, ACTION_REPORT_CERTIFICATIONS,
+  ACTION_REPORT_CORRESPONDENCE};

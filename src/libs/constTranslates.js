@@ -4,9 +4,11 @@ export const KEY_ADD_PERSON = 'KEY persoon toevoegen';
 export const KEY_ASCENDING = 'KEY oplopend';
 export const KEY_BUDGET = 'KEY budget';
 export const KEY_CANCEL = 'KEY annuleren';
+export const KEY_CERTIFICATIONS = 'KEY certificeringen';
 export const KEY_CHANGE = 'KEY wijziging';
 export const KEY_CLOSE = 'KEY sluiten';
 export const KEY_CONTACT = 'KEY contact';
+export const KEY_CORRESPONDENCE = 'KEY correspondentie';
 export const KEY_DASHBOARD = 'KEY dashboard';
 export const KEY_DATE = 'KEY datum';
 export const KEY_DELETE = 'KEY verwijderen';
@@ -48,6 +50,7 @@ export const KEY_PROJECT = 'KEY project';
 export const KEY_PROPERTIES = 'KEY eigenschappen';
 export const KEY_REFRESH = 'KEY verversen';
 export const KEY_REMEMBER_PREV_LOGIN = 'KEY onthouden';
+export const KEY_REPORT = 'KEY rapport';
 export const KEY_RESTBUDGET = 'KEY restbudget';
 export const KEY_SALESSTATUS = 'KEY salesstatus';
 export const KEY_SEARCH = 'KEY zoek';
@@ -61,8 +64,6 @@ export const KEY_USERNAME = 'KEY gebruikersnaam';
 export const KEY_VALID_VALUE = 'KEY valide waarde';
 export const KEY_WARNING_CLOSE_FORM = 'KEY wijzigingen niet opgeslagen, toch sluiten ?';
 export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
-
-
 
 /*
  Labels die niet in api.public.getTranslationTable zitten:

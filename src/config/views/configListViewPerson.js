@@ -25,53 +25,14 @@ const listViewConfig = {
 			showInRowMenu: false
 		},
     {
-      ...actions.ACTION_TEST_SUBS,
+      ...actions.ACTION_REPORT,
       subActions: [
         {
-          ...actions.ACTION_EDIT
+          ...actions.ACTION_REPORT_CERTIFICATIONS
     		},
         {
-          ...actions.ACTION_DELETE
-    		},
-        {
-          ...actions.ACTION_REFRESH,
-    			showInRowMenu: false
-    		},
-        {
-          ...baseConfigActions,
-          id: 'sub1',
-          multiRow: false,
-          label: 'test met subitems',
-          labelIcon: icons.ICON_TRASH_ALT,
-          tooltip: 'Een subitem',
-          zeroRow: false,
-          callback: () => { testSubs() }
-        },
-        {
-          ...actions.ACTION_TEST_SUBS,
-          subActions: [
-            {
-              ...actions.ACTION_EDIT
-        		},
-            {
-              ...actions.ACTION_DELETE
-        		},
-            {
-              ...actions.ACTION_REFRESH,
-        			showInRowMenu: false
-        		},
-            {
-              ...baseConfigActions,
-              id: 'sub1',
-              multiRow: false,
-              label: 'test met subitems',
-              labelIcon: icons.ICON_TRASH_ALT,
-              tooltip: 'Een subitem',
-              zeroRow: false,
-              callback: () => { testSubs() }
-            }
-          ]
-        }
+          ...actions.ACTION_REPORT_CORRESPONDENCE
+    		}
       ]
 		}
 	],
