@@ -1,8 +1,6 @@
 import * as actions from './centralViewActions';
-import * as icons from '../../libs/constIcons';
 import * as trans from '../../libs/constTranslates';
 import baseConfig from './configListViewBase';
-import baseConfigActions from './centralViewActionsBase';
 import formConfigPerson from '../forms/configFormPerson';
 
 const listViewConfig = {
@@ -101,6 +99,7 @@ const listViewConfig = {
   sortOrder: 1,
   sortOptions: {
     translate: true,
+    defaultSortOption: 'wijzigingA',
     options: [ // In this order the sort options will appear in the list.
       { id: 'contactA', label: [trans.KEY_CONTACT, trans.KEY_ASCENDING], sortOn: 'laatstecontact', order: 1},
       { id: 'contactD', label: [trans.KEY_CONTACT, trans.KEY_DESCENDING], sortOn: 'laatstecontact', order: -1},
@@ -110,10 +109,6 @@ const listViewConfig = {
   },
   title: trans.KEY_PERSON,
   url: 'api.relatiebeheer.niveau9'
-};
-
-const testSubs = () => {
-  alert('Voor test doeleinden!');
 };
 
 export default { ...baseConfig, ...listViewConfig };

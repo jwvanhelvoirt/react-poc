@@ -7,7 +7,6 @@ import Aux from '../../../hoc/auxiliary';
 import classes from './messageBox.scss';
 
 const messageBox = (props) => {
-  console.log(props.messageContent);
   const content = (
     <div className={classes.MessageBox}>
       <ModalHeader

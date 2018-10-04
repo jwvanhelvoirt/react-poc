@@ -25,6 +25,7 @@ class _View extends Component {
     const { viewConfig } = this.props;
 
     let loading = true;
+    let selectedListItems = [];
 
     let listItems = [];
     if (!viewConfig.url) {
@@ -35,10 +36,13 @@ class _View extends Component {
 
       // In case there's no url specified, we've got nothing to load, so the Spinner should not be displayed.
       loading = false;
-
       let listItemsUpdated = cloneDeep(this.props.listItems);
-      if (listItemsUpdated.translate) {
-        listItemsUpdated.options = listItemsUpdated.options.map((item) => {
+
+      const { translate, defaultSortOption } = listItemsUpdated;
+      let { options } = listItemsUpdated;
+
+      if (translate) {
+        options = options.map((item) => {
           // Translate the label.
           if (Array.isArray(item.label)) {
               // Array of translate keys that are concatenated divided by a space.
@@ -59,7 +63,15 @@ class _View extends Component {
         });
       }
 
-      listItems = listItemsUpdated.options;
+      listItems = options;
+
+      if (defaultSortOption) {
+        // This list must have a default value, for instance a popup with sort options.
+        selectedListItems = [defaultSortOption];
+
+        // And update the store.
+        this.props.storeSortItem(defaultSortOption);
+      }
     }
 
     this.state = {
@@ -74,7 +86,7 @@ class _View extends Component {
       mousePosY: 0, // Vertical postioning of the action menu.
       searchbarValue: '',
       selectedListItemId: null,
-      selectedListItems: [],
+      selectedListItems,
       showMenu: false,
       showMenuType: '',
       showModalColumnConfigurator: false,
@@ -490,7 +502,8 @@ class _View extends Component {
     // const { sortOrder } = selectedSortOption[0];
 
     // setState is async function, the method 'reloadListView' relies on the updated state, so we use a callback to continue.
-    this.setState({sort: selectedSortOption[0].sortOn, sortOrder: selectedSortOption[0].order}, () => { this.reloadListView(0, searchbarValue); });
+    this.setState({sort: selectedSortOption[0].sortOn, sortOrder: selectedSortOption[0].order},
+      () => { this.reloadListView(0, searchbarValue); });
 
     // Close the sort modal.
     this.onModalSortCloseHandler();
