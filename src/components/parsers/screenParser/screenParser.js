@@ -207,8 +207,8 @@ class Screen extends Component {
         // Return html for this pane.
         html = (
           <div className={classes.Pane}>
-            {upperZone}
             <div className={classes.ListviewContainer}>
+              {upperZone}
               {content}
             </div>
           </div>

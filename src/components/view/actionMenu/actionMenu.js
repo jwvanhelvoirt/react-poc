@@ -52,7 +52,7 @@ const getActions = (actions, subActions, _this, subMenu, mousePosY, mousePosX, s
   const iconWidth = 40;
   const labelWidth = 190;
   const subMenuIndicatorWidth = 20;
-  const subMenuIndent = 80;
+  const subMenuIndent = 40;
   const menuWidth = iconWidth + labelWidth + subMenuIndicatorWidth;
 
   const actionMenuHeight = actionsMenu.length * actionHeight;
