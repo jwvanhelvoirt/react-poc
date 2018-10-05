@@ -53,7 +53,7 @@ const formConfig = {
 			},
 			valid: false,
 			touched: false
-		},
+		}
   }
 };
 

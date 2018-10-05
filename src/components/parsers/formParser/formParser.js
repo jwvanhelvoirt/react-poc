@@ -379,6 +379,7 @@ class Form extends Component {
           msgFailedSubmit={msgFailedSubmit}
           callBackOk={this.submitHandler}
           callBackCancel={this.props.onCancel}
+          contentExtraScrollZone={true}
         />
         {lookupModal}
       </Aux>

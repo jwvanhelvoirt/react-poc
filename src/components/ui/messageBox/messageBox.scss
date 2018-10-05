@@ -6,4 +6,15 @@
 
 .Content {
   padding: 10px 10px 0px 10px;
+  margin-bottom: 2px;
+}
+
+.ContentExtraScrollZone {
+  margin-bottom: 58px;
+}
+
+@media (min-width: 768px) {
+  .ContentExtraScrollZone {
+  	margin-bottom: 0;
+  }
 }

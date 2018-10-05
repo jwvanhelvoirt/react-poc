@@ -7,6 +7,11 @@ import Aux from '../../../hoc/auxiliary';
 import classes from './messageBox.scss';
 
 const messageBox = (props) => {
+
+  const classesMb = props.contentExtraScrollZone ?
+    [classes.Content, classes.ContentExtraScrollZone].join(' ') :
+    classes.Content;
+
   const content = (
     <div className={classes.MessageBox}>
       <ModalHeader
@@ -17,7 +22,7 @@ const messageBox = (props) => {
         titleAlign={props.titleAlign}
       />
       <UserInfo msgFailedSubmit={props.msgFailedSubmit} />
-      <div className={classes.Content}>
+      <div className={classesMb}>
         {props.messageContent}
       </div>
       <ModalFooter
