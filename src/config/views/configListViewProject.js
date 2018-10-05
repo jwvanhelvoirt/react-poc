@@ -13,7 +13,7 @@ const listViewConfig = {
       sort: false
     },
     {
-      columnClasses: ['ScreenMedium'],
+      columnClasses: ['ScreenMediumColumn'],
       content: 'code',
       label: trans.KEY_NAME,
       show: true,
@@ -22,7 +22,7 @@ const listViewConfig = {
       sortOn: 'code'
     },
     {
-      columnClasses: ['ScreenMedium'],
+      columnClasses: ['ScreenMediumColumn'],
       content: 'niveau4',
       label: trans.KEY_ORGANISATION,
       show: true,
@@ -31,7 +31,7 @@ const listViewConfig = {
       sortOn: 'niveau4'
     },
     {
-      columnClasses: ['ScreenMedium'],
+      columnClasses: ['ScreenMediumColumn'],
       content: 'start',
       contentType: 'timespan',
       data: { start: 'start', end: 'eind' },
@@ -42,7 +42,7 @@ const listViewConfig = {
       sortOn: 'start'
     },
     {
-      columnClasses: ['ScreenSmallOnly'],
+      columnClasses: ['ScreenSmallOnlyColumn'],
       content: {
         lines: [
           {
@@ -64,7 +64,7 @@ const listViewConfig = {
       sortOn: 'code'
     },
     {
-      columnClasses: ['ScreenSmallOnly'],
+      columnClasses: ['ScreenSmallOnlyColumn'],
       content: 'start',
       contentType: 'timespan',
       data: { start: 'start', end: 'eind' },

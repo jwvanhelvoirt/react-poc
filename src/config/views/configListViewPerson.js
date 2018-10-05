@@ -45,7 +45,7 @@ const listViewConfig = {
       sort: false
     },
     {
-      columnClasses: ['ScreenSmallOnly'],
+      columnClasses: ['ScreenSmallOnlyColumn'],
       content: {
         lines: [
           {
@@ -80,7 +80,7 @@ const listViewConfig = {
       sortOn: 'naam'
     },
     {
-      columnClasses: ['ScreenMedium'],
+      columnClasses: ['ScreenMediumColumn'],
       content: {
         lines: [
           {
@@ -107,7 +107,7 @@ const listViewConfig = {
       sortOn: 'naam'
     },
     {
-      columnClasses: ['ScreenMedium'],
+      columnClasses: ['ScreenMediumColumn'],
       content: {
         lines: [
           {

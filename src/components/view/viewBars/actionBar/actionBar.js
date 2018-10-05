@@ -53,6 +53,16 @@ const actionBar = (props) => {
         <div className={classes.ActionRowActions}>
           {
             actionsPrimary.map((action, index) => {
+
+              // Calculate action classes. We can configure actions to show only on particular screen sizes.
+              let arrayClassesAction = [];
+              if (action.actionClasses) {
+                arrayClassesAction = action.actionClasses.map((className) => {
+                  return classes[className];
+                });
+              }
+              const classesAction = arrayClassesAction.join(' ');
+
               // Check if this action contains subActions.
               const callback = action.subActions ?
                 // SubActions: show a action menu with the subActions.
@@ -61,7 +71,7 @@ const actionBar = (props) => {
                 () => action.callback(_this);
 
               return (
-                <div key={index} onClick={callback} data-tip="React-tooltip" data-for={action.id}>
+                <div key={index} className={classesAction} onClick={callback} data-tip="React-tooltip" data-for={action.id}>
                   <FontAwesomeIcon icon={action.labelIcon} />
                   <Tooltip id={action.id}>
                     <Label labelKey={action.tooltip} convertType={'propercase'} />

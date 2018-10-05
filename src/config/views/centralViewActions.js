@@ -33,6 +33,7 @@ const ACTION_DELETE = {
 
 const ACTION_REFRESH = {
   ...baseConfigActions,
+  // actionClasses: ['ScreenSmallOnlyAction'], // for documentation purpose.
   id: 'refresh',
   label: trans.KEY_REFRESH,
   labelIcon: icons.ICON_SYNC_ALT,

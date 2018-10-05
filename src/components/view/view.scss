@@ -372,27 +372,33 @@
 .largeFont {
   font-size: 16px;
 }
-.ScreenSmall, .ScreenMedium, .ScreenLarge, .ScreenSmallOnly, .ScreenMediumOnly, .ScreenLargeOnly { display: none; }
+.ScreenSmallColumn, .ScreenMediumColumn, .ScreenLargeColumn,
+.ScreenSmallOnlyColumn, .ScreenMediumOnlyColumn, .ScreenLargeOnlyColumn,
+.ScreenSmallAction, .ScreenMediumAction, .ScreenLargeAction,
+.ScreenSmallOnlyAction, .ScreenMediumOnlyAction, .ScreenLargeOnlyAction { display: none; }
 
 @media(min-width: 1px) {
-  .ScreenSmall { display: block; }
+  .ScreenSmallColumn { display: block; }
+  .ScreenSmallAction { display: flex; }
 }
 
 @media(max-width: 767px) {
-  .ScreenSmallOnly { display: block; }
-  .RowHover>* {
-    font-size: 30px;
-  }
+  .ScreenSmallOnlyColumn { display: block; }
+  .ScreenSmallOnlyAction { display: flex; }
+  .RowHover>* { font-size: 30px; }
 }
 
 @media(min-width: 768px) {
-  .ScreenSmall, .ScreenMedium { display: block; }
+  .ScreenSmallColumn, .ScreenMediumColumn { display: block; }
+  .ScreenSmallAction, .ScreenMediumAction { display: flex; }
 }
 
 @media(min-width: 768px) and (max-width: 1279px) {
-  .ScreenMediumOnly { display: block; }
+  .ScreenMediumOnlyColumn { display: block; }
+  .ScreenMediumOnlyAction { display: flex; }
 }
 
 @media(min-width: 1280px) {
-  .ScreenSmall, .ScreenMedium, .ScreenLarge, .ScreenLargeOnly { display: block; }
+  .ScreenSmallColumn, .ScreenMediumColumn, .ScreenLargeColumn, .ScreenLargeOnlyColumn { display: block; }
+  .ScreenSmallAction, .ScreenMediumAction, .ScreenLargeAction, .ScreenLargeOnlyAction { display: flex; }
 }

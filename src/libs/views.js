@@ -21,7 +21,7 @@ export const getViewActions = (actions, show, selectedListItems) => {
 };
 
 export const getColumnClasses = (column, defaultClasses, classes) => {
-  // Calculate column classes.
+  // Calculate column classes. We can configure columns to show only on particular screen sizes.
   let arrayClassesScreen = [];
 
   if (column.columnClasses) {
