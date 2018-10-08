@@ -125,8 +125,17 @@ class Form extends Component {
     // Voor input elementen van het type text input werkt het, bij elke toetsaanslag wordt deze method uitgevoerd.
     // De bedoeling is om op een TAB van de laaste input, het veld te focussen, dat autofocus op true heeft staan.
 
-    // console.log(event.keyCode);
-    // console.log(formElement);
+    // If user presses ENTER, we should submit the form if certain conditions are met.
+    if (this.props.onSubmit && formElement.configInput.preventSubmitOnEnter !== true &&
+      event.keyCode === 13 && this.state.isValidForm) {
+      this.submitHandler(event);
+    }
+
+    // If user presses ESCAPE, we should cancel the form if certain conditions are met.
+    if (this.props.onCancel && event.keyCode === 27) {
+      this.props.onCancel();
+    }
+
   };
 
   inputChangedHandler = (event, id) => {
@@ -351,7 +360,7 @@ class Form extends Component {
                     this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
                   removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
                   configForm={this.state.configForm}
-                  />
+                />
               )
             )
         })}

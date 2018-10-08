@@ -59,17 +59,18 @@ const formConfig = {
 			label: trans.KEY_FORGOT_PASSWORD,
 			elementType: 'formLink',
 			func: () => forgotPassword()
-		}
+		},
 		// // Alleen om te testen,kan straks weg.
-		// note: {
-		// 	label: trans.KEY_USERNAME,
-		// 	elementType: 'textarea',
-		// 	elementConfig: {
-		// 		rows: '4'
-		// 	},
-		// 	placeholder: trans.KEY_USERNAME,
-		// 	value: ''
-		// },
+		note: {
+			label: trans.KEY_USERNAME,
+			elementType: 'textarea',
+			elementConfig: {
+				rows: '4'
+			},
+			placeholder: trans.KEY_USERNAME,
+			preventSubmitOnEnter: true,
+			value: ''
+		},
 		// organisationManager: {
 		// 	label: trans.KEY_USERNAME,
 		// 	elementType: 'select',
