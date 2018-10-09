@@ -12,8 +12,8 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
-import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId, touchedForm,
-  storeFormFocussedField, storeConfigForm } from '../../../store/actions';
+import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId,
+  touchedForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import FormElement from '../../form/formElement/formElement';
 import MessageBox from '../../ui/messageBox/messageBox';
@@ -90,7 +90,6 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone });
-    this.props.storeConfigForm(clone.id, clone);
   };
 
   checkValidity = (value, rules) => {
@@ -138,9 +137,6 @@ class Form extends Component {
     // If user presses TAB the cursor focus moves to the next input.
     // However if it is the last input on the form, the cursor should focus on the input that is focussed by default,
     // instead of tabbing through the entire DOM. Most of the time this will be the first input.
-    if (event.keyCode === 9) {
-      this.props.storeFormFocussedField(configFormId, formElement.inputId);
-    }
 
   };
 
@@ -169,7 +165,6 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone, isValidForm });
-    this.props.storeConfigForm(clone.id, clone);
   };
 
   isValidForm = (updatedFormInputs) => {
@@ -267,7 +262,6 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone, isValidForm });
-    this.props.storeConfigForm(clone.id, clone);
   };
 
   onModalLookupSubmitHandler = () => {
@@ -309,7 +303,6 @@ class Form extends Component {
 
       // Update the state to re-render the component.
       this.setState({ configForm: clone, isValidForm });
-      this.props.storeConfigForm(clone.id, clone);
 
       // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
       this.props.touchedForm(true);
@@ -401,6 +394,7 @@ class Form extends Component {
           callBackOk={this.submitHandler}
           callBackCancel={this.props.onCancel}
           contentExtraScrollZone={true}
+          trapFocus={true}
         />
         {lookupModal}
       </Aux>
@@ -410,14 +404,12 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
-  const { lookupListItems, lookupListItemsSelected, lookupInputId, formFocussedField, configFormStore } = state.redMain;
+  const { lookupListItems, lookupListItemsSelected, lookupInputId } = state.redMain;
   return { lookupListItems, lookupListItemsSelected, lookupInputId };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    storeConfigForm: (formId, configForm) => dispatch(storeConfigForm(formId, configForm)),
-    storeFormFocussedField: (formId, fieldId) => dispatch(storeFormFocussedField(formId, fieldId)),
     storeFormSubmitData: (formSubmitData) => dispatch(storeFormSubmitData(formSubmitData)),
     storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch(storeLookupListItemsSelected(lookupListItemsSelected)),

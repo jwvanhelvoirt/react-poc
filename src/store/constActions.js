@@ -1,7 +1,5 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
-export const FORM_CONFIG_STORE = 'FORM_CONFIG_STORE';
-export const FORM_FOCUSSED_FIELD_STORE = 'FORM_FOCUSSED_FIELD_STORE';
 export const FORM_SUBMIT_DATA_STORE = 'FORM_SUBMIT_DATA_STORE';
 export const FORM_TOUCHED = 'FORM_TOUCHED';
 export const FORM_USER_INFO = 'FORM_USER_INFO';

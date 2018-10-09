@@ -14,7 +14,7 @@
 */
 
 import React from 'react';
-import { Button } from 'reactstrap';
+// import { Button } from 'reactstrap'; //TODO : DEZE COMPONENT STRAKS GEHEEL RESTYLEN MET DE INPUT VAN FRANK. GEEN TRANSITION EFFECT!!! WANT DAN WERKT DE TRAPFOCUS NIET MEER!!
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tooltip from '../../ui/tooltip/tooltip';
 import Label from '../../ui/label/label';
@@ -27,63 +27,63 @@ const button = (props) => {
   if (props.labelText) {
     labelText = props.labelText.map((item, index) => {
       return index === 0 ?
-        <Label key={index} labelKey={item} convertType={'propercase'} trailingSpace={true} /> :
+      <Label key={index} labelKey={item} convertType={'propercase'} trailingSpace={true} /> :
         <Label key={index} labelKey={item} />
-    });
-  }
-  const label = props.labelIcon ? <FontAwesomeIcon icon={props.labelIcon} /> : labelText;
+      });
+    }
+    const label = props.labelIcon ? <FontAwesomeIcon icon={props.labelIcon} /> : labelText;
 
-  // Is there an outline property?
- let opts = {};
- if (props.outline) {
-   opts['outline'] = true;
- }
+    // Is there an outline property?
+    let opts = {};
+    if (props.outline) {
+      opts['outline'] = true;
+    }
 
- const classesButton = [classes.Button, classes[props.buttonsClass]].join(' ');
+    const classesButton = [classes.Button, classes[props.buttonsClass]].join(' ');
 
-   // Get the button and tooltip html.
-  let button = (
-    <Button
-      autoFocus={props.autoFocus}
-      size='sm'
-      {...opts}
-      className={classesButton}
-      color={props.color}
-      onClick={props.clicked}
-      disabled={props.disabled}>
-      {label}
-    </Button>
-  );
-
-  let reactTooltip = null;
-  if (props.tooltip) {
-    button = (
-      <Button
+    // Get the button and tooltip html.
+    let button = (
+      <button
+        autoFocus={props.autoFocus}
         size='sm'
         {...opts}
         className={classesButton}
         color={props.color}
         onClick={props.clicked}
-        disabled={props.disabled}
-        data-tip={props.dataTip}
-        data-for={props.id}>
+        disabled={props.disabled}>
         {label}
-      </Button>
+      </button>
     );
 
-    reactTooltip = (
-      <Tooltip id={props.id}>
-        <Label labelKey={props.tooltip} convertType={'propercase'} />
-      </Tooltip>
+    let reactTooltip = null;
+    if (props.tooltip) {
+      button = (
+        <button
+          size='sm'
+          {...opts}
+          className={classesButton}
+          color={props.color}
+          onClick={props.clicked}
+          disabled={props.disabled}
+          data-tip={props.dataTip}
+          data-for={props.id}>
+          {label}
+        </button>
+      );
+
+      reactTooltip = (
+        <Tooltip id={props.id}>
+          <Label labelKey={props.tooltip} convertType={'propercase'} />
+        </Tooltip>
+      );
+    }
+
+    return (
+      <Aux>
+        {button}
+        {reactTooltip}
+      </Aux>
     );
-  }
+  };
 
-  return (
-    <Aux>
-      {button}
-      {reactTooltip}
-    </Aux>
-  );
-};
-
-export default button;
+  export default button;

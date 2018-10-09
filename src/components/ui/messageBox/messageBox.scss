@@ -4,10 +4,6 @@
   flex-direction: column;
 }
 
-.MessageBox:focus-within {
-  border: 2px solid red;
-}
-
 .MessageBox:not(:focus-within) {
   background-color: rgb(255, 255, 254);
   transition: background-color 0.01s;

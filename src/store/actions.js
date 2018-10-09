@@ -66,22 +66,6 @@ export const storeFormSubmitData = (formSubmitData) => {
   };
 };
 
-export const storeConfigForm = (formId, configForm) => {
-  return {
-    type: types.FORM_CONFIG_STORE,
-    formId,
-    configForm
-  };
-};
-
-export const storeFormFocussedField = (formId, fieldId) => {
-  return {
-    type: types.FORM_FOCUSSED_FIELD_STORE,
-    formId,
-    fieldId
-  };
-};
-
 export const storeLanguage = (language) => {
   return {
     type: types.TRANS_LANGUAGE_STORE,

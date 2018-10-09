@@ -515,9 +515,6 @@ class _View extends Component {
    * @brief   Closes the message modal.
    */
   onModalMessageCloseHandler = () => {
-    console.log(this.state.configForm);
-    // console.log(this.props.formFocussedField);
-    // console.log(this.props.configFormStore);
     this.setState({ showModalMessage: false });
   };
 
@@ -612,7 +609,6 @@ class _View extends Component {
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
    */
   render = () => {
-    console.log('render view');
     const { modalClass, messageButtons, focusButton, messageTitle, messageType, messageContent,
       callBackOk, callBackCancel} = this.localData;
     const { loadedListItem, configForm, selectedListItemId, showModalSort, showModalMessage, showMenu, subActions,
