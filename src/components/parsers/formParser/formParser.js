@@ -12,7 +12,8 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
-import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId, touchedForm } from '../../../store/actions';
+import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId, touchedForm,
+  storeFormFocussedField, storeConfigForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import FormElement from '../../form/formElement/formElement';
 import MessageBox from '../../ui/messageBox/messageBox';
@@ -23,7 +24,6 @@ class Form extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       showModalLookup: false,
       configForm: cloneDeep(this.props.configForm),
@@ -36,6 +36,7 @@ class Form extends Component {
       messageType: '',
       messageContent: '',
       messageButtons: '',
+      focusButton: '',
       callBackOk: null,
       callBackCancel: null
     };
@@ -89,6 +90,7 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone });
+    this.props.storeConfigForm(clone.id, clone);
   };
 
   checkValidity = (value, rules) => {
@@ -119,21 +121,25 @@ class Form extends Component {
     return isValid;
   };
 
-  onKeyUpHandler = (event, formElement) => {
+  onKeyUpHandler = (event, formElement, configFormId) => {
     // 2-10-2018: dit fundamentje is gebouwd om tabs (keyCode === 9) binnen een form te houden.
     // Daar moet nog veel meer voor gebeuren, maar dit is een begin.
     // Voor input elementen van het type text input werkt het, bij elke toetsaanslag wordt deze method uitgevoerd.
     // De bedoeling is om op een TAB van de laaste input, het veld te focussen, dat autofocus op true heeft staan.
 
-    // If user presses ENTER, we should submit the form if certain conditions are met.
+        // If user presses ENTER, we should submit the form if certain conditions are met.
     if (this.props.onSubmit && formElement.configInput.preventSubmitOnEnter !== true &&
       event.keyCode === 13 && this.state.isValidForm) {
       this.submitHandler(event);
     }
 
-    // If user presses ESCAPE, we should cancel the form if certain conditions are met.
-    if (this.props.onCancel && event.keyCode === 27) {
-      this.props.onCancel();
+    // ESCAPE press is handled centrally in the MessageBox component.
+
+    // If user presses TAB the cursor focus moves to the next input.
+    // However if it is the last input on the form, the cursor should focus on the input that is focussed by default,
+    // instead of tabbing through the entire DOM. Most of the time this will be the first input.
+    if (event.keyCode === 9) {
+      this.props.storeFormFocussedField(configFormId, formElement.inputId);
     }
 
   };
@@ -163,6 +169,7 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone, isValidForm });
+    this.props.storeConfigForm(clone.id, clone);
   };
 
   isValidForm = (updatedFormInputs) => {
@@ -221,7 +228,7 @@ class Form extends Component {
     }
   };
 
-  showModal = (modalState, modalClass, title, type, content, buttons,
+  showModal = (modalState, modalClass, title, type, content, buttons, focusButton,
     callBackOk = () => this.onModalLookupSubmitHandler(),
     callBackCancel = () => this.onModalLookupCloseHandler()) => {
 
@@ -230,6 +237,7 @@ class Form extends Component {
     this.localData.messageType = type;
     this.localData.messageContent = content;
     this.localData.messageButtons = buttons;
+    this.localData.focusButton = focusButton;
     this.localData.callBackCancel = callBackCancel;
     this.localData.callBackOk = callBackOk;
     this.setState({ [modalState]: true });
@@ -259,6 +267,7 @@ class Form extends Component {
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone, isValidForm });
+    this.props.storeConfigForm(clone.id, clone);
   };
 
   onModalLookupSubmitHandler = () => {
@@ -300,6 +309,7 @@ class Form extends Component {
 
       // Update the state to re-render the component.
       this.setState({ configForm: clone, isValidForm });
+      this.props.storeConfigForm(clone.id, clone);
 
       // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
       this.props.touchedForm(true);
@@ -321,7 +331,8 @@ class Form extends Component {
   };
 
   render = () => {
-    const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
+    const { modalClass, messageButtons, focusButton, messageTitle, messageType, messageContent,
+      callBackOk, callBackCancel} = this.localData;
     const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel,
       cancelButtonLabel, buttonsClass, msgFailedSubmit } = this.state.configForm;
 
@@ -329,7 +340,7 @@ class Form extends Component {
     if (this.state.showModalLookup) {
       lookupModal = (
         <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
-          messageContent={messageContent} buttons={messageButtons}
+          messageContent={messageContent} buttons={messageButtons} focusButton={focusButton}
           callBackOk={callBackOk} callBackCancel={callBackCancel} modal={true}
         />
       );
@@ -353,11 +364,12 @@ class Form extends Component {
                 <FormElement
                   key={formElement.inputId}
                   inputId={formElement.inputId}
+                  defaultFocus={this.state.configForm.defaultFocus}
                   changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
-                  keyUp={(event) => this.onKeyUpHandler(event, formElement)}
+                  keyUp={(event) => this.onKeyUpHandler(event, formElement, this.state.configForm.id)}
                   configInput={formElement.configInput}
-                  showModal={(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel) =>
-                    this.showModal(modalState, modalClass, title, type, content, buttons, callBackOk, callBackCancel)}
+                  showModal={(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel) =>
+                    this.showModal(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel)}
                   removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
                   configForm={this.state.configForm}
                 />
@@ -398,12 +410,14 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
-  const { lookupListItems, lookupListItemsSelected, lookupInputId } = state.redMain;
+  const { lookupListItems, lookupListItemsSelected, lookupInputId, formFocussedField, configFormStore } = state.redMain;
   return { lookupListItems, lookupListItemsSelected, lookupInputId };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    storeConfigForm: (formId, configForm) => dispatch(storeConfigForm(formId, configForm)),
+    storeFormFocussedField: (formId, fieldId) => dispatch(storeFormFocussedField(formId, fieldId)),
     storeFormSubmitData: (formSubmitData) => dispatch(storeFormSubmitData(formSubmitData)),
     storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch(storeLookupListItemsSelected(lookupListItemsSelected)),

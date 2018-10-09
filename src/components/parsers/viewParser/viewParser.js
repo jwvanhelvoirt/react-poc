@@ -171,11 +171,12 @@ class _View extends Component {
    * @brief   Closes the modal that shows the formdata of the selected or new listItem.
    */
   onCloseHandler = (userConfirmation) => {
+
     if (userConfirmation && this.props.formTouched) {
       const content = <Label labelKey={trans.KEY_WARNING_CLOSE_FORM} convertType={'propercase'} />
 
       // Ask for user confirmation to lose all changes in the form.
-      this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_CLOSE], 'warning', content, 'butOkCancel',
+      this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_CLOSE], 'warning', content, 'butOkCancel', 'Cancel',
          () => this.onCloseHandlerDiscardChanges(false), () => this.onModalMessageCloseHandler());
     } else {
       this.props.touchedForm(false);
@@ -208,7 +209,7 @@ class _View extends Component {
   errorGetSingleHandler = (error) => {
     // Item NOT successfully loaded, show the error in a modal.
     const content = <Label labelKey={trans.KEY_ERROR_FETCH_ITEM} convertType={'propercase'} />
-    this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk');
+    this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk', 'Ok');
   };
 
   /**
@@ -274,7 +275,7 @@ class _View extends Component {
     if (userConfirmation) {
       const content = <Label labelKey={trans.KEY_WARNING_DELETE_DOCS} convertType={'propercase'} />
       // Ask for user confirmation before deleting records from the database.
-      this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_DELETE], 'warning', content, 'butOkCancel',
+      this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_DELETE], 'warning', content, 'butOkCancel', 'Ok',
          () => this.deleteItems(false), () => this.onModalMessageCloseHandler());
 
       this.setState({ showModalMessage: true });
@@ -311,13 +312,13 @@ class _View extends Component {
    */
   errorDeleteHandler = (error) => {
     const content = <Label labelKey={trans.KEY_ERROR_REMOVE_LIST_ITEMS} convertType={'propercase'} />;
-    this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk');
+    this.showModal('showModalMessage', 'ModalSmall', [trans.KEY_ERROR], 'error', content, 'butOk', 'Ok');
   };
 
   /**
    * @brief   Toont een modal voor specifiek foutafhandeling, info naar gebruiker..
    */
-  showModal = (modalState, modalClass, title, type, content, buttons,
+  showModal = (modalState, modalClass, title, type, content, buttons, focusButton,
     callBackOk = () => this.onModalMessageCloseHandler(),
     callBackCancel = () => this.onModalMessageCloseHandler()) => {
     this.localData.modalClass = modalClass;
@@ -325,6 +326,7 @@ class _View extends Component {
     this.localData.messageType = type;
     this.localData.messageContent = content;
     this.localData.messageButtons = buttons;
+    this.localData.focusButton = focusButton;
     this.localData.callBackCancel = callBackCancel;
     this.localData.callBackOk = callBackOk;
     this.setState({ [modalState]: true });
@@ -476,7 +478,7 @@ class _View extends Component {
    */
   onClickSortHandler = () => {
     this.showModal('showModalSort', 'ModalWide', [trans.KEY_SORT], 'info',
-      <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel',
+      <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel', 'Ok',
        () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
   };
 
@@ -513,6 +515,9 @@ class _View extends Component {
    * @brief   Closes the message modal.
    */
   onModalMessageCloseHandler = () => {
+    console.log(this.state.configForm);
+    // console.log(this.props.formFocussedField);
+    // console.log(this.props.configFormStore);
     this.setState({ showModalMessage: false });
   };
 
@@ -607,7 +612,9 @@ class _View extends Component {
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
    */
   render = () => {
-    const { modalClass, messageButtons, messageTitle, messageType, messageContent, callBackOk, callBackCancel} = this.localData;
+    console.log('render view');
+    const { modalClass, messageButtons, focusButton, messageTitle, messageType, messageContent,
+      callBackOk, callBackCancel} = this.localData;
     const { loadedListItem, configForm, selectedListItemId, showModalSort, showModalMessage, showMenu, subActions,
       showMenuType, viewConfig, loading, selectedListItems, mousePosX, mousePosY } = this.state;
 
@@ -628,7 +635,7 @@ class _View extends Component {
 
     // Modals that can be opened from this view depending on state.
     const viewModalData = { modalClass, messageTitle, type: messageType, messageContent,
-      buttons: messageButtons, callBackOk, callBackCancel, modal: true
+      buttons: messageButtons, focusButton, callBackOk, callBackCancel, modal: true
     };
     const sortModal = <ViewModal show={showModalSort} viewModalData={viewModalData} />;
     const messageModal = <ViewModal show={showModalMessage} viewModalData={viewModalData} />;

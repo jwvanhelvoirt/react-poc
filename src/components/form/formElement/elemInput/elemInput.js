@@ -1,7 +1,7 @@
 import React from 'react';
 
 const elemInput = (props) => {
-  const { configInput, inputClasses, placeholderInput, autoFocus, changed, keyUp } = props;
+  const { configInput, inputClasses, placeholderInput, autoFocus, changed, keyUp, onClick } = props;
   const { elementConfig, value } = configInput;
 
   return (
@@ -14,6 +14,7 @@ const elemInput = (props) => {
       autoComplete='off'
       onChange={changed}
       onKeyUp={keyUp}
+      onClick={() => onClick()}
     />
   );
 };

@@ -13,7 +13,7 @@ const messageBox = (props) => {
     classes.Content;
 
   const content = (
-    <div className={classes.MessageBox}>
+    <div className={classes.MessageBox} onKeyUp={(event) => onKeyUp(event, props.callBackCancel)}>
       <ModalHeader
         title={props.messageTitle}
         type={props.type}
@@ -27,6 +27,7 @@ const messageBox = (props) => {
       </div>
       <ModalFooter
         buttons={props.buttons}
+        focusButton={props.focusButton}
         buttonsClass={props.buttonsClass}
         formIsValid={props.formIsValid}
         okButtonLabel={props.okButtonLabel}
@@ -43,5 +44,12 @@ const messageBox = (props) => {
     <Aux>{box}</Aux>
   );
 };
+
+const onKeyUp = (event, callBackCancel) => {
+  // If user presses ESCAPE, we should cancel the form.
+  if (event.keyCode === 27) {
+    callBackCancel();
+  }
+}
 
 export default messageBox;

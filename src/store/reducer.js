@@ -2,7 +2,9 @@ import * as types from './constActions';
 
 const initialState = {
   authenticated: false,
+  configFormStore: [],
   // followUpScreenData: '',
+  formFocussedField: [],
   formShowUserInfo: false,
   formTouched: false,
   initTranslatesLoaded: false,
@@ -48,6 +50,67 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         formSubmitData: action.formSubmitData
+      };
+
+    case types.FORM_CONFIG_STORE:
+      let updatedConfigForm = [];
+      // Check if the curent array already contains an item for this form.
+      let configFormExist = false;
+      state.configFormStore.forEach((item) => {
+        if (Object.keys(item)[0] === action.formId) {
+          configFormExist = true;
+        }
+      });
+
+      if (configFormExist) {
+        updatedConfigForm = state.configFormStore.map((item) => {
+          if (Object.keys(item)[0] === action.formId) {
+            return { [action.formId]: action.configForm }
+          } else {
+            return item;
+          }
+        });
+      } else {
+        updatedConfigForm = [
+          ...state.configFormStore,
+          { [action.formId]: action.configForm }
+        ]
+      }
+
+      return {
+        ...state,
+        configFormStore: updatedConfigForm
+      };
+
+    case types.FORM_FOCUSSED_FIELD_STORE: // Stores data of fields which are currently cursor focussed in forms.
+      let updatedformFocussedField = [];
+
+      // Check if the curent array already contains an item for this form.
+      let formFocusExist = false;
+      state.formFocussedField.forEach((item) => {
+        if (Object.keys(item)[0] === action.formId) {
+          formFocusExist = true;
+        }
+      });
+
+      if (formFocusExist) {
+        updatedformFocussedField = state.formFocussedField.map((item) => {
+          if (Object.keys(item)[0] === action.formId) {
+            return { [action.formId]: action.fieldId }
+          } else {
+            return item;
+          }
+        });
+      } else {
+        updatedformFocussedField = [
+          ...state.formFocussedField,
+          { [action.formId]: action.fieldId }
+        ]
+      }
+
+      return {
+        ...state,
+        formFocussedField: updatedformFocussedField
       };
 
     case types.FORM_TOUCHED: // Form is touched by the user yes or no.

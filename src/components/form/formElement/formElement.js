@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import Label from '../../ui/label/label';
 import { getDisplayValue } from '../../../libs/generic';
 import * as trans from '../../../libs/constTranslates';
+import { storeFormFocussedField } from '../../../store/actions';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
 import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
@@ -26,8 +27,8 @@ import classes from './formElement.scss';
 class Input extends Component {
 
   render = () => {
-    const { inputId, configInput, changed, keyUp, translates, configForm, removeMultiValueItem, showModal } = this.props;
-    const { elementType, valid, validation, touched, label, defaultFocus, placeholder } = configInput;
+    const { inputId, configInput, changed, keyUp, translates, configForm, removeMultiValueItem, showModal, defaultFocus } = this.props;
+    const { elementType, valid, validation, touched, label, /*defaultFocus,*/ placeholder } = configInput;
     const placeholderInput = placeholder ? getDisplayValue(placeholder, 'propercase', true, translates): null;
 
     let inputClasses = [classes.InputElement];
@@ -36,12 +37,18 @@ class Input extends Component {
     }
 
     // Default focus.
-    const autoFocus = defaultFocus ? true : false;
+    const autoFocus = inputId === defaultFocus ? true : false;
+    if (autoFocus) {
+      // This input has cursor focus, update the store.
+      this.props.storeFormFocussedField(configForm.id, inputId);
+    }
 
     // Default element is a text input.
     let inputElement = (
       <ElemInput configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-        autoFocus={autoFocus} changed={changed} keyUp={keyUp} />
+        autoFocus={autoFocus} changed={changed} keyUp={keyUp}
+        onClick={() => onInputClickHandler(this.props, configForm.id, inputId)}
+      />
     );
 
     // Check for the applicable element type for this form element.
@@ -53,14 +60,18 @@ class Input extends Component {
       case ('textarea'):
         inputElement = (
           <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-            autoFocus={autoFocus} changed={changed} keyUp={keyUp} />
+            autoFocus={autoFocus} changed={changed} keyUp={keyUp}
+            onClick={() => onInputClickHandler(this.props, configForm.id, inputId)}
+          />
         );
         break;
 
       case ('select'):
         inputElement = (
           <ElemSelect configInput={configInput} inputClasses={inputClasses} autoFocus={autoFocus}
-            changed={changed} keyUp={keyUp} translates={translates} />
+            changed={changed} keyUp={keyUp} translates={translates}
+            onClick={() => onInputClickHandler(this.props, configForm.id, inputId)}
+          />
         );
         break;
 
@@ -109,9 +120,20 @@ class Input extends Component {
 
 }
 
+const onInputClickHandler = (props, formId, inputId) => {
+  // To update the store which field is cursor focussed) in case the user doesn't TAB to an input, but clicks on it.
+  props.storeFormFocussedField(formId, inputId);
+};
+
 const mapStateToProps = state => {
   const { translates } = state.redMain;
   return { translates };
 };
 
-export default connect(mapStateToProps)(Input);
+const mapDispatchToProps = dispatch => {
+  return {
+    storeFormFocussedField: (formId, fieldId) => dispatch(storeFormFocussedField(formId, fieldId))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Input);

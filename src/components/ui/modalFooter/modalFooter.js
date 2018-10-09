@@ -5,18 +5,24 @@ import * as trans from '../../../libs/constTranslates';
 import classes from './modalFooter.scss';
 
 const modalFooter = (props) => {
-  const okButDisabled = props.formIsValid === false  ? true : false;
-  const labelOk = props.okButtonLabel ? props.okButtonLabel : trans.KEY_OK;
-  const labelCancel = props.cancelButtonLabel ? props.cancelButtonLabel : trans.KEY_CANCEL;
+const { formIsValid, okButtonLabel, cancelButtonLabel, callBackOk, buttonsClass, callBackCancel, buttons, focusButton } = props;
+
+  const okButDisabled = formIsValid === false  ? true : false;
+  const labelOk = okButtonLabel ? okButtonLabel : trans.KEY_OK;
+  const labelCancel = cancelButtonLabel ? cancelButtonLabel : trans.KEY_CANCEL;
   let but = null;
 
+  const focusOk = focusButton === 'Ok' ? true : false;
+  const focusCancel = focusButton === 'Cancel' ? true : false;
+
   const butOk =
-    <Button clicked={props.callBackOk} color="success" buttonsClass={props.buttonsClass} labelText={[labelOk]} disabled={okButDisabled} />;
+    <Button clicked={callBackOk} color="success" autoFocus={focusOk} buttonsClass={buttonsClass} labelText={[labelOk]}
+      disabled={okButDisabled} />;
 
   const butCancel =
-    <Button clicked={props.callBackCancel} color="danger" buttonsClass={props.buttonsClass} labelText={[labelCancel]} />;
+    <Button clicked={callBackCancel} color="danger" autoFocus={focusCancel} buttonsClass={buttonsClass} labelText={[labelCancel]} />;
 
-  switch (props.buttons) {
+  switch (buttons) {
   case 'butOk':
     but = butOk;
     break;

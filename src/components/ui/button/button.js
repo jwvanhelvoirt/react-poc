@@ -44,6 +44,7 @@ const button = (props) => {
    // Get the button and tooltip html.
   let button = (
     <Button
+      autoFocus={props.autoFocus}
       size='sm'
       {...opts}
       className={classesButton}
