@@ -16,6 +16,7 @@ import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected
   touchedForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 import FormElement from '../../form/formElement/formElement';
+import FormLayout from '../../form/formLayout/formLayout';
 import MessageBox from '../../ui/messageBox/messageBox';
 import * as trans from '../../../libs/constTranslates';
 import { callServer } from '../../../api/api';
@@ -121,23 +122,13 @@ class Form extends Component {
   };
 
   onKeyUpHandler = (event, formElement, configFormId) => {
-    // 2-10-2018: dit fundamentje is gebouwd om tabs (keyCode === 9) binnen een form te houden.
-    // Daar moet nog veel meer voor gebeuren, maar dit is een begin.
-    // Voor input elementen van het type text input werkt het, bij elke toetsaanslag wordt deze method uitgevoerd.
-    // De bedoeling is om op een TAB van de laaste input, het veld te focussen, dat autofocus op true heeft staan.
-
-        // If user presses ENTER, we should submit the form if certain conditions are met.
+    // If user presses ENTER, we should submit the form if certain conditions are met.
     if (this.props.onSubmit && formElement.configInput.preventSubmitOnEnter !== true &&
       event.keyCode === 13 && this.state.isValidForm) {
       this.submitHandler(event);
     }
 
     // ESCAPE press is handled centrally in the MessageBox component.
-
-    // If user presses TAB the cursor focus moves to the next input.
-    // However if it is the last input on the form, the cursor should focus on the input that is focussed by default,
-    // instead of tabbing through the entire DOM. Most of the time this will be the first input.
-
   };
 
   inputChangedHandler = (event, id) => {
@@ -339,37 +330,46 @@ class Form extends Component {
       );
     }
 
-    let formElementsArray = [];
-    for (let inputId in inputs) {
-      if (inputId !== 'id' && inputId !== '__v') { // These are system fields returned by Mongo, we don't want them to be displayed.
-        formElementsArray.push({
-          inputId,
-          configInput: inputs[inputId]
-        });
-      }
-    }
+    // let formElementsArray = [];
+    // for (let inputId in inputs) {
+    //   formElementsArray.push({
+    //     inputId,
+    //     configInput: inputs[inputId]
+    //   });
+    // }
 
-    const content =
-      <div>
-        {formElementsArray.map(formElement => {
-            return (
-              (
-                <FormElement
-                  key={formElement.inputId}
-                  inputId={formElement.inputId}
-                  defaultFocus={this.state.configForm.defaultFocus}
-                  changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
-                  keyUp={(event) => this.onKeyUpHandler(event, formElement, this.state.configForm.id)}
-                  configInput={formElement.configInput}
-                  showModal={(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel) =>
-                    this.showModal(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel)}
-                  removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
-                  configForm={this.state.configForm}
-                />
-              )
-            )
-        })}
-      </div>;
+    // const content1 =
+    //   <div>
+    //     {formElementsArray.map(formElement => {
+    //         return (
+    //           (
+    //             <FormElement
+    //               key={formElement.inputId}
+    //               inputId={formElement.inputId}
+    //               defaultFocus={this.state.configForm.defaultFocus}
+    //               changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
+    //               keyUp={(event) => this.onKeyUpHandler(event, formElement, this.state.configForm.id)}
+    //               configInput={formElement.configInput}
+    //               showModal={(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel) =>
+    //                 this.showModal(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel)}
+    //               removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
+    //               configForm={this.state.configForm}
+    //             />
+    //           )
+    //         )
+    //     })}
+    //   </div>;
+
+    const content = (
+      <FormLayout
+        configForm={this.state.configForm}
+        changed={this.inputChangedHandler}
+        keyUp={this.onKeyUpHandler}
+        showModal={(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel) =>
+          this.showModal(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel)}
+        removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
+      />
+    );
 
     // Title of the form.
     const titleForm = (this.props.id || noCreate) ? [title] : [trans.KEY_NEW, title];

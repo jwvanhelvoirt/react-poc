@@ -1,0 +1,62 @@
+.Row {
+	border: 1px solid green;
+	padding: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	flex-grow: 1;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.Col {
+	border: 1px solid red;
+	padding: 10px;
+	box-sizing: border-box;
+	display: flex;
+	align-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.Elem {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+
+.Elem:not(:last-child) {
+	padding-right: 10px;
+}
+
+.Elem>* {
+	width: 100%;
+}
+
+.Flex10 { width: 10%; }
+.Flex20 { width: 20%; }
+.Flex25 { width: 25%; }
+.Flex30 { width: 30%; }
+.Flex33 { width: 33%; }
+.Flex34 { width: 34%; }
+.Flex40 { width: 40%; }
+.Flex50 { width: 50%; }
+.Flex60 { width: 60%; }
+.Flex70 { width: 70%; }
+.Flex75 { width: 75%; }
+.Flex80 { width: 80%; }
+.Flex90 { width: 90%; }
+.Flex100 { width: 100%; }
+
+@media(max-width: 767px) {
+	.Col {
+		flex-direction: column;
+	}
+
+	.Elem:not(:last-child) {
+		padding-right: 0;
+	}
+
+	.Flex10, .Flex20, .Flex25, .Flex30, .Flex33, .Flex34, .Flex40, .Flex50, .Flex60, .Flex70, .Flex75, .Flex80, .Flex90, .Flex100 {
+	  width: 100%;
+	}
+}
