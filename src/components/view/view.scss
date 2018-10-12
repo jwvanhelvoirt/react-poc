@@ -18,12 +18,12 @@
 }
 
 .ListviewHeader {
-  background-color: #eee;
+  // background-color: #eee;
   position: -webkit-sticky;
   position: sticky;
   top: 50px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  // border-top: 1px solid #ccc;
+  // border-bottom: 1px solid #ccc;
   user-select: none;
 }
 
@@ -32,62 +32,14 @@
   margin: 0;
   padding: 0;
   padding-left: 10px;
-  height: 40px;
+  // height: 40px;
   align-items: center;
   justify-content: center;
 }
 
-.TitleRow {
-  border-bottom: 1px solid #ccc;
-  box-sizing: border-box;
-  // min-height: 100%; /* 4-10-2018: Multiplies heigth of 40px with 3 in Firefox ESR 52.9.0 */
-  justify-content: space-between;
-}
-
-.Title {
-  font-weight: 500;
-  font-size: 15px;
-  padding: 0;
-  margin: 0;
-}
-
-.Navigation {
-  display: flex;
-  min-height: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-.Navigation>* {
-  border-left: 1px solid #ccc;
-  min-height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-}
-
-.Counter {
-  padding: 0px 10px;
-}
-
-.PreviousNext, .ColumnConfigurator {
-  width: 36px;
-}
-
-.PreviousNext {
-  background-color: #ddd;
-}
-
-.PreviousNext:hover {
-  background-color: #eee;
-  cursor: pointer;
-}
-
-.ColumnConfigurator:hover {
-  background-color: #ddd;
-  cursor: pointer;
+.HorizontalRuler {
+  border-bottom: 1px solid #e2e2e2;
+  margin: 0 10px;
 }
 
 .ActionRow {
@@ -96,58 +48,72 @@
   box-sizing: border-box;
   padding-left: 0;
   justify-content: space-between;
+  background-color: #e1e8f8;
+  padding: 10px 5px;
+  height: 60px;
 }
 
 .ActionRowActions, .FilterSort {
   display: flex;
+  align-items: center;
   min-height: 100%;
   padding: 0;
+  // padding-left: 5px;
   margin: 0;
+}
+
+.FilterSort {
+  margin-left: 5px;
 }
 
 .ActionRowActions>*, .FilterSort>* {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   margin: 0;
+  margin-right: 5px;
+  border-radius: 4px;
 }
 
 .ActionRowActions>*  {
   // border-right: 1px solid #ccc;
-  color: white;
-  background-color: #007bff;
-}
-
-.ActionRowActions>*:last-child {
-  border-right: none;
+  color: #7c7c7c;
+  background-color: #e2e2e2;
+  border: 1px solid #7c7c7c;
 }
 
 .FilterSort>*  {
   // border-right: 1px solid #ccc;
   color: white;
-  background-color: #28a745;
+  background: linear-gradient(top, #00b7fa 0%, #00a8e6 100%);
 }
 
 .ActionRowActions>*:hover {
-  background-color: darkblue;
-  cursor: pointer;
+  // background-color: darkblue;
+  // cursor: pointer;
 }
 
 .FilterSort>*:hover {
-  background-color: darkgreen;
-  cursor: pointer;
+  // background-color: darkgreen;
+  // cursor: pointer;
 }
 
 .Search {
   min-height: 100%;
   padding: 0;
+  padding-left: 5px;
+  // padding-right: 2px;
   margin: 0;
   background-color: white;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 13px;
+  border: 1px solid #707070;
+  border-radius: 20px;
 }
 
 .Search>div {
@@ -157,8 +123,8 @@
   width: 36px;
   padding: 0;
   margin: 0;
-  color: #dc3545;
   background-color: white;
+  color: #dc3545;
 }
 
 .Search>div:hover {
@@ -172,11 +138,24 @@
   flex-grow: 2;
   outline: none;
   border: none;
+  background: transparent;
+}
+
+.Search>input::placeholder {
+  color: #ccc;
+  font-style: italic;
+}
+
+.SearchErase{
+  border-radius: 20px;
+  width: 26px !important;
+  height: 26px !important;
 }
 
 .HeaderRow {
   background-color: #ddd;
   box-sizing: border-box;
+  height: 50px;
   // min-height: 100%; /* 4-10-2018: Multiplies heigth of 40px with 3 in Firefox ESR 52.9.0 */
 }
 
@@ -184,6 +163,12 @@
   display: flex;
   margin: 0;
   padding: 0;
+}
+
+.Header {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  color: #393b4a;
 }
 
 .HeaderSortable {
@@ -196,24 +181,19 @@
 
 .Sort {
   margin-left: 5px;
+  color: #0199d0;
 }
 
-
-
-
-
-
-
 .Row {
-  padding: 8px 0 8px 10px;
+  padding: 12px 0 12px 10px;
   display: flex;
-  border-bottom: 1px solid #eee;
   cursor: pointer;
 }
 
 .Row:hover {
-  background-color: #eee;
   color: inherit;
+  border: 1px solid #707070;
+  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.2);
 }
 
 .RowEdit {
@@ -225,6 +205,7 @@
   border: 1px solid #bbb;
   width: 12px;
   height: 12px;
+  background: white;
 }
 
 .RowSelected, .HeaderSelected {
@@ -264,10 +245,14 @@
   color: black;
 }
 
-.FlexRow>*, .Title {
+.FlexRow>* {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.DropDownIcon {
+  font-size: 18px;
 }
 
 .Fixed {
@@ -286,8 +271,8 @@
 }
 
 .Fixed2 {
-  width: 26px;
-  min-width: 26px;
+  width: 32px;
+  min-width: 32px;
   display: flex;
   justify-content: center;
 }
@@ -361,17 +346,26 @@
   flex-grow: 2;
 }
 
-.preSpace::before {
+.PreSpace::before {
   content: ' ';
 }
 
-.smallFont {
+.FontSmall {
   font-size: 10px;
 }
 
-.largeFont {
+.FontLarge {
   font-size: 16px;
 }
+
+.FontBold {
+  font-weight: 600;
+}
+
+.FontGrey {
+  color: #625b5b;
+}
+
 .ScreenSmallColumn, .ScreenMediumColumn, .ScreenLargeColumn,
 .ScreenSmallOnlyColumn, .ScreenMediumOnlyColumn, .ScreenLargeOnlyColumn,
 .ScreenSmallAction, .ScreenMediumAction, .ScreenLargeAction,

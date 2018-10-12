@@ -108,7 +108,7 @@ const actionBar = (props) => {
   if (showSearchbar) {
     searchBar = (
       <div className={classesCombinedSearchbar}>
-        <div onClick={() => _this.clearSearchbarHandler()}><FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} /></div>
+        <div className={classes.SearchErase} onClick={() => _this.clearSearchbarHandler()}><FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} /></div>
         <input
           value={searchbarValue}
           onChange={(event) => {
@@ -126,10 +126,10 @@ const actionBar = (props) => {
   // Action bar overall.
   const actionBarOverall = showRowActions ?
     <div className={classes.ActionRow}>
+      {searchBar}
       {filterSort}
       {actionsPrimaryOutput}
       {actionsMenuOutput}
-      {searchBar}
     </div> :
     null;
 

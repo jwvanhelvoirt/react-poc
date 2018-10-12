@@ -4,6 +4,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
 	faAngleDown,
 	faAngleRight,
+	faArrowLeft,
+	faArrowToLeft,
+	faArrowRight,
+	faArrowToRight,
 	faBars,
 	faCog,
 	faEdit,
@@ -30,6 +34,10 @@ import {
 export default library.add(
 	faAngleDown,
 	faAngleRight,
+	faArrowLeft,
+	faArrowToLeft,
+	faArrowRight,
+	faArrowToRight,
 	faBars,
 	faCog,
 	faEdit,

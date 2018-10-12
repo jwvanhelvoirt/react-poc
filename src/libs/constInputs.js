@@ -1,5 +1,6 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
+export const INPUT_COM_INFO = 'cominfo';
 export const INPUT_FIRST_NAME = 'roepnaam';
 export const INPUT_FORGOT_PASSWORD = 'forgotPassword';
 export const INPUT_INITIALS = 'initialen';

@@ -1,13 +1,13 @@
 html, body {
-	height: 100% !important;
-	margin: 0 !important;
-	box-sizing: border-box !important;
-	font-family: 'Open Sans', sans-serif !important;
-	font-size: 15px;
+  height: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  font-family: 'Muli', sans-serif;
+  font-size: 15px;
 }
 
 :global #wrapper {
-	min-height: 100% !important;
-	display: flex !important;
-	box-sizing: border-box !important;
+  min-height: 100% !important;
+  display: flex !important;
+  box-sizing: border-box !important;
 }

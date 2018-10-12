@@ -1,0 +1,54 @@
+.TitleRow {
+  box-sizing: border-box;
+  height: 50px;
+  justify-content: flex-end;
+  background-color: white;
+  padding: 10px;
+}
+
+.PreviousNextWrapper {
+  width: 102px;
+  border: 1px solid #707070;
+  border-radius: 3px;
+  color: #707070;
+}
+
+.Counter {
+  width: 150px;
+  color: #707070;
+  font-size: 12px;
+}
+
+.PreviousNext {
+  width: 34px;
+  border-right: 1px solid #707070;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+}
+
+.PreviousNext:last-child {
+  border-right: none;
+}
+
+.PreviousNext:hover {
+  cursor: pointer;
+}
+
+.Navigation {
+  display: flex;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.Navigation>* {
+  // border-left: 1px solid #ccc;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}

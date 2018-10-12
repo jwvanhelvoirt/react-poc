@@ -89,7 +89,6 @@ class _View extends Component {
       selectedListItems,
       showMenu: false,
       showMenuType: '',
-      showModalColumnConfigurator: false,
       showModalFilter: false,
       showModalMessage: false,
       showModalSort: false,
@@ -533,20 +532,6 @@ class _View extends Component {
   };
 
   /**
-   * @brief   Shows a modal where the user can change which columns to display in the listView.
-   */
-  onClickColumnConfiguratorHandler = () => {
-    this.setState({ showModalColumnConfigurator: true });
-  };
-
-  /**
-   * @brief   Closes the columns configurator modal.
-   */
-  onModalColumnConfiguratorCloseHandler = () => {
-    this.setState({ showModalColumnConfigurator: false });
-  };
-
-  /**
    * @brief   Selects or deselects all listItems in the listView.
    */
   toggleAllRows = () => {
@@ -649,7 +634,6 @@ class _View extends Component {
       />
     );
     // const filterModal = <ViewModal show={this.state.showModalFilter} viewModalData={viewModalData} />;
-    // const columnConfiguratorModal = <ViewModal show={this.state.showModalColumnConfigurator} viewModalData={viewModalData} />;
 
     // Start building the listView.
     // It contains many elements that can be shown or not, depending on configuration in the viewConfig.
@@ -676,7 +660,6 @@ class _View extends Component {
         {formModal}
         {/*filterModal*/}
         {sortModal}
-        {/*columnConfiguratorModal*/}
         {messageModal}
         {actionMenu}
       </Aux>

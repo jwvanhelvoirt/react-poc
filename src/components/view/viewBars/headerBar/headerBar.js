@@ -56,7 +56,9 @@ const headerBar = (props) => {
             const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
             const onColumn = column.sort ? () => _this.sortOnColumn(column.sortOn) : null;
 
-            const classesDefault = column.sort ? [classes[column.size], classes.HeaderSortable] : [classes[column.size]];
+            const classesDefault = column.sort ?
+              [classes.Header, classes[column.size], classes.HeaderSortable] : 
+              [classes.Header, classes[column.size]];
             const columnClasses = getColumnClasses(column, classesDefault, classes);
 
             return(

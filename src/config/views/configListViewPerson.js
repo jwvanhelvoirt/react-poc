@@ -50,23 +50,23 @@ const listViewConfig = {
         lines: [
           {
             lineData: [
-              { type: 'prop', value: 'completenaam' }
+              { type: 'prop', value: 'completenaam', classes: ['FontBold'] }
             ]
           },
           {
             lineData: [
-              { type: 'prop', value: 'email', classes: ['smallFont'] }
+              { type: 'prop', value: 'email', classes: ['FontSmall'] }
             ]
           },
           {
             lineData: [
-              { type: 'prop', value: 'tel', classes: ['smallFont'] }
+              { type: 'prop', value: 'tel', classes: ['FontSmall'] }
             ]
           },
           {
             lineData: [
               { type: 'prop', value: 'niveau4' },
-              { type: 'string', value: '(', classes: ['preSpace'] },
+              { type: 'string', value: '(', classes: ['PreSpace'] },
               { type: 'prop', value: 'niveau4debiteurnr' },
               { type: 'string', value: ')' },
             ]
@@ -85,17 +85,17 @@ const listViewConfig = {
         lines: [
           {
             lineData: [
-              { type: 'prop', value: 'completenaam' }
+              { type: 'prop', value: 'completenaam', classes: ['FontBold', 'FontGrey'] }
             ]
           },
           {
             lineData: [
-              { type: 'prop', value: 'email', classes: ['smallFont'] }
+              { type: 'prop', value: 'email', classes: ['FontSmall'] }
             ]
           },
           {
             lineData: [
-              { type: 'prop', value: 'tel', classes: ['smallFont'] }
+              { type: 'prop', value: 'tel', classes: ['FontSmall'] }
             ]
           }
         ]
@@ -113,7 +113,7 @@ const listViewConfig = {
           {
             lineData: [
               { type: 'prop', value: 'niveau4' },
-              { type: 'string', value: '(', classes: ['preSpace'] },
+              { type: 'string', value: '(', classes: ['PreSpace'] },
               { type: 'prop', value: 'niveau4debiteurnr' },
               { type: 'string', value: ')' },
             ]

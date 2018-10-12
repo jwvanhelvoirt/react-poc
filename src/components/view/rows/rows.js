@@ -22,7 +22,7 @@ const rows = (props) => {
   }
 
   return (
-    <div>{listItemsHtml}</div>
+    <div className={classes.RowContainer}>{listItemsHtml}</div>
   );
 }
 

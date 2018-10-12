@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import Label from '../../../ui/label/label';
 import { getDisplayValue } from '../../../../libs/generic';
 import * as trans from '../../../../libs/constTranslates';
+import ElemComInfo from './elemComInfo/elemComInfo';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
 import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
@@ -75,6 +76,10 @@ class Input extends Component {
       case ('singleCheckbox'):
         inputElement = <ElemSingleCheckbox configInput={configInput} configForm={configForm}
           changed={changed} keyUp={keyUp} />;
+        break;
+
+      case ('componentComInfo'):
+        inputElement = <ElemComInfo />
         break;
 
       case ('multiAppend'):

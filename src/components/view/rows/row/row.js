@@ -52,9 +52,10 @@ const row = (props) => {
   let listItemsFixedMenu = <div className={classes.Fixed0}></div>;
   let rightMouseClickMenu = null;
   if (row && row.menu) {
+    const classesDropDown = [classes.Fixed2, classes.DropDownIcon].join(' ');
     // Only if the row contains a click menu, we print a div in the row to align equally with the listItems.
     listItemsFixedMenu = (
-      <div className={classes.Fixed2} onClick={(event) => _this.showRowMenu(event, listItem.id)}>
+      <div className={classesDropDown} onClick={(event) => _this.showRowMenu(event, listItem.id)}>
         <FontAwesomeIcon icon={icons.ICON_ANGLE_DOWN} />
       </div>
     );

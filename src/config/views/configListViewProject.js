@@ -52,7 +52,7 @@ const listViewConfig = {
           },
           {
             lineData: [
-              { type: 'prop', value: 'niveau4', classes: ['smallFont'] }
+              { type: 'prop', value: 'niveau4', classes: ['FontSmall'] }
             ]
           }
         ]

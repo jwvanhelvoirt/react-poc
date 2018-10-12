@@ -10,9 +10,10 @@ const viewBars = (props) => {
 
   const listviewHeader = viewConfig.showListViewHeader ?
     <div className={classes.ListviewHeader}>
-      <TitleBar viewConfig={viewConfig} _this={_this} />
       <ActionBar viewConfig={viewConfig} _this={_this} />
       <HeaderBar viewConfig={viewConfig} _this={_this} />
+      <TitleBar viewConfig={viewConfig} _this={_this} />
+      <div className={classes.HorizontalRuler}></div>
     </div> :
     null;
 

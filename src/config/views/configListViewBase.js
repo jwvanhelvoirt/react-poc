@@ -4,7 +4,6 @@ const baseConfig = {
   row: { selectable: true, menu: true },
   rowSelectAll: true,
   showActions: true,
-  showColumnConfigurator: false,
   showFilter: false,
   showListViewHeader: true,
   showNavigation: true,

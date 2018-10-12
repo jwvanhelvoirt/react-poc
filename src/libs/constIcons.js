@@ -2,6 +2,10 @@
 
 export const ICON_ANGLE_DOWN = 'angle-down';
 export const ICON_ANGLE_RIGHT = 'angle-right';
+export const ICON_ARROW_LEFT = 'arrow-left';
+export const ICON_ARROW_TO_LEFT = 'arrow-to-left';
+export const ICON_ARROW_RIGHT = 'arrow-right';
+export const ICON_ARROW_TO_RIGHT = 'arrow-to-right';
 export const ICON_BARS = 'bars';
 export const ICON_COG = 'cog';
 export const ICON_EDIT = 'edit';

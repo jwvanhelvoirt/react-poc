@@ -56,6 +56,9 @@ const formConfig = {
       },
       valid: false,
       touched: false
+    },
+    [input.INPUT_COM_INFO]: {
+      elementType: 'componentComInfo'
     }
   },
   layout: {
