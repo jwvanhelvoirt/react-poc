@@ -12,17 +12,17 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Label from '../../ui/label/label';
-import { getDisplayValue } from '../../../libs/generic';
-import * as trans from '../../../libs/constTranslates';
+import Label from '../../../ui/label/label';
+import { getDisplayValue } from '../../../../libs/generic';
+import * as trans from '../../../../libs/constTranslates';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
 import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
 import ElemSelect from './elemSelect/elemSelect';
 import ElemSingleCheckbox from './elemSingleCheckbox/elemSingleCheckbox';
 import ElemTextarea from './elemTextarea/elemTextarea';
-import Aux from '../../../hoc/auxiliary';
-import classes from './formElementN.scss';
+import Aux from '../../../../hoc/auxiliary';
+import classes from './formElement.scss';
 
 class Input extends Component {
 
@@ -105,7 +105,7 @@ class Input extends Component {
     return(
       <Aux>
         {labelPrint}
-        {validationError}
+        {/*validationError*/}
         {inputElement}
       </Aux>
     );

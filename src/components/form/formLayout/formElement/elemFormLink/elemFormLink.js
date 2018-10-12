@@ -1,5 +1,5 @@
 import React from 'react';
-import Label from '../../../ui/label/label';
+import Label from '../../../../ui/label/label';
 import classes from './elemFormLink.scss';
 
 const elemFormLink = (props) => {

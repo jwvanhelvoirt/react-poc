@@ -477,7 +477,7 @@ class _View extends Component {
    * @brief   Shows a modal where the user can select on which attribute to sort the listView in which order.
    */
   onClickSortHandler = () => {
-    this.showModal('showModalSort', 'ModalWide', [trans.KEY_SORT], 'info',
+    this.showModal('showModalSort', 'ModalLarge', [trans.KEY_SORT], 'info',
       <View viewConfig={viewConfigSort} listItems={this.state.viewConfig.sortOptions} />, 'butOkCancel', 'Ok',
        () => this.processSelectedSortOption(), () => this.onModalSortCloseHandler());
   };

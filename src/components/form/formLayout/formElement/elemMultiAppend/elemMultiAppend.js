@@ -1,10 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import View from '../../../parsers/viewParser/viewParser';
-import Button from '../../../ui/button/button';
-import Aux from '../../../../hoc/auxiliary';
-import * as icons from '../../../../libs/constIcons';
-import * as trans from '../../../../libs/constTranslates';
+import View from '../../../../parsers/viewParser/viewParser';
+import Button from '../../../../ui/button/button';
+import Aux from '../../../../../hoc/auxiliary';
+import * as icons from '../../../../../libs/constIcons';
+import * as trans from '../../../../../libs/constTranslates';
 import classes from './elemMultiAppend.scss';
 
 const elemMultiAppend = (props) => {

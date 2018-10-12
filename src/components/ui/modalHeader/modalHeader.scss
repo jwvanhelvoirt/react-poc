@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   z-index: 50;
+  border-bottom: 1px solid #b8bac9;
 }
 
 .Header>* {
@@ -57,7 +58,8 @@
 }
 
 .Info {
-  background-color: #007bff;
+  color: grey;
+  background-color: white;
 }
 
 .Warning {

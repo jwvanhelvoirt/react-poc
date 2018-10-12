@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId,
   touchedForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
-import FormElement from '../../form/formElement/formElement';
+// import FormElement from '../../form/formElement/formElement';
 import FormLayout from '../../form/formLayout/formLayout';
 import MessageBox from '../../ui/messageBox/messageBox';
 import * as trans from '../../../libs/constTranslates';
@@ -317,7 +317,7 @@ class Form extends Component {
   render = () => {
     const { modalClass, messageButtons, focusButton, messageTitle, messageType, messageContent,
       callBackOk, callBackCancel} = this.localData;
-    const { inputs, title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel,
+    const { title, titleAlign, titleIcon, size, buttons, headerSize, noCreate, okButtonLabel,
       cancelButtonLabel, buttonsClass, msgFailedSubmit } = this.state.configForm;
 
     let lookupModal = null;

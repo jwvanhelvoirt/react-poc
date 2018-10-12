@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDisplayValue } from '../../../../libs/generic';
+import { getDisplayValue } from '../../../../../libs/generic';
 
 const elemSelect = (props) => {
   const { configInput, inputClasses, autoFocus, changed, keyUp, translates } = props;

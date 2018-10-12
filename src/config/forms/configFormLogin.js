@@ -1,4 +1,5 @@
 import * as icons from '../../libs/constIcons';
+import * as input from '../../libs/constInputs';
 import * as trans from '../../libs/constTranslates';
 import baseConfig from './configFormBase';
 
@@ -17,7 +18,7 @@ const formConfig = {
   url: 'api.login',
   urlSuffix: false,
   inputs: {
-    login: {
+    [input.INPUT_USERNAME]: {
       label: trans.KEY_USERNAME,
       elementType: 'input',
       elementConfig: {
@@ -32,7 +33,7 @@ const formConfig = {
       valid: false,
       touched: false
     },
-    password: {
+    [input.INPUT_PASSWORD]: {
       label: trans.KEY_PASSWORD,
       elementType: 'input',
       elementConfig: {
@@ -46,7 +47,7 @@ const formConfig = {
       valid: false,
       touched: false
     },
-    remember_login: {
+    [input.INPUT_REMEMBER_PREV_LOGIN]: {
       // TODO : nu de functie niet meer nodig is, kan dit een normale checkbox worden, checkboxes en radios zijn echter nog niet ingeregeld.
       // Moet straks dus wel omgezet worden naar een gewone checkbox.
       label: trans.KEY_REMEMBER_PREV_LOGIN,
@@ -56,7 +57,7 @@ const formConfig = {
       // Don't need this anymore, but leave it for reference. You can bind a function to be called when clicking the checkbox.
       // func: (event, configForm) => rememberPrevLogin(event, configForm)
     },
-    forgotPassword: {
+    [input.INPUT_FORGOT_PASSWORD]: {
       label: trans.KEY_FORGOT_PASSWORD,
       elementType: 'formLink',
       func: () => forgotPassword()
@@ -94,6 +95,41 @@ const formConfig = {
     // 	lookupTitle: trans.KEY_USERNAME,
     // 	value: [],
     // }
+  },
+
+  //login
+  //password
+  //remember_login
+  //forgotPassword
+
+  layout: {
+    rows: [
+      {
+        cols: [
+          {
+            width: 'Flex100',
+            rows: [
+              {
+                inputs: [
+                  { id: input.INPUT_USERNAME, width: 'Flex100' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_PASSWORD, width: 'Flex100' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_REMEMBER_PREV_LOGIN, width: 'Flex50' },
+                  { id: input.INPUT_FORGOT_PASSWORD, width: 'Flex50' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 };
 

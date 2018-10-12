@@ -1,6 +1,6 @@
 import React from 'react';
-import Label from '../../../ui/label/label';
-import Aux from '../../../../hoc/auxiliary';
+import Label from '../../../../ui/label/label';
+import Aux from '../../../../../hoc/auxiliary';
 import classes from './elemSingleCheckbox.scss';
 
 const elemSingleCheckbox = (props) => {
@@ -10,9 +10,11 @@ const elemSingleCheckbox = (props) => {
 
   return (
     <Aux>
-      <input type='checkbox' checked={value} className={classes.SingleCheckbox} onChange={changed}
-        onKeyUp={keyUp} onClick={click} />
-      <Label labelKey={label} convertType={'propercase'} />
+      <div>
+        <input type='checkbox' checked={value} className={classes.SingleCheckbox} onChange={changed}
+          onKeyUp={keyUp} onClick={click} />
+        <Label labelKey={label} convertType={'propercase'} />
+      </div>
     </Aux>
   );
 };

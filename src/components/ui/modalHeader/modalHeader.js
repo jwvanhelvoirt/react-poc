@@ -4,6 +4,7 @@ import Label from '../../ui/label/label';
 import classes from './modalHeader.scss';
 
 const modalHeader = (props) => {
+
   let classColor = classes.Info;
   switch (props.type) {
     case 'warning':
