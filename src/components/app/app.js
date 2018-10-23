@@ -33,7 +33,7 @@ import ModAdmin from '../content/modules/modAdmin';
 import Mod404 from '../content/modules/mod404';
 
 import { isAuthNavItems, navItems } from '../../config/navigation/configNavigationItems';
-import { isAuthNavIcons, navIcons } from '../../config/navigation/configNavigationIcons';
+import { navIcons } from '../../config/navigation/configNavigationIcons';
 
 class App extends Component {
 
@@ -174,7 +174,7 @@ class App extends Component {
             <Route path={routes.ROUTE_SEARCH} component={ModSearch} />
             <Route path={routes.ROUTE_PERSONAL} component={ModPersonalSettings} />
             <Route path={routes.ROUTE_LOGOUT} component={Logout} />
-            {isAuthNavIcons.admin ? <Route path={routes.ROUTE_ADMIN} component={ModAdmin} /> : null}
+            {isAuthNavItems.admin ? <Route path={routes.ROUTE_ADMIN} component={ModAdmin} /> : null}
 
             {/* Every unexpected route results into a 404, except for the '/' route (the root) */}
             <Route component={Mod404} />

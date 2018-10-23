@@ -3,16 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Backdrop from '../../ui/backdrop/backdrop';
 import Label from '../../ui/label/label';
 import * as icons from '../../../libs/constIcons';
-import { getViewActions } from '../../../libs/views';
+import { getViewActions, getContent } from '../../../libs/views';
 import Aux from '../../../hoc/auxiliary';
 import classes from './actionMenu.scss';
 
 const actionMenu = (props) => {
-  const { show, actions, subActions, showType, selectedListItems, mousePosY, mousePosX, actionMenuClosed, _this } = props;
+
+  const { show, actions, actionMenuHeader, subActions, showType, listItems, selectedListItems, mousePosY, mousePosX,
+    actionMenuClosed, _this } = props;
   let actionsMenuOutput = null;
 
   if (show) {
-    const actionsOutput = getActions(actions, subActions, _this, false, mousePosY, mousePosX, showType, selectedListItems, 0, 0);
+    const actionsOutput = getActions(actions, subActions, actionMenuHeader, _this, false, mousePosY, mousePosX, showType, listItems, selectedListItems, 0, 0);
 
     actionsMenuOutput = (
       <Aux>
@@ -35,8 +37,8 @@ const closeActionMenu = (event, _this, callback) => {
   callback(_this);
 };
 
-const getActions = (actions, subActions, _this, subMenu, mousePosY, mousePosX, showType, selectedListItems,
-  indexSubAction, subMenuLevel) => {
+const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mousePosY, mousePosX, showType, listItems,
+  selectedListItems, indexSubAction, subMenuLevel) => {
   // Recursive function that constructs HTML for all actions and it's subs.
 
   // If there are subActions passed process these instead of the actions.
@@ -48,14 +50,18 @@ const getActions = (actions, subActions, _this, subMenu, mousePosY, mousePosX, s
   const browserHeight = window.innerHeight || document.body.clientHeight;
 
   // We take these out of actionsMenu.scss.
-  const actionHeight = 50;
-  const iconWidth = 40;
+  const headerHeight = 40;
+  const actionHeight = 40;
+  const iconWidth = 45;
   const labelWidth = 190;
   const subMenuIndicatorWidth = 20;
   const subMenuIndent = 40;
-  const menuWidth = iconWidth + labelWidth + subMenuIndicatorWidth;
+  const menuWidth = (iconWidth + 5) + labelWidth + subMenuIndicatorWidth;
 
-  const actionMenuHeight = actionsMenu.length * actionHeight;
+  let actionMenuHeight = (actionsMenu.length * actionHeight);
+  if (showType === 'showInRowMenu') {
+    actionMenuHeight = (actionsMenu.length * actionHeight) + headerHeight;
+  }
 
   // Prevent the menu from leaving the browser screen both horizontally and vertically.
   const menuTop = mousePosY + actionMenuHeight > browserHeight ? browserHeight - actionMenuHeight - 10 : mousePosY;
@@ -88,6 +94,23 @@ const getActions = (actions, subActions, _this, subMenu, mousePosY, mousePosX, s
     width: subMenuIndicatorWidth + 'px'
   };
 
+  let header = null;
+  if (actionMenuHeader && showType === 'showInRowMenu' && subMenuLevel === 0) {
+    // Get the data of the selected row in an object.
+    const listItem = listItems.filter((item) => item.id === selectedListItems[0])[0];
+
+    // Create the header label for the actions menu for identifying the selected row.
+    const headerContent = getContent(actionMenuHeader, listItem, classes);
+
+    const headerInlineStyle = headerHeight + 'px';
+
+    header = (
+      <div className={classes.HeaderWrapper} style={{minHeight: headerInlineStyle, maxHeight: headerInlineStyle}}>
+        <div className={classes.Header}>{headerContent}</div>
+      </div>
+    );
+  }
+
   const actionsOutput = actionsMenu.map((action, index) => {
 
     const classesMenuItem = action.subActions ? [classes.Action, classes.HasSubMenu].join(' ') : classes.Action;
@@ -97,33 +120,40 @@ const getActions = (actions, subActions, _this, subMenu, mousePosY, mousePosX, s
       null;
 
     const subMenuContainer = action.subActions ?
-      getActions(action.subActions, null, _this, true, mousePosY, mousePosX, showType, selectedListItems,
+      getActions(action.subActions, null, null, _this, true, mousePosY, mousePosX, showType, listItems, selectedListItems,
         indexSubAction + index + 1, subMenuLevel + 1) :
       null;
 
     const callback = action.callback ? (event) => closeActionMenu(event, _this, action.callback) : null;
 
+    const divider = action.divider ?
+      <div className={classes.DividerWrapper}><div className={classes.Divider}></div></div> :
+      null;
+
     return (
-      <div key={index} className={classesMenuItem} style={dynamicStylesAction}
-        onClick={callback}>
-        <div className={classes.Icon} style={dynamicStylesIcon}>
-          <FontAwesomeIcon icon={action.labelIcon} />
+      <Aux key={index} >
+        <div className={classesMenuItem} style={dynamicStylesAction}
+          onClick={callback}>
+          <div className={classes.Icon} style={dynamicStylesIcon}>
+            <FontAwesomeIcon icon={action.labelIcon} />
+          </div>
+          <div className={classes.Label} style={dynamicStylesLabel}>
+            <Label labelKey={action.label} convertType={'propercase'} />
+          </div>
+          <div className={classes.SubMenuIndicator} style={dynamicStylesSubMenuIndicator}>
+            {subMenuIndicator}
+          </div>
+          {subMenuContainer}
         </div>
-        <div className={classes.Label} style={dynamicStylesLabel}>
-          <Label labelKey={action.label} convertType={'propercase'} />
-        </div>
-        <div className={classes.SubMenuIndicator} style={dynamicStylesSubMenuIndicator}>
-          {subMenuIndicator}
-        </div>
-        {subMenuContainer}
-      </div>
+        {divider}
+      </Aux>
     );
   });
 
   const classesMenu = subMenu ? classes.SubMenu : classes.ActionMenu;
   const dynamicStylesActionMenu = subMenu ?
     {
-      [subMenuOrientationY]: 45,
+      [subMenuOrientationY]: actionHeight - 5,
       [subMenuOrientationX]: subMenuIndent
     } :
     {
@@ -133,6 +163,7 @@ const getActions = (actions, subActions, _this, subMenu, mousePosY, mousePosX, s
 
   return (
     <div className={classesMenu} style={dynamicStylesActionMenu}>
+      {header}
       {actionsOutput}
     </div>
   );

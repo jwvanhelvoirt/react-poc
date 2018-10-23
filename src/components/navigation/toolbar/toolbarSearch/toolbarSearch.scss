@@ -2,10 +2,12 @@
   min-height: 100%;
   padding: 0;
   margin: 0;
-  background-color: white;
+  background-color: #424250;
   display: flex;
   justify-content: space-between;
   font-size: 13px;
+  border: 1px solid transparent;
+  border-radius: 18px;
 }
 
 .Search>div {
@@ -15,14 +17,13 @@
   width: 36px;
   padding: 0;
   margin: 0;
-  color: #dc3545;
-  background-color: white;
+  color: #777;
+  background-color: transparent;
 }
 
 .Search>div:hover {
-  background-color: #dc3545;
-  color: white;
   cursor: pointer;
+  color: white;
 }
 
 .Search>input {
@@ -30,6 +31,13 @@
   flex-grow: 2;
   outline: none;
   border: none;
+  background-color: transparent;
+  color: white;
+}
+
+.Search>input::placeholder {
+  color: white;
+  font-style: italic;
 }
 
 .Small {

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { NavLink } from 'react-router-dom';
-import Tooltip from '../tooltip/tooltip';
-import Label from '../label/label';
+import Tooltip from '../../../../ui/tooltip/tooltip';
+import Label from '../../../../ui/label/label';
 import classes from './toolbarIcon.scss';
 
 const toolbarIcon = (props) => {

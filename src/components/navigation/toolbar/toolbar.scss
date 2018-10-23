@@ -4,11 +4,10 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	background-color: #eee;
+	background: linear-gradient(to right, #181b22 0%, #393b4a 100%);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	// padding: 0 20px;
 	box-sizing: border-box;
 	z-index: 50;
 	border-bottom: 1px solid #ccc;
@@ -23,16 +22,8 @@
 	height: 34px;
 }
 
-.GrowSmall {
-	flex-grow: 1;
-}
-
-.GrowMedium {
-	flex-grow: 2;
-}
-
-.GrowBig {
-	flex-grow: 3;
+.Searchbar {
+	width: 350px;
 }
 
 @media (max-width: 1919px) {
@@ -40,5 +31,11 @@
 		color: white;
 		display: block;
 		font-size: 20px;
+	}
+}
+
+@media (max-width: 767px) {
+	.Searchbar {
+		width: 200px;
 	}
 }

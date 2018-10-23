@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const getViewActions = (actions, show, selectedListItems) => {
   let actionsPrimary = actions.filter((action) => action[show]);
 
@@ -36,4 +38,45 @@ export const getColumnClasses = (column, defaultClasses, classes) => {
   ];
 
   return arrayClasses.join(' ');
-}
+};
+
+// getContent(column.content, listItem);
+
+export const getContent = (contentProp, listItem, classes) => {
+  let listItemColumnContent = null;
+
+  if (typeof contentProp === 'string') {
+    // Printing a single attribute.
+    listItemColumnContent = listItem[contentProp];
+  } else {
+    // Printing concatenated attributes or multiple lines.
+
+    // Loop through all lines.
+    listItemColumnContent = contentProp.lines.map((line, index) => {
+
+      // Loop through all parts of data to be printed on a single line.
+      const lineParts = line.lineData.map((part, index) => {
+        let additionalClasses = null;
+        if (part.classes) {
+          const arrayAdditionalClasses = part.classes.map((className) => {
+            return classes[className];
+          });
+          additionalClasses = arrayAdditionalClasses.join(' ');
+        }
+
+        switch (part.type) {
+          case 'prop':
+            return <span key={index} className={additionalClasses}>{listItem[part.value]}</span>;
+          default:
+            return <span key={index} className={additionalClasses}>{part.value}</span>;
+        }
+      });
+
+      return <div key={index}>{lineParts}</div>
+    });
+
+  }
+
+  return listItemColumnContent;
+
+};

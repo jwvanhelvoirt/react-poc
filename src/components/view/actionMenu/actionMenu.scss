@@ -2,9 +2,13 @@
   position: absolute;
   background: white;
   box-shadow: 1px 1px 20px 8px rgba(0,0,0,0.35);
+  border: 1px solid #797979;
+  border-radius: 4px;
   z-index: 150;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  max-width: 260px;
 }
 
 .SubMenu {
@@ -12,26 +16,32 @@
 }
 
 .Action {
+  color: #979797;
+  border-left: 5px solid transparent;
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  border-bottom: 1px solid #eee;
 }
 
 .Action:hover {
-  background-color: #eee;
+  color: white;
+  background-color: #2d98de;
+  border-left: 5px solid #355c7d;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .Icon {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 13px;
 }
 
 .Label {
   display: flex;
   align-items: center;
+  font-size: 13px;
 }
 
 .Label>* {
@@ -53,4 +63,31 @@
 .HasSubMenu:hover>.SubMenu {
   display: flex;
   flex-direction: column;
+}
+
+.DividerWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Divider {
+  width: 90%;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.HeaderWrapper {
+  width: 100%;
+  padding: 0 21px;
+  display: flex;
+  align-items: center;
+}
+
+.Header {
+  color: #2d98de;
+  font-size: 15px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

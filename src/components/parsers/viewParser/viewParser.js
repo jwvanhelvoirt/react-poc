@@ -597,7 +597,7 @@ class _View extends Component {
     const { modalClass, messageButtons, focusButton, messageTitle, messageType, messageContent,
       callBackOk, callBackCancel} = this.localData;
     const { loadedListItem, configForm, selectedListItemId, showModalSort, showModalMessage, showMenu, subActions,
-      showMenuType, viewConfig, loading, selectedListItems, mousePosX, mousePosY } = this.state;
+      showMenuType, viewConfig, loading, listItems, selectedListItems, mousePosX, mousePosY } = this.state;
 
     // Display the form modal in case loadedListItem is filled with form data.
     let formModal = null;
@@ -623,10 +623,12 @@ class _View extends Component {
     const actionMenu = (
       <ActionMenu
         actions={viewConfig.actions}
+        actionMenuHeader={viewConfig.actionMenuHeader}
         subActions={subActions}
         show={showMenu}
         showType={showMenuType}
         actionMenuClosed={this.onActionsMenuCloseHandler}
+        listItems={listItems}
         selectedListItems={selectedListItems}
         mousePosX={mousePosX}
         mousePosY={mousePosY}
@@ -642,11 +644,11 @@ class _View extends Component {
     const listviewHeader = <ViewBars viewConfig={viewConfig} _this={this} />;
 
     // ListItems.
-    let listItems = <Rows viewConfig={viewConfig} _this={this} />;
+    let listOutput = <Rows viewConfig={viewConfig} _this={this} />;
 
     // In case the listItems are still fetched, we display a spinner.
     if (loading) {
-      listItems = <Spinner />;
+      listOutput = <Spinner />;
     }
 
     return(
@@ -654,7 +656,7 @@ class _View extends Component {
         <div className={classes.ListviewContainer}>
           {listviewHeader}
           <div className={classes.ListviewContent}>
-            {listItems}
+            {listOutput}
           </div>
         </div>
         {formModal}

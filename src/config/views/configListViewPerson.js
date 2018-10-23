@@ -4,6 +4,7 @@ import baseConfig from './configListViewBase';
 import formConfigPerson from '../forms/configFormPerson';
 
 const listViewConfig = {
+  actionMenuHeader: 'completenaam',
   actions: [
     {
       ...actions.ACTION_ADD,
@@ -16,7 +17,8 @@ const listViewConfig = {
       ...actions.ACTION_EDIT
     },
     {
-      ...actions.ACTION_DELETE
+      ...actions.ACTION_DELETE,
+      divider: true
     },
     {
       ...actions.ACTION_REFRESH,

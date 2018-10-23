@@ -8,12 +8,14 @@ import * as trans from '../../libs/constTranslates';
 export const isAuthNavItems = {
   document: true,
   task: true,
-  person: true
+  person: true,
+  admin: true
 };
 
 export const navItems = [
                             { icon: icons.ICON_HOME,      label: trans.KEY_DASHBOARD,  url: routes.ROUTE_DASHBOARD, dashboard: false },
   isAuthNavItems.document ? { icon: icons.ICON_FILE_ALT,  label: trans.KEY_DOCUMENT,   url: routes.ROUTE_DOCUMENT,  dashboard: true } : {},
   isAuthNavItems.task     ? { icon: icons.ICON_TASKS,     label: trans.KEY_TASK,       url: routes.ROUTE_TASK,      dashboard: true } : {},
-  isAuthNavItems.person   ? { icon: icons.ICON_USER,      label: trans.KEY_PERSON,     url: routes.ROUTE_PERSON,    dashboard: true } : {}
+  isAuthNavItems.person   ? { icon: icons.ICON_USER,      label: trans.KEY_PERSON,     url: routes.ROUTE_PERSON,    dashboard: true } : {},
+  isAuthNavItems.admin   ?  { icon: icons.ICON_COG,       label: trans.KEY_SETTINGS,   url: routes.ROUTE_ADMIN,     dashboard: true } : {}
 ];

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '../../../../libs/constIcons';
-import { getViewActions, getColumnClasses } from '../../../../libs/views';
+import { getViewActions, getColumnClasses, getContent } from '../../../../libs/views';
 import Avatar from '../../../ui/avatar/avatar';
 import Timespan from '../../../ui/timespan/timespan';
 import RowHoverIcon from './rowHoverIcon/rowHoverIcon';
@@ -102,37 +102,7 @@ const row = (props) => {
                   listItemColumnContent = <Timespan size={column.size} start={listItem[column.data.start]} end={listItem[column.data.end]} />;
                   break;
                 default:
-                  if (typeof column.content === 'string') {
-                    // Printing a single attribute.
-                    listItemColumnContent = listItem[column.content];
-                  } else {
-                    // Printing concatenated attributes or multiple lines.
-
-                    // Loop through all lines.
-                    listItemColumnContent = column.content.lines.map((line, index) => {
-
-                      // Loop through all parts of data to be printed on a single line.
-                      const lineParts = line.lineData.map((part, index) => {
-                        let additionalClasses = null;
-                        if (part.classes) {
-                          const arrayAdditionalClasses = part.classes.map((className) => {
-                            return classes[className];
-                          });
-                          additionalClasses = arrayAdditionalClasses.join(' ');
-                        }
-
-                        switch (part.type) {
-                          case 'prop':
-                            return <span key={index} className={additionalClasses}>{listItem[part.value]}</span>;
-                          default:
-                            return <span key={index} className={additionalClasses}>{part.value}</span>;
-                        }
-                      });
-
-                      return <div key={index}>{lineParts}</div>
-                    });
-
-                  }
+                  listItemColumnContent = getContent(column.content, listItem, classes);
               };
 
               const columnClasses = getColumnClasses(column, [classes[column.size]], classes);
