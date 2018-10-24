@@ -11,7 +11,9 @@ const toolbar = (props) => {
     <header className={classes.Toolbar}>
       <DrawerToggle clicked={props.drawerToggleClicked} />
       <div className={classes.Searchbar}><ToolbarSearch /></div>
-      <ToolbarIcons navIcons={props.navIcons} />
+      <Large><ToolbarIcons navIcons={props.navIcons} /></Large>
+      <Medium><ToolbarIcons navIcons={props.navIcons} /></Medium>
+      <Small><DrawerToggleIcons clicked={props.drawerToggleClickedIcons} /></Small>
     </header>
   );
 };

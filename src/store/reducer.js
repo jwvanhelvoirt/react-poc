@@ -140,10 +140,16 @@ const reducer = (state = initialState, action) => {
         translates: action.translates
       };
 
-    case types.USER_AUTHENTICATE: // Is the user authenticated or not?.
+    case types.USER_AUTHENTICATE: // Is the user authenticated or not?
       return {
         ...state,
         authenticated: action.authenticate
+      };
+
+    case types.USER_INFO_STORE: // Store all data form the authenticated user.
+      return {
+        ...state,
+        userInfo: action.userInfo
       };
 
     default:

@@ -1,13 +1,15 @@
 .ToolbarIcon {
 	height: 100%;
-	width: 56px;
+	width: 80px;
 	font-size: 22px;
+	border-top: 5px solid transparent;
 	border-bottom: 5px solid transparent;
 }
 
 .ToolbarIcon:hover {
 	cursor: pointer;
 	background-color: #767780;
+	border-top: 5px solid transparent;
 	border-bottom: 5px solid #0199D0;
 }
 

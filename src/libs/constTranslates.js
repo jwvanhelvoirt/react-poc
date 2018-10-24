@@ -2,11 +2,13 @@
 
 export const KEY_ADD_PERSON = 'KEY persoon toevoegen';
 export const KEY_ASCENDING = 'KEY oplopend';
+export const KEY_AVG_GDPR = 'KEY AVG/GDPR';
 export const KEY_BUDGET = 'KEY budget';
 export const KEY_CANCEL = 'KEY annuleren';
 export const KEY_CERTIFICATIONS = 'KEY certificeringen';
 export const KEY_CHANGE = 'KEY wijziging';
 export const KEY_CLOSE = 'KEY sluiten';
+export const KEY_CONNECT_EXTERNAL_DEVICES = 'KEY koppel externe apparaten';
 export const KEY_CONTACT = 'KEY contact';
 export const KEY_CORRESPONDENCE = 'KEY correspondentie';
 export const KEY_DASHBOARD = 'KEY dashboard';
@@ -22,6 +24,7 @@ export const KEY_FAILED_LOGIN = 'KEY combinatie gebruikersnaam/wachtwoord onbeke
 export const KEY_FILTER_ACTION = 'KEY filter view';
 export const KEY_FIRST_NAME = 'KEY roepnaam';
 export const KEY_FORGOT_PASSWORD = 'KEY wachtwoord vergeten';
+export const KEY_HELP = 'KEY help';
 export const KEY_HOME = 'KEY home';
 export const KEY_INFO = 'KEY info';
 export const KEY_INITIALS = 'KEY initialen';
@@ -32,6 +35,8 @@ export const KEY_LIST = 'KEY lijst';
 export const KEY_LLC = 'KEY bv';
 export const KEY_LOGIN = 'KEY login';
 export const KEY_LOGOUT = 'KEY uitloggen';
+export const KEY_LOGOUT_ALL = 'KEY overal afmelden';
+export const KEY_LOGOUT_CLOSE = 'KEY afmelden en afsluiten';
 export const KEY_MENU = 'KEY menu';
 export const KEY_NAME = 'KEY naam';
 export const KEY_NEW = 'KEY nieuw';
@@ -44,11 +49,12 @@ export const KEY_OTHER = 'KEY overige';
 export const KEY_PASSWORD = 'KEY wachtwoord';
 export const KEY_PERIOD = 'KEY periode';
 export const KEY_PERSON = 'KEY persoon';
-export const KEY_PERSONAL_SETTINGS = 'KEY instellingen';
+export const KEY_PERSONAL_SETTINGS = 'KEY persoonlijke instellingen';
 export const KEY_PLUS = 'KEY plus';
 export const KEY_PROJECT = 'KEY project';
 export const KEY_PROPERTIES = 'KEY eigenschappen';
 export const KEY_REFRESH = 'KEY verversen';
+export const KEY_RELEASE = 'KEY release';
 export const KEY_REMEMBER_PREV_LOGIN = 'KEY onthouden';
 export const KEY_REPORT = 'KEY rapport';
 export const KEY_RESTBUDGET = 'KEY restbudget';
@@ -83,4 +89,6 @@ export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
 - KEY plus
 - KEY verversen
 - KEY persoon toevoegen
+- KEY persoonlijke instellingen
+- KEY koppel externe apparaten
 */

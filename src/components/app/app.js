@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { authenticateUser, magicChecked, setLoadUserSettings, storeLanguage, storeTranslates, translatesLoaded } from '../../store/actions';
+import { authenticateUser, magicChecked, setLoadUserSettings, storeLanguage, storeUserInfo,
+  storeTranslates, translatesLoaded } from '../../store/actions';
 import * as routes from '../../libs/constRoutes';
 import '../../assets/fontAwesome/fontAwesome';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
@@ -123,6 +124,7 @@ class App extends Component {
       // User has the same language configured as the current translates object.
       this.props.translatesLoaded();
       this.props.storeLanguage(response.data.settings.language);
+      this.props.storeUserInfo(response.data);
       localStorage.setItem('language', response.data.settings.language);
     }
   };
@@ -202,6 +204,7 @@ const mapDispatchToProps = dispatch => {
     magicChecked: (initMagicChecked) => dispatch(magicChecked(initMagicChecked)),
     setLoadUserSettings: (loadUserSettings) => dispatch(setLoadUserSettings(loadUserSettings)),
     storeLanguage: (language) => dispatch(storeLanguage(language)),
+    storeUserInfo: (userInfo) => dispatch(storeUserInfo(userInfo)),
     storeTranslates: (translates) => dispatch(storeTranslates(translates)),
     translatesLoaded: () => dispatch(translatesLoaded())
   }

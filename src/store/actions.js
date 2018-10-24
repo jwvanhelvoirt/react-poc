@@ -73,6 +73,13 @@ export const storeLanguage = (language) => {
   };
 };
 
+export const storeUserInfo = (userInfo) => {
+  return {
+    type: types.USER_INFO_STORE,
+    userInfo
+  };
+};
+
 export const storeTranslates = (translates) => {
   return {
     type: types.TRANS_TRANSLATES_STORE,

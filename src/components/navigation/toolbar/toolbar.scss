@@ -1,41 +1,44 @@
 .Toolbar {
-	height: 56px;
-	width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background: linear-gradient(to right, #181b22 0%, #393b4a 100%);
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	box-sizing: border-box;
-	z-index: 50;
-	border-bottom: 1px solid #ccc;
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to right, #181b22 0%, #393b4a 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 50;
+  border-bottom: 1px solid #ccc;
 }
 
 .Toolbar .Title {
-	// display: none;
+  // display: none;
 }
 
 .Toolbar .Searchbar {
-	margin: 0 10px;
-	height: 34px;
+  margin: 0 10px;
+  height: 34px;
 }
 
 .Searchbar {
-	width: 350px;
+  max-width: 350px;
+  min-width: 350px;
 }
 
 @media (max-width: 1919px) {
-	.Toolbar .Title {
-		color: white;
-		display: block;
-		font-size: 20px;
-	}
+  .Toolbar .Title {
+    color: white;
+    display: block;
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 767px) {
-	.Searchbar {
-		width: 200px;
-	}
+  .Searchbar {
+    max-width: 150px;
+    min-width: 150px;
+    overflow-x: hidden;
+  }
 }

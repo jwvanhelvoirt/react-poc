@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Backdrop from '../../ui/backdrop/backdrop';
 import Label from '../../ui/label/label';
@@ -10,11 +11,12 @@ import classes from './actionMenu.scss';
 const actionMenu = (props) => {
 
   const { show, actions, actionMenuHeader, subActions, showType, listItems, selectedListItems, mousePosY, mousePosX,
-    actionMenuClosed, _this } = props;
+    actionMenuClosed, _this, userInfo } = props;
   let actionsMenuOutput = null;
 
   if (show) {
-    const actionsOutput = getActions(actions, subActions, actionMenuHeader, _this, false, mousePosY, mousePosX, showType, listItems, selectedListItems, 0, 0);
+    const actionsOutput = getActions(actions, subActions, actionMenuHeader, _this, false, mousePosY, mousePosX,
+      showType, listItems, selectedListItems, 0, 0, userInfo);
 
     actionsMenuOutput = (
       <Aux>
@@ -38,7 +40,7 @@ const closeActionMenu = (event, _this, callback) => {
 };
 
 const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mousePosY, mousePosX, showType, listItems,
-  selectedListItems, indexSubAction, subMenuLevel) => {
+  selectedListItems, indexSubAction, subMenuLevel, userInfo) => {
   // Recursive function that constructs HTML for all actions and it's subs.
 
   // If there are subActions passed process these instead of the actions.
@@ -59,7 +61,7 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
   const menuWidth = (iconWidth + 5) + labelWidth + subMenuIndicatorWidth;
 
   let actionMenuHeight = (actionsMenu.length * actionHeight);
-  if (showType === 'showInRowMenu') {
+  if (showType === 'showInRowMenu' || showType === 'showInPersonalMenu') {
     actionMenuHeight = (actionsMenu.length * actionHeight) + headerHeight;
   }
 
@@ -95,9 +97,11 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
   };
 
   let header = null;
-  if (actionMenuHeader && showType === 'showInRowMenu' && subMenuLevel === 0) {
+  if (actionMenuHeader && (showType === 'showInRowMenu' || showType === 'showInPersonalMenu') && subMenuLevel === 0) {
     // Get the data of the selected row in an object.
-    const listItem = listItems.filter((item) => item.id === selectedListItems[0])[0];
+    const listItem = showType === 'showInRowMenu' ?
+      listItems.filter((item) => item.id === selectedListItems[0])[0] :
+      userInfo;
 
     // Create the header label for the actions menu for identifying the selected row.
     const headerContent = getContent(actionMenuHeader, listItem, classes);
@@ -121,7 +125,7 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
 
     const subMenuContainer = action.subActions ?
       getActions(action.subActions, null, null, _this, true, mousePosY, mousePosX, showType, listItems, selectedListItems,
-        indexSubAction + index + 1, subMenuLevel + 1) :
+        indexSubAction + index + 1, subMenuLevel + 1, userInfo) :
       null;
 
     const callback = action.callback ? (event) => closeActionMenu(event, _this, action.callback) : null;
@@ -170,4 +174,9 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
 
 };
 
-export default actionMenu;
+const mapStateToProps = state => {
+  const { userInfo } = state.redMain;
+  return { userInfo };
+};
+
+export default connect(mapStateToProps)(actionMenu);

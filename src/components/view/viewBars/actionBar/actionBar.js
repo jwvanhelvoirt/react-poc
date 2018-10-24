@@ -94,6 +94,7 @@ const actionBar = (props) => {
       </div>
       );
     }
+
   }
 
   // Action bar: Searchbar.
