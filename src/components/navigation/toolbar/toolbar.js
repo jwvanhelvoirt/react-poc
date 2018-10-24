@@ -1,9 +1,8 @@
 import React from 'react';
 import DrawerToggle from '../sideDrawer/drawerToggle/drawerToggle';
-import DrawerToggleIcons from '../sideDrawer/drawerToggle/drawerToggleIcons';
+// import DrawerToggleIcons from '../sideDrawer/drawerToggle/drawerToggleIcons';
 import ToolbarSearch from './toolbarSearch/toolbarSearch';
 import ToolbarIcons from './toolbarIcons/toolbarIcons';
-import { Large, Medium, Small } from '../../../libs/responsive';
 import classes from './toolbar.scss';
 
 const toolbar = (props) => {

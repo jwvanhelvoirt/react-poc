@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Backdrop from '../../ui/backdrop/backdrop';
 import Label from '../../ui/label/label';
@@ -33,10 +34,16 @@ const actionMenu = (props) => {
   );
 };
 
-const closeActionMenu = (event, _this, callback) => {
-  event.stopPropagation();
+const closeActionMenu = (event, _this, callback, stopPropagation) => {
+  if (stopPropagation) {
+    event.stopPropagation();
+  }
+
   _this.setState({ showMenu: false, subActions: [] });
-  callback(_this);
+
+  if (callback) {
+    callback(_this);
+  }
 };
 
 const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mousePosY, mousePosX, showType, listItems,
@@ -128,14 +135,16 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
         indexSubAction + index + 1, subMenuLevel + 1, userInfo) :
       null;
 
-    const callback = action.callback ? (event) => closeActionMenu(event, _this, action.callback) : null;
-
     const divider = action.divider ?
       <div className={classes.DividerWrapper}><div className={classes.Divider}></div></div> :
       null;
 
-    return (
-      <Aux key={index} >
+    const callback = action.callback ?
+      (event) => closeActionMenu(event, _this, action.callback, true) :
+      (event) => closeActionMenu(event, _this, null, false);
+
+    const basicActionOutput = (
+      <Aux>
         <div className={classesMenuItem} style={dynamicStylesAction}
           onClick={callback}>
           <div className={classes.Icon} style={dynamicStylesIcon}>
@@ -150,6 +159,16 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
           {subMenuContainer}
         </div>
         {divider}
+      </Aux>
+    );
+
+    const actionOutput = action.url ?
+      <NavLink to={action.url} exact>{basicActionOutput}</NavLink> :
+      basicActionOutput;
+
+    return (
+      <Aux key={index} >
+        {actionOutput}
       </Aux>
     );
   });

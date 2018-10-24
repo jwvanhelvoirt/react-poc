@@ -68,7 +68,7 @@ class ModPersonalSettings extends Component {
     }
 
     return (
-        <Aux>{userSettings}</Aux>
+        <Aux><div>Personal settings</div></Aux>
     );
 	};
 

@@ -31,6 +31,11 @@ import ModPersonalSettings from '../content/modules/modPersonalSettings';
 import Logout from '../navigation/logout/logout';
 import ModAdmin from '../content/modules/modAdmin';
 
+import ModGdpr from '../content/modules/modGdpr';
+import ModHelp from '../content/modules/modHelp';
+import ModRelease from '../content/modules/modRelease';
+import ModConnect from '../content/modules/modConnect';
+
 import Mod404 from '../content/modules/mod404';
 
 import { isAuthNavItems, navItems } from '../../config/navigation/configNavigationItems';
@@ -174,9 +179,13 @@ class App extends Component {
             {isAuthNavItems.person ? <Route path={routes.ROUTE_PERSON} component={ModPerson} /> : null}
 
             <Route path={routes.ROUTE_SEARCH} component={ModSearch} />
-            <Route path={routes.ROUTE_PERSONAL} component={ModPersonalSettings} />
+            <Route path={routes.ROUTE_PERSONAL_SETTINGS} component={ModPersonalSettings} />
             <Route path={routes.ROUTE_LOGOUT} component={Logout} />
             {isAuthNavItems.admin ? <Route path={routes.ROUTE_ADMIN} component={ModAdmin} /> : null}
+            <Route path={routes.ROUTE_GDPR} component={ModGdpr} />
+            <Route path={routes.ROUTE_HELP} component={ModHelp} />
+            <Route path={routes.ROUTE_RELEASE} component={ModRelease} />
+            <Route path={routes.ROUTE_CONNECT} component={ModConnect} />
 
             {/* Every unexpected route results into a 404, except for the '/' route (the root) */}
             <Route component={Mod404} />
