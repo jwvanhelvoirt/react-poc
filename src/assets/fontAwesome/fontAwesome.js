@@ -3,6 +3,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 import {
   faAngleDown,
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
   faAngleRight,
   faArrowLeft,
   faArrowToLeft,
@@ -30,14 +32,17 @@ import {
   faSortDown,
   faSyncAlt,
   faTasks,
+  faTimes,
   faTimesCircle,
   faTrash,
   faTrashAlt,
   faUser
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/pro-regular-svg-icons';
 
 export default library.add(
   faAngleDown,
+  faAngleDoubleLeft,
+  faAngleDoubleRight,
   faAngleRight,
   faArrowLeft,
   faArrowToLeft,
@@ -65,6 +70,7 @@ export default library.add(
   faSortDown,
   faSyncAlt,
   faTasks,
+  faTimes,
   faTimesCircle,
   faTrash,
   faTrashAlt,

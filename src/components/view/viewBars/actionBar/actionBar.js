@@ -19,7 +19,7 @@ const actionBar = (props) => {
   const showFilterAction = filterOptions && filterOptions.length > 0 && showFilter ? true : false;
   const filter = showFilterAction ?
     <div onClick={() => _this.onClickFilterHandler()} data-tip="React-tooltip" data-for={trans.KEY_FILTER_ACTION}>
-      <FontAwesomeIcon icon={icons.ICON_FILTER} />
+      <FontAwesomeIcon icon={['far', icons.ICON_FILTER]} />
       <Tooltip id={trans.KEY_FILTER_ACTION}>
         <Label labelKey={trans.KEY_FILTER_ACTION} convertType={'propercase'} />
       </Tooltip>
@@ -30,7 +30,7 @@ const actionBar = (props) => {
   const showSortAction = sortOptions && sortOptions.options && sortOptions.options.length > 0 && showSort ? true : false;
   const sort = showSortAction ?
     <div onClick={() => _this.onClickSortHandler()} data-tip="React-tooltip" data-for={trans.KEY_SORT_ACTION}>
-      <FontAwesomeIcon icon={icons.ICON_SORT} />
+      <FontAwesomeIcon icon={['far', icons.ICON_SORT]} />
       <Tooltip id={trans.KEY_SORT_ACTION}>
         <Label labelKey={trans.KEY_SORT_ACTION} convertType={'propercase'} />
       </Tooltip>
@@ -72,7 +72,7 @@ const actionBar = (props) => {
 
               return (
                 <div key={index} className={classesAction} onClick={callback} data-tip="React-tooltip" data-for={action.id}>
-                  <FontAwesomeIcon icon={action.labelIcon} />
+                  <FontAwesomeIcon icon={['far', action.labelIcon]} />
                   <Tooltip id={action.id}>
                     <Label labelKey={action.tooltip} convertType={'propercase'} />
                   </Tooltip>
@@ -89,7 +89,7 @@ const actionBar = (props) => {
       actionsMenuOutput = (
         <div className={classes.ActionRowActions}>
           <div onClick={(event) => _this.showBarMenu(event)}>
-            <FontAwesomeIcon icon={icons.ICON_ELLIPSIS_V} />
+            <FontAwesomeIcon icon={['far', icons.ICON_ELLIPSIS_V]} />
           </div>
       </div>
       );
@@ -98,7 +98,6 @@ const actionBar = (props) => {
   }
 
   // Action bar: Searchbar.
-  const classesCombinedSearchbar = [classes.Search, classes.Medium].join(' ');
 
   // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
   // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
@@ -108,8 +107,10 @@ const actionBar = (props) => {
   let searchBar = null;
   if (showSearchbar) {
     searchBar = (
-      <div className={classesCombinedSearchbar}>
-        <div className={classes.SearchErase} onClick={() => _this.clearSearchbarHandler()}><FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} /></div>
+      <div className={classes.Search}>
+        <div className={classes.SearchErase} onClick={() => _this.clearSearchbarHandler()}>
+          <FontAwesomeIcon icon={['far', icons.ICON_TIMES_CIRCLE]} />
+        </div>
         <input
           value={searchbarValue}
           onChange={(event) => {
@@ -118,7 +119,6 @@ const actionBar = (props) => {
               debounced(_this)
             }
           }}
-          autoFocus
           className={classes.SearchInput} type="text" placeholder={search} />
       </div>
     );
@@ -128,9 +128,11 @@ const actionBar = (props) => {
   const actionBarOverall = showRowActions ?
     <div className={classes.ActionRow}>
       {searchBar}
-      {filterSort}
-      {actionsPrimaryOutput}
-      {actionsMenuOutput}
+      <div className={classes.Actions}>
+        {filterSort}
+        {actionsPrimaryOutput}
+        {actionsMenuOutput}
+      </div>
     </div> :
     null;
 

@@ -22,9 +22,9 @@ const titleBar = (props) => {
   const of = <Label labelKey={trans.KEY_OF} />;
 
   if (viewConfig.showNavigation) {
-      navLeftEnd =  <div key="1" className={classes.PreviousNext} onClick={() => _this.nav(false, false)}><FontAwesomeIcon icon={icons.ICON_ARROW_TO_LEFT} /></div>;
+      navLeftEnd =  <div key="1" className={classes.PreviousNext} onClick={() => _this.nav(false, false)}><FontAwesomeIcon icon={['far', icons.ICON_ARROW_TO_LEFT]} /></div>;
       navLeftMult = <div key="2" className={classes.PreviousNext} onClick={() => _this.nav(false, true)}>{_this.navStep}</div>;
-      navLeft =     <div key="3" className={classes.PreviousNext} onClick={() => _this.nav(false, false)}><FontAwesomeIcon icon={icons.ICON_ARROW_LEFT} /></div>;
+      navLeft =     <div key="3" className={classes.PreviousNext} onClick={() => _this.nav(false, false)}><FontAwesomeIcon icon={['far', icons.ICON_ARROW_LEFT]} /></div>;
 
       if (count > skip) {
           navInfo = <div key="4" className={classes.Counter}><div>{skip + 1}-{skip + viewConfig.limit > count ?
@@ -36,9 +36,9 @@ const titleBar = (props) => {
         navInfo = <div key="4" className={classes.Counter}>1-{count} {of} {count}</div>;
       }
 
-      navRight =     <div key="5" className={classes.PreviousNext} onClick={() => _this.nav(true, false)}><FontAwesomeIcon icon={icons.ICON_ARROW_RIGHT} /></div>;
+      navRight =     <div key="5" className={classes.PreviousNext} onClick={() => _this.nav(true, false)}><FontAwesomeIcon icon={['far', icons.ICON_ARROW_RIGHT]} /></div>;
       navRightMult = <div key="6" className={classes.PreviousNext} onClick={() => _this.nav(true, true)}>{_this.navStep}</div>;
-      navRightEnd =  <div key="7" className={classes.PreviousNext} onClick={() => _this.nav(true, false)}><FontAwesomeIcon icon={icons.ICON_ARROW_TO_RIGHT} /></div>;
+      navRightEnd =  <div key="7" className={classes.PreviousNext} onClick={() => _this.nav(true, false)}><FontAwesomeIcon icon={['far', icons.ICON_ARROW_TO_RIGHT]} /></div>;
   }
 
   const navPrev = [navLeftEnd, navLeftMult, navLeft];

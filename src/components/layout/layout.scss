@@ -1,22 +1,26 @@
 .FullScreen {
+  display: flex;
   width: 100%;
   box-sizing: border-box;
 }
 
 .Content {
+  display: flex;
   width: 100%;
   margin-top: 60px;
   box-sizing: border-box;
+  padding: 0;
 }
 
 .Content>* {
-	display: flex;
-	min-height: 100%;
-	height: 1px;
+  display: flex;
+  min-height: 100%;
+  height: 1px;
+  flex-grow: 1;
 }
 
 @media(max-width: 767px) {
-	.Content>* {
-		flex-direction: column;
-	}
+  .Content>* {
+    flex-direction: column;
+  }
 }

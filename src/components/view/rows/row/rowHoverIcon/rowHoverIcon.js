@@ -10,7 +10,7 @@ const rowHoverIcon = (props) => {
     <div>
       <div onClick={(event) => executeAction(event, _this, callback, id)}
         data-tip='React-tooltip' data-for={index}>
-        <FontAwesomeIcon icon={labelIcon} />
+        <FontAwesomeIcon icon={['far', labelIcon]} />
       </div>
       <Tooltip id={index}>
         <Label labelKey={action.tooltip} convertType={'propercase'} />

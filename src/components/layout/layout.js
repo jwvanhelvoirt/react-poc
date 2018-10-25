@@ -7,15 +7,11 @@ import SideDrawer from '../navigation/sideDrawer/sideDrawer';
 
 class Layout extends Component {
   state = {
-    showSideDrawer: false,
-    showSideDrawerIcons: false
+    showSideDrawer: true
   };
 
   // User closes the normal sideBar.
   sideDrawerClosedHandler = () => this.setState({ showSideDrawer: false });
-
-  // User closes the icon sideBar.
-  sideDrawerClosedHandlerIcons = () => this.setState({ showSideDrawerIcons: false });
 
   // User clicks on the icon (hamburger) to show the normal sideBar.
   sideDrawerToggleHandler = () => {
@@ -24,44 +20,46 @@ class Layout extends Component {
     });
   };
 
-  // User clicks on the icon (ribon) to show the icon sideBar.
-  sideDrawerToggleHandlerIcons = () => {
-    this.setState((prevState) => {
-      return { showSideDrawerIcons: !prevState.showSideDrawerIcons };
-    });
+  componentWillMount = () => {
+    console.log('componentWillMount');
+
+    const browserWidth = window.innerWidth || document.body.clientWidth;
+
+    if (browserWidth < 768) {
+      this.setState({showSideDrawer: false});
+    }
   };
 
   render = () => {
     const { toolbar } = this.props;
-    let toolbarAndSideDrawers = null;
+    let toolbarOutput = null;
 
     if (toolbar) {
-      toolbarAndSideDrawers =
-        <Aux>
-          <Toolbar
-            drawerToggleClicked={this.sideDrawerToggleHandler}
-            drawerToggleClickedIcons={this.sideDrawerToggleHandlerIcons}
-            navIcons={this.props.navIcons}
-          />
-          <SideDrawer
-            open={this.state.showSideDrawer}
-            closed={this.sideDrawerClosedHandler}
-            navItems={this.props.navItems}
-          />
-          <SideDrawer
-            open={this.state.showSideDrawerIcons}
-            closed={this.sideDrawerClosedHandlerIcons}
-            navItems={this.props.navIcons}
-          />
-        </Aux>;
+      toolbarOutput =
+        <Toolbar
+          drawerToggleClicked={this.sideDrawerToggleHandler}
+          drawerToggleClickedIcons={this.sideDrawerToggleHandlerIcons}
+          navIcons={this.props.navIcons}
+          showSideDrawer={this.state.showSideDrawer}
+        />
     }
+
+    const sideDrawer = this.props.navItems ?
+    (
+      <SideDrawer
+        open={this.state.showSideDrawer}
+        navItems={this.props.navItems}
+      />
+  ) :
+  null;
 
     const contentClass = toolbar ? classes.Content : classes.FullScreen;
 
     return (
       <Aux>
-        {toolbarAndSideDrawers}
+        {toolbarOutput}
         <main className={contentClass}>
+          {sideDrawer}
           {this.props.children}
         </main>
       </Aux>

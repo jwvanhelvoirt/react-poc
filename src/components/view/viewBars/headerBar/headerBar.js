@@ -47,17 +47,19 @@ const headerBar = (props) => {
         <div className={classesCombinedHeaders}>
         {
           columnsVisible.map((column, index) => {
-            let sortIcon = <FontAwesomeIcon icon='sort' />;
+            let sortIcon = <FontAwesomeIcon icon={['far', icons.ICON_SORT]} />;
             if (column.sortOn === _this.state.sortedColumn) {
               // In case user clicked on the sortcolumn, we display a different sort icon depending on the current sort order.
-              sortIcon = _this.state.sortOrder === 1 ? <FontAwesomeIcon icon={icons.ICON_SORT_UP} /> : <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />;
+              sortIcon = _this.state.sortOrder === 1 ?
+                <FontAwesomeIcon icon={['far', icons.ICON_SORT_UP]} /> :
+                <FontAwesomeIcon icon={['far', icons.ICON_SORT_DOWN]} />;
             }
             const sortColumn = column.sort ? <span className={classes.Sort}>{sortIcon}</span> : null;
             const labelColumn = <Label labelKey={column.label} convertType={'propercase'} />;
             const onColumn = column.sort ? () => _this.sortOnColumn(column.sortOn) : null;
 
             const classesDefault = column.sort ?
-              [classes.Header, classes[column.size], classes.HeaderSortable] : 
+              [classes.Header, classes[column.size], classes.HeaderSortable] :
               [classes.Header, classes[column.size]];
             const columnClasses = getColumnClasses(column, classesDefault, classes);
 

@@ -1,38 +1,61 @@
+.NavigationItemWrapper a {
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
 .NavigationItem {
-	padding: 6px;
-	box-sizing: border-box;
-	display: block;
-	width: 100%;
-	border-bottom: 1px solid white;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
 }
 
 .NavigationItem:hover {
-	background-color: lightgrey;
+  background-color: #323643;
+  border-left: 5px solid #0098d3;
+  color: white;
 }
 
 .NavigationItem a {
-	color: white;
-	text-decoration: none;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
-	display: block;
 }
 
-.NavigationItem a:hover,
-.NavigationItem a:active,
-.NavigationItem a.active {
-	/*border-right: 10px solid black;*/
+.NavItemWrapper {
+  display: flex;
+  // border: 1px solid blue;
+  max-width: 200px;
 }
 
-.NavigationItem .IconLabel {
-	display: flex;
-	align-items: center;
+.Icon {
+  min-width: 40px;
+  max-width: 40px;
+  font-size: 22px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // border: 1px solid red;
 }
 
-.NavigationItem .IconLabel>div:first-child {
-	margin-right: 10px;
-	width: 20px;
-	display: flex;
-	justify-content: center;
+.Label {
+  min-width: 150px;
+  max-width: 150px;
+  // border: 1px solid green;
+  align-items: center;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.LabelShow {
+  display: flex;
+}
+
+.LabelHide {
+  display: none;
 }

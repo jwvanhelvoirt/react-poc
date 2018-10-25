@@ -43,7 +43,6 @@ class ToolbarSearch extends Component {
   };
 
   render = () => {
-    const classesCombinedSearchbar = [classes.Search, classes.Medium].join(' ');
 
     // The state variable 'debounceFunction' decides wether the debounce function (submitSearchHandler) can be called or not.
     // This is necessary, because after every key stroke in the search field, the state is updated and the render method runs again.
@@ -51,8 +50,8 @@ class ToolbarSearch extends Component {
     const search = getDisplayValue(trans.KEY_SEARCH, 'propercase', true, this.props.translates);
 
     return (
-      <div className={classesCombinedSearchbar}>
-        <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} /></div>
+      <div className={classes.Search}>
+        <div onClick={() => this.clearSearchbarHandler()}><FontAwesomeIcon icon={['far', icons.ICON_TIMES_CIRCLE]} /></div>
         <input
           value={this.state.searchbarValue}
           onChange={(event) => {

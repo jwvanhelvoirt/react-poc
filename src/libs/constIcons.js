@@ -1,6 +1,8 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
 export const ICON_ANGLE_DOWN = 'angle-down';
+export const ICON_ANGLE_DOUBLE_LEFT = 'angle-double-left';
+export const ICON_ANGLE_DOUBLE_RIGHT = 'angle-double-right';
 export const ICON_ANGLE_RIGHT = 'angle-right';
 export const ICON_ARROW_LEFT = 'arrow-left';
 export const ICON_ARROW_TO_LEFT = 'arrow-to-left';
@@ -28,6 +30,7 @@ export const ICON_SORT_DOWN = 'sort-down';
 export const ICON_SORT_UP = 'sort-up';
 export const ICON_SYNC_ALT = 'sync-alt';
 export const ICON_TASKS = 'tasks';
+export const ICON_TIMES = 'times';
 export const ICON_TIMES_CIRCLE = 'times-circle';
 export const ICON_TRASH = 'trash';
 export const ICON_TRASH_ALT = 'trash-alt';

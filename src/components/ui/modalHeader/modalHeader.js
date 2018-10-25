@@ -24,7 +24,7 @@ const modalHeader = (props) => {
       <Label key={index} labelKey={item} />
   });
 
-  const icon = props.titleIcon ? <FontAwesomeIcon icon={props.titleIcon} /> : null;
+  const icon = props.titleIcon ? <FontAwesomeIcon icon={['far', props.titleIcon]} /> : null;
 
   return(
     <div className={classesHeader}>

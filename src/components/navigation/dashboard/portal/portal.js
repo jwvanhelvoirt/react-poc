@@ -7,9 +7,9 @@ import classes from './portal.scss';
 const portal = (props) => {
   const { icon, label, url } = props.portal;
   return (
-    <NavLink to={url} exact activeStyle={{color: 'red'}}>
+    <NavLink to={url} exact activeStyle={{color: 'blue'}}>
       <div className={classes.Portal}>
-        <div className={classes.Icon}><FontAwesomeIcon icon={icon} /></div>
+        <div className={classes.Icon}><FontAwesomeIcon icon={['far', icon]} /></div>
         <div className={classes.Label}><Label labelKey={label} convertType={'propercase'} /></div>
       </div>
     </NavLink>

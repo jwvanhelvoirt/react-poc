@@ -31,7 +31,7 @@ const button = (props) => {
         <Label key={index} labelKey={item} />
       });
     }
-    const label = props.labelIcon ? <FontAwesomeIcon icon={props.labelIcon} /> : labelText;
+    const label = props.labelIcon ? <FontAwesomeIcon icon={['far', props.labelIcon]} /> : labelText;
 
     // Is there an outline property?
     let opts = {};

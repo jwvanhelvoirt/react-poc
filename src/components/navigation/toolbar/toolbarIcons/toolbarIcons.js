@@ -14,7 +14,7 @@ class ToolbarIcons extends Component {
     mousePosX: 0, // Horizontal positioning of the action menu.
     mousePosY: 0, // Vertical postioning of the action menu.
     showMenu: false,
-    showMenuType: '',
+    showMenuType: ''
   }
 
   showPersonalMenu = (event) => {
@@ -29,18 +29,23 @@ class ToolbarIcons extends Component {
     let actionMenuPersonal = null;
 
     const links = this.props.navIcons.map((icon, index) => {
+
+      const faIcon = icon.index === 'menu' ?
+        (this.props.showSideDrawer ? icon.iconHide : icon.icon) :
+        icon.icon;
+
       let nav = null;
       if (icon.url) {
         nav = (
           <ToolbarIcon key={index} id={index} link={icon.url} label={icon.label}>
-            <FontAwesomeIcon icon={icon.icon} />
+            <FontAwesomeIcon icon={['far', faIcon]} />
           </ToolbarIcon>
         );
 
       } else if (icon.clicked) {
         nav = (
           <ToolbarIcon key={icon.index} id={icon.index} clicked={icon.clicked} label={icon.label}>
-            <FontAwesomeIcon icon={icon.icon} />
+            <FontAwesomeIcon icon={['far', faIcon]} />
           </ToolbarIcon>
         );
       } else if (icon.actions) {
@@ -50,7 +55,7 @@ class ToolbarIcons extends Component {
 
             <div className={classes.DropDownIconWrapper}>
               <div className={classes.DropDownIcon}>
-                <FontAwesomeIcon icon={icons.ICON_SORT_DOWN} />
+                <FontAwesomeIcon icon={['far', icons.ICON_SORT_DOWN]} />
               </div>
             </div>
 

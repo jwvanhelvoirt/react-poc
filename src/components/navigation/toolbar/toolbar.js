@@ -8,7 +8,7 @@ import classes from './toolbar.scss';
 const toolbar = (props) => {
   return (
     <header className={classes.Toolbar}>
-      <DrawerToggle clicked={props.drawerToggleClicked} />
+      <DrawerToggle clicked={props.drawerToggleClicked} showSideDrawer={props.showSideDrawer} />
       <div className={classes.Searchbar}><ToolbarSearch /></div>
       <ToolbarIcons navIcons={props.navIcons} />
     </header>

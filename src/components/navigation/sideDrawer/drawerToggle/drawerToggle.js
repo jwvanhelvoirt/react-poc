@@ -5,11 +5,11 @@ import * as trans from '../../../../libs/constTranslates';
 
 const drawerToggle = (props) => {
   const toolbarIcons = [
-    { index: 'menu', icon: icons.ICON_BARS, label: trans.KEY_MENU, clicked: props.clicked }
+    { index: 'menu', icon: icons.ICON_BARS, iconHide: icons.ICON_TIMES, label: trans.KEY_MENU, clicked: props.clicked }
   ];
 
   return (
-    <ToolbarIcons navIcons={toolbarIcons} />
+    <ToolbarIcons navIcons={toolbarIcons} showSideDrawer={props.showSideDrawer} />
   );
 };
 

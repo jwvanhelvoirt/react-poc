@@ -18,7 +18,7 @@ const toolbarIcon = (props) => {
       data-tip="React-tooltip"
       data-for={tooltipId}
       activeStyle={{
-        color: 'red'
+        color: 'blue'
       }}>
       {props.children}
     </NavLink>

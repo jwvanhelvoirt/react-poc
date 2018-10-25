@@ -16,7 +16,7 @@ const elemMultiAppend = (props) => {
     return (
       <div key={index} className={classes.Multiline}>
         <div className={classes.MultilineRemove} onClick={() => removeMultiValueItem(inputId, valueId)}>
-          <FontAwesomeIcon icon={icons.ICON_TIMES_CIRCLE} />
+          <FontAwesomeIcon icon={['far', icons.ICON_TIMES_CIRCLE]} />
         </div>
         <div className={classes.DisplayValue}>{item[lookupFieldForDisplay]}</div>
       </div>

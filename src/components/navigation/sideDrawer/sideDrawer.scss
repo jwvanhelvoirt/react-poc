@@ -1,22 +1,43 @@
 .SideDrawer {
-	position: fixed;
-	width: 280px;
-	max-width: 70%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	z-index: 200;
-	background-color: darkgray;
-	padding: 32px 16px;
-	box-sizing: border-box;
-	transition: transform 0.3s ease-out;
-	box-shadow: 0px 0px 10px grey;
+  height: 100%;
+  z-index: 200;
+  background: linear-gradient(to bottom, #181b23 0%, #383a49 100%);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.SideDrawerMin {
+  max-width: 50px;
+}
+
+.SideDrawerMax {
+  max-width: 200px;
 }
 
 .Open {
-	transform: translateX(0);
+  display: flex;
 }
 
 .Close {
-	transform: translateX(-100%);
+  display: none;
+}
+
+.ExpandCollapse {
+  color: white;
+  font-size: 13px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.ExpandCollapse:hover {
+  cursor: pointer;
+}
+
+.sideBarDivider {
+  height: 7px;
+  background: linear-gradient(to bottom, rgba(50,50,50,1) 25%,    rgba(28,31,39,1) 100%);
 }

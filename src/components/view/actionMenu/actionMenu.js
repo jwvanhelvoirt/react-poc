@@ -127,7 +127,7 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
     const classesMenuItem = action.subActions ? [classes.Action, classes.HasSubMenu].join(' ') : classes.Action;
 
     const subMenuIndicator = action.subActions ?
-      <FontAwesomeIcon icon={icons.ICON_ANGLE_RIGHT} /> :
+      <FontAwesomeIcon icon={['far', icons.ICON_ANGLE_RIGHT]} /> :
       null;
 
     const subMenuContainer = action.subActions ?
@@ -148,7 +148,7 @@ const getActions = (actions, subActions, actionMenuHeader, _this, subMenu, mouse
         <div className={classesMenuItem} style={dynamicStylesAction}
           onClick={callback}>
           <div className={classes.Icon} style={dynamicStylesIcon}>
-            <FontAwesomeIcon icon={action.labelIcon} />
+            <FontAwesomeIcon icon={['far', action.labelIcon]} />
           </div>
           <div className={classes.Label} style={dynamicStylesLabel}>
             <Label labelKey={action.label} convertType={'propercase'} />
