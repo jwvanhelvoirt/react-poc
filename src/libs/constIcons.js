@@ -17,6 +17,7 @@ export const ICON_FILE_ALT = 'file-alt';
 export const ICON_FILTER = 'filter';
 export const ICON_HOME = 'home';
 export const ICON_LOCK_ALT = 'lock-alt';
+export const ICON_LONG_ARROW_LEFT = 'long-arrow-left';
 export const ICON_MINUS = 'minus';
 export const ICON_PLUS = 'plus';
 export const ICON_POWER_OFF = 'power-off';

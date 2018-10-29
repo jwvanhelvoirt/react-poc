@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { storeRoute } from '../../../store/actions';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
@@ -66,6 +67,10 @@ class Screen extends Component {
   errorGetSingleHandler = (error) => {
     console.log(error);
   };
+
+  navigateBackwards = () => {
+    this.props.history.goBack();
+  }
 
   togglePane = (id) => {
     // Toggles the panes that are configured as 'toggleable' from visible to hidden and vice versa.
@@ -135,9 +140,14 @@ class Screen extends Component {
 
           // First breadcrumb is a link to the dashboard.
           let breadcrumb = (
-            <NavLink to='/dashboard'>
-                <Label labelKey={trans.KEY_HOME} convertType={'propercase'} />
-            </NavLink>
+            <Aux>
+              <div className={classes.BackIcon} onClick={this.navigateBackwards}>
+                  <FontAwesomeIcon icon={['far', icons.ICON_LONG_ARROW_LEFT]} />
+              </div>
+              <NavLink to='/dashboard' className={classes.HomeIcon}>
+                  <FontAwesomeIcon icon={['far', icons.ICON_HOME]} />
+              </NavLink>
+            </Aux>
           );
 
           // Via the URL we calculate the other breadcrumbs.
@@ -148,14 +158,18 @@ class Screen extends Component {
           let arrayUrlParts = [];
           let lastItem = '';
 
-          this.props.match.path.split('/').forEach((item) => {
+          this.props.match.path.split('/').forEach((item, index) => {
 
             if (prevItem) {
               if (item.indexOf(':') === 0) {
+                let active = false;
                 const param = item.replace(':', '');
-                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param);
+                if (index === this.props.match.path.split('/').length - 1) {
+                  active = true;
+                }
+                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param, active);
               } else {
-                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts);
+                  breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, null, false);
               }
             }
 
@@ -167,18 +181,18 @@ class Screen extends Component {
           });
 
           if (lastItem) {
-            breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts);
+            breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts, null, true);
           }
 
           // Print identifying data from the row selected in the previous screen or not.
           const followUpScreenData = this.state.followUpScreenData ?
-            <span>{' (' + this.state.followUpScreenData + ')'}</span> :
+            <span>{this.state.followUpScreenData}</span> :
             null;
 
           // Print breadcrumb zone.
           upperZone = (
             <div className={classes.Header}>
-              <div>{breadcrumb}</div>
+              <div className={classes.BreadcrumbWrapper}>{breadcrumb}</div>
               {followUpScreenData}
             </div>
           );
@@ -228,17 +242,25 @@ class Screen extends Component {
     return result;
   };
 
-  extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param) => {
+  extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param, active) => {
       // Extends the current breadcrumb.
-
       const addParam = param ? '/' + this.props.match.params[param] : '';
+
+      const classBreadcrumbWrapper = active ? [classes.BreadcrumbWrapper, classes.Active].join(' ') : classes.BreadcrumbWrapper;
 
       return (
       <Aux>
         {breadcrumb}
-        <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
-          {' > ' + getDisplayValue(trans['KEY_' + item.toUpperCase()], 'propercase', true, this.props.translates)}
-        </NavLink>
+        <div className={classes.BreadcrumbDividerWrapper}>
+          <div className={classes.BreadcrumbDivider}></div>
+        </div>
+        <div className={classBreadcrumbWrapper}>
+          <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
+            <span>
+              {getDisplayValue(trans['KEY_' + item.toUpperCase()], 'propercase', true, this.props.translates)}
+            </span>
+          </NavLink>
+        </div>
       </Aux>
     );
   };
