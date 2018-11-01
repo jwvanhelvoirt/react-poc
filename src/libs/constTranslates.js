@@ -1,5 +1,6 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
+export const KEY_ACQUISITION = 'KEY acquisitie';
 export const KEY_ADDRESS_NO = 'KEY nummer';
 export const KEY_ADDRESS_STREET = 'KEY adres';
 export const KEY_ADD_PERSON = 'KEY persoon toevoegen';
@@ -7,6 +8,7 @@ export const KEY_ASCENDING = 'KEY oplopend';
 export const KEY_AVG_GDPR = 'KEY AVG/GDPR';
 export const KEY_BUDGET = 'KEY budget';
 export const KEY_CANCEL = 'KEY annuleren';
+export const KEY_CERTIFICATION = 'KEY certificering';
 export const KEY_CERTIFICATIONS = 'KEY certificeringen';
 export const KEY_CHANGE = 'KEY wijziging';
 export const KEY_CLOSE = 'KEY sluiten';
@@ -59,7 +61,9 @@ export const KEY_PERSONAL_SETTINGS = 'KEY persoonlijke instellingen';
 export const KEY_PLUS = 'KEY plus';
 export const KEY_PROJECT = 'KEY project';
 export const KEY_PROPERTIES = 'KEY eigenschappen';
+export const KEY_RECRUITMENT = 'KEY Werving & Selectie';
 export const KEY_REFRESH = 'KEY verversen';
+export const KEY_REGISTRATION = 'KEY OI';
 export const KEY_RELEASE = 'KEY release';
 export const KEY_REMEMBER_PREV_LOGIN = 'KEY onthouden';
 export const KEY_REPORT = 'KEY rapport';
@@ -71,6 +75,7 @@ export const KEY_SETTINGS = 'KEY instellingen';
 export const KEY_SORT = 'KEY sorteren';
 export const KEY_SORT_ACTION = 'KEY sort view';
 export const KEY_STARTDATE = 'KEY startdatum';
+export const KEY_SUPPORT = 'KEY KS';
 export const KEY_TASK = 'KEY taak';
 export const KEY_UNKNOWN = 'KEY onbekend';
 export const KEY_USERNAME = 'KEY gebruikersnaam';

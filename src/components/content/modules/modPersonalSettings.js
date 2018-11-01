@@ -7,6 +7,7 @@ import Spinner from '../../ui/spinners/spinner/spinner';
 import FormParser from '../../parsers/formParser/formParser';
 import formConfig from '../../../config/forms/configFormUserSettings';
 import { callServer } from '../../../api/api';
+import classes from './mod.scss';
 
 class ModPersonalSettings extends Component {
 
@@ -68,7 +69,7 @@ class ModPersonalSettings extends Component {
     }
 
     return (
-        <Aux><div>Personal settings</div></Aux>
+        <Aux><div className={classes.Wrapper}>Personal settings</div></Aux>
     );
 	};
 

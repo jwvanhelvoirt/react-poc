@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import classes from './mod.scss';
 
-class ModConnect extends Component {
-  render () {
-    return (
-      <div>Connect external devices</div>
-    );
-  }
-}
+const modConnect = () => <div className={classes.Wrapper}>Connect external devices</div>;
 
-export default ModConnect;
+export default modConnect;

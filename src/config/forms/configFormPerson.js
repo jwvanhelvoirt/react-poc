@@ -73,8 +73,8 @@ const formConfig = {
       touched: false
     },
 
-    [input.INPUT_COM_INFO]: {
-      elementType: 'componentComInfo'
+    [input.INPUT_COMMUNICATION_INFO]: {
+      elementType: 'componentCommunicationInfo'
     },
 
     [input.INPUT_PRIVATE_ADDRESS_STREET]: {
@@ -161,6 +161,11 @@ const formConfig = {
                   { id: input.INPUT_INITIALS, width: 'Flex25' },
                   { id: input.INPUT_INSERTIONS, width: 'Flex25' },
                   { id: input.INPUT_LAST_NAME, width: 'Flex25' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_COMMUNICATION_INFO, width: 'Flex100' }
                 ]
               }
             ]

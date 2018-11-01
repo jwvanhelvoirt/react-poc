@@ -16,7 +16,7 @@ import Label from '../../../ui/label/label';
 import { getDisplayValue } from '../../../../libs/generic';
 import * as trans from '../../../../libs/constTranslates';
 import ElemCheckbox from './elemCheckbox/elemCheckbox';
-import ElemComInfo from './elemComInfo/elemComInfo';
+import ElemCommunicationInfo from './elemCommunicationInfo/elemCommunicationInfo';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
 import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
@@ -88,8 +88,10 @@ class Input extends Component {
           changed={(event) => changed(event, inputId)} keyUp={keyUp} />;
         break;
 
-      case ('componentComInfo'):
-        inputElement = <ElemComInfo />
+      case ('componentCommunicationInfo'):
+        inputElement = (
+          <ElemCommunicationInfo />
+        );
         break;
 
       case ('multiAppend'):

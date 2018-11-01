@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import classes from './mod.scss';
 
-class ModAdmin extends Component {
-  render () {
-    return (
-      <div>Instellingen</div>
-    );
-  }
-}
+const modAdmin = () => <div className={classes.Wrapper}>Instellingen</div>;
 
-export default ModAdmin;
+export default modAdmin;

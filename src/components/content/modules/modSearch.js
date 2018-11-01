@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classes from './mod.scss';
 
 class ModSearch extends Component {
   render = () => {
     return (
-      <div>Zoekresultaten voor : {this.props.searchTextOverall}</div>
+      <div className={classes.Wrapper}>Zoekresultaten voor : {this.props.searchTextOverall}</div>
     );
   };
 }

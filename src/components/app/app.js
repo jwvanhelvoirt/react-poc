@@ -31,6 +31,12 @@ import ModPersonalSettings from '../content/modules/modPersonalSettings';
 import Logout from '../navigation/logout/logout';
 import ModAdmin from '../content/modules/modAdmin';
 
+import ModAcquisitionList from '../content/modules/modAcquisitionList';
+import ModCertificationList from '../content/modules/modCertificationList';
+import ModRecruitmentList from '../content/modules/modRecruitmentList';
+import ModSupportList from '../content/modules/modSupportList';
+import ModRegistrationList from '../content/modules/modRegistrationList';
+
 import ModGdpr from '../content/modules/modGdpr';
 import ModHelp from '../content/modules/modHelp';
 import ModRelease from '../content/modules/modRelease';
@@ -175,6 +181,22 @@ class App extends Component {
 
             {isAuthNavItems.task ? <Route path={routes.ROUTE_TASK_LIST_ID} component={ModTaskList} /> : null}
             {isAuthNavItems.task ? <Route path={routes.ROUTE_TASK} component={ModProject} /> : null}
+//-----------------
+            {isAuthNavItems.acquisition ? <Route path={routes.ROUTE_ACQUISITION_LIST_ID} component={ModAcquisitionList} /> : null}
+            {isAuthNavItems.acquisition ? <Route path={routes.ROUTE_ACQUISITION} component={ModProject} /> : null}
+
+            {isAuthNavItems.certification ? <Route path={routes.ROUTE_CERTIFICATION_LIST_ID} component={ModCertificationList} /> : null}
+            {isAuthNavItems.certification ? <Route path={routes.ROUTE_CERTIFICATION} component={ModProject} /> : null}
+
+            {isAuthNavItems.recruitment ? <Route path={routes.ROUTE_RECRUITMENT_LIST_ID} component={ModRecruitmentList} /> : null}
+            {isAuthNavItems.recruitment ? <Route path={routes.ROUTE_RECRUITMENT} component={ModProject} /> : null}
+
+            {isAuthNavItems.support ? <Route path={routes.ROUTE_SUPPORT_LIST_ID} component={ModSupportList} /> : null}
+            {isAuthNavItems.support ? <Route path={routes.ROUTE_SUPPORT} component={ModProject} /> : null}
+
+            {isAuthNavItems.registration ? <Route path={routes.ROUTE_REGISTRATION_LIST_ID} component={ModRegistrationList} /> : null}
+            {isAuthNavItems.registration ? <Route path={routes.ROUTE_REGISTRATION} component={ModProject} /> : null}
+//-----------------
 
             {isAuthNavItems.person ? <Route path={routes.ROUTE_PERSON} component={ModPerson} /> : null}
 

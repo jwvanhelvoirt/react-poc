@@ -16,12 +16,16 @@ import {
   faEdit,
   faEllipsisV,
   faFileAlt,
+  faFileCertificate,
   faFileChartLine,
   faFilter,
+  faHandshakeAlt,
+  faHeadphones,
   faHome,
   faLockAlt,
   faLongArrowLeft,
   faMinus,
+  faPencilAlt,
   faPlus,
   faPowerOff,
   faQuestion,
@@ -37,7 +41,8 @@ import {
   faTimesCircle,
   faTrash,
   faTrashAlt,
-  faUser
+  faUser,
+  faUsers
 } from '@fortawesome/pro-regular-svg-icons';
 
 export default library.add(
@@ -55,12 +60,16 @@ export default library.add(
   faEdit,
   faEllipsisV,
   faFileAlt,
+  faFileCertificate,
   faFileChartLine,
   faFilter,
+  faHandshakeAlt,
+  faHeadphones,
   faHome,
   faLockAlt,
   faLongArrowLeft,
   faMinus,
+  faPencilAlt,
   faPlus,
   faPowerOff,
   faQuestion,
@@ -76,5 +85,6 @@ export default library.add(
   faTimesCircle,
   faTrash,
   faTrashAlt,
-  faUser
+  faUser,
+  faUsers
 );

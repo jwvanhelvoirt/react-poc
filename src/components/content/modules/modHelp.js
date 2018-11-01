@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import classes from './mod.scss';
 
-class ModHelp extends Component {
-  render () {
-    return (
-      <div>Help</div>
-    );
-  }
-}
+const modHelp = () => <div className={classes.Wrapper}>Help</div>;
 
-export default ModHelp;
+export default modHelp;

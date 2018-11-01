@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import classes from './mod.scss';
 
-class Mod404 extends Component {
-  render () {
-    return (
-      <div>Sorry, deze pagina is niet (meer) bekend.</div>
-    );
-  }
-}
+const module404 = () => <div className={classes.Wrapper}>Sorry, deze pagina is niet (meer) bekend.</div>;
 
-export default Mod404;
+export default module404;
