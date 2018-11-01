@@ -1,47 +1,51 @@
+.FormContent {
+  font-size: 13px;
+}
+
 .Row {
-	// border: 1px solid green;
-	// padding: 10px;
-	margin-bottom: 10px;
-	display: flex;
-	flex-wrap: wrap;
-	flex-grow: 1;
-	width: 100%;
-	box-sizing: border-box;
+  // border: 1px solid green;
+  // padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .Col {
-	// border: 1px solid red;
-	padding: 10px;
-	box-sizing: border-box;
-	// display: flex;
-	align-content: flex-start;
-	flex-wrap: wrap;
+  // border: 1px solid red;
+  padding: 10px;
+  box-sizing: border-box;
+  // display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .Col:first-child {
-	padding-left: 0;
+  padding-left: 0;
 }
 
 .Col:last-child {
-	padding-right: 0;
+  padding-right: 0;
 }
 
 .ColEmphasize {
-	background: #fafafa;
+  background: #fafafa;
 }
 
 .Elem {
-	display: flex;
-	flex-direction: column;
-	box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .Elem:not(:last-child) {
-	padding-right: 10px;
+  padding-right: 10px;
 }
 
 .Elem>* {
-	width: 100%;
+  width: 100%;
 }
 
 .Flex10 { width: 10%; }
@@ -60,20 +64,20 @@
 .Flex100 { width: 100% }
 
 @media(max-width: 767px) {
-	.Col {
-		flex-direction: column;
-		padding: 0;
-	}
+  .Col {
+    flex-direction: column;
+    padding: 0;
+  }
 
-	.ColEmphasize {
-		background: white;
-	}
+  .ColEmphasize {
+    background: white;
+  }
 
-	.Elem:not(:last-child) {
-		padding-right: 0;
-	}
+  .Elem:not(:last-child) {
+    padding-right: 0;
+  }
 
-	.Flex10, .Flex20, .Flex25, .Flex30, .Flex33, .Flex34, .Flex40, .Flex50, .Flex60, .Flex70, .Flex75, .Flex80, .Flex90, .Flex100 {
-	  width: 100%;
-	}
+  .Flex10, .Flex20, .Flex25, .Flex30, .Flex33, .Flex34, .Flex40, .Flex50, .Flex60, .Flex70, .Flex75, .Flex80, .Flex90, .Flex100 {
+    width: 100%;
+  }
 }

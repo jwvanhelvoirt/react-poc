@@ -1,15 +1,58 @@
 .Button {
-	padding: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  min-width: 100px;
 }
 
 .Button:not(:first-child) {
-	margin-left: 2px;
+  margin-left: 5px;
 }
 
 .Button:not(:last-child) {
-	margin-right: 2px;
+  margin-right: 5px;
 }
 
 .FillSpace {
-	flex-grow: 1;
+  flex-grow: 1;
+}
+
+.ButtonOk {
+  color: white;
+  background-color: #0199d0;
+  border: 1px solid #0089ba;
+}
+
+.ButtonOkDisabled {
+  color: white;
+  background-color: #d3edf6;
+  border: 1px solid #c6d9e0;
+}
+
+.ButtonCancel {
+  color: #777;
+  background-color: #ededed;
+  border: 1px solid #e8e8e8;
+}
+
+.ButtonCancelDisabled {
+  color: #d2d2d2;
+  background-color: #f9f9f9;
+  border: 1px solid #e8e8e8;
+}
+
+.ButtonOk:hover {
+  background-color: #0489b9;
+}
+
+.ButtonCancel:hover {
+  background-color: #d9d9d9;
+}
+
+.ButtonOk:active {
+  background-color: #00759f;
+}
+
+.ButtonCancel:active {
+  background-color: #d1d1d1;
 }

@@ -11,6 +11,18 @@ const formConfig = {
   size: 'ModalExtraLarge',
   url: 'api.relatiebeheer.niveau9',
   inputs: {
+
+    [input.INPUT_GENDER]: {
+      label: trans.KEY_GENDER,
+      elementType: 'radio',
+      options: [
+        { displayValue: trans.KEY_UNKNOWN, value: '0' },
+        { displayValue: trans.KEY_MALE, value: '1' },
+        { displayValue: trans.KEY_FEMALE, value: '2' }
+      ],
+      value: '1'
+    },
+
     [input.INPUT_FIRST_NAME]: {
       label: trans.KEY_FIRST_NAME,
       elementType: 'input',
@@ -25,6 +37,7 @@ const formConfig = {
       valid: false,
       touched: false
     },
+
     [input.INPUT_INITIALS]: {
       label: trans.KEY_INITIALS,
       elementType: 'input',
@@ -34,6 +47,7 @@ const formConfig = {
       placeholder: trans.KEY_INITIALS,
       value: ''
     },
+
     [input.INPUT_INSERTIONS]: {
       label: trans.KEY_INSERTIONS,
       elementType: 'input',
@@ -43,6 +57,7 @@ const formConfig = {
       placeholder: trans.KEY_INSERTIONS,
       value: ''
     },
+
     [input.INPUT_LAST_NAME]: {
       label: trans.KEY_LAST_NAME,
       elementType: 'input',
@@ -57,10 +72,46 @@ const formConfig = {
       valid: false,
       touched: false
     },
+
     [input.INPUT_COM_INFO]: {
       elementType: 'componentComInfo'
-    }
+    },
+
+    [input.INPUT_PRIVATE_ADDRESS_STREET]: {
+      label: trans.KEY_ADDRESS_STREET,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: '',
+      ids: [] // When data is retrieved, the object key id is stored here, so we have a handle to the id once we save data.
+    },
+    [input.INPUT_PRIVATE_ADDRESS_NO]: {
+      label: trans.KEY_ADDRESS_NO,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: '',
+      ids: []
+    },
+    [input.INPUT_PRIVATE_ADDRESS_COUNTRY]: {
+      label: trans.KEY_COUNTRY,
+      elementType: 'select',
+      elementConfig: {
+        options: []
+      },
+      optionsSource: {
+        url: 'api.relatiebeheer.getCountries',
+        displayValue: 'naam',
+        value: 'id'
+      },
+      value: '1347063',
+      ids: []
+    },
+
   },
+
   layout: {
     rows: [
       {
@@ -72,6 +123,22 @@ const formConfig = {
                 inputs: [
                   { id: input.INPUT_FIRST_NAME, width: 'Flex70' },
                   { id: input.INPUT_INITIALS, width: 'Flex30' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_GENDER, width: 'Flex100' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex80' },
+                  { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex20' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex100' }
                 ]
               }
             ]

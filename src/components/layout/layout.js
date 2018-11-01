@@ -21,8 +21,6 @@ class Layout extends Component {
   };
 
   componentWillMount = () => {
-    console.log('componentWillMount');
-
     const browserWidth = window.innerWidth || document.body.clientWidth;
 
     if (browserWidth < 768) {

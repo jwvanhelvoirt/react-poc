@@ -5,9 +5,6 @@ import FormTabs from '../formTabs/formTabs';
 import classes from './formContent.scss';
 
 const formContent = (props) => {
-  // console.log('formContent')
-  // console.log(props);
-  // console.log('------------')
   const { layout, inputs, defaultFocus, changed, keyUp, configForm, showModal, removeMultiValueItem } = props;
 
   const rows = layout.rows.map((row, index) => {
@@ -40,7 +37,7 @@ const formContent = (props) => {
                 <FormElement
                   inputId={input.id}
                   defaultFocus={defaultFocus}
-                  changed={(event) => changed(event, input.id)}
+                  changed={changed}
                   keyUp={(event) => keyUp(event, formElement, configForm.id)}
                   configInput={formElement.configInput}
                   showModal={() => showModal()}
@@ -54,15 +51,6 @@ const formContent = (props) => {
           return <div key={index} className={classes.Row}>{inputsDisplay}</div>;
         });
       }
-
-
-      // let arrayClassesScreen = [];
-      // if (col.columnClasses) {
-      //   arrayClassesScreen = col.columnClasses.map((className) => {
-      //     return classes[className];
-      //   });
-      // }
-      // console.log(arrayClassesScreen);
 
       // const classesCol = col.width ? [classes.Col, classes[col.width]].join(' ') : classes.Col;
       const classesCol = col.width ? [classes.Col, classes[col.width]] : [classes.Col];
@@ -78,7 +66,7 @@ const formContent = (props) => {
   });
 
   return (
-    <div>{rows}</div>
+    <div className={classes.FormContent}>{rows}</div>
   );
 };
 

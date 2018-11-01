@@ -1,6 +1,6 @@
 const baseConfig = {
   buttons: 'butOkCancel',
-  buttonsClass: 'FillSpace',
+  // buttonsClass: 'FillSpace',
   headerSize: 'HeaderSmall',
   noCreate: false,
   size: 'ModalMedium',

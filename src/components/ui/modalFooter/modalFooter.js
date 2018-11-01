@@ -15,12 +15,14 @@ const { formIsValid, okButtonLabel, cancelButtonLabel, callBackOk, buttonsClass,
   const focusOk = focusButton === 'Ok' ? true : false;
   const focusCancel = focusButton === 'Cancel' ? true : false;
 
-  const butOk =
+  let butOk = (
     <Button clicked={callBackOk} color="success" autoFocus={focusOk} buttonsClass={buttonsClass} labelText={[labelOk]}
-      disabled={okButDisabled} />;
+      disabled={okButDisabled} />
+  );
 
-  const butCancel =
-    <Button clicked={callBackCancel} color="danger" autoFocus={focusCancel} buttonsClass={buttonsClass} labelText={[labelCancel]} />;
+  const butCancel = (
+    <Button clicked={callBackCancel} color="danger" autoFocus={focusCancel} buttonsClass={buttonsClass} labelText={[labelCancel]} />
+  );
 
   switch (buttons) {
   case 'butOk':

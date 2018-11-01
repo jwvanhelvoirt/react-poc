@@ -8,6 +8,7 @@ import baseConfig from './configFormBase';
 const formConfig = {
   id: 'login',
   buttons: 'butOk',
+  buttonsClass: 'FillSpace',
   defaultFocus: 'login',
   msgFailedSubmit: trans.KEY_FAILED_LOGIN,
   noCreate: true,

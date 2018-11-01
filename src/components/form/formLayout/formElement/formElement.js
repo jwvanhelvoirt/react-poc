@@ -15,10 +15,12 @@ import { connect } from 'react-redux';
 import Label from '../../../ui/label/label';
 import { getDisplayValue } from '../../../../libs/generic';
 import * as trans from '../../../../libs/constTranslates';
+import ElemCheckbox from './elemCheckbox/elemCheckbox';
 import ElemComInfo from './elemComInfo/elemComInfo';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
 import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
+import ElemRadio from './elemRadio/elemRadio';
 import ElemSelect from './elemSelect/elemSelect';
 import ElemSingleCheckbox from './elemSingleCheckbox/elemSingleCheckbox';
 import ElemTextarea from './elemTextarea/elemTextarea';
@@ -43,7 +45,7 @@ class Input extends Component {
     // Default element is a text input.
     let inputElement = (
       <ElemInput configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-        autoFocus={autoFocus} changed={changed} keyUp={keyUp}
+        autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
       />
     );
 
@@ -53,10 +55,18 @@ class Input extends Component {
       case ('input'):
         break;
 
+      case ('radio'):
+        inputElement = <ElemRadio configInput={configInput} inputId={inputId} changed={changed} />;
+        break;
+
+      case ('checkbox'):
+        inputElement = <ElemCheckbox configInput={configInput} inputId={inputId} changed={changed} />;
+        break;
+
       case ('textarea'):
         inputElement = (
           <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-            autoFocus={autoFocus} changed={changed} keyUp={keyUp}
+            autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
           />
         );
         break;
@@ -64,7 +74,7 @@ class Input extends Component {
       case ('select'):
         inputElement = (
           <ElemSelect configInput={configInput} inputClasses={inputClasses} autoFocus={autoFocus}
-            changed={changed} keyUp={keyUp} translates={translates}
+            changed={(event) => changed(event, inputId)} keyUp={keyUp} translates={translates}
           />
         );
         break;
@@ -75,7 +85,7 @@ class Input extends Component {
 
       case ('singleCheckbox'):
         inputElement = <ElemSingleCheckbox configInput={configInput} configForm={configForm}
-          changed={changed} keyUp={keyUp} />;
+          changed={(event) => changed(event, inputId)} keyUp={keyUp} />;
         break;
 
       case ('componentComInfo'):

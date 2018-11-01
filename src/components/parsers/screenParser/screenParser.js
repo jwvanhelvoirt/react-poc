@@ -7,7 +7,6 @@ import { storeRoute } from '../../../store/actions';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
 import Button from '../../ui/button/button';
-import Label from '../../ui/label/label';
 import { Large, Medium, Small } from '../../../libs/responsive';
 import Aux from '../../../hoc/auxiliary';
 import { getDisplayValue } from '../../../libs/generic';

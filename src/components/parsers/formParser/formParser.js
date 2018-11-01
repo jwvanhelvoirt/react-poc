@@ -19,6 +19,7 @@ import Aux from '../../../hoc/auxiliary';
 import FormLayout from '../../form/formLayout/formLayout';
 import MessageBox from '../../ui/messageBox/messageBox';
 import * as trans from '../../../libs/constTranslates';
+import { assignObject, isEqual, leftString } from '../../../libs/generic';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {
@@ -47,47 +48,68 @@ class Form extends Component {
     // state property 'configForm' contains default values, update these with the values of the selected entry and update state.
     const clone = cloneDeep(this.state.configForm);
     const updatedFormInputs = clone.inputs;
+    const arrayIndexInputs = Object.keys(this.state.configForm.inputs).sort();
 
-    const arrayRecords = Object.keys(this.props.data);
-    for (let index in arrayRecords) {
-      // Only print the attributes configured in the configForm, somehow the deepclone contains all
-      // attributes, so we use this.state.configForm to check if the attribute is expected on the client.
-      if (this.state.configForm.inputs[arrayRecords[index]]) {
-        let updatedFormElement = {
-          ...updatedFormInputs[arrayRecords[index]]
-        }
+    arrayIndexInputs.forEach((input, index) => {
+      let updatedFormElement = {
+        ...updatedFormInputs[input]
+      };
 
-        // Get the initial value.
-        if (updatedFormElement.valueLocalStorage && localStorage.getItem(updatedFormElement.valueLocalStorage)) {
-          if (updatedFormElement.elementType === 'singleCheckbox') {
-            updatedFormElement.value = 1;
-          } else {
-            updatedFormElement.value = localStorage.getItem(updatedFormElement.valueLocalStorage);
-          }
+      // Get the initial value.
+      if (updatedFormElement.valueLocalStorage && localStorage.getItem(updatedFormElement.valueLocalStorage)) {
+        if (updatedFormElement.elementType === 'singleCheckbox') {
+          updatedFormElement.value = 1;
         } else {
-          updatedFormElement.value = this.props.data[arrayRecords[index]];
+          updatedFormElement.value = localStorage.getItem(updatedFormElement.valueLocalStorage);
+        }
+      } else {
+        let inputValue = this.props.data[input];
+
+        if (input.indexOf('.', 0) >= 0) {
+          inputValue = this.props.data[leftString(input, '.')];
+
+          const arrayObject = input.split('.');
+          arrayObject.forEach((item, index) => {
+            let attribute = item;
+            switch (item) {
+              case '{id}':
+                // Object contains a nested object with an id key (i.e. priveadres.116271.adres, where we need the value of .adres)
+                attribute = Object.keys(inputValue)[0]; //jwvh
+                updatedFormElement.ids.push(attribute); // Store the key, because we need it for saving.
+                break;
+              case '{first}':
+                // TODO : HIER PAKKEN WE STRAKS HET [0] OBJECT OP, DAT KOMT VAAK VOOR.
+                break;
+              default:
+            }
+
+            inputValue = index > 0 ? inputValue[attribute] : inputValue;
+          });
         }
 
-        // Check for validity.
-        if (Array.isArray(updatedFormElement.value)) {
-          if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
-            updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-            if (!updatedFormElement.valid) {
-              updatedFormElement.touched = true;
-            }
-          }
-        } else {
-          if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
-            updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-            if (!updatedFormElement.valid) {
-              updatedFormElement.touched = true;
-            }
-          }
-        }
-
-        updatedFormInputs[arrayRecords[index]] = updatedFormElement;
+        updatedFormElement.value = inputValue;
       }
-    }
+
+      // Check for validity.
+      if (Array.isArray(updatedFormElement.value)) {
+        if (updatedFormElement.validation && updatedFormElement.value.length > 0) {
+          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+          if (!updatedFormElement.valid) {
+            updatedFormElement.touched = true;
+          }
+        }
+      } else {
+        if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
+          updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+          if (!updatedFormElement.valid) {
+            updatedFormElement.touched = true;
+          }
+        }
+      }
+
+      updatedFormInputs[input] = updatedFormElement;
+
+    });
 
     clone.inputs = updatedFormInputs;
     this.setState({ configForm: clone });
@@ -131,7 +153,7 @@ class Form extends Component {
     // ESCAPE press is handled centrally in the MessageBox component.
   };
 
-  inputChangedHandler = (event, id) => {
+  inputChangedHandler = (event, id, value) => {
     // Set the state 'formTouched' in the store to 'true'.
     this.props.touchedForm(true); // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
 
@@ -141,9 +163,13 @@ class Form extends Component {
     const updatedFormElement = updatedFormInputs[id];
 
     // Update the value.
-    updatedFormElement.value = event.target.type === 'checkbox' ?
-      (event.target.checked ? 1 : 0) : // Backend doesn't understand boolean value (true/false), only a 1 for true and a 0 for false.
-      event.target.value;
+    if (value) {
+      updatedFormElement.value = value;
+    } else {
+      updatedFormElement.value = event.target.type === 'checkbox' ?
+        (event.target.checked ? 1 : 0) : // Backend doesn't understand boolean value (true/false), only a 1 for true and a 0 for false.
+        event.target.value;
+    }
 
     // Check for validation.
     if (updatedFormElement.validation) {
@@ -173,9 +199,82 @@ class Form extends Component {
 
     const { inputs, urlSuffix, url } = this.state.configForm;
 
+    // Final object we're gonna submit as payload on the submit url.
     const submitData = {};
+
+    // We can have different inputs with different values to be stored in the samen nested object.
+    // i.e priveadres.{id}.adres and priveadres.{id}.nr
+    // We need to know if we should add the previous key-value pairs to the new key-value pair.
+    // Inputs are sorted so we can do this!
+    let nestedObjectsPrevious = [];
+    let objectKeyPrimaryPrevious = '';
+    let keyValuePairPrevious = {};
+
     for (let id in inputs) {
-      submitData[id] = inputs[id].value;
+
+      if (id.indexOf('.', 0) >= 0) {
+        // Data is not stored in a root attribute but nested in an object.
+
+        const value = inputs[id].value; // Value on the form.
+
+        // For values to be stored in nested object. These nested objects support more than one id in the object structure.
+        // The actual id has been pushed to an array during rendering the input on the form and stored in the applicable input in the configForm.
+        // We have to do this, because we need the same id for saving the data in nested inputs with an id.
+        let ids = inputs[id].ids;
+
+        // Array containing the object structure, last item is always the key of the key-value pair.
+        const arrayObject = id.split('.');
+
+        let nestedObjects = []; // Array for nested objects between the first and last item. F.i. [test2, test3] in case of test1.test2.test3.test4
+        let objectKeyPrimary = ''; // String containing the name of the first object in the object structure. F.i. 'test1' in case of test1.test2.test3.test4
+        let objectKeyValue = ''; // String containing the name of the key-part (of the key-value pair). F.i. 'test4' in case of test1.test2.test3.test4
+
+        arrayObject.forEach((item, index) => {
+          if (index === 0) {
+            // First item is the primary key.
+            objectKeyPrimary = item;
+          } else if (index + 1 === arrayObject.length) {
+            // Last item represents the value and should be the key part of a key-value pair.
+            objectKeyValue = item;
+          } else {
+            // All items between the first and the last item are nested objects.
+            switch (item) {
+              case '{id}':
+                nestedObjects.push(ids[0]); // We need to append the related id.
+                ids = ids.shift(); // Remove this used id, so that a possible next {id} part can always refer to the first item in the ids array.
+                break;
+              case '{first}':
+                break;
+              default:
+                nestedObjects.push(item);
+            }
+          }
+        });
+
+        let keyValuePair = {};
+
+        if (isEqual(nestedObjects, nestedObjectsPrevious) && objectKeyPrimary === objectKeyPrimaryPrevious) {
+          // Same nested object as the previous one, so assign the previous key-value pairs also.
+          keyValuePair = { ...keyValuePairPrevious, [objectKeyValue]: value };
+        } else {
+          keyValuePair = { [objectKeyValue]: value };
+        }
+
+        keyValuePairPrevious = cloneDeep(keyValuePair);
+        nestedObjectsPrevious = cloneDeep(nestedObjects);
+        objectKeyPrimaryPrevious = objectKeyPrimary;
+
+        const emptyObject = {};
+        // Create the object and assign the value to the last object in the tree.
+        const objectNested = assignObject(emptyObject, nestedObjects, keyValuePair);
+
+        // Add the value (an object) to the submit data.
+        submitData[objectKeyPrimary] = objectNested;
+      } else {
+        // Data is stored in a root attribute.
+        // Add the value (a string) to the submit data.
+        submitData[id] = inputs[id].value;
+      }
     }
 
     let params = {};

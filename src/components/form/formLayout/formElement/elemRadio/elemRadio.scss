@@ -1,0 +1,30 @@
+.RadioWrapper {
+  display: flex;
+}
+
+.Radio {
+  border-top: 1px solid #c4c5c7;
+  border-bottom: 1px solid #c4c5c7;
+  background: linear-gradient(to bottom, #fff 0%, #f7f7f7 15%, #fff 100%);
+  min-width: 60px;
+  padding: 6px 10px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.Radio:first-child {
+  border-left: 1px solid #c4c5c7;
+  border-radius: 18px 0 0 18px;
+}
+
+.Radio:last-child {
+  border-right: 1px solid #c4c5c7;
+  border-radius: 0 18px 18px 0;
+}
+
+.Active {
+  background: linear-gradient(to bottom, #54b1ed 0%, #2c97de 100%);
+  color: white;
+  font-weight: 600;
+}
