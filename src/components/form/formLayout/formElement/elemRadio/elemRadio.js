@@ -10,9 +10,9 @@ const radio = (props) => {
   const radioHtml = options.map((option, index) => {
     const classOption = option.value === value ? [classes.Radio, classes.Active].join(' ') : classes.Radio;
     return (
-      <div key={index} className={classOption} onClick={(event) => changed(event, inputId, option.value)}>
+      <button key={index} className={classOption} onClick={(event) => changed(event, inputId, option.value)}>
         <Label labelKey={option.displayValue} convertType={'propercase'} />
-      </div>
+      </button>
     );
   });
 

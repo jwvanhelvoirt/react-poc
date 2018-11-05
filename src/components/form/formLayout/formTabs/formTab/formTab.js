@@ -8,7 +8,7 @@ const formTab = (props) => {
 
   return (
     <div>
-      <div className={classTab} onClick={click}>{label}</div>
+      <button className={classTab} onClick={click}>{label}</button>
       <div className={classActive}></div>
     </div>
   );
