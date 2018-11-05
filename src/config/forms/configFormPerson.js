@@ -74,7 +74,9 @@ const formConfig = {
     },
 
     [input.INPUT_COMMUNICATION_INFO]: {
-      elementType: 'componentCommunicationInfo'
+      label: trans.KEY_COMMUNICATION_INFO,
+      elementType: 'componentCommunicationInfo',
+      value: {}
     },
 
     [input.INPUT_PRIVATE_ADDRESS_STREET]: {
@@ -147,22 +149,22 @@ const formConfig = {
             width: 'Flex50',
             columnClasses: ['ColEmphasize'],
             rows: [
-              {
-                inputs: [
-                  { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
-                  { id: input.INPUT_INITIALS, width: 'Flex25' },
-                  { id: input.INPUT_INSERTIONS, width: 'Flex25' },
-                  { id: input.INPUT_LAST_NAME, width: 'Flex25' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
-                  { id: input.INPUT_INITIALS, width: 'Flex25' },
-                  { id: input.INPUT_INSERTIONS, width: 'Flex25' },
-                  { id: input.INPUT_LAST_NAME, width: 'Flex25' }
-                ]
-              },
+              // {
+              //   inputs: [
+              //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
+              //     { id: input.INPUT_INITIALS, width: 'Flex25' },
+              //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
+              //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
+              //   ]
+              // },
+              // {
+              //   inputs: [
+              //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
+              //     { id: input.INPUT_INITIALS, width: 'Flex25' },
+              //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
+              //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
+              //   ]
+              // },
               {
                 inputs: [
                   { id: input.INPUT_COMMUNICATION_INFO, width: 'Flex100' }

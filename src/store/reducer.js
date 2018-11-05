@@ -44,6 +44,12 @@ const reducer = (state = initialState, action) => {
     //   };
     //
 
+    case types.COMMUNICATION_TYPES_STORE: // Communication types related to communication info on forms for organisations and persons.
+      return {
+        ...state,
+        communicationTypes: action.communicationTypes
+      };
+
     case types.FORM_SUBMIT_DATA_STORE: // Stores data of last submitted form.
       return {
         ...state,

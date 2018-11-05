@@ -59,6 +59,13 @@ export const showUserInfo = (formShowUserInfo) => {
   };
 };
 
+export const storeCommunicationTypes = (communicationTypes) => {
+  return {
+    type: types.COMMUNICATION_TYPES_STORE,
+    communicationTypes
+  };
+};
+
 export const storeFormSubmitData = (formSubmitData) => {
   return {
     type: types.FORM_SUBMIT_DATA_STORE,

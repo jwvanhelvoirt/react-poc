@@ -12,6 +12,7 @@ export const KEY_CERTIFICATION = 'KEY certificering';
 export const KEY_CERTIFICATIONS = 'KEY certificeringen';
 export const KEY_CHANGE = 'KEY wijziging';
 export const KEY_CLOSE = 'KEY sluiten';
+export const KEY_COMMUNICATION_INFO = 'KEY communicatie info';
 export const KEY_CONNECT_EXTERNAL_DEVICES = 'KEY koppel externe apparaten';
 export const KEY_CONTACT = 'KEY contact';
 export const KEY_CORRESPONDENCE = 'KEY correspondentie';
@@ -31,6 +32,7 @@ export const KEY_FILTER_ACTION = 'KEY filter view';
 export const KEY_FIRST_NAME = 'KEY roepnaam';
 export const KEY_FORGOT_PASSWORD = 'KEY wachtwoord vergeten';
 export const KEY_GENDER = 'KEY geslacht';
+export const KEY_GENERAL = 'KEY algemeen';
 export const KEY_HELP = 'KEY help';
 export const KEY_HOME = 'KEY home';
 export const KEY_INFO = 'KEY info';
@@ -103,4 +105,5 @@ export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
 - KEY persoon toevoegen
 - KEY persoonlijke instellingen
 - KEY koppel externe apparaten
+- KEY communicatie info
 */

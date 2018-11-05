@@ -13,13 +13,14 @@ import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
 import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId,
-  touchedForm } from '../../../store/actions';
+  touchedForm, storeCommunicationTypes } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 // import FormElement from '../../form/formElement/formElement';
 import FormLayout from '../../form/formLayout/formLayout';
 import MessageBox from '../../ui/messageBox/messageBox';
 import * as trans from '../../../libs/constTranslates';
 import { assignObject, isEqual, leftString } from '../../../libs/generic';
+import { convertInitialCommunicationData } from '../../../libs/forms';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {
@@ -65,26 +66,33 @@ class Form extends Component {
       } else {
         let inputValue = this.props.data[input];
 
-        if (input.indexOf('.', 0) >= 0) {
-          inputValue = this.props.data[leftString(input, '.')];
+        if (updatedFormElement.elementType === 'componentCommunicationInfo') {
+          inputValue = convertInitialCommunicationData(this.props.data);
 
-          const arrayObject = input.split('.');
-          arrayObject.forEach((item, index) => {
-            let attribute = item;
-            switch (item) {
-              case '{id}':
-                // Object contains a nested object with an id key (i.e. priveadres.116271.adres, where we need the value of .adres)
-                attribute = Object.keys(inputValue)[0]; //jwvh
-                updatedFormElement.ids.push(attribute); // Store the key, because we need it for saving.
-                break;
-              case '{first}':
-                // TODO : HIER PAKKEN WE STRAKS HET [0] OBJECT OP, DAT KOMT VAAK VOOR.
-                break;
-              default:
-            }
+          // We need to store this.props.data.teltype in the store because we need these in the particular element component (elemCommunicationInfo).
+          this.props.storeCommunicationTypes(this.props.data.teltype);
+        } else {
+          if (input.indexOf('.', 0) >= 0) {
+            inputValue = this.props.data[leftString(input, '.')];
 
-            inputValue = index > 0 ? inputValue[attribute] : inputValue;
-          });
+            const arrayObject = input.split('.');
+            arrayObject.forEach((item, index) => {
+              let attribute = item;
+              switch (item) {
+                case '{id}':
+                  // Object contains a nested object with an id key (i.e. priveadres.116271.adres, where we need the value of .adres)
+                  attribute = Object.keys(inputValue)[0];
+                  updatedFormElement.ids.push(attribute); // Store the key, because we need it for saving.
+                  break;
+                case '{first}':
+                  // TODO : HIER PAKKEN WE STRAKS HET [0] OBJECT OP, DAT KOMT VAAK VOOR.
+                  break;
+                default:
+              }
+
+              inputValue = index > 0 ? inputValue[attribute] : inputValue;
+            });
+          }
         }
 
         updatedFormElement.value = inputValue;
@@ -513,6 +521,7 @@ const mapDispatchToProps = dispatch => {
     storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch(storeLookupListItemsSelected(lookupListItemsSelected)),
     storeLookupInputId: (lookupInputId) => dispatch(storeLookupInputId(lookupInputId)),
+    storeCommunicationTypes: (communicationTypes) => dispatch(storeCommunicationTypes(communicationTypes)),
     touchedForm: (formTouched) => dispatch(touchedForm(formTouched))
   }
 };

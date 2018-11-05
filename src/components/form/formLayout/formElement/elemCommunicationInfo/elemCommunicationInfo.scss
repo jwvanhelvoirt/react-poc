@@ -1,3 +1,50 @@
-.CommunicationInfo {
-  border: 1px solid green;
+.Header {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding-bottom: 2px;
+}
+
+.Label {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+}
+
+.Add, .Delete {
+  min-height: 30px;
+  min-width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #00b7fa 0%, #00a8e6 100%);
+  color: white;
+  border: none;
+}
+
+.EntriesWrapper {
+  max-height: 200px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.Entry {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.Input {
+  flex-grow: 1;
+}
+
+.Checkbox, .Select, .Input {
+  margin-right: 5px;
+}
+
+.Select {
+  max-width: 120px;
 }

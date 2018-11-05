@@ -90,7 +90,7 @@ class Input extends Component {
 
       case ('componentCommunicationInfo'):
         inputElement = (
-          <ElemCommunicationInfo />
+          <ElemCommunicationInfo configInput={configInput} changed={changed} />
         );
         break;
 
@@ -106,7 +106,7 @@ class Input extends Component {
 
     // Not all input types require a label.
     // TODO: Als we straks het design van Frank gaan implementeren, kan het zijn dat het label naar de elem component gaat.
-    const labelPrint = (elementType !== 'formLink' && elementType !== 'singleCheckbox') ?
+    const labelPrint = (elementType !== 'formLink' && elementType !== 'singleCheckbox' && elementType !== 'componentCommunicationInfo') ?
       <label className={classes.Label}>
         <Label labelKey={label} convertType={'propercase'} />
       </label> :
