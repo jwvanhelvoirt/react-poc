@@ -114,4 +114,16 @@ export const isEqual = (value, other) => {
 
   // If nothing failed, return true
   return true;
+};
+
+// Converts selected image to a base64 string.
+export const getBase64 = (file, onLoadCallback) => {
+    return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function() { resolve(reader.result); };
+        reader.onerror = reject;
+        if (file) {
+          reader.readAsDataURL(file); // Is assynchronous, so this method returns a promise.
+        }
+    });
 }

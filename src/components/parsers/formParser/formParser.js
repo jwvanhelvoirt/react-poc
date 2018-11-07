@@ -171,7 +171,7 @@ class Form extends Component {
     const updatedFormElement = updatedFormInputs[id];
 
     // Update the value.
-    if (value) {
+    if (value || value === '') {
       updatedFormElement.value = value;
     } else {
       updatedFormElement.value = event.target.type === 'checkbox' ?

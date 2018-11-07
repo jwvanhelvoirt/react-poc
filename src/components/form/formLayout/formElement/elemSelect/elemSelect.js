@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { getDisplayValue } from '../../../../../libs/generic';
 import { callServer } from '../../../../../api/api';
 
@@ -16,10 +17,11 @@ class ElemSelect extends Component {
     if (optionsSource) {
       const magic = localStorage.getItem('magic');
       const submitData = { MAGIC: magic };
+      const language = optionsSource.language ? this.props.language : '';
 
       callServer('put', optionsSource.url,
         (response) => this.successHandlerGetOptions(response),
-        (error) => this.errorHandlerGetOptions(error), submitData);
+        (error) => this.errorHandlerGetOptions(error), submitData, language);
     } else {
       this.setState({ options: elementConfig.options });
     }
@@ -42,7 +44,7 @@ class ElemSelect extends Component {
 
   render = () => {
     const { configInput, inputClasses, autoFocus, changed, keyUp, translates } = this.props;
-    const { elementConfig, value, convertDisplayValues, translateDisplayValues } = configInput;
+    const { value, convertDisplayValues, translateDisplayValues } = configInput;
 
     return (
       <select
@@ -62,4 +64,9 @@ class ElemSelect extends Component {
   }
 }
 
-export default ElemSelect;
+const mapStateToProps = state => {
+  const { language } = state.redMain;
+  return { language };
+};
+
+export default connect(mapStateToProps)(ElemSelect);

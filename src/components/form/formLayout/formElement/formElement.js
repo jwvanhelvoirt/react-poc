@@ -23,6 +23,7 @@ import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
 import ElemRadio from './elemRadio/elemRadio';
 import ElemSelect from './elemSelect/elemSelect';
 import ElemSingleCheckbox from './elemSingleCheckbox/elemSingleCheckbox';
+import ElemSinglePicture from './elemSinglePicture/elemSinglePicture';
 import ElemTextarea from './elemTextarea/elemTextarea';
 import Aux from '../../../../hoc/auxiliary';
 import classes from './formElement.scss';
@@ -46,60 +47,66 @@ class Input extends Component {
     let inputElement = (
       <ElemInput configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
         autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
-      />
+        />
     );
 
     // Check for the applicable element type for this form element.
     switch (elementType) {
 
       case ('input'):
-        break;
+      break;
 
       case ('radio'):
-        inputElement = <ElemRadio configInput={configInput} inputId={inputId} changed={changed} />;
-        break;
+      inputElement = <ElemRadio configInput={configInput} inputId={inputId} changed={changed} />;
+      break;
 
       case ('checkbox'):
-        inputElement = <ElemCheckbox configInput={configInput} inputId={inputId} changed={changed} />;
-        break;
+      inputElement = <ElemCheckbox configInput={configInput} inputId={inputId} changed={changed} />;
+      break;
 
       case ('textarea'):
-        inputElement = (
-          <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-            autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
+      inputElement = (
+        <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
+          autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
           />
-        );
-        break;
+      );
+      break;
 
       case ('select'):
-        inputElement = (
-          <ElemSelect configInput={configInput} inputClasses={inputClasses} autoFocus={autoFocus}
-            changed={(event) => changed(event, inputId)} keyUp={keyUp} translates={translates}
+      inputElement = (
+        <ElemSelect configInput={configInput} inputClasses={inputClasses} autoFocus={autoFocus}
+          changed={(event) => changed(event, inputId)} keyUp={keyUp} translates={translates}
           />
-        );
-        break;
+      );
+      break;
 
       case ('formLink'):
-        inputElement = <ElemFormLink configInput={configInput} />;
-        break;
+      inputElement = <ElemFormLink configInput={configInput} />;
+      break;
 
       case ('singleCheckbox'):
-        inputElement = <ElemSingleCheckbox configInput={configInput} configForm={configForm}
-          changed={(event) => changed(event, inputId)} keyUp={keyUp} />;
-        break;
+      inputElement = <ElemSingleCheckbox configInput={configInput} configForm={configForm}
+        changed={(event) => changed(event, inputId)} keyUp={keyUp} />;
+      break;
 
       case ('componentCommunicationInfo'):
-        inputElement = (
-          <ElemCommunicationInfo configInput={configInput} changed={changed} />
-        );
-        break;
+      inputElement = (
+        <ElemCommunicationInfo configInput={configInput} changed={changed} />
+      );
+      break;
+
+      case ('singlePicture'):
+      inputElement = (
+        <ElemSinglePicture configInput={configInput} changed={changed} inputId={inputId} configForm={configForm} />
+      );
+      break;
 
       case ('multiAppend'):
-        inputElement = (
-          <ElemMultiAppend configInput={configInput} removeMultiValueItem={removeMultiValueItem}
-            inputId={inputId} showModal={showModal} />
-        );
-        break;
+      inputElement = (
+        <ElemMultiAppend configInput={configInput} removeMultiValueItem={removeMultiValueItem}
+          inputId={inputId} showModal={showModal} />
+      );
+      break;
 
       default:
     }
@@ -107,10 +114,10 @@ class Input extends Component {
     // Not all input types require a label.
     // TODO: Als we straks het design van Frank gaan implementeren, kan het zijn dat het label naar de elem component gaat.
     const labelPrint = (elementType !== 'formLink' && elementType !== 'singleCheckbox' && elementType !== 'componentCommunicationInfo') ?
-      <label className={classes.Label}>
-        <Label labelKey={label} convertType={'propercase'} />
-      </label> :
-      null;
+    <label className={classes.Label}>
+      <Label labelKey={label} convertType={'propercase'} />
+    </label> :
+    null;
 
     // Validation error.
     // TODO: Als we straks het design van Frank gaan implementeren, kan het zijn dat de validatie tekst naar de elem component gaat.

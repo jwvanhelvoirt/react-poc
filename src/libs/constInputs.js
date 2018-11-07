@@ -2,6 +2,7 @@
 
 export const INPUT_COMMUNICATION_INFO = 'cominfo';
 export const INPUT_FIRST_NAME = 'roepnaam';
+export const INPUT_FOTO = 'foto';
 export const INPUT_FORGOT_PASSWORD = 'forgotPassword';
 export const INPUT_GENDER = 'geslacht';
 export const INPUT_INITIALS = 'initialen';

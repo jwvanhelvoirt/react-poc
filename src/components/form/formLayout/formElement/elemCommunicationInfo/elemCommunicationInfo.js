@@ -24,8 +24,15 @@ class CommunicationInfo extends Component {
   };
 
   onChange = (event, id, changeElement) => {
+    // Changes can be:
+    // 1. (De)select an entry as default.
+    // 2. Change the communication type.
+    // 3. Change the value.
+    // 4. Delete an entry.
+    // 5. Add an entry.
+
     const { changed, configInput } = this.props;
-    let value = cloneDeep(configInput.value);
+    let value = cloneDeep(configInput.value); // Value before the change, this is an object containing data for all entries.
 
     switch (changeElement) {
       case communicationTypeDefault:
@@ -46,25 +53,28 @@ class CommunicationInfo extends Component {
       default:
     };
 
+    // Trigger the inputChangedHandler method in the FormParser, which handles all changes.
     changed(null, input.INPUT_COMMUNICATION_INFO, value);
   };
 
   addCommunicationType = (value) => {
+    // Add an empty communication type with a negative id, so the backend knows it's a new entry.
     const object = {
       [communicationTypeValue]: '',
       [communicationTypeRef]: '',
       [communicationTypeDefault]: '0'
     }
-    value[this.localData.indexNew] = object;
+    value[this.localData.indexNew] = object; // Add this new entry to the existing entries.
 
-    this.localData.indexNew = this.localData.indexNew - 1;
+    this.localData.indexNew = this.localData.indexNew - 1; // For a possible next new entry.
 
     return value;
   };
 
   render = () => {
-    const { changed, configInput } = this.props;
+    const { configInput } = this.props;
 
+    // Header with label and Add-button.
     const communicationInfoHeader = (
       <div className={classes.Header}>
         <div className={[classesForm.Label, classes.Label].join(' ')}>
@@ -76,15 +86,18 @@ class CommunicationInfo extends Component {
       </div>
     );
 
+    // All entries.
     const communicationInfoEntries = Object.keys(configInput.value).map((item, index) => {
       const { standaard, naam, refteltype } = configInput.value[item];
 
-      const checked = parseInt(standaard);
+      // Checkbox to (de)select this entry as default.
+      const checked = parseInt(standaard, 10);
       const checkbox = (
         <input type='checkbox' checked={checked} className={classes.Checkbox}
           onChange={(event) => this.onChange(event, item, communicationTypeDefault)} />
       );
 
+      // Dropdown to select a particular communication type. The entire list of communication types is stored in the store and injected as a prop.
       const select = (
         <select
           className={[classes.Select, classesForm.InputElement].join(' ')}
@@ -98,6 +111,7 @@ class CommunicationInfo extends Component {
         </select>
       );
 
+      // The input where user can type the value.
       const input = (
         <input
           className={[classes.Input, classesForm.InputElement].join(' ')}
@@ -107,6 +121,7 @@ class CommunicationInfo extends Component {
         />
       );
 
+      // Button to delete this particular entry.
       const deleteEntry = (
         <button className={classes.Delete} onClick={(event) => this.onChange(null, item, 'delete')}>
           <FontAwesomeIcon icon={['far', icons.ICON_MINUS]} />

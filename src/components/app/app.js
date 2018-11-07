@@ -181,7 +181,7 @@ class App extends Component {
 
             {isAuthNavItems.task ? <Route path={routes.ROUTE_TASK_LIST_ID} component={ModTaskList} /> : null}
             {isAuthNavItems.task ? <Route path={routes.ROUTE_TASK} component={ModProject} /> : null}
-//-----------------
+
             {isAuthNavItems.acquisition ? <Route path={routes.ROUTE_ACQUISITION_LIST_ID} component={ModAcquisitionList} /> : null}
             {isAuthNavItems.acquisition ? <Route path={routes.ROUTE_ACQUISITION} component={ModProject} /> : null}
 
@@ -196,7 +196,6 @@ class App extends Component {
 
             {isAuthNavItems.registration ? <Route path={routes.ROUTE_REGISTRATION_LIST_ID} component={ModRegistrationList} /> : null}
             {isAuthNavItems.registration ? <Route path={routes.ROUTE_REGISTRATION} component={ModProject} /> : null}
-//-----------------
 
             {isAuthNavItems.person ? <Route path={routes.ROUTE_PERSON} component={ModPerson} /> : null}
 

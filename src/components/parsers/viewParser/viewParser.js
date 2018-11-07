@@ -191,7 +191,7 @@ class _View extends Component {
 
     const params = { MAGIC: localStorage.getItem('magic'), id };
     callServer('put', '/' + this.state.viewConfig.url + '.get',
-      (response)=> this.successGetSingleHandler(response, id), this.errorGetSingleHandler, params);
+      (response)=> this.successGetSingleHandler(response, id), this.errorGetSingleHandler, params, this.props.language);
   };
 
   /**
@@ -671,8 +671,8 @@ class _View extends Component {
 }
 
 const mapStateToProps = state => {
-  const { formTouched, route, sortItem, translates } = state.redMain;
-  return { formTouched, route, sortItem, translates };
+  const { formTouched, language, route, sortItem, translates } = state.redMain;
+  return { formTouched, language, route, sortItem, translates };
 };
 
 const mapDispatchToProps = dispatch => {

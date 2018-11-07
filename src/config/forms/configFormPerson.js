@@ -12,6 +12,11 @@ const formConfig = {
   url: 'api.relatiebeheer.niveau9',
   inputs: {
 
+    [input.INPUT_FOTO]: {
+      elementType: 'singlePicture',
+      useIfEmpty: input.INPUT_FIRST_NAME
+    },
+
     [input.INPUT_GENDER]: {
       label: trans.KEY_GENDER,
       elementType: 'radio',
@@ -100,13 +105,11 @@ const formConfig = {
     [input.INPUT_PRIVATE_ADDRESS_COUNTRY]: {
       label: trans.KEY_COUNTRY,
       elementType: 'select',
-      elementConfig: {
-        options: []
-      },
       optionsSource: {
         url: 'api.relatiebeheer.getCountries',
         displayValue: 'naam',
-        value: 'id'
+        value: 'id',
+        language: true
       },
       value: '1347063',
       ids: []
@@ -177,24 +180,29 @@ const formConfig = {
             rows: [
               {
                 inputs: [
-                  { id: input.INPUT_FIRST_NAME, width: 'Flex100' }
+                  { id: input.INPUT_FOTO, width: 'Flex100' }
                 ]
               },
-              {
-                inputs: [
-                  { id: input.INPUT_INITIALS, width: 'Flex100' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_INSERTIONS, width: 'Flex100' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_LAST_NAME, width: 'Flex100' }
-                ]
-              }
+              // {
+              //   inputs: [
+              //     { id: input.INPUT_FIRST_NAME, width: 'Flex100' }
+              //   ]
+              // },
+              // {
+              //   inputs: [
+              //     { id: input.INPUT_INITIALS, width: 'Flex100' }
+              //   ]
+              // },
+              // {
+              //   inputs: [
+              //     { id: input.INPUT_INSERTIONS, width: 'Flex100' }
+              //   ]
+              // },
+              // {
+              //   inputs: [
+              //     { id: input.INPUT_LAST_NAME, width: 'Flex100' }
+              //   ]
+              // }
             ]
           }
         ]
