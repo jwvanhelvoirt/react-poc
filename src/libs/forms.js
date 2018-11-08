@@ -1,6 +1,8 @@
+import * as input from './constInputs';
+
 /**
-* @brief  We need a custom function to convert response data for all communication info to a value that will be send when the form is saved.
-*
+* @brief  We need a custom function to convert an array of objects (retrieve) to an object structure based on id (save).
+* FOR INSTANCE:
 *         Retrieve structure:
 *         [
 *           {
@@ -30,20 +32,22 @@
 *              naam: '+31634081524'
 *            }
 *          }
-* @params  data     All response data for a particular instance that contains communication data (f.i. a company or a person).
+* @params  data         All response data of a particular entity (f.i. a person, an organisation, a project).
+* @params  input        Name of the attribute that contains the object structure to be saved (f.i. cominfo or niveau4).
+* @params  attributes   Attributes to be saved.
 */
-export const convertInitialCommunicationData = (data) => {
+export const convertInitialDataFromArrayToObject = (data, input, attributes) => {
   const returnValue = {};
 
-  data.cominfo.forEach((item) => {
+  data[input].forEach((item) => {
     const object = {};
 
-    object.standaard = item.standaard;
-    object.refteltype = item.refteltype;
-    object.naam = item.naam;
+    attributes.forEach((attribute) => {
+      object[attribute] = item[attribute];
+    });
 
     returnValue[item.id] = { ...object };
   });
 
   return returnValue;
-}
+};

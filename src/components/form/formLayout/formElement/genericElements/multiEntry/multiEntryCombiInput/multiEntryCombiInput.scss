@@ -1,0 +1,14 @@
+.CombiInput {
+  display: flex;
+  align-items: center;
+}
+
+.CombiInput>*:not(:last-child) {
+  margin-right: 5px;
+}
+
+.CombiInput>* {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

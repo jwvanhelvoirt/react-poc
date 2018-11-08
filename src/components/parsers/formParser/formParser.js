@@ -13,14 +13,15 @@ import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { connect } from 'react-redux';
 import { storeFormSubmitData, storeLookupListItems, storeLookupListItemsSelected, storeLookupInputId,
-  touchedForm, storeCommunicationTypes } from '../../../store/actions';
+  touchedForm } from '../../../store/actions';
 import Aux from '../../../hoc/auxiliary';
 // import FormElement from '../../form/formElement/formElement';
 import FormLayout from '../../form/formLayout/formLayout';
 import MessageBox from '../../ui/messageBox/messageBox';
+import * as inputAttrib from '../../../libs/constInputs';
 import * as trans from '../../../libs/constTranslates';
 import { assignObject, isEqual, leftString } from '../../../libs/generic';
-import { convertInitialCommunicationData } from '../../../libs/forms';
+import { convertInitialCommunicationData, convertInitialOrganizationData, convertInitialDataFromArrayToObject } from '../../../libs/forms';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {
@@ -65,13 +66,22 @@ class Form extends Component {
         }
       } else {
         let inputValue = this.props.data[input];
+        let attributes = [];
 
-        if (updatedFormElement.elementType === 'componentCommunicationInfo') {
-          inputValue = convertInitialCommunicationData(this.props.data);
+        switch (updatedFormElement.elementType) {
 
-          // We need to store this.props.data.teltype in the store because we need these in the particular element component (elemCommunicationInfo).
-          this.props.storeCommunicationTypes(this.props.data.teltype);
-        } else {
+          case 'componentCommunicationInfo':
+          attributes = ['standaard', 'refteltype', 'naam'];
+          inputValue = convertInitialDataFromArrayToObject(this.props.data, inputAttrib.INPUT_COMMUNICATION_INFO, attributes);
+          break;
+
+          case 'componentOrganizationInfo':
+          attributes = ['naam', 'hoofd', 'functienaam', 'reffunctiecode', 'vertrokken', 'vertrokkenper', 'refniveau4',
+            'secretaresse', 'afdeling', 'locatiecode'];
+          inputValue = convertInitialDataFromArrayToObject(this.props.data, inputAttrib.INPUT_ORGANIZATION_INFO, attributes);
+          break;
+
+          default:
           if (input.indexOf('.', 0) >= 0) {
             inputValue = this.props.data[leftString(input, '.')];
 
@@ -93,6 +103,7 @@ class Form extends Component {
               inputValue = index > 0 ? inputValue[attribute] : inputValue;
             });
           }
+
         }
 
         updatedFormElement.value = inputValue;
@@ -521,7 +532,6 @@ const mapDispatchToProps = dispatch => {
     storeLookupListItems: (lookupListItems) => dispatch(storeLookupListItems(lookupListItems)),
     storeLookupListItemsSelected: (lookupListItemsSelected) => dispatch(storeLookupListItemsSelected(lookupListItemsSelected)),
     storeLookupInputId: (lookupInputId) => dispatch(storeLookupInputId(lookupInputId)),
-    storeCommunicationTypes: (communicationTypes) => dispatch(storeCommunicationTypes(communicationTypes)),
     touchedForm: (formTouched) => dispatch(touchedForm(formTouched))
   }
 };

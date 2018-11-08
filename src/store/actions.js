@@ -59,10 +59,94 @@ export const showUserInfo = (formShowUserInfo) => {
   };
 };
 
+export const storeCandidateStatusses = (candidateStatusses) => {
+  return {
+    type: types.CANDIDATE_STATUSSES_STORE,
+    candidateStatusses
+  };
+};
+
 export const storeCommunicationTypes = (communicationTypes) => {
   return {
     type: types.COMMUNICATION_TYPES_STORE,
     communicationTypes
+  };
+};
+
+export const storeEmployees = (employees) => {
+  return {
+    type: types.EMPLOYEES_STORE,
+    employees
+  };
+};
+
+export const storeFunctionCodes = (functionCodes) => {
+  return {
+    type: types.FUNCTION_CODES_STORE,
+    functionCodes
+  };
+};
+
+export const storeGroups = (groups) => {
+  return {
+    type: types.GROUPS_STORE,
+    groups
+  };
+};
+
+export const storeList9a = (list9a) => {
+  return {
+    type: types.LIST9A_STORE,
+    list9a
+  };
+};
+
+export const storeList9b = (list9b) => {
+  return {
+    type: types.LIST9B_STORE,
+    list9b
+  };
+};
+
+export const storeList9c = (list9c) => {
+  return {
+    type: types.LIST9C_STORE,
+    list9c
+  };
+};
+
+export const storeList9d = (list9d) => {
+  return {
+    type: types.LIST9D_STORE,
+    list9d
+  };
+};
+
+export const storeList9e = (list9e) => {
+  return {
+    type: types.LIST9E_STORE,
+    list9e
+  };
+};
+
+export const storeList9f = (list9f) => {
+  return {
+    type: types.LIST9F_STORE,
+    list9f
+  };
+};
+
+export const storeList9g = (list9g) => {
+  return {
+    type: types.LIST9G_STORE,
+    list9g
+  };
+};
+
+export const storeList9h = (list9h) => {
+  return {
+    type: types.LIST9H_STORE,
+    list9h
   };
 };
 

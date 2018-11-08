@@ -11,7 +11,7 @@
   font: inherit;
   padding: 6px 10px;
   display: block;
-  // width: 100%;
+  width: 100%; /*Important cause else it exceeds a flex container size (f.i. Flex20).*/
 }
 
 .InputElement:focus {

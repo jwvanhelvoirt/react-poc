@@ -1,0 +1,22 @@
+.Entry {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.Inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.EntryLine {
+  display: flex;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.EntryLine>div {
+  padding-right: 5px;
+  box-sizing: border-box;
+}

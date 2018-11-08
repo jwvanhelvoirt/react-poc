@@ -1,6 +1,5 @@
 // We use these constants to avoid typos that are not detected by the compiler and might cost you hours to find.
 
-export const COMMUNICATION_TYPES_STORE = 'COMMUNICATION_TYPES_STORE';
 export const FORM_SUBMIT_DATA_STORE = 'FORM_SUBMIT_DATA_STORE';
 export const FORM_TOUCHED = 'FORM_TOUCHED';
 export const FORM_USER_INFO = 'FORM_USER_INFO';
@@ -22,3 +21,17 @@ export const TRANS_LANGUAGE_STORE = 'TRANS_LANGUAGE_STORE';
 export const TRANS_TRANSLATES_STORE = 'TRANS_TRANSLATES_STORE';
 export const USER_AUTHENTICATE = 'USER_AUTHENTICATE';
 export const USER_INFO_STORE = 'USER_INFO_STORE';
+
+export const CANDIDATE_STATUSSES_STORE = 'CANDIDATE_STATUSSES_STORE';
+export const COMMUNICATION_TYPES_STORE = 'COMMUNICATION_TYPES_STORE';
+export const EMPLOYEES_STORE = 'EMPLOYEES_STORE';
+export const FUNCTION_CODES_STORE = 'FUNCTION_CODES_STORE';
+export const GROUPS_STORE = 'GROUPS_STORE';
+export const LIST9A_STORE = 'LIST9A_STORE';
+export const LIST9B_STORE = 'LIST9B_STORE';
+export const LIST9C_STORE = 'LIST9C_STORE';
+export const LIST9D_STORE = 'LIST9D_STORE';
+export const LIST9E_STORE = 'LIST9E_STORE';
+export const LIST9F_STORE = 'LIST9F_STORE';
+export const LIST9G_STORE = 'LIST9G_STORE';
+export const LIST9H_STORE = 'LIST9H_STORE';

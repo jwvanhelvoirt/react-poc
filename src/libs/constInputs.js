@@ -8,6 +8,7 @@ export const INPUT_GENDER = 'geslacht';
 export const INPUT_INITIALS = 'initialen';
 export const INPUT_INSERTIONS = 'tussenvoeg';
 export const INPUT_LAST_NAME = 'naam';
+export const INPUT_ORGANIZATION_INFO = 'niveau4';
 export const INPUT_PASSWORD = 'password';
 export const INPUT_PRIVATE_ADDRESS_STREET = 'priveadres.{id}.adres';
 export const INPUT_PRIVATE_ADDRESS_NO = 'priveadres.{id}.nr';

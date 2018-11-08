@@ -1,0 +1,18 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+}
+
+.Labels {
+  display: flex;
+  width: 100%;
+}
+
+.Labels>div {
+  padding-right: 5px;
+  box-sizing: border-box;
+}

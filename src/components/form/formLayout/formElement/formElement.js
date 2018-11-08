@@ -15,8 +15,9 @@ import { connect } from 'react-redux';
 import Label from '../../../ui/label/label';
 import { getDisplayValue } from '../../../../libs/generic';
 import * as trans from '../../../../libs/constTranslates';
+
+// Generic elements.
 import ElemCheckbox from './elemCheckbox/elemCheckbox';
-import ElemCommunicationInfo from './elemCommunicationInfo/elemCommunicationInfo';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
 import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
@@ -25,6 +26,11 @@ import ElemSelect from './elemSelect/elemSelect';
 import ElemSingleCheckbox from './elemSingleCheckbox/elemSingleCheckbox';
 import ElemSinglePicture from './elemSinglePicture/elemSinglePicture';
 import ElemTextarea from './elemTextarea/elemTextarea';
+
+// Custom elements.
+import ElemOrganizationInfo from './elemOrganizationInfo/elemOrganizationInfo';
+import ElemCommunicationInfo from './elemCommunicationInfo/elemCommunicationInfo';
+
 import Aux from '../../../../hoc/auxiliary';
 import classes from './formElement.scss';
 
@@ -53,6 +59,7 @@ class Input extends Component {
     // Check for the applicable element type for this form element.
     switch (elementType) {
 
+      // *********** Start generic elements ************
       case ('input'):
       break;
 
@@ -89,12 +96,6 @@ class Input extends Component {
         changed={(event) => changed(event, inputId)} keyUp={keyUp} />;
       break;
 
-      case ('componentCommunicationInfo'):
-      inputElement = (
-        <ElemCommunicationInfo configInput={configInput} changed={changed} />
-      );
-      break;
-
       case ('singlePicture'):
       inputElement = (
         <ElemSinglePicture configInput={configInput} changed={changed} inputId={inputId} configForm={configForm} />
@@ -107,6 +108,21 @@ class Input extends Component {
           inputId={inputId} showModal={showModal} />
       );
       break;
+      // *********** End generic elements ************
+
+      // *********** Start custom elements ************
+      case ('componentCommunicationInfo'):
+      inputElement = (
+        <ElemCommunicationInfo configInput={configInput} changed={changed} />
+      );
+      break;
+
+      case ('componentOrganizationInfo'):
+      inputElement = (
+        <ElemOrganizationInfo configInput={configInput} changed={changed} />
+      );
+      break;
+      // *********** End custom elements ************
 
       default:
     }

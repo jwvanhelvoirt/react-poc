@@ -81,6 +81,13 @@ const formConfig = {
     [input.INPUT_COMMUNICATION_INFO]: {
       label: trans.KEY_COMMUNICATION_INFO,
       elementType: 'componentCommunicationInfo',
+      maxHeight: '200px',
+      value: {}
+    },
+
+    [input.INPUT_ORGANIZATION_INFO]: {
+      elementType: 'componentOrganizationInfo',
+      maxHeight: '300px',
       value: {}
     },
 
@@ -214,16 +221,30 @@ const formConfig = {
             rows: [
               {
                 inputs: [
-                  { id: input.INPUT_FIRST_NAME, width: 'Flex40' },
-                  { id: input.INPUT_INITIALS, width: 'Flex10' },
-                  { id: input.INPUT_INSERTIONS, width: 'Flex10' },
-                  { id: input.INPUT_LAST_NAME, width: 'Flex40' }
+                  { id: input.INPUT_ORGANIZATION_INFO, width: 'Flex100' }
                 ]
               }
             ]
           }
         ]
       },
+      // {
+      //   cols: [
+      //     {
+      //       width: 'Flex100',
+      //       rows: [
+      //         {
+      //           inputs: [
+      //             { id: input.INPUT_FIRST_NAME, width: 'Flex40' },
+      //             { id: input.INPUT_INITIALS, width: 'Flex10' },
+      //             { id: input.INPUT_INSERTIONS, width: 'Flex10' },
+      //             { id: input.INPUT_LAST_NAME, width: 'Flex40' }
+      //           ]
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // },
       {
         cols: [
           {

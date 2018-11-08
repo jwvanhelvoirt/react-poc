@@ -6,8 +6,10 @@ import * as icons from '../../../../../libs/constIcons';
 import * as input from '../../../../../libs/constInputs';
 import Aux from '../../../../../hoc/auxiliary';
 import Label from '../../../../ui/label/label';
-import classes from './elemCommunicationInfo.scss';
-import classesForm from '../formElement.scss';
+import MultiEntryCombiInput from '../genericElements/multiEntry/multiEntryCombiInput/multiEntryCombiInput';
+import MultiEntryEntry from '../genericElements/multiEntry/multiEntryEntry/multiEntryEntry';
+import MultiEntryWrapper from '../genericElements/multiEntry/multiEntryWrapper/multiEntryWrapper';
+import classesFormElement from '../formElement.scss';
 
 const communicationTypeValue = 'naam';
 const communicationTypeRef = 'refteltype';
@@ -35,22 +37,29 @@ class CommunicationInfo extends Component {
     let value = cloneDeep(configInput.value); // Value before the change, this is an object containing data for all entries.
 
     switch (changeElement) {
+
       case communicationTypeDefault:
-        value[id][communicationTypeDefault] = event.target.checked ? '1' : '0';
-        break;
+      value[id][communicationTypeDefault] = event.target.checked ? '1' : '0';
+      break;
+
       case communicationTypeValue:
-        value[id][communicationTypeValue] = event.target.value;
-        break;
+      value[id][communicationTypeValue] = event.target.value;
+      break;
+
       case communicationTypeRef:
-        value[id][communicationTypeRef] = event.target.value;
-        break;
+      value[id][communicationTypeRef] = event.target.value;
+      break;
+
       case 'delete':
-        delete value[id];
-        break;
+      delete value[id];
+      break;
+
       case 'add':
-        value = this.addCommunicationType(value);
-        break;
+      value = this.addCommunicationType(value);
+      break;
+
       default:
+
     };
 
     // Trigger the inputChangedHandler method in the FormParser, which handles all changes.
@@ -61,7 +70,7 @@ class CommunicationInfo extends Component {
     // Add an empty communication type with a negative id, so the backend knows it's a new entry.
     const object = {
       [communicationTypeValue]: '',
-      [communicationTypeRef]: '',
+      [communicationTypeRef]: '8', // id of 'Email generally'
       [communicationTypeDefault]: '0'
     }
     value[this.localData.indexNew] = object; // Add this new entry to the existing entries.
@@ -74,33 +83,20 @@ class CommunicationInfo extends Component {
   render = () => {
     const { configInput } = this.props;
 
-    // Header with label and Add-button.
-    const communicationInfoHeader = (
-      <div className={classes.Header}>
-        <div className={[classesForm.Label, classes.Label].join(' ')}>
-          <Label labelKey={configInput.label} convertType={'propercase'} />
-        </div>
-        <button className={classes.Add} onClick={(event) => this.onChange(null, null, 'add')}>
-          <FontAwesomeIcon icon={['far', icons.ICON_PLUS]} />
-        </button>
-      </div>
-    );
-
     // All entries.
-    const communicationInfoEntries = Object.keys(configInput.value).map((item, index) => {
+    const entries = Object.keys(configInput.value).map((item, index) => {
       const { standaard, naam, refteltype } = configInput.value[item];
 
       // Checkbox to (de)select this entry as default.
       const checked = parseInt(standaard, 10);
       const checkbox = (
-        <input type='checkbox' checked={checked} className={classes.Checkbox}
-          onChange={(event) => this.onChange(event, item, communicationTypeDefault)} />
+        <input type='checkbox' checked={checked} onChange={(event) => this.onChange(event, item, communicationTypeDefault)} />
       );
 
       // Dropdown to select a particular communication type. The entire list of communication types is stored in the store and injected as a prop.
       const select = (
         <select
-          className={[classes.Select, classesForm.InputElement].join(' ')}
+          className={classesFormElement.InputElement}
           value={refteltype}
           onChange={(event) => this.onChange(event, item, communicationTypeRef)}>
           {this.props.communicationTypes.map(option => {
@@ -111,42 +107,46 @@ class CommunicationInfo extends Component {
         </select>
       );
 
+      // We combine the select and the dropdown in one element.
+      const communicationType = <MultiEntryCombiInput inputs={[checkbox, select]}/>;
+
       // The input where user can type the value.
       const input = (
         <input
-          className={[classes.Input, classesForm.InputElement].join(' ')}
+          className={classesFormElement.InputElement}
           type={'text'}
           value={naam}
           onChange={(event) => this.onChange(event, item, communicationTypeValue)}
         />
       );
 
-      // Button to delete this particular entry.
-      const deleteEntry = (
-        <button className={classes.Delete} onClick={(event) => this.onChange(null, item, 'delete')}>
-          <FontAwesomeIcon icon={['far', icons.ICON_MINUS]} />
-        </button>
-      );
+      const entryInput = [
+          {
+            line: [
+              { input: communicationType, width: 'Flex40' },
+              { input: input, width: 'Flex60' }
+            ]
+          }
+      ];
 
-      return (
-        <div key={index} className={classes.Entry}>
-          {checkbox}
-          {select}
-          {input}
-          {deleteEntry}
-        </div>
-      );
+      return <MultiEntryEntry key={index} entryInput={entryInput} deleteAction={(event) => this.onChange(null, item, 'delete')} />;
 
     });
 
-    const communicationInfoEntriesWrapper = <div className={classes.EntriesWrapper}>{communicationInfoEntries}</div>
+    const headerLabels = [
+      { label: configInput.label, width: 'Flex100' }
+    ];
+
+    const wrapper = (
+      <MultiEntryWrapper height={configInput.maxHeight} labels={headerLabels} addAction={(event) => this.onChange(null, null, 'add')} entries={entries}/>
+    );
 
     return (
       <Aux>
-        {communicationInfoHeader}
-        {communicationInfoEntriesWrapper}
+        {wrapper}
       </Aux>
     );
+
   };
 }
 
