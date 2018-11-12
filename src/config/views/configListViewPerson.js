@@ -4,7 +4,7 @@ import baseConfig from './configListViewBase';
 import formConfigPerson from '../forms/configFormPerson';
 
 const listViewConfig = {
-  actionMenuHeader: 'completenaam',
+  actionMenuHeader: 'adressering',
   actions: [
     {
       ...actions.ACTION_ADD,
@@ -52,7 +52,7 @@ const listViewConfig = {
         lines: [
           {
             lineData: [
-              { type: 'prop', value: 'completenaam', classes: ['FontBold'] }
+              { type: 'prop', value: 'adressering', classes: ['FontBold'] }
             ]
           },
           {
@@ -87,7 +87,7 @@ const listViewConfig = {
         lines: [
           {
             lineData: [
-              { type: 'prop', value: 'completenaam', classes: ['FontBold', 'FontGrey'] }
+              { type: 'prop', value: 'adressering', classes: ['FontBold', 'FontGrey'] }
             ]
           },
           {

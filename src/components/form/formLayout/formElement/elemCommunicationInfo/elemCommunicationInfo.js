@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as icons from '../../../../../libs/constIcons';
 import * as input from '../../../../../libs/constInputs';
 import Aux from '../../../../../hoc/auxiliary';
-import Label from '../../../../ui/label/label';
 import MultiEntryCombiInput from '../genericElements/multiEntry/multiEntryCombiInput/multiEntryCombiInput';
 import MultiEntryEntry from '../genericElements/multiEntry/multiEntryEntry/multiEntryEntry';
 import MultiEntryWrapper from '../genericElements/multiEntry/multiEntryWrapper/multiEntryWrapper';
@@ -72,7 +69,8 @@ class CommunicationInfo extends Component {
       [communicationTypeValue]: '',
       [communicationTypeRef]: '8', // id of 'Email generally'
       [communicationTypeDefault]: '0'
-    }
+    };
+    
     value[this.localData.indexNew] = object; // Add this new entry to the existing entries.
 
     this.localData.indexNew = this.localData.indexNew - 1; // For a possible next new entry.

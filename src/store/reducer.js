@@ -59,6 +59,12 @@ const reducer = (state = initialState, action) => {
       communicationTypes: action.communicationTypes
     };
 
+    case types.DROPDOWN_HTML_STORE:
+    return {
+      ...state,
+      dropdownHtml: action.dropdownHtml
+    };
+
     case types.EMPLOYEES_STORE:
     return {
       ...state,

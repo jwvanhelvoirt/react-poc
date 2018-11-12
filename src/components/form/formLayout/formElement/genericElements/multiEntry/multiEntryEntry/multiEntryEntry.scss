@@ -1,7 +1,8 @@
 .Entry {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
+  // border: 1px solid red;
 }
 
 .Inputs {
@@ -12,11 +13,11 @@
 
 .EntryLine {
   display: flex;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   width: 100%;
 }
 
 .EntryLine>div {
-  padding-right: 5px;
+  padding-right: 10px;
   box-sizing: border-box;
 }

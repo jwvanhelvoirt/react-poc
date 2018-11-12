@@ -126,94 +126,94 @@ const formConfig = {
 
   layout: {
     rows: [
-      {
-        cols: [
-          {
-            width: 'Flex30',
-            rows: [
-              {
-                inputs: [
-                  { id: input.INPUT_FIRST_NAME, width: 'Flex70' },
-                  { id: input.INPUT_INITIALS, width: 'Flex30' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_GENDER, width: 'Flex100' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex80' },
-                  { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex20' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex100' }
-                ]
-              }
-            ]
-          },
-          {
-            width: 'Flex50',
-            columnClasses: ['ColEmphasize'],
-            rows: [
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
-              //     { id: input.INPUT_INITIALS, width: 'Flex25' },
-              //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
-              //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
-              //     { id: input.INPUT_INITIALS, width: 'Flex25' },
-              //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
-              //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
-              //   ]
-              // },
-              {
-                inputs: [
-                  { id: input.INPUT_COMMUNICATION_INFO, width: 'Flex100' }
-                ]
-              }
-            ]
-          },
-          {
-            width: 'Flex20',
-            rows: [
-              {
-                inputs: [
-                  { id: input.INPUT_FOTO, width: 'Flex100' }
-                ]
-              },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_FIRST_NAME, width: 'Flex100' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_INITIALS, width: 'Flex100' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_INSERTIONS, width: 'Flex100' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_LAST_NAME, width: 'Flex100' }
-              //   ]
-              // }
-            ]
-          }
-        ]
-      },
+      // {
+      //   cols: [
+      //     {
+      //       width: 'Flex30',
+      //       rows: [
+      //         {
+      //           inputs: [
+      //             { id: input.INPUT_FIRST_NAME, width: 'Flex70' },
+      //             { id: input.INPUT_INITIALS, width: 'Flex30' }
+      //           ]
+      //         },
+      //         {
+      //           inputs: [
+      //             { id: input.INPUT_GENDER, width: 'Flex100' }
+      //           ]
+      //         },
+      //         {
+      //           inputs: [
+      //             { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex80' },
+      //             { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex20' }
+      //           ]
+      //         },
+      //         {
+      //           inputs: [
+      //             { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex100' }
+      //           ]
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       width: 'Flex50',
+      //       columnClasses: ['ColEmphasize'],
+      //       rows: [
+      //         // {
+      //         //   inputs: [
+      //         //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
+      //         //     { id: input.INPUT_INITIALS, width: 'Flex25' },
+      //         //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
+      //         //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
+      //         //   ]
+      //         // },
+      //         // {
+      //         //   inputs: [
+      //         //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
+      //         //     { id: input.INPUT_INITIALS, width: 'Flex25' },
+      //         //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
+      //         //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
+      //         //   ]
+      //         // },
+      //         {
+      //           inputs: [
+      //             { id: input.INPUT_COMMUNICATION_INFO, width: 'Flex100' }
+      //           ]
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       width: 'Flex20',
+      //       rows: [
+      //         {
+      //           inputs: [
+      //             { id: input.INPUT_FOTO, width: 'Flex100' }
+      //           ]
+      //         },
+      //         // {
+      //         //   inputs: [
+      //         //     { id: input.INPUT_FIRST_NAME, width: 'Flex100' }
+      //         //   ]
+      //         // },
+      //         // {
+      //         //   inputs: [
+      //         //     { id: input.INPUT_INITIALS, width: 'Flex100' }
+      //         //   ]
+      //         // },
+      //         // {
+      //         //   inputs: [
+      //         //     { id: input.INPUT_INSERTIONS, width: 'Flex100' }
+      //         //   ]
+      //         // },
+      //         // {
+      //         //   inputs: [
+      //         //     { id: input.INPUT_LAST_NAME, width: 'Flex100' }
+      //         //   ]
+      //         // }
+      //       ]
+      //     }
+      //   ]
+      // },
       {
         cols: [
           {
@@ -260,8 +260,7 @@ const formConfig = {
                         rows: [
                           {
                             inputs: [
-                              { id: input.INPUT_FIRST_NAME, width: 'Flex50' },
-                              { id: input.INPUT_INITIALS, width: 'Flex50' }
+                              { id: input.INPUT_INITIALS, width: 'Flex100' }
                             ]
                           }
                         ]
@@ -300,8 +299,7 @@ const formConfig = {
                         rows: [
                           {
                             inputs: [
-                              { id: input.INPUT_FIRST_NAME, width: 'Flex70' },
-                              { id: input.INPUT_INITIALS, width: 'Flex30' }
+                              { id: input.INPUT_INITIALS, width: 'Flex100' }
                             ]
                           },
                           {

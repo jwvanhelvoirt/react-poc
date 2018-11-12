@@ -8,7 +8,7 @@ import viewConfigSort from '../../../config/views/configListViewSortOptions';
 import FormParser from '../formParser/formParser';
 import Spinner from '../../ui/spinners/spinner/spinner';
 import Label from '../../ui/label/label';
-import ActionMenu from '../../view/actionMenu/actionMenu';
+import ActionMenu from '../../ui/actionMenu/actionMenu';
 import ViewModal from '../../view/viewModal/viewModal';
 import ViewBars from '../../view/viewBars/viewBars';
 import Rows from '../../view/rows/rows';

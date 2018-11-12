@@ -1,5 +1,3 @@
-import * as input from './constInputs';
-
 /**
 * @brief  We need a custom function to convert an array of objects (retrieve) to an object structure based on id (save).
 * FOR INSTANCE:

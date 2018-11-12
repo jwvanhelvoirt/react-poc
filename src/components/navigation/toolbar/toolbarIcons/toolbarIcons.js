@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '../../../../libs/constIcons';
 import Avatar from '../../../ui/avatar/avatar';
 import ToolbarIcon from './toolbarIcon/toolbarIcon';
-import ActionMenu from '../../../view/actionMenu/actionMenu';
+import ActionMenu from '../../../ui/actionMenu/actionMenu';
 import Aux from '../../../../hoc/auxiliary';
 import classes from './toolbarIcons.scss';
 

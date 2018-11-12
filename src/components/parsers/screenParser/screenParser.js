@@ -238,7 +238,13 @@ class Screen extends Component {
       return html;
     });
 
-    return result;
+    // We might have to display a dropdown that could have been triggered from a form (modal) but should be (partially) displayed outside of the form.
+    return (
+      <Aux>
+        {result}
+        {this.props.dropdownHtml}
+      </Aux>
+    );
   };
 
   extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param, active) => {
@@ -282,8 +288,8 @@ class Screen extends Component {
 }
 
 const mapStateToProps = state => {
-  const { translates } = state.redMain;
-  return { translates };
+  const { dropdownHtml, translates } = state.redMain;
+  return { dropdownHtml, translates };
 };
 
 const mapDispatchToProps = dispatch => {

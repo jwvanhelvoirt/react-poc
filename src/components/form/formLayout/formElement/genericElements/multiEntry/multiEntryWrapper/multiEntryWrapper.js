@@ -8,8 +8,6 @@ const multiEntryWrapper = (props) => {
 
   const header = labels || addAction ? <MultiEntryHeader labels={labels} addAction={addAction} /> : null;
 
-  const maxHeight = height ? height : ''
-
   return (
     <div>
       {header}

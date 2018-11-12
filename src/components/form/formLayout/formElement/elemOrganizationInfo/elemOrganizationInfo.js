@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as icons from '../../../../../libs/constIcons';
 import * as input from '../../../../../libs/constInputs';
 import * as trans from '../../../../../libs/constTranslates';
+import { storeDropdownHtml } from '../../../../../store/actions';
 import Aux from '../../../../../hoc/auxiliary';
+import Dropdown from '../../../../ui/dropdown/dropdown';
+import Select from '../../../../ui/select/select';
 import MultiEntryCombiInput from '../genericElements/multiEntry/multiEntryCombiInput/multiEntryCombiInput';
 import MultiEntryEntry from '../genericElements/multiEntry/multiEntryEntry/multiEntryEntry';
 import MultiEntryWrapper from '../genericElements/multiEntry/multiEntryWrapper/multiEntryWrapper';
@@ -14,8 +15,10 @@ import classesFormElement from '../formElement.scss';
 const organizationMain = 'hoofd';
 const organizationFunction = 'functienaam';
 const organizationFunctionCode = 'reffunctiecode';
+const organizationId = 'refniveau4';
 const organizationLeft = 'vertrokken';
 const organizationLeftOn = 'vertrokkenper';
+const organizationName = 'naam';
 const organizationSecretary = 'secretaresse';
 const organizationDepartment = 'afdeling';
 const organizationLocationCode = 'locatiecode';
@@ -34,6 +37,7 @@ class CommunicationInfo extends Component {
 
     const { changed, configInput } = this.props;
     let value = cloneDeep(configInput.value); // Value before the change, this is an object containing data for all entries.
+    let triggerChangeHandler = true;
 
     switch (changeElement) {
 
@@ -43,10 +47,6 @@ class CommunicationInfo extends Component {
 
       case organizationFunction:
       value[id][organizationFunction] = event.target.value;
-      break;
-
-      case organizationFunctionCode:
-      value[id][organizationFunctionCode] = event.target.value;
       break;
 
       case organizationLeft:
@@ -74,7 +74,8 @@ class CommunicationInfo extends Component {
       break;
 
       case 'add':
-      value = this.addOrganization(value);
+      this.onDropdownShowAddOrganization(event);
+      triggerChangeHandler = false;
       break;
 
       default:
@@ -82,10 +83,14 @@ class CommunicationInfo extends Component {
     };
 
     // Trigger the inputChangedHandler method in the FormParser, which handles all changes.
-    changed(null, input.INPUT_ORGANIZATION_INFO, value);
+    if (triggerChangeHandler) {
+      changed(null, input.INPUT_ORGANIZATION_INFO, value);
+    }
   };
 
   changeMainOrganization = (event, value, id) => {
+    // Dropdown with a single value.
+
     // Change the value so no organization is related as main organization.
     Object.keys(value).map((item) => value[item][organizationMain] = '0');
 
@@ -95,19 +100,68 @@ class CommunicationInfo extends Component {
     return value;
   };
 
-  addOrganization = (value) => {
-    console.log('addOrganization');
-    // // Add an empty communication type with a negative id, so the backend knows it's a new entry.
-    // const object = {
-    //   [communicationTypeValue]: '',
-    //   [communicationTypeRef]: '8', // id of 'Email generally'
-    //   [communicationTypeDefault]: '0'
-    // }
-    // value[this.localData.indexNew] = object; // Add this new entry to the existing entries.
-    //
-    // this.localData.indexNew = this.localData.indexNew - 1; // For a possible next new entry.
-    //
-    return value;
+  onDropdownShowAddOrganization = (event) => {
+    this.toggleDropdownAddOrganization(true, event.clientX, event.clientY);
+  }
+
+  onDropdownCloseAddOrganization = () => {
+    this.toggleDropdownAddOrganization(false);
+  };
+
+  toggleDropdownAddOrganization = (show, mousePosX, mousePosY) => {
+
+    const dropdownAddOrganization = (
+      <Dropdown
+        searchBar={true}
+        searchType={'server'}
+        searchApi={{ api: 'api.relatiebeheer.zoekRelatie', entity: 'niveau4', id: 'id', label: 'naam' }}
+        onSelect={this.addOrganization}
+        show={show}
+        dropdownClosed={this.onDropdownCloseAddOrganization}
+        mousePosX={mousePosX}
+        mousePosY={mousePosY}
+      />
+    );
+
+    this.props.storeDropdownHtml(dropdownAddOrganization);
+  };
+
+  addOrganization = (id, name) => {
+    this.toggleDropdownAddOrganization(false); // Remove the dropdown.
+
+    const { changed, configInput } = this.props;
+
+    // Add an empty organization with a negative id, so the backend knows it's a new entry.
+    const object = {
+      [organizationDepartment]: '',
+      [organizationFunction]: '',
+      [organizationMain]: '0',
+      [organizationLocationCode]: '',
+      [organizationName]: name,
+      [organizationFunctionCode]: '0',
+      [organizationId]: id,
+      [organizationSecretary]: '',
+      [organizationLeft]: '0',
+      [organizationLeftOn]: null,
+    };
+
+    let value = cloneDeep(configInput.value); // Value before the change, this is an object containing data for all entries.
+    value[this.localData.indexNew] = object; // Add this new entry to the existing entries.
+
+    this.localData.indexNew = this.localData.indexNew - 1; // For a possible next new entry.
+
+    changed(null, input.INPUT_ORGANIZATION_INFO, value);
+  };
+
+  changeFunctionCode = (value, label, rowId) => {
+    this.toggleDropdownAddOrganization(false); // Remove the dropdown. TODO: DIT MOET EIGENLIJK ANDERS!!!
+
+    const { changed, configInput } = this.props;
+    let valueConfig = cloneDeep(configInput.value); // Value before the change, this is an object containing data for all entries.
+
+    valueConfig[rowId][organizationFunctionCode] = value;
+
+    changed(null, input.INPUT_ORGANIZATION_INFO, valueConfig);
   };
 
   render = () => {
@@ -115,9 +169,7 @@ class CommunicationInfo extends Component {
 
     // All entries.
     const entries = Object.keys(configInput.value).map((item, index) => {
-
-      const { naam, hoofd, functienaam, reffunctiecode, vertrokken, refniveau4,
-        secretaresse, afdeling, locatiecode } = configInput.value[item];
+      const { naam, hoofd, functienaam, reffunctiecode, vertrokken, secretaresse, afdeling, locatiecode } = configInput.value[item];
 
       let { vertrokkenper } = configInput.value[item];
 
@@ -139,16 +191,11 @@ class CommunicationInfo extends Component {
 
         // Dropdown to select a particular type. The entire list of function types is stored in the store and injected as a prop.
         const functionCode = (
-          <select
-            className={classesFormElement.InputElement}
+          <Select
             value={reffunctiecode}
-            onChange={(event) => this.onChange(event, item, organizationFunctionCode)}>
-            {this.props.functionCodes.map(option => {
-              return <option key={option.id} value={option.id}>
-                {option.naam}
-              </option>
-            })}
-          </select>
+            onChange={this.changeFunctionCode}
+            options={this.props.functionCodes} optionId={'id'} optionLabel={'naam'} rowId={item}>
+          </Select>
         );
 
         // Radio to select this entry as default organization.
@@ -225,7 +272,7 @@ class CommunicationInfo extends Component {
     ];
 
     const wrapper = (
-      <MultiEntryWrapper height={configInput.maxHeight} labels={headerLabels} addAction={(event) => this.onChange(null, null, 'add')} entries={entries}/>
+      <MultiEntryWrapper height={configInput.maxHeight} labels={headerLabels} addAction={(event) => this.onChange(event, null, 'add')} entries={entries}/>
     );
 
     return (
@@ -241,4 +288,10 @@ const mapStateToProps = state => {
   return { functionCodes };
 };
 
-export default connect(mapStateToProps)(CommunicationInfo);
+const mapDispatchToProps = dispatch => {
+  return {
+    storeDropdownHtml: (dropdownHtml) => dispatch(storeDropdownHtml(dropdownHtml))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommunicationInfo);

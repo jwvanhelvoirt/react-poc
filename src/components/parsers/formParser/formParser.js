@@ -21,7 +21,7 @@ import MessageBox from '../../ui/messageBox/messageBox';
 import * as inputAttrib from '../../../libs/constInputs';
 import * as trans from '../../../libs/constTranslates';
 import { assignObject, isEqual, leftString } from '../../../libs/generic';
-import { convertInitialCommunicationData, convertInitialOrganizationData, convertInitialDataFromArrayToObject } from '../../../libs/forms';
+import { convertInitialDataFromArrayToObject } from '../../../libs/forms';
 import { callServer } from '../../../api/api';
 
 class Form extends Component {

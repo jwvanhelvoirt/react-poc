@@ -88,7 +88,7 @@ class MessageBox extends Component {
     // If the user tabs outside the modal, the cursor is focussed automatically on the first input.
     const elem = this.mb.querySelector('input');
     if (elem) {
-      elem.focus();
+      // elem.focus(); // This cannot be done, because a dropdown of a form input is positioned OUTSIDE the modal.
     }
   };
 

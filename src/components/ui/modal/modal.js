@@ -59,7 +59,7 @@ class Modal extends Component {
         <div
           className={classNames}
           style={{
-            transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
+            /*transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)', THIS CAUSES A DROPDOWN BACKDROP IN A FORM TO BE POSITIONED WITHIN THE FORM CONTAINER!!*/
             opacity: this.props.show ? '1' : '0'
           }}>
           {this.props.children}

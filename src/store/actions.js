@@ -66,6 +66,13 @@ export const storeCandidateStatusses = (candidateStatusses) => {
   };
 };
 
+export const storeDropdownHtml = (dropdownHtml) => {
+  return {
+    type: types.DROPDOWN_HTML_STORE,
+    dropdownHtml
+  };
+};
+
 export const storeCommunicationTypes = (communicationTypes) => {
   return {
     type: types.COMMUNICATION_TYPES_STORE,
