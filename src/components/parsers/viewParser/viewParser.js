@@ -417,7 +417,8 @@ class _View extends Component {
     const sortAttribute = sortOrder === -1 ? sort + '_desc' : sort + '_asc';
 
     const { limit } = viewConfig;
-    const params = { MAGIC: localStorage.getItem('magic'), sort: sortAttribute, skip, limit, search };
+    // const params = { MAGIC: localStorage.getItem('magic'), sort: sortAttribute, skip, limit, search };
+    const params = { MAGIC: localStorage.getItem('magic'), sort: sortAttribute, start: skip, pagesize: limit, text: search };
 
     // In case the list must be filtered based on a selected row in the previous view.
     if (this.state.viewConfig.rowBindedAttribute) {

@@ -43,9 +43,9 @@ class Dropdown extends Component {
     console.log('componentWillUnmount');
   };
 
-  componentDidUpdate = () => {
+  componentWillUpdate = () => {
     console.log(this.props);
-    console.log('componentDidUpdate');
+    console.log('componentWillUpdate');
 
     // const { values, valuesIdLabel } = this.props;
     //

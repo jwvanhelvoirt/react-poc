@@ -110,18 +110,18 @@ class CommunicationInfo extends Component {
 
   toggleDropdownAddOrganization = (show, mousePosX, mousePosY) => {
 
-    const dropdownAddOrganization = (
-      <Dropdown
-        searchBar={true}
-        searchType={'server'}
-        searchApi={{ api: 'api.relatiebeheer.zoekRelatie', entity: 'niveau4', id: 'id', label: 'naam' }}
-        onSelect={this.addOrganization}
-        show={show}
-        dropdownClosed={this.onDropdownCloseAddOrganization}
-        mousePosX={mousePosX}
-        mousePosY={mousePosY}
-      />
-    );
+    const dropdownAddOrganization = show ?
+    <Dropdown
+      searchBar={true}
+      searchType={'server'}
+      searchApi={{ api: 'api.relatiebeheer.zoekRelatie', entity: 'niveau4', id: 'id', label: 'naam' }}
+      onSelect={this.addOrganization}
+      show={show}
+      dropdownClosed={this.onDropdownCloseAddOrganization}
+      mousePosX={mousePosX}
+      mousePosY={mousePosY}
+    /> :
+    null;
 
     this.props.storeDropdownHtml(dropdownAddOrganization);
   };

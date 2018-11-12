@@ -17,20 +17,19 @@ class Select extends Component {
   }
 
   toggleDropdown = (event, show, rowId, value) => {
-    const dropdown = (
-      <Dropdown
-        values={this.props.options}
-        valuesIdLabel={{ id: 'id', label: 'naam' }}
-        searchBar={true}
-        searchType={'client'}
-        onSelect={this.props.onChange}
-        rowId={rowId}
-        show={show}
-        dropdownClosed={(event) => this.closeDropdown(event)}
-        mousePosX={event.clientX}
-        mousePosY={event.clientY}
-      />
-    );
+    const dropdown = show ?
+    <Dropdown
+      values={this.props.options}
+      valuesIdLabel={{ id: 'id', label: 'naam' }}
+      searchBar={true}
+      searchType={'client'}
+      onSelect={this.props.onChange}
+      rowId={rowId}
+      show={show}
+      dropdownClosed={(event) => this.closeDropdown(event)}
+      mousePosX={event.clientX}
+      mousePosY={event.clientY}
+    /> : null;
 
     this.props.storeDropdownHtml(dropdown);
   };
