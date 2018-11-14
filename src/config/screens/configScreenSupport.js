@@ -1,13 +1,11 @@
 import React from 'react';
 import View from '../../components/parsers/viewParser/viewParser';
-import viewConfig from '../../config/views/configListViewDocumentList';
+import viewConfig from '../../config/views/configListViewSupport';
 import * as trans from '../../libs/constTranslates';
 
 export const screenConfig = {
   showTabs: false,
-  searchIdIn: 'api.project.project.get',
-  searchIdFor: 'code',
-  breadcrumb: trans.KEY_LIST,
+  route: '1', // This screen will contain one list, a click on a listrow, appends /1/:id to the URL.
   panes: [
     {
       id: 'panes1',
@@ -19,9 +17,9 @@ export const screenConfig = {
       content: {
         id: 'pane1',
         tabs: [
-          { id: 'documentList', label: trans.KEY_DOCUMENT, component: <View viewConfig={viewConfig} /> }
+          { id: 'support', label: trans.KEY_SUPPORT, component: <View viewConfig={viewConfig} /> }
         ],
-        activeTab: 'documentList'
+        activeTab: 'support'
       }
     }
   ]

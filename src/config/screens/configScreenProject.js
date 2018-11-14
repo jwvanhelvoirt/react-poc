@@ -5,7 +5,7 @@ import * as trans from '../../libs/constTranslates';
 
 export const screenConfig = {
   showTabs: false,
-  route: 'list', // This screen will contain one list, a click on a listrow, appends /list/:id to the URL.
+  route: '1', // This screen will contain one list, a click on a listrow, appends /1/:id to the URL.
   panes: [
     {
       id: 'panes1',

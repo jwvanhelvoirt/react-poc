@@ -10,27 +10,27 @@ const listViewConfig = {
       sortOn: 'naam',
       columnClasses: ['ScreenAll'],
       show: true,
-      size: 'Flex70'
+      size: 'Flex60'
     },
     {
-      content: 'eind',
+      content: 'datumtijd',
       label: trans.KEY_DATE,
       sort: true,
-      sortOn: 'eind',
+      sortOn: 'datumtijd',
       columnClasses: ['ScreenAll'],
       show: true,
-      size: 'Flex30'
+      size: 'Flex40'
     }
   ],
   row: { selectable: true, menu: false },
-  rowBindedAttribute: 'refniveau5',// This connects this follow-up screen to the selected row in the previous screen.
+  rowBindedAttribute: 'refniveau5', 	 // This connects this follow-up screen to the selected row in the previous screen.
   // F.i. if you click on an organisation in screen A, you get all related persons in screen B.
   // It will filter on the id in the URL in the collection 'persons' in the attribute configured here.
   showActions: false,
-  sort: 'eind',
+  sort: 'naam',
   sortOrder: 1,
   title: trans.KEY_DOCUMENT,
-  url: 'call/api.taken.taak'
+  url: 'api.document.document'
 };
 
 export default { ...baseConfig, ...listViewConfig };

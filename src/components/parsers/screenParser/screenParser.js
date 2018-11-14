@@ -43,7 +43,7 @@ class Screen extends Component {
     if (searchIdIn) {
       // In a follow-up screen we need information from the record selected in the previous screen. Fetch it!
       const params = { MAGIC: localStorage.getItem('magic'), id };
-      callServer('put', '/' + searchIdIn, this.successGetSingleHandler, this.errorGetSingleHandler, params);
+      callServer('put', 'call/' + searchIdIn, this.successGetSingleHandler, this.errorGetSingleHandler, params);
     }
   };
 
@@ -114,17 +114,17 @@ class Screen extends Component {
           color="success"
           labelIcon={icons.ICON_PLUS}
           clicked={() => this.togglePane(pane.id)}
-        />
+          />
       );
 
       // Button to hide a 'toggleable' pane.
       const buttonHide = (
         <Button
-            color="secondary"
-            outline="true"
-            labelIcon={icons.ICON_MINUS}
-            clicked={() => this.togglePane(pane.id)}
-        />
+          color="secondary"
+          outline="true"
+          labelIcon={icons.ICON_MINUS}
+          clicked={() => this.togglePane(pane.id)}
+          />
       );
 
       let html = '';
@@ -141,10 +141,10 @@ class Screen extends Component {
           let breadcrumb = (
             <Aux>
               <div className={classes.BackIcon} onClick={this.navigateBackwards}>
-                  <FontAwesomeIcon icon={['far', icons.ICON_LONG_ARROW_LEFT]} />
+                <FontAwesomeIcon icon={['far', icons.ICON_LONG_ARROW_LEFT]} />
               </div>
               <NavLink to='/dashboard' className={classes.HomeIcon}>
-                  <FontAwesomeIcon icon={['far', icons.ICON_HOME]} />
+                <FontAwesomeIcon icon={['far', icons.ICON_HOME]} />
               </NavLink>
             </Aux>
           );
@@ -168,7 +168,7 @@ class Screen extends Component {
                 }
                 breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param, active);
               } else {
-                  breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, null, false);
+                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, null, false);
               }
             }
 
@@ -185,118 +185,122 @@ class Screen extends Component {
 
           // Print identifying data from the row selected in the previous screen or not.
           const followUpScreenData = this.state.followUpScreenData ?
-            <span>{this.state.followUpScreenData}</span> :
+          <span>{this.state.followUpScreenData}</span> :
             null;
 
-          // Print breadcrumb zone.
-          upperZone = (
-            <div className={classes.Header}>
-              <div className={classes.BreadcrumbWrapper}>{breadcrumb}</div>
-              {followUpScreenData}
-            </div>
-          );
-        } else {
-          // Show tab bar
+            // Print breadcrumb zone.
+            upperZone = (
+              <div className={classes.Header}>
+                <div className={classes.BreadcrumbWrapper}>{breadcrumb}</div>
+                {followUpScreenData}
+              </div>
+            );
+          } else {
+            // Show tab bar
 
-          // Get all tabs for this pane.
-          const links = getTabRow(this.state.activeTabs[pane.content.id], pane.content.tabs, pane.content.id, this);
+            // Get all tabs for this pane.
+            const links = getTabRow(this.state.activeTabs[pane.content.id], pane.content.tabs, pane.content.id, this);
 
-          // Should we show the toggle hide button?
-          const toggle = pane.toggle ? buttonHide : "";
+            // Should we show the toggle hide button?
+            const toggle = pane.toggle ? buttonHide : "";
 
-          // The tab bar.
-          upperZone = (
-            <div className={classes.TabBar}>
-              {toggle}
-              <Nav tabs>{links}</Nav>
+            // The tab bar.
+            upperZone = (
+              <div className={classes.TabBar}>
+                {toggle}
+                <Nav tabs>{links}</Nav>
+              </div>
+            );
+
+          }
+
+          // Get the content of the active tab (in breadcrumb modus there's the one tab is always active).
+          const content = getTabComponent(this.state.activeTabs[pane.content.id], pane.content.tabs);
+
+          // Return html for this pane.
+          html = (
+            <div className={classes.Pane}>
+              <div className={classes.ListviewContainer}>
+                {upperZone}
+                {content}
+              </div>
             </div>
           );
 
         }
 
-        // Get the content of the active tab (in breadcrumb modus there's the one tab is always active).
-        const content = getTabComponent(this.state.activeTabs[pane.content.id], pane.content.tabs);
+        // Wrap the pane html in a div with a special class.
+        const PaneWrapper = <div key={indexPane} className={classes.PaneWrapper}>{html}</div>
 
-        // Return html for this pane.
-        html = (
-          <div className={classes.Pane}>
-            <div className={classes.ListviewContainer}>
-              {upperZone}
-              {content}
-            </div>
-          </div>
-        );
+        // Should we show the toggle display button?
+        html = html === '' ? (pane.toggle ? buttonShow : '') : PaneWrapper;
 
-      }
+        return html;
+      });
 
-      // Wrap the pane html in a div with a special class.
-      const PaneWrapper = <div key={indexPane} className={classes.PaneWrapper}>{html}</div>
+      // We might have to display a dropdown that could have been triggered from a form (modal) but should be (partially) displayed outside of the form.
+      return (
+        <Aux>
+          {result}
+          {this.props.dropdownHtml}
+        </Aux>
+      );
+    };
 
-      // Should we show the toggle display button?
-      html = html === '' ? (pane.toggle ? buttonShow : '') : PaneWrapper;
+    extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param, active) => {
+      // The breadcrumb part can be configured via screenConfig.breadcrumb.
+      // TODO: waarschijnlijk is deze constructie niet houdbaar voor een portal met 3 ipv 2 geneste schermen. Hij pakt nu immers alleen de actieve.
+      const transBreadcrumb = (active && this.state.screenConfig.breadcrumb) ? this.state.screenConfig.breadcrumb : trans['KEY_' + item.toUpperCase()];
 
-      return html;
-    });
-
-    // We might have to display a dropdown that could have been triggered from a form (modal) but should be (partially) displayed outside of the form.
-    return (
-      <Aux>
-        {result}
-        {this.props.dropdownHtml}
-      </Aux>
-    );
-  };
-
-  extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param, active) => {
       // Extends the current breadcrumb.
       const addParam = param ? '/' + this.props.match.params[param] : '';
 
       const classBreadcrumbWrapper = active ? [classes.BreadcrumbWrapper, classes.Active].join(' ') : classes.BreadcrumbWrapper;
 
       return (
-      <Aux>
-        {breadcrumb}
-        <div className={classes.BreadcrumbDividerWrapper}>
-          <div className={classes.BreadcrumbDivider}></div>
+        <Aux>
+          {breadcrumb}
+          <div className={classes.BreadcrumbDividerWrapper}>
+            <div className={classes.BreadcrumbDivider}></div>
+          </div>
+          <div className={classBreadcrumbWrapper}>
+            <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
+              <span>
+                {getDisplayValue(transBreadcrumb, 'propercase', true, this.props.translates)}
+              </span>
+            </NavLink>
+          </div>
+        </Aux>
+      );
+    };
+
+    render = () => {
+      // TODO : Berekent ze nu allemaal. Eigenlijk wil je alleen berekenen, wat nodig is. Uitzoeken...
+      const large = this.getHtml('displayLarge');
+      const medium = this.getHtml('displayMedium');
+      const small = this.getHtml('displaySmall');
+
+      return (
+        <div>
+          <Large>{large}</Large>
+          <Medium>{medium}</Medium>
+          <Small>{small}</Small>
         </div>
-        <div className={classBreadcrumbWrapper}>
-          <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
-            <span>
-              {getDisplayValue(trans['KEY_' + item.toUpperCase()], 'propercase', true, this.props.translates)}
-            </span>
-          </NavLink>
-        </div>
-      </Aux>
-    );
-  };
+      );
+    };
 
-  render = () => {
-    // TODO : Berekent ze nu allemaal. Eigenlijk wil je alleen berekenen, wat nodig is. Uitzoeken...
-    const large = this.getHtml('displayLarge');
-    const medium = this.getHtml('displayMedium');
-    const small = this.getHtml('displaySmall');
-
-    return (
-      <div>
-        <Large>{large}</Large>
-        <Medium>{medium}</Medium>
-        <Small>{small}</Small>
-      </div>
-    );
-  };
-
-}
-
-const mapStateToProps = state => {
-  const { dropdownHtml, translates } = state.redMain;
-  return { dropdownHtml, translates };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    // storeFollowUpScreenId: (followUpScreenData) => dispatch( {type: types.FOLLOW_UP_SCREEN_ID_STORE, followUpScreenData } ),
-    storeRoute: (route) => dispatch(storeRoute(route))
   }
-};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Screen));
+  const mapStateToProps = state => {
+    const { dropdownHtml, translates } = state.redMain;
+    return { dropdownHtml, translates };
+  };
+
+  const mapDispatchToProps = dispatch => {
+    return {
+      // storeFollowUpScreenId: (followUpScreenData) => dispatch( {type: types.FOLLOW_UP_SCREEN_ID_STORE, followUpScreenData } ),
+      storeRoute: (route) => dispatch(storeRoute(route))
+    }
+  };
+
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Screen));

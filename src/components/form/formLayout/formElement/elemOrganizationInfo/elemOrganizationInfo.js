@@ -114,7 +114,7 @@ class CommunicationInfo extends Component {
     <Dropdown
       searchBar={true}
       searchType={'server'}
-      searchApi={{ api: 'api.relatiebeheer.zoekRelatie', entity: 'niveau4', id: 'id', label: 'naam' }}
+      searchApi={{ api: 'call/api.relatiebeheer.zoekRelatie', entity: 'niveau4', id: 'id', label: 'naam' }}
       onSelect={this.addOrganization}
       show={show}
       dropdownClosed={this.onDropdownCloseAddOrganization}

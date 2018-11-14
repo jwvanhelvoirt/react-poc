@@ -34,39 +34,6 @@ class Dropdown extends Component {
 
   };
 
-  componentWillMount = () => {
-    console.log(this.props);
-    console.log('componentWillMount');
-  };
-
-  componentWillUnmount = () => {
-    console.log('componentWillUnmount');
-  };
-
-  componentWillUpdate = () => {
-    console.log(this.props);
-    console.log('componentWillUpdate');
-
-    // const { values, valuesIdLabel } = this.props;
-    //
-    // const list = values ?
-    //   values.map((item) => {
-    //     return {
-    //       id: item[valuesIdLabel.id],
-    //       label: item[valuesIdLabel.label]
-    //     }
-    //   }) : [];
-    //
-    // console.log(list);
-    //
-    // this.setState({
-    //   list,
-    //   listOriginal: cloneDeep(list), // to filter the original values
-    //   searchbarValue: ''
-    // });
-
-  }
-
   clearSearchbarHandler = () => {
     this.setState({ searchbarValue: '' });
   };

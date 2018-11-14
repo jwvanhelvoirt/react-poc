@@ -37,6 +37,10 @@ import ModRecruitmentList from '../content/modules/modRecruitmentList';
 import ModSupportList from '../content/modules/modSupportList';
 import ModRegistrationList from '../content/modules/modRegistrationList';
 
+// External portals.
+import ModSupport from '../content/modules/modSupport';
+import ModSupportDetails from '../content/modules/modSupportDetails';
+
 import ModGdpr from '../content/modules/modGdpr';
 import ModHelp from '../content/modules/modHelp';
 import ModRelease from '../content/modules/modRelease';
@@ -56,7 +60,7 @@ class App extends Component {
     this.props.storeLanguage(languageInit);
     localStorage.setItem('language', languageInit);
 
-    callServer('put', 'api.public.getTranslationTable?language=' + languageInit,
+    callServer('put', 'call/api.public.getTranslationTable?language=' + languageInit,
       (response) => this.successGetHandlerTranslates(response),
       (error) => this.errorGetHandlerTranslates);
   };
@@ -113,7 +117,8 @@ class App extends Component {
     // Make a serve call to fetch user settings.
     const magic = localStorage.getItem('magic');
     const submitData = { MAGIC: magic };
-    callServer('put', 'api.getMedewerkerInfo',
+    // callServer('put', 'call/api.getMedewerkerInfo',
+    callServer('put', 'portal/call/api.getMedewerkerInfo',
       (response) => this.successHandlerGetUserInfo(response),
       (error) => this.errorHandlerGetUserInfo(error), submitData);
   };
@@ -128,7 +133,7 @@ class App extends Component {
       // User has another language configured than the current translates object, we have to fetch the translates object for this language.
       this.props.storeLanguage(response.data.settings.language);
       localStorage.setItem('language', response.data.settings.language);
-      callServer('put', 'api.public.getTranslationTable?language=' + response.data.settings.language,
+      callServer('put', 'call/api.public.getTranslationTable?language=' + response.data.settings.language,
         (response) => this.successGetHandlerTranslatesReload(response),
         (error) => this.errorGetHandlerTranslatesReload);
     } else {
@@ -196,6 +201,9 @@ class App extends Component {
 
             {isAuthNavItems.registration ? <Route path={routes.ROUTE_REGISTRATION_LIST_ID} component={ModRegistrationList} /> : null}
             {isAuthNavItems.registration ? <Route path={routes.ROUTE_REGISTRATION} component={ModProject} /> : null}
+
+            {isAuthNavItems.supportExt ? <Route path={routes.ROUTE_SUPPORT_EXT_DETAILS_ID} component={ModSupportDetails} /> : null}
+            {isAuthNavItems.supportExt ? <Route path={routes.ROUTE_SUPPORT_EXT} component={ModSupport} /> : null}
 
             {isAuthNavItems.person ? <Route path={routes.ROUTE_PERSON} component={ModPerson} /> : null}
 

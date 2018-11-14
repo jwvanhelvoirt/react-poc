@@ -1,13 +1,13 @@
 import React from 'react';
 import View from '../../components/parsers/viewParser/viewParser';
-import viewConfig from '../../config/views/configListViewDocumentList';
+import viewConfig from '../../config/views/configListViewSupportDetails';
 import * as trans from '../../libs/constTranslates';
 
 export const screenConfig = {
   showTabs: false,
-  searchIdIn: 'api.project.project.get',
-  searchIdFor: 'code',
-  breadcrumb: trans.KEY_LIST,
+  searchIdIn: 'api.support.history.list',
+  searchIdFor: 'reftaak',
+  breadcrumb: trans.KEY_DETAILS,
   panes: [
     {
       id: 'panes1',
@@ -19,9 +19,9 @@ export const screenConfig = {
       content: {
         id: 'pane1',
         tabs: [
-          { id: 'documentList', label: trans.KEY_DOCUMENT, component: <View viewConfig={viewConfig} /> }
+          { id: 'supportDetails', label: trans.KEY_DETAILS, component: <View viewConfig={viewConfig} /> }
         ],
-        activeTab: 'documentList'
+        activeTab: 'supportDetails'
       }
     }
   ]

@@ -14,6 +14,7 @@ export const isAuthNavItems = {
   certification: true,
   recruitment: true,
   support: true,
+  supportExt: true,
   registration: true
 };
 
@@ -25,7 +26,8 @@ export const navItems = [
   isAuthNavItems.acquisition   ?  { icon: icons.ICON_HANDSHAKE_ALT,     label: trans.KEY_ACQUISITION,   url: routes.ROUTE_ACQUISITION,   dashboard: true } : {},
   isAuthNavItems.certification ?  { icon: icons.ICON_FILE_CERTIFICATE,  label: trans.KEY_CERTIFICATION, url: routes.ROUTE_CERTIFICATION, dashboard: true } : {},
   isAuthNavItems.recruitment   ?  { icon: icons.ICON_USERS,             label: trans.KEY_RECRUITMENT,   url: routes.ROUTE_RECRUITMENT,   dashboard: true } : {},
-  isAuthNavItems.support       ?  { icon: icons.ICON_HEADPHONES,        label: trans.KEY_SUPPORT,       url: routes.ROUTE_SUPPORT,       dashboard: true } : {},
+  isAuthNavItems.support       ?  { icon: icons.ICON_HEADPHONES,        label: trans.KEY_CUSTOMER_SUPPORT, url: routes.ROUTE_SUPPORT,    dashboard: true } : {},
   isAuthNavItems.registration  ?  { icon: icons.ICON_PENCIL_ALT,        label: trans.KEY_REGISTRATION,  url: routes.ROUTE_REGISTRATION,  dashboard: true } : {},
-  isAuthNavItems.admin         ?  { icon: icons.ICON_COG,               label: trans.KEY_SETTINGS,      url: routes.ROUTE_ADMIN,         dashboard: true } : {}
+  isAuthNavItems.admin         ?  { icon: icons.ICON_COG,               label: trans.KEY_SETTINGS,      url: routes.ROUTE_ADMIN,         dashboard: true } : {},
+  isAuthNavItems.supportExt    ?  { icon: icons.ICON_HEADPHONES,        label: trans.KEY_SUPPORT,       url: routes.ROUTE_SUPPORT_EXT,   dashboard: true } : {}
 ];

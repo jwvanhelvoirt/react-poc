@@ -47,6 +47,7 @@ class Form extends Component {
   };
 
   componentWillMount = () => {
+
     // state property 'configForm' contains default values, update these with the values of the selected entry and update state.
     const clone = cloneDeep(this.state.configForm);
     const updatedFormInputs = clone.inputs;
@@ -71,18 +72,22 @@ class Form extends Component {
         switch (updatedFormElement.elementType) {
 
           case 'componentCommunicationInfo':
-          attributes = ['standaard', 'refteltype', 'naam'];
-          inputValue = convertInitialDataFromArrayToObject(this.props.data, inputAttrib.INPUT_COMMUNICATION_INFO, attributes);
+          if (this.props.id) { // Only for existing entries.
+            attributes = ['standaard', 'refteltype', 'naam'];
+            inputValue = convertInitialDataFromArrayToObject(this.props.data, inputAttrib.INPUT_COMMUNICATION_INFO, attributes);
+          }
           break;
 
           case 'componentOrganizationInfo':
-          attributes = ['naam', 'hoofd', 'functienaam', 'reffunctiecode', 'vertrokken', 'vertrokkenper', 'refniveau4',
-            'secretaresse', 'afdeling', 'locatiecode'];
-          inputValue = convertInitialDataFromArrayToObject(this.props.data, inputAttrib.INPUT_ORGANIZATION_INFO, attributes);
+          if (this.props.id) { // Only for existing entries.
+            attributes = ['naam', 'hoofd', 'functienaam', 'reffunctiecode', 'vertrokken', 'vertrokkenper', 'refniveau4',
+              'secretaresse', 'afdeling', 'locatiecode'];
+            inputValue = convertInitialDataFromArrayToObject(this.props.data, inputAttrib.INPUT_ORGANIZATION_INFO, attributes);
+          }
           break;
 
           default:
-          if (input.indexOf('.', 0) >= 0) {
+          if (this.props.id && input.indexOf('.', 0) >= 0) { // Get value of nested objects only for existing entries.
             inputValue = this.props.data[leftString(input, '.')];
 
             const arrayObject = input.split('.');
@@ -319,7 +324,7 @@ class Form extends Component {
 
     const urlAddition = urlSuffix ? '.set' : '';
 
-    callServer('put', '/' + url + urlAddition, this.successSubmitHandler, this.errorSubmitHandler, params);
+    callServer('put', url + urlAddition, this.successSubmitHandler, this.errorSubmitHandler, params);
   };
 
   successSubmitHandler = response => this.props.onSubmit(response);

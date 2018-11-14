@@ -144,7 +144,7 @@ const listViewConfig = {
     ]
   },
   title: trans.KEY_PERSON,
-  url: 'api.relatiebeheer.niveau9'
+  url: 'call/api.relatiebeheer.niveau9'
 };
 
 export default { ...baseConfig, ...listViewConfig };

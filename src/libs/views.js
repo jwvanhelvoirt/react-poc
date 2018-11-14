@@ -1,4 +1,6 @@
 import React from 'react';
+import Moment from 'react-moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const getViewActions = (actions, show, selectedListItems) => {
   let actionsPrimary = actions.filter((action) => action[show]);
@@ -40,14 +42,16 @@ export const getColumnClasses = (column, defaultClasses, classes) => {
   return arrayClasses.join(' ');
 };
 
-// getContent(column.content, listItem);
+export const getContent = (contentProp, listItem, classes, columnProps) => {
+  console.log(contentProp);
+  console.log(columnProps);
+  console.log('--------');
 
-export const getContent = (contentProp, listItem, classes) => {
   let listItemColumnContent = null;
 
   if (typeof contentProp === 'string') {
     // Printing a single attribute.
-    listItemColumnContent = listItem[contentProp];
+    listItemColumnContent = formatValue(listItem[contentProp], columnProps);
   } else {
     // Printing concatenated attributes or multiple lines.
 
@@ -64,11 +68,31 @@ export const getContent = (contentProp, listItem, classes) => {
           additionalClasses = arrayAdditionalClasses.join(' ');
         }
 
+        // Check if the value is based on conditions.
+        const value = part.value.conditions ?
+          getValueBasedOnConditions(part.value.conditions, listItem) :
+          part.value;
+
+        // Check if there's a color property. And if so if it's value is based on conditions.
+        const color = part.color && part.color.conditions ?
+          getValueBasedOnConditions(part.color.conditions, listItem) :
+          part.color ? listItem[part.color] : 'inherit';
+
         switch (part.type) {
+
           case 'prop':
-            return <span key={index} className={additionalClasses}>{listItem[part.value]}</span>;
+          return <span key={index} className={additionalClasses}>{formatValue(listItem[value], columnProps)}</span>;
+
+          case 'icon':
+          return (
+            <span key={index} style={{ color: color }} className={additionalClasses}>
+              <FontAwesomeIcon icon={['far', value]} />
+            </span>
+          );
+
           default:
-            return <span key={index} className={additionalClasses}>{part.value}</span>;
+          return <span key={index} className={additionalClasses}>{value}</span>;
+
         }
       });
 
@@ -79,4 +103,54 @@ export const getContent = (contentProp, listItem, classes) => {
 
   return listItemColumnContent;
 
+};
+
+const getValueBasedOnConditions = (conditions, listItem) => {
+    const fieldValue = listItem[conditions.field];
+
+  let returnVal = '';
+  conditions.check.forEach((item) => {
+    if (Array.isArray(item.checkValue)) {
+      // Values to be compared with the field value are collected in an array.
+      item.checkValue.forEach((checkVal) => {
+        if (checkVal === fieldValue) {
+          returnVal = item.value;
+        }
+      });
+    } else {
+      if (item.checkValue === fieldValue) {
+        returnVal = item.value;
+      }
+    }
+
+  });
+
+  return returnVal;
+};
+
+const formatValue = (value, columnProps) => {
+  let returnValue = value;
+
+  if (columnProps && columnProps.date) {
+
+    switch (columnProps.dateType) {
+
+      case 'datetime':
+      returnValue = <Moment format="DD-MM-YYYY HH:mm">{value}</Moment>;
+      break;
+
+      case 'date':
+      default:
+      returnValue = <Moment format="DD-MM-YYYY">{value}</Moment>;
+      break;
+
+      case 'fromNow':
+      returnValue = <Moment fromNow>{value}</Moment>;
+      break;
+
+    }
+
+  }
+
+  return returnValue;
 };

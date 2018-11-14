@@ -13,7 +13,7 @@ class Logout extends Component {
   };
 
   logout = () => {
-    callServer('put', 'api.logout', (response) => this.successGetHandler(response), (error) => this.errorGetHandler(error));
+    callServer('put', 'call/api.logout', (response) => this.successGetHandler(response), (error) => this.errorGetHandler(error));
   };
 
   // Successfully logged out.

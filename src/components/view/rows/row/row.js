@@ -102,7 +102,7 @@ const row = (props) => {
                   listItemColumnContent = <Timespan size={column.size} start={listItem[column.data.start]} end={listItem[column.data.end]} />;
                   break;
                 default:
-                  listItemColumnContent = getContent(column.content, listItem, classes);
+                  listItemColumnContent = getContent(column.content, listItem, classes, column);
               };
 
               const columnClasses = getColumnClasses(column, [classes[column.size]], classes);

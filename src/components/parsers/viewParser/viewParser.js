@@ -190,7 +190,7 @@ class _View extends Component {
     this.setState({ selectedListItemId: id });
 
     const params = { MAGIC: localStorage.getItem('magic'), id };
-    callServer('put', '/' + this.state.viewConfig.url + '.get',
+    callServer('put', this.state.viewConfig.url + '.get',
       (response)=> this.successGetSingleHandler(response, id), this.errorGetSingleHandler, params, this.props.language);
   };
 
@@ -283,7 +283,7 @@ class _View extends Component {
       // Delete records from the database.
       // const params = { selectedListItems: this.state.selectedListItems };
       const params = { MAGIC: localStorage.getItem('magic'), id: this.state.selectedListItems[0] };
-      callServer('put', '/' + this.state.viewConfig.url + '.del',
+      callServer('put', this.state.viewConfig.url + '.del',
         (response) => this.successDeleteHandler(response),
         (error) => this.errorDeleteHandler(error), params
       );
@@ -425,7 +425,7 @@ class _View extends Component {
       params[this.state.viewConfig.rowBindedAttribute] = this.props.match.params.id;
     }
 
-    callServer('put', '/' + this.state.viewConfig.url + '.list', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
+    callServer('put', this.state.viewConfig.url + '.list', (response) => this.successGetHandler(response, skip), this.errorGetHandler, params);
 
     // In case this reload is triggered from the view refresh action, text in the searchbar must be removed.
     if (emptySearchbar) {

@@ -25,7 +25,7 @@ class ModPersonalSettings extends Component {
 
   // Call to the server to fetch user settings.
   loadUserSettings = () => {
-    callServer('get', '/' + formConfig.url + '/read', (response) => this.successGetHandler(response), this.errorGetHandler);
+    callServer('get', 'call/' + formConfig.url + '/read', (response) => this.successGetHandler(response), this.errorGetHandler);
   };
 
   // User settings fetched successfully.

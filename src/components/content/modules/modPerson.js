@@ -15,7 +15,7 @@ class Module extends Component {
     // Make a serve call to fetch data sources required for the person io.
     const magic = localStorage.getItem('magic');
     const submitData = { MAGIC: magic };
-    callServer('put', 'api.relatiebeheer.niveau9.getDetailsTables',
+    callServer('put', 'call/api.relatiebeheer.niveau9.getDetailsTables',
       (response) => this.successHandler(response),
       (error) => this.errorHandler(error), submitData, this.props.language);
   };

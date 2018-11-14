@@ -7,6 +7,7 @@ export const screenConfig = {
   showTabs: false,
   searchIdIn: 'api.project.project.get',
   searchIdFor: 'code',
+  breadcrumb: trans.KEY_LIST,
   panes: [
     {
       id: 'panes1',

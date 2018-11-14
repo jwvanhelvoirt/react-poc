@@ -19,7 +19,7 @@ class ElemSelect extends Component {
       const submitData = { MAGIC: magic };
       const language = optionsSource.language ? this.props.language : '';
 
-      callServer('put', optionsSource.url,
+      callServer('put', 'call/' + optionsSource.url,
         (response) => this.successHandlerGetOptions(response),
         (error) => this.errorHandlerGetOptions(error), submitData, language);
     } else {

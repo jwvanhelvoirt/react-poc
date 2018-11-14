@@ -6,6 +6,7 @@
 * @params  translates              Object containing all translate keys with the corresponding values.
 */
 export const getDisplayValue = (displayValue, convertDisplayValues, translateDisplayValues, translates) => {
+
   let value = translateDisplayValues ? (translates[displayValue] ? translates[displayValue] : displayValue) : displayValue;
 
   switch (convertDisplayValues) {
