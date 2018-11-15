@@ -18,3 +18,12 @@ export const INPUT_PRIVATE_ADDRESS_STATE = 'priveadres.{id}.staat';
 export const INPUT_PRIVATE_ADDRESS_COUNTRY = 'priveadres.{id}.refland';
 export const INPUT_REMEMBER_PREV_LOGIN = 'remember_login';
 export const INPUT_USERNAME = 'login';
+
+export const INPUT_TASK_ATTACHMENTS = 'refdocument';
+export const INPUT_TASK_ID = 'reftaak';
+export const INPUT_TASK_NAME = 'title';
+export const INPUT_TASK_NO = 'nr';
+export const INPUT_TASK_PRIORITY = 'reftaakprioriteit';
+export const INPUT_TASK_PROJECT = 'refniveau5';
+export const INPUT_TASK_STATUS = 'status';
+export const INPUT_TASK_UPDATE_DESCRIPTION = 'description';

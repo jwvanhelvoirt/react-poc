@@ -26,6 +26,8 @@ import ElemSelect from './elemSelect/elemSelect';
 import ElemSingleCheckbox from './elemSingleCheckbox/elemSingleCheckbox';
 import ElemSinglePicture from './elemSinglePicture/elemSinglePicture';
 import ElemTextarea from './elemTextarea/elemTextarea';
+import ElemTinyMce from './elemTinyMce/elemTinyMce';
+import ElemDisplay from './elemDisplay/elemDisplay';
 
 // Custom elements.
 import ElemOrganizationInfo from './elemOrganizationInfo/elemOrganizationInfo';
@@ -37,7 +39,9 @@ import classes from './formElement.scss';
 class Input extends Component {
 
   render = () => {
-    const { inputId, configInput, changed, keyUp, translates, configForm, removeMultiValueItem, showModal, defaultFocus } = this.props;
+    // console.log(this.props);
+    const { inputId, configInput, changed, keyUp, translates, configForm, removeMultiValueItem, showModal, defaultFocus,
+      data, dataOriginal } = this.props;
     const { elementType, valid, validation, touched, label, /*defaultFocus,*/ placeholder } = configInput;
     const placeholderInput = placeholder ? getDisplayValue(placeholder, 'propercase', true, translates): null;
 
@@ -60,35 +64,38 @@ class Input extends Component {
     switch (elementType) {
 
       // *********** Start generic elements ************
+      case ('checkbox'):
+      inputElement = <ElemCheckbox configInput={configInput} inputId={inputId} changed={changed} />;
+      break;
+
+      case ('display'):
+      inputElement = <ElemDisplay configInput={configInput} inputClasses={inputClasses} />;
+      break;
+
+      case ('formLink'):
+      inputElement = <ElemFormLink configInput={configInput} />;
+      break;
+
       case ('input'):
+      break;
+
+      case ('multiAppend'):
+      inputElement = (
+        <ElemMultiAppend configInput={configInput} removeMultiValueItem={removeMultiValueItem}
+          inputId={inputId} showModal={showModal} />
+      );
       break;
 
       case ('radio'):
       inputElement = <ElemRadio configInput={configInput} inputId={inputId} changed={changed} />;
       break;
 
-      case ('checkbox'):
-      inputElement = <ElemCheckbox configInput={configInput} inputId={inputId} changed={changed} />;
-      break;
-
-      case ('textarea'):
-      inputElement = (
-        <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
-          autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
-          />
-      );
-      break;
-
       case ('select'):
       inputElement = (
         <ElemSelect configInput={configInput} inputClasses={inputClasses} autoFocus={autoFocus}
-          changed={(event) => changed(event, inputId)} keyUp={keyUp} translates={translates}
+          changed={changed} keyUp={keyUp} inputId={inputId} translates={translates} dataOriginal={dataOriginal}
           />
       );
-      break;
-
-      case ('formLink'):
-      inputElement = <ElemFormLink configInput={configInput} />;
       break;
 
       case ('singleCheckbox'):
@@ -102,10 +109,17 @@ class Input extends Component {
       );
       break;
 
-      case ('multiAppend'):
+      case ('textarea'):
       inputElement = (
-        <ElemMultiAppend configInput={configInput} removeMultiValueItem={removeMultiValueItem}
-          inputId={inputId} showModal={showModal} />
+        <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
+          autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
+          />
+      );
+      break;
+
+      case ('tinyMce'):
+      inputElement = (
+        <ElemTinyMce configInput={configInput} changed={changed} />
       );
       break;
       // *********** End generic elements ************

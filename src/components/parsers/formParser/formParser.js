@@ -453,36 +453,6 @@ class Form extends Component {
       );
     }
 
-    // let formElementsArray = [];
-    // for (let inputId in inputs) {
-    //   formElementsArray.push({
-    //     inputId,
-    //     configInput: inputs[inputId]
-    //   });
-    // }
-
-    // const content1 =
-    //   <div>
-    //     {formElementsArray.map(formElement => {
-    //         return (
-    //           (
-    //             <FormElement
-    //               key={formElement.inputId}
-    //               inputId={formElement.inputId}
-    //               defaultFocus={this.state.configForm.defaultFocus}
-    //               changed={(event) => this.inputChangedHandler(event, formElement.inputId)}
-    //               keyUp={(event) => this.onKeyUpHandler(event, formElement, this.state.configForm.id)}
-    //               configInput={formElement.configInput}
-    //               showModal={(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel) =>
-    //                 this.showModal(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel)}
-    //               removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
-    //               configForm={this.state.configForm}
-    //             />
-    //           )
-    //         )
-    //     })}
-    //   </div>;
-
     const content = (
       <FormLayout
         configForm={this.state.configForm}
@@ -491,6 +461,8 @@ class Form extends Component {
         showModal={(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel) =>
           this.showModal(modalState, modalClass, title, type, content, buttons, focusButton, callBackOk, callBackCancel)}
         removeMultiValueItem={(fieldId, valueId) => this.removeMultiValueItem(fieldId, valueId)}
+        data={this.props.data}
+        dataOriginal={this.props.dataOriginal}
       />
     );
 

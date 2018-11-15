@@ -81,7 +81,7 @@ class Dropdown extends Component {
   };
 
   getValues = () => {
-    const { searchBar, onSelect, rowId, mousePosX, mousePosY } = this.props;
+    const { dropdownClosed, searchBar, onSelect, rowId, mousePosX, mousePosY } = this.props;
 
     // We take these out of dropdown.scss.
     const dropdownWidth = 260;
@@ -119,15 +119,21 @@ class Dropdown extends Component {
               className={classes.SearchInput} type="text" placeholder={searchPlaceholder} />
           </div>
         </div>
-      ) : null
+      ) : null;
 
     const valuesOutput = this.state.list.length > 0 ?
       this.state.list.map((item, index) => {
+
+        // Get the action to be executed once the user selects a value from the dropdown.
+        const onSelectHandler = this.props.inputChangeHandler ?
+          // This is the generic input change handler for individual inputs.
+          () => { dropdownClosed(); onSelect(null, this.props.inputId, item.id) } :
+          // This is the input change handler for input fields that are part of a group of inputs.
+          () => { onSelect(item.id, item.label, rowId) };
+
         return (
           <button key={index} className={classes.Value} autoFocus={(index === 0 && !searchBar) ? true : false}
-            onClick={() => {
-              onSelect(item.id, item.label, rowId)
-            }}>
+            onClick={onSelectHandler}>
             <div className={classes.Label}>
               {item.label}
             </div>

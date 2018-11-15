@@ -25,12 +25,23 @@ const listViewConfig = {
     {
       columnClasses: ['ScreenSmallColumn'],
       content: 'created',
+      contentType: 'timespan',
+      data: { start: 'created', end: 'datumtijd', totalDays: 60 },
       label: trans.KEY_INPUT,
       show: true,
-      size: 'Flex15',
+      size: 'TimespanLarge',
       sort: true,
       sortOn: 'created'
     },
+    // {
+    //   columnClasses: ['ScreenSmallColumn'],
+    //   content: 'created',
+    //   label: trans.KEY_INPUT,
+    //   show: true,
+    //   size: 'Flex15',
+    //   sort: true,
+    //   sortOn: 'created'
+    // },
     {
       columnClasses: ['ScreenSmallColumn'],
       content: 'datumtijd',

@@ -1,6 +1,7 @@
 import React from 'react';
-import Tooltip from '../tooltip/tooltip';
+import Moment from 'react-moment';
 import _ from 'lodash';
+import Tooltip from '../tooltip/tooltip';
 import classes from './timespan.scss';
 
 const resize = (size, resizeTo) => {
@@ -23,11 +24,11 @@ const timespan = (props) => {
 
   const tooltipId = _.uniqueId('timespan_');
 
-  // Calculate the nummber of days between the start date and the current date (this can be a negative number).
+  // Calculate the number of days between the start date and the current date (this can be a negative number).
   var timeDiffStart = startDate.getTime() - currentDate.getTime();
   var diffDaysStart = Math.ceil(timeDiffStart / (1000 * 3600 * 24));
 
-  // Calculate the nummber of days between the end date and the current date (this can be a negative number).
+  // Calculate the number of days between the end date and the current date (this can be a negative number).
   var timeDiffEnd = endDate.getTime() - currentDate.getTime();
   var diffDaysEnd = Math.ceil(timeDiffEnd / (1000 * 3600 * 24));
 
@@ -36,7 +37,7 @@ const timespan = (props) => {
   const styleFutureFilled = {};
 
   // By default our timespan covers a period of 730 days (two years).
-  const totalDays = 730;
+  const totalDays = props.totalDays ? props.totalDays : 730;
 
   let start = 0;
   let end = 0;
@@ -90,7 +91,7 @@ const timespan = (props) => {
         <div className={classes.FutureFilled} style={styleFutureFilled}></div>
       </div>
       <Tooltip id={tooltipId}>
-        {props.start + ' - ' + props.end}
+        <Moment format="DD-MM-YYYY HH:mm">{props.start}</Moment>{' - '}<Moment format="DD-MM-YYYY HH:mm">{props.end}</Moment>
       </Tooltip>
     </div>
   );

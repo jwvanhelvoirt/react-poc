@@ -11,3 +11,7 @@ html, body {
   display: flex !important;
   box-sizing: border-box !important;
 }
+
+:global .mce-notification.mce-in {
+  display: none; // to hide the tinyMce text: This domain is not registered with TinyMCE Cloud. Start a free trial to discover our premium cloud services and pro support.
+}

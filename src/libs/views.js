@@ -43,10 +43,6 @@ export const getColumnClasses = (column, defaultClasses, classes) => {
 };
 
 export const getContent = (contentProp, listItem, classes, columnProps) => {
-  console.log(contentProp);
-  console.log(columnProps);
-  console.log('--------');
-
   let listItemColumnContent = null;
 
   if (typeof contentProp === 'string') {

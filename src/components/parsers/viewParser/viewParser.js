@@ -199,6 +199,7 @@ class _View extends Component {
    */
   successGetSingleHandler = (response, id) => {
     // Item succssfully loaded from the server, setting state 'loadedListItem', will render form dialog.
+    // console.log(response.data[id]);
     this.setState({ loadedListItem: response.data[id] });
   };
 
@@ -607,6 +608,7 @@ class _View extends Component {
         <FormParser
           configForm={configForm}
           data={loadedListItem}
+          dataOriginal={loadedListItem}
           onCancel={() => this.onCloseHandler(true)}
           onSubmit={this.onSubmitHandler}
           id={selectedListItemId}

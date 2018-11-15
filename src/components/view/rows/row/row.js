@@ -99,7 +99,10 @@ const row = (props) => {
                   listItemColumnContent = <Avatar size={column.size} foto={listItem[column.content]} name={listItem[column.avatarName]} />
                   break;
                 case 'timespan':
-                  listItemColumnContent = <Timespan size={column.size} start={listItem[column.data.start]} end={listItem[column.data.end]} />;
+                  listItemColumnContent = (
+                    <Timespan size={column.size} start={listItem[column.data.start]}
+                      end={listItem[column.data.end]} totalDays={column.data.totalDays} />
+                  );
                   break;
                 default:
                   listItemColumnContent = getContent(column.content, listItem, classes, column);

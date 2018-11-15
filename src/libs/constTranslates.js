@@ -89,7 +89,9 @@ export const KEY_STARTDATE = 'KEY startdatum';
 export const KEY_STATUS = 'KEY status';
 export const KEY_SUPPORT = 'KEY support';
 export const KEY_SUPPORTEXT = 'KEY support';
+export const KEY_SUPPORT_DETAILS = 'KEY support details';
 export const KEY_TASK = 'KEY taak';
+export const KEY_TASK_NO = 'KEY taak nummer';
 export const KEY_TYPE = 'KEY type';
 export const KEY_UNKNOWN = 'KEY onbekend';
 export const KEY_USERNAME = 'KEY gebruikersnaam';
@@ -118,4 +120,6 @@ export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
 - KEY persoonlijke instellingen
 - KEY koppel externe apparaten
 - KEY communicatie info
+- KEY support details
+- KEY taak nummer
 */

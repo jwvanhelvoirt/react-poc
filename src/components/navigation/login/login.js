@@ -55,7 +55,6 @@ class Login extends Component {
           onError={this.onErrorHandler}
           id={null}
           modal={true}
-          submitUrl={'portal/call/api.login'}
         />
       </div>
     );

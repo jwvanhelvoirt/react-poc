@@ -24,6 +24,8 @@ class Select extends Component {
       searchBar={true}
       searchType={'client'}
       onSelect={this.props.onChange}
+      inputChangeHandler={this.props.inputChangeHandler}
+      inputId={this.props.inputId}
       rowId={rowId}
       show={show}
       dropdownClosed={(event) => this.closeDropdown(event)}
@@ -39,7 +41,7 @@ class Select extends Component {
   };
 
   render = () => {
-    const { value, options, optionId, optionLabel, rowId } = this.props;
+    const { value, options, optionId, optionLabel, rowId, autoFocus } = this.props;
 
     let displayValue = '';
     options.forEach((item) => {
@@ -51,7 +53,7 @@ class Select extends Component {
     return (
       <div className={classes.SelectWrapper} onClick={(event) => this.showDropdown(event, rowId)}>
         <div className={classes.SelectValue}>{displayValue}</div>
-        <button className={classes.SelectDropdown}>
+        <button className={classes.SelectDropdown} autoFocus={autoFocus}>
           <FontAwesomeIcon icon={['far', icons.ICON_ANGLE_DOWN]} />
         </button>
       </div>

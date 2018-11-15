@@ -5,7 +5,7 @@ import FormTabs from '../formTabs/formTabs';
 import classes from './formContent.scss';
 
 const formContent = (props) => {
-  const { layout, inputs, defaultFocus, changed, keyUp, configForm, showModal, removeMultiValueItem } = props;
+  const { layout, inputs, defaultFocus, changed, keyUp, configForm, showModal, removeMultiValueItem, data, dataOriginal } = props;
 
   const rows = layout.rows.map((row, index) => {
 
@@ -43,6 +43,8 @@ const formContent = (props) => {
                   showModal={() => showModal()}
                   removeMultiValueItem={() => removeMultiValueItem()}
                   configForm={configForm}
+                  data={data}
+                  dataOriginal={dataOriginal}
                 />
               </div>
             );

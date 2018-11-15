@@ -192,6 +192,7 @@ class CommunicationInfo extends Component {
         // Dropdown to select a particular type. The entire list of function types is stored in the store and injected as a prop.
         const functionCode = (
           <Select
+            inputChangeHandler={false}
             value={reffunctiecode}
             onChange={this.changeFunctionCode}
             options={this.props.functionCodes} optionId={'id'} optionLabel={'naam'} rowId={item}>
