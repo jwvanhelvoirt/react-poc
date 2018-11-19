@@ -21,6 +21,7 @@ export const INPUT_USERNAME = 'login';
 
 export const INPUT_TASK_ATTACHMENTS = 'refdocument';
 export const INPUT_TASK_ID = 'reftaak';
+export const INPUT_TASK_LIST = 'list';
 export const INPUT_TASK_NAME = 'title';
 export const INPUT_TASK_NO = 'nr';
 export const INPUT_TASK_PRIORITY = 'reftaakprioriteit';

@@ -13,5 +13,13 @@ html, body {
 }
 
 :global .mce-notification.mce-in {
-  display: none; // to hide the tinyMce text: This domain is not registered with TinyMCE Cloud. Start a free trial to discover our premium cloud services and pro support.
+  display: none; /*to hide the tinyMce text: This domain is not registered with TinyMCE Cloud. Start a free trial to discover our premium cloud services and pro support.*/
+}
+
+:global .mce-branding {
+  display: none !important; /*to hide the 'Powered by TinyMCE' bit in the status bar.*/
+}
+
+:global .mce-panel {
+  border: 0 solid transparent !important;
 }

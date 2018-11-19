@@ -236,75 +236,79 @@ class Form extends Component {
 
     for (let id in inputs) {
 
-      if (id.indexOf('.', 0) >= 0) {
-        // Data is not stored in a root attribute but nested in an object.
+      if (inputs[id].save !== false) {
+        if (id.indexOf('.', 0) >= 0) {
+          // Data is not stored in a root attribute but nested in an object.
 
-        const value = inputs[id].value; // Value on the form.
+          const value = inputs[id].value; // Value on the form.
 
-        // For values to be stored in nested object. These nested objects support more than one id in the object structure.
-        // The actual id has been pushed to an array during rendering the input on the form and stored in the applicable input in the configForm.
-        // We have to do this, because we need the same id for saving the data in nested inputs with an id.
-        let ids = inputs[id].ids;
+          // For values to be stored in nested object. These nested objects support more than one id in the object structure.
+          // The actual id has been pushed to an array during rendering the input on the form and stored in the applicable input in the configForm.
+          // We have to do this, because we need the same id for saving the data in nested inputs with an id.
+          let ids = inputs[id].ids;
 
-        // Array containing the object structure, last item is always the key of the key-value pair.
-        const arrayObject = id.split('.');
+          // Array containing the object structure, last item is always the key of the key-value pair.
+          const arrayObject = id.split('.');
 
-        let nestedObjects = []; // Array for nested objects between the first and last item. F.i. [test2, test3] in case of test1.test2.test3.test4
-        let objectKeyPrimary = ''; // String containing the name of the first object in the object structure. F.i. 'test1' in case of test1.test2.test3.test4
-        let objectKeyValue = ''; // String containing the name of the key-part (of the key-value pair). F.i. 'test4' in case of test1.test2.test3.test4
+          let nestedObjects = []; // Array for nested objects between the first and last item. F.i. [test2, test3] in case of test1.test2.test3.test4
+          let objectKeyPrimary = ''; // String containing the name of the first object in the object structure. F.i. 'test1' in case of test1.test2.test3.test4
+          let objectKeyValue = ''; // String containing the name of the key-part (of the key-value pair). F.i. 'test4' in case of test1.test2.test3.test4
 
-        arrayObject.forEach((item, index) => {
-          if (index === 0) {
-            // First item is the primary key.
-            objectKeyPrimary = item;
-          } else if (index + 1 === arrayObject.length) {
-            // Last item represents the value and should be the key part of a key-value pair.
-            objectKeyValue = item;
-          } else {
-            // All items between the first and the last item are nested objects.
-            switch (item) {
-              case '{id}':
-                nestedObjects.push(ids[0]); // We need to append the related id.
-                ids = ids.shift(); // Remove this used id, so that a possible next {id} part can always refer to the first item in the ids array.
-                break;
-              case '{first}':
-                break;
-              default:
-                nestedObjects.push(item);
+          arrayObject.forEach((item, index) => {
+            if (index === 0) {
+              // First item is the primary key.
+              objectKeyPrimary = item;
+            } else if (index + 1 === arrayObject.length) {
+              // Last item represents the value and should be the key part of a key-value pair.
+              objectKeyValue = item;
+            } else {
+              // All items between the first and the last item are nested objects.
+              switch (item) {
+                case '{id}':
+                  nestedObjects.push(ids[0]); // We need to append the related id.
+                  ids = ids.shift(); // Remove this used id, so that a possible next {id} part can always refer to the first item in the ids array.
+                  break;
+                case '{first}':
+                  break;
+                default:
+                  nestedObjects.push(item);
+              }
             }
+          });
+
+          let keyValuePair = {};
+
+          if (isEqual(nestedObjects, nestedObjectsPrevious) && objectKeyPrimary === objectKeyPrimaryPrevious) {
+            // Same nested object as the previous one, so assign the previous key-value pairs also.
+            keyValuePair = { ...keyValuePairPrevious, [objectKeyValue]: value };
+          } else {
+            keyValuePair = { [objectKeyValue]: value };
           }
-        });
 
-        let keyValuePair = {};
+          keyValuePairPrevious = cloneDeep(keyValuePair);
+          nestedObjectsPrevious = cloneDeep(nestedObjects);
+          objectKeyPrimaryPrevious = objectKeyPrimary;
 
-        if (isEqual(nestedObjects, nestedObjectsPrevious) && objectKeyPrimary === objectKeyPrimaryPrevious) {
-          // Same nested object as the previous one, so assign the previous key-value pairs also.
-          keyValuePair = { ...keyValuePairPrevious, [objectKeyValue]: value };
+          const emptyObject = {};
+          // Create the object and assign the value to the last object in the tree.
+          const objectNested = assignObject(emptyObject, nestedObjects, keyValuePair);
+
+          // Add the value (an object) to the submit data.
+          submitData[objectKeyPrimary] = objectNested;
         } else {
-          keyValuePair = { [objectKeyValue]: value };
+          // Data is stored in a root attribute.
+          // Add the value (a string) to the submit data.
+          submitData[id] = inputs[id].value;
         }
-
-        keyValuePairPrevious = cloneDeep(keyValuePair);
-        nestedObjectsPrevious = cloneDeep(nestedObjects);
-        objectKeyPrimaryPrevious = objectKeyPrimary;
-
-        const emptyObject = {};
-        // Create the object and assign the value to the last object in the tree.
-        const objectNested = assignObject(emptyObject, nestedObjects, keyValuePair);
-
-        // Add the value (an object) to the submit data.
-        submitData[objectKeyPrimary] = objectNested;
-      } else {
-        // Data is stored in a root attribute.
-        // Add the value (a string) to the submit data.
-        submitData[id] = inputs[id].value;
       }
+
     }
 
     let params = {};
     if (urlSuffix) {
       // Normal forms.
       const id = this.props.id ? this.props.id : -1;
+
       params = {
         MAGIC: localStorage.getItem('magic'),
         data: {
@@ -323,7 +327,7 @@ class Form extends Component {
     // this.props.storeFormSubmitData(params);
 
     const urlAddition = urlSuffix ? '.set' : '';
-
+// console.log(params);
     callServer('put', url + urlAddition, this.successSubmitHandler, this.errorSubmitHandler, params);
   };
 

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { storeRoute } from '../../../store/actions';
 import { Nav } from 'reactstrap';
 import { getTabComponent, getTabRow } from '../../../libs/tabs.js';
 import Button from '../../ui/button/button';
+import Breadcrumb from '../../navigation/breadcrumb/breadcrumb';
 import { Large, Medium, Small } from '../../../libs/responsive';
 import Aux from '../../../hoc/auxiliary';
 import { getDisplayValue } from '../../../libs/generic';
@@ -136,171 +136,114 @@ class Screen extends Component {
         // Check if we should display a breadcrumb zone instead of a tab zone.
         if (this.state.screenConfig.showTabs === false) {
           // Show breadcrumb.
+          upperZone = <Breadcrumb followUpScreenData={this.state.followUpScreenData} breadcrumb={this.state.screenConfig.breadcrumb} />;
 
-          // First breadcrumb is a link to the dashboard.
-          let breadcrumb = (
-            <Aux>
-              <div className={classes.BackIcon} onClick={this.navigateBackwards}>
-                <FontAwesomeIcon icon={['far', icons.ICON_LONG_ARROW_LEFT]} />
-              </div>
-              <NavLink to='/dashboard' className={classes.HomeIcon}>
-                <FontAwesomeIcon icon={['far', icons.ICON_HOME]} />
-              </NavLink>
-            </Aux>
-          );
+        } else {
+          // Show tab bar
 
-          // Via the URL we calculate the other breadcrumbs.
-          // The URL might have params in it, for instance /project/document/5b7fb7c6495a102ff856dc3
-          // The path of such URL might be something like: /project/document/:id
-          // The :id part and it's predecessor are treated as ONE breadcrumb.
-          let prevItem = '';
-          let arrayUrlParts = [];
-          let lastItem = '';
+          // Get all tabs for this pane.
+          const links = getTabRow(this.state.activeTabs[pane.content.id], pane.content.tabs, pane.content.id, this);
 
-          this.props.match.path.split('/').forEach((item, index) => {
+          // Should we show the toggle hide button?
+          const toggle = pane.toggle ? buttonHide : "";
 
-            if (prevItem) {
-              if (item.indexOf(':') === 0) {
-                let active = false;
-                const param = item.replace(':', '');
-                if (index === this.props.match.path.split('/').length - 1) {
-                  active = true;
-                }
-                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, param, active);
-              } else {
-                breadcrumb = this.extendBreadcrumb(breadcrumb, prevItem, arrayUrlParts, null, false);
-              }
-            }
-
-            if (item) {
-              lastItem = prevItem = item.indexOf(':') === 0 ? '' : item;
-              arrayUrlParts.push(item);
-            }
-
-          });
-
-          if (lastItem) {
-            breadcrumb = this.extendBreadcrumb(breadcrumb, lastItem, arrayUrlParts, null, true);
-          }
-
-          // Print identifying data from the row selected in the previous screen or not.
-          const followUpScreenData = this.state.followUpScreenData ?
-          <span>{this.state.followUpScreenData}</span> :
-            null;
-
-            // Print breadcrumb zone.
-            upperZone = (
-              <div className={classes.Header}>
-                <div className={classes.BreadcrumbWrapper}>{breadcrumb}</div>
-                {followUpScreenData}
-              </div>
-            );
-          } else {
-            // Show tab bar
-
-            // Get all tabs for this pane.
-            const links = getTabRow(this.state.activeTabs[pane.content.id], pane.content.tabs, pane.content.id, this);
-
-            // Should we show the toggle hide button?
-            const toggle = pane.toggle ? buttonHide : "";
-
-            // The tab bar.
-            upperZone = (
-              <div className={classes.TabBar}>
-                {toggle}
-                <Nav tabs>{links}</Nav>
-              </div>
-            );
-
-          }
-
-          // Get the content of the active tab (in breadcrumb modus there's the one tab is always active).
-          const content = getTabComponent(this.state.activeTabs[pane.content.id], pane.content.tabs);
-
-          // Return html for this pane.
-          html = (
-            <div className={classes.Pane}>
-              <div className={classes.ListviewContainer}>
-                {upperZone}
-                {content}
-              </div>
+          // The tab bar.
+          upperZone = (
+            <div className={classes.TabBar}>
+              {toggle}
+              <Nav tabs>{links}</Nav>
             </div>
           );
 
         }
 
-        // Wrap the pane html in a div with a special class.
-        const PaneWrapper = <div key={indexPane} className={classes.PaneWrapper}>{html}</div>
+        // Get the content of the active tab (in breadcrumb modus there's the one tab is always active).
+        const content = getTabComponent(this.state.activeTabs[pane.content.id], pane.content.tabs);
 
-        // Should we show the toggle display button?
-        html = html === '' ? (pane.toggle ? buttonShow : '') : PaneWrapper;
-
-        return html;
-      });
-
-      // We might have to display a dropdown that could have been triggered from a form (modal) but should be (partially) displayed outside of the form.
-      return (
-        <Aux>
-          {result}
-          {this.props.dropdownHtml}
-        </Aux>
-      );
-    };
-
-    extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param, active) => {
-      // The breadcrumb part can be configured via screenConfig.breadcrumb.
-      // TODO: waarschijnlijk is deze constructie niet houdbaar voor een portal met 3 ipv 2 geneste schermen. Hij pakt nu immers alleen de actieve.
-      const transBreadcrumb = (active && this.state.screenConfig.breadcrumb) ? this.state.screenConfig.breadcrumb : trans['KEY_' + item.toUpperCase()];
-
-      // Extends the current breadcrumb.
-      const addParam = param ? '/' + this.props.match.params[param] : '';
-
-      const classBreadcrumbWrapper = active ? [classes.BreadcrumbWrapper, classes.Active].join(' ') : classes.BreadcrumbWrapper;
-
-      return (
-        <Aux>
-          {breadcrumb}
-          <div className={classes.BreadcrumbDividerWrapper}>
-            <div className={classes.BreadcrumbDivider}></div>
+        // Return html for this pane.
+        html = (
+          <div className={classes.Pane}>
+            <div className={classes.ListviewContainer}>
+              {upperZone}
+              {content}
+            </div>
           </div>
-          <div className={classBreadcrumbWrapper}>
-            <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
-              <span>
-                {getDisplayValue(transBreadcrumb, 'propercase', true, this.props.translates)}
-              </span>
-            </NavLink>
-          </div>
-        </Aux>
-      );
-    };
+        );
 
-    render = () => {
-      // TODO : Berekent ze nu allemaal. Eigenlijk wil je alleen berekenen, wat nodig is. Uitzoeken...
-      const large = this.getHtml('displayLarge');
-      const medium = this.getHtml('displayMedium');
-      const small = this.getHtml('displaySmall');
+      }
 
-      return (
-        <div>
-          <Large>{large}</Large>
-          <Medium>{medium}</Medium>
-          <Small>{small}</Small>
+      // Wrap the pane html in a div with a special class.
+      const PaneWrapper = <div key={indexPane} className={classes.PaneWrapper}>{html}</div>
+
+      // Should we show the toggle display button?
+      html = html === '' ? (pane.toggle ? buttonShow : '') : PaneWrapper;
+
+      return html;
+    });
+
+    // We might have to display a dropdown that could have been triggered from a form (modal) but should be (partially) displayed outside of the form.
+    return (
+      <Aux>
+        {result}
+        {this.props.dropdownHtml}
+      </Aux>
+    );
+  };
+
+  extendBreadcrumb = (breadcrumb, item, arrayUrlParts, param, active) => {
+    // The breadcrumb part can be configured via screenConfig.breadcrumb.
+    // TODO: waarschijnlijk is deze constructie niet houdbaar voor een portal met 3 ipv 2 geneste schermen. Hij pakt nu immers alleen de actieve.
+    const transBreadcrumb = (active && this.state.screenConfig.breadcrumb) ? this.state.screenConfig.breadcrumb : trans['KEY_' + item.toUpperCase()];
+
+    // Extends the current breadcrumb.
+    const addParam = param ? '/' + this.props.match.params[param] : '';
+
+    const classBreadcrumbWrapper = active ? [classes.BreadcrumbWrapper, classes.Active].join(' ') : classes.BreadcrumbWrapper;
+
+    return (
+      <Aux>
+        {breadcrumb}
+        <div className={classes.BreadcrumbDividerWrapper}>
+          <div className={classes.BreadcrumbDivider}></div>
         </div>
-      );
-    };
+        <div className={classBreadcrumbWrapper}>
+          <NavLink to={'/' + arrayUrlParts.join('/') + addParam}>
+            <span>
+              {getDisplayValue(transBreadcrumb, 'propercase', true, this.props.translates)}
+            </span>
+          </NavLink>
+        </div>
+      </Aux>
+    );
+  };
 
+  render = () => {
+    // TODO : Berekent ze nu allemaal. Eigenlijk wil je alleen berekenen, wat nodig is. Uitzoeken...
+    const large = this.getHtml('displayLarge');
+    const medium = this.getHtml('displayMedium');
+    const small = this.getHtml('displaySmall');
+
+    return (
+      <div>
+        <Large>{large}</Large>
+        <Medium>{medium}</Medium>
+        <Small>{small}</Small>
+      </div>
+    );
+  };
+
+}
+
+const mapStateToProps = state => {
+  const { dropdownHtml, translates } = state.redMain;
+  return { dropdownHtml, translates };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // storeFollowUpScreenId: (followUpScreenData) => dispatch( {type: types.FOLLOW_UP_SCREEN_ID_STORE, followUpScreenData } ),
+    storeRoute: (route) => dispatch(storeRoute(route))
   }
+};
 
-  const mapStateToProps = state => {
-    const { dropdownHtml, translates } = state.redMain;
-    return { dropdownHtml, translates };
-  };
-
-  const mapDispatchToProps = dispatch => {
-    return {
-      // storeFollowUpScreenId: (followUpScreenData) => dispatch( {type: types.FOLLOW_UP_SCREEN_ID_STORE, followUpScreenData } ),
-      storeRoute: (route) => dispatch(storeRoute(route))
-    }
-  };
-
-  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Screen));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Screen));

@@ -50,6 +50,7 @@ class MessageBox extends Component {
           headerSize={this.props.headerSize}
           titleIcon={this.props.titleIcon}
           titleAlign={this.props.titleAlign}
+          modal={this.props.modal}
         />
         <UserInfo msgFailedSubmit={this.props.msgFailedSubmit} />
         <div className={classesMb}>

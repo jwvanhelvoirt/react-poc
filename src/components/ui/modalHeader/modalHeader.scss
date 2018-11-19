@@ -1,4 +1,4 @@
-.Header {
+.Header, .HeaderFullScreen {
   height: auto;
   color: white;
   padding: 0 10px;
@@ -12,6 +12,10 @@
   align-items: center;
   z-index: 50;
   border-bottom: 1px solid #b8bac9;
+}
+
+.HeaderFullScreen {
+  top: 50px !important;
 }
 
 .Header>* {

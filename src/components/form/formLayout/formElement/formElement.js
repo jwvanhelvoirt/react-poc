@@ -28,6 +28,7 @@ import ElemSinglePicture from './elemSinglePicture/elemSinglePicture';
 import ElemTextarea from './elemTextarea/elemTextarea';
 import ElemTinyMce from './elemTinyMce/elemTinyMce';
 import ElemDisplay from './elemDisplay/elemDisplay';
+import ElemTicketUpdates from './elemTicketUpdates/elemTicketUpdates';
 
 // Custom elements.
 import ElemOrganizationInfo from './elemOrganizationInfo/elemOrganizationInfo';
@@ -114,6 +115,12 @@ class Input extends Component {
         <ElemTextarea configInput={configInput} inputClasses={inputClasses} placeholderInput={placeholderInput}
           autoFocus={autoFocus} changed={(event) => changed(event, inputId)} keyUp={keyUp}
           />
+      );
+      break;
+
+      case ('ticketUpdates'):
+      inputElement = (
+        <ElemTicketUpdates data={data} />
       );
       break;
 

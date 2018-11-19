@@ -17,7 +17,9 @@ const modalHeader = (props) => {
       break;
   };
 
-  const classesHeader = [classes.Header, classColor, classes[props.headerSize], classes[props.titleAlign]].join(' ');
+  const headerClass = props.modal ? classes.Header : classes.HeaderFullScreen;
+
+  const classesHeader = [headerClass, classColor, classes[props.headerSize], classes[props.titleAlign]].join(' ');
   const label = props.title.map((item, index) => {
     return index === 0 ?
       <Label key={index} labelKey={item} convertType={'propercase'} trailingSpace={true} /> :

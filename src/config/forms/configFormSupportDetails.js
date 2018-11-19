@@ -5,12 +5,28 @@ import baseConfig from './configFormBase';
 
 const formConfig = {
   id: 'supportDetails',
-  defaultFocus: input.INPUT_TASK_PRIORITY,
+  defaultFocus: input.INPUT_TASK_NAME,
   title: trans.KEY_SUPPORT_DETAILS,
   titleIcon: icons.ICON_HEADPHONES,
-  // size: 'ModalExtraLarge',
-  url: 'portal/call/api.support.history.list',
+  size: 'ModalExtraLarge',
+  url: 'portal/call/api.support.history',
   inputs: {
+
+    [input.INPUT_TASK_ID]: {
+      elementType: 'hidden',
+      value: '',
+    },
+
+    [input.INPUT_TASK_ATTACHMENTS]: {
+      elementType: 'hidden',
+      value: [],
+    },
+
+    [input.INPUT_TASK_LIST]: {
+      elementType: 'ticketUpdates',
+      value: [],
+      save: false
+    },
 
     [input.INPUT_TASK_NO]: {
       label: trans.KEY_TASK_NO,
@@ -57,6 +73,9 @@ const formConfig = {
         property: 'status',
         displayValue: 'naam',
         value: 'id'
+      },
+      validation: {
+        required: true
       },
       value: ''
     },
@@ -116,6 +135,20 @@ const formConfig = {
                   { id: input.INPUT_TASK_PRIORITY, width: 'Flex33' },
                   { id: input.INPUT_TASK_PROJECT, width: 'Flex33' },
                   { id: input.INPUT_TASK_STATUS, width: 'Flex34' }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        cols: [
+          {
+            width: 'Flex100',
+            rows: [
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_LIST, width: 'Flex100' },
                 ]
               }
             ]

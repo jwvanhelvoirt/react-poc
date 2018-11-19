@@ -1,0 +1,35 @@
+.Update {
+  border: 1px solid #cbcbcb;
+  background-color: #f2f0f0;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  // justify-content: space-between;
+}
+
+.Update:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.UpdateDetails {
+  min-width: 120px;
+  max-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // border: 1px solid red;
+}
+
+.UpdateDetailsStatus {
+  margin-bottom: 20px;
+}
+
+.UpdateDetailsDateTime {
+  font-size: 11px;
+}
+
+.UpdateContent {
+  flex-grow: 1;
+  padding-left: 10px;
+  // border: 1px solid green;
+}
