@@ -1,3 +1,5 @@
+import { callServer } from '../api/api';
+
 /**
 * @brief   Calculates the display value. Handles translation and conversion.
 * @params  displayValue            String containing value to be displayed. This might be a translate key.
@@ -10,17 +12,22 @@ export const getDisplayValue = (displayValue, convertDisplayValues, translateDis
   let value = translateDisplayValues ? (translates[displayValue] ? translates[displayValue] : displayValue) : displayValue;
 
   switch (convertDisplayValues) {
+
     case 'propercase':
     value = propercase(value);
     break;
+
     case 'uppercase':
     value = value.toUpperCase();
     break;
+
     case 'lowercase':
     value = value.toLowerCase();
     break;
+
     default:
     break;
+
   }
 
   return value;
@@ -127,4 +134,14 @@ export const getBase64 = (file, onLoadCallback) => {
           reader.readAsDataURL(file); // Is assynchronous, so this method returns a promise.
         }
     });
-}
+};
+
+export const downloadAttachment = (id) => {
+  const queryParams = [
+    { paramName: 'MAGIC', paramValue: localStorage.getItem('magic') },
+    { paramName: 'id', paramValue: id }
+  ];
+
+  callServer('open', 'portal/call/api.document.downloadDocument', null, null, null, null, null, queryParams);
+
+};

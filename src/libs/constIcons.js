@@ -23,6 +23,7 @@ export const ICON_HOME = 'home';
 export const ICON_LOCK_ALT = 'lock-alt';
 export const ICON_LONG_ARROW_LEFT = 'long-arrow-left';
 export const ICON_MINUS = 'minus';
+export const ICON_PAPERCLIP = 'paperclip';
 export const ICON_PAUSE = 'pause';
 export const ICON_PLAY = 'play';
 export const ICON_PENCIL_ALT = 'pencil-alt';
