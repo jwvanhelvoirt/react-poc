@@ -70,7 +70,7 @@ class CommunicationInfo extends Component {
       [communicationTypeRef]: '8', // id of 'Email generally'
       [communicationTypeDefault]: '0'
     };
-    
+
     value[this.localData.indexNew] = object; // Add this new entry to the existing entries.
 
     this.localData.indexNew = this.localData.indexNew - 1; // For a possible next new entry.
@@ -98,9 +98,11 @@ class CommunicationInfo extends Component {
           value={refteltype}
           onChange={(event) => this.onChange(event, item, communicationTypeRef)}>
           {this.props.communicationTypes.map(option => {
-            return <option key={option.id} value={option.id}>
-              {option.naam}
-            </option>
+            return (
+              <option key={option.id} value={option.id}>
+                {option.naam}
+              </option>
+            );
           })}
         </select>
       );

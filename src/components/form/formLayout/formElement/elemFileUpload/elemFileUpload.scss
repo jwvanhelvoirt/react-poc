@@ -1,0 +1,25 @@
+.FileUpload {
+  display: none;
+}
+
+.Attachment {
+  // border: 1px solid red;
+  display: flex;
+  cursor: pointer;
+  height: 30px;
+}
+
+.Attachment>* {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AttachmentIcon {
+  padding-right: 10px;
+  font-size: 20px;
+}
+
+.AttachmentFilename {
+  font-style: italic;
+}

@@ -123,7 +123,7 @@ class Form extends Component {
           }
         }
       } else {
-        if (updatedFormElement.validation && updatedFormElement.value.trim() !== '') {
+        if (updatedFormElement.validation && updatedFormElement.value && updatedFormElement.value.trim() !== '') {
           updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
           if (!updatedFormElement.valid) {
             updatedFormElement.touched = true;
@@ -147,20 +147,20 @@ class Form extends Component {
     if (rules) {
       if (isArray) {
         if (rules.required) {
-          isValid = value.length > 0 && isValid;
+          isValid = value && value.length > 0 && isValid;
         }
       } else {
         if (rules.required) {
-          isValid = value.trim() !== '' && isValid;
+          isValid = value && value.trim() !== '' && isValid;
         }
       }
 
       if (rules.minLength) {
-        isValid = value.length >= rules.minLength && isValid;
+        isValid = value && value.length >= rules.minLength && isValid;
       }
 
       if (rules.maxLength) {
-        isValid = value.length <= rules.maxLength && isValid;
+        isValid = value && value.length <= rules.maxLength && isValid;
       }
     }
 
@@ -178,6 +178,7 @@ class Form extends Component {
   };
 
   inputChangedHandler = (event, id, value) => {
+
     // Set the state 'formTouched' in the store to 'true'.
     this.props.touchedForm(true); // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
 

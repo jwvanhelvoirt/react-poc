@@ -6,10 +6,6 @@ import baseConfig from './configFormBase';
 const formConfig = {
   id: 'person',
   defaultFocus: input.INPUT_FIRST_NAME,
-  title: trans.KEY_PERSON,
-  titleIcon: icons.ICON_USER,
-  size: 'ModalExtraLarge',
-  url: 'call/api.relatiebeheer.niveau9',
   inputs: {
 
     [input.INPUT_FOTO]: {
@@ -123,7 +119,6 @@ const formConfig = {
     },
 
   },
-
   layout: {
     rows: [
       {
@@ -319,7 +314,12 @@ const formConfig = {
         ]
       }
     ]
-  }
+  },
+  newEntryFromServer: false,
+  size: 'ModalExtraLarge',
+  title: trans.KEY_PERSON,
+  titleIcon: icons.ICON_USER,
+  url: 'call/api.relatiebeheer.niveau9'
 };
 
 export default { ...baseConfig, ...formConfig };

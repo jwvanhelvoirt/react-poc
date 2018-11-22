@@ -16,7 +16,10 @@ const formConfig = {
   size: 'ModalSmall',
   title: trans.KEY_LOGIN,
   titleIcon: icons.ICON_SIGN_IN_ALT,
+
   url: 'portal/call/api.login',
+  // url: 'call/api.login',
+
   urlSuffix: false,
   inputs: {
     [input.INPUT_USERNAME]: {

@@ -7,7 +7,9 @@ export const KEY_ACQUISITION = 'KEY acquisitie';
 export const KEY_ADDRESS_NO = 'KEY nummer';
 export const KEY_ADDRESS_STREET = 'KEY adres';
 export const KEY_ADD_PERSON = 'KEY persoon toevoegen';
+export const KEY_ADD_TICKET = 'KEY ticket toevoegen';
 export const KEY_ASCENDING = 'KEY oplopend';
+export const KEY_ATTACHMENT = 'KEY bijlage';
 export const KEY_AVG_GDPR = 'KEY AVG/GDPR';
 export const KEY_BUDGET = 'KEY budget';
 export const KEY_CANCEL = 'KEY annuleren';
@@ -122,4 +124,5 @@ export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
 - KEY communicatie info
 - KEY support details
 - KEY taak nummer
+- KEY ticket toevoegen
 */

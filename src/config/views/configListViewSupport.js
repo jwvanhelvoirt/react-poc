@@ -1,8 +1,25 @@
-import * as trans from '../../libs/constTranslates';
+import * as actions from './centralViewActions';
 import * as icon from '../../libs/constIcons';
+import * as trans from '../../libs/constTranslates';
 import baseConfig from './configListViewBase';
+import formConfigSupportDetails from '../forms/configFormSupportDetails';
 
 const listViewConfig = {
+  actions: [
+    {
+      ...actions.ACTION_ADD,
+      id: 'createTicket',
+      label: trans.KEY_ADD_TICKET,
+      showInBarMenu: false,
+      tooltip: trans.KEY_ADD_TICKET,
+      callback: (_this) => { _this.addItem(formConfigSupportDetails, true) }
+    },
+    {
+      ...actions.ACTION_REFRESH,
+      showInRowMenu: false,
+      showInBarMenu: false
+    }
+  ],
   columns: [
     {
       columnClasses: ['ScreenSmallColumn'],
@@ -18,30 +35,21 @@ const listViewConfig = {
       content: 'naam',
       label: trans.KEY_DESCRIPTION,
       show: true,
-      size: 'Flex30',
+      size: 'Flex100',
       sort: true,
       sortOn: 'naam'
     },
     {
       columnClasses: ['ScreenSmallColumn'],
       content: 'created',
-      contentType: 'timespan',
+      contentType: 'timespanTask',
       data: { start: 'created', end: 'datumtijd', totalDays: 60 },
       label: trans.KEY_INPUT,
       show: true,
-      size: 'TimespanLarge',
+      size: 'TimespanSmall',
       sort: true,
       sortOn: 'created'
     },
-    // {
-    //   columnClasses: ['ScreenSmallColumn'],
-    //   content: 'created',
-    //   label: trans.KEY_INPUT,
-    //   show: true,
-    //   size: 'Flex15',
-    //   sort: true,
-    //   sortOn: 'created'
-    // },
     {
       columnClasses: ['ScreenSmallColumn'],
       content: 'datumtijd',
@@ -116,9 +124,9 @@ const listViewConfig = {
     }
   ],
   multiSelect: false,
-  row: { selectable: true, menu: false },
+  row: { selectable: false, menu: false, hoverMenu: false },
   rowSelectAll: false,
-  showActions: false,
+  showActions: true,
   sort: 'nr',
   sortOrder: -1,
   title: trans.KEY_SUPPORT,

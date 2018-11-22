@@ -1,5 +1,6 @@
 import * as trans from '../../libs/constTranslates';
 import baseConfig from './configListViewBase';
+import formConfigSupportDetails from '../forms/configFormSupportDetails';
 
 const listViewConfig = {
   columns: [

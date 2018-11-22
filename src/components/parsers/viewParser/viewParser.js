@@ -183,15 +183,21 @@ class _View extends Component {
     }
   };
 
+  getItemFromServer = (id) => {
+    const params = { MAGIC: localStorage.getItem('magic'), id };
+    callServer('put', this.state.viewConfig.url + '.get',
+      (response) => this.successGetSingleHandler(response, id), this.errorGetSingleHandler, params, this.props.language);
+  };
+
   /**
    * @brief   Pulls data from the selected listItem from the server.
    */
   onClickItemHandler = (id) => {
     this.setState({ selectedListItemId: id });
-
-    const params = { MAGIC: localStorage.getItem('magic'), id };
-    callServer('put', this.state.viewConfig.url + '.get',
-      (response)=> this.successGetSingleHandler(response, id), this.errorGetSingleHandler, params, this.props.language);
+    this.getItemFromServer(id);
+    // const params = { MAGIC: localStorage.getItem('magic'), id };
+    // callServer('put', this.state.viewConfig.url + '.get',
+    //   (response)=> this.successGetSingleHandler(response, id), this.errorGetSingleHandler, params, this.props.language);
   };
 
   /**
@@ -259,13 +265,28 @@ class _View extends Component {
    * @brief   Displays a form modal to add a new record to the database.
    */
   addItem = (formConfig, addToView) => {
-    // Prepares the form data to add a new item by filling 'loadedListItem'.
-    const newPostData = {};
-    for (let inputId in formConfig.inputs) {
-      newPostData[inputId] = formConfig.inputs[inputId].value;
-    }
+    console.log(formConfig);
+
     this.localData.addRecordToView = addToView;
-    this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: cloneDeep(formConfig) });
+
+    if (formConfig.newEntryFromServer) {
+      // In case of a new entry, we trigger an api call to the server.
+
+      this.getItemFromServer(-1);
+
+    } else {
+      // In case of a new entry, we handle this fully on the client.
+
+      // Prepares the form data to add a new item by filling 'loadedListItem'.
+      const newPostData = {};
+      for (let inputId in formConfig.inputs) {
+        newPostData[inputId] = formConfig.inputs[inputId].value;
+      }
+
+      this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: cloneDeep(formConfig) });
+
+    }
+
   };
 
   /**

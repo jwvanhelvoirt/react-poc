@@ -6,20 +6,18 @@ import baseConfig from './configFormBase';
 const formConfig = {
   id: 'supportDetails',
   defaultFocus: input.INPUT_TASK_NAME,
-  title: trans.KEY_SUPPORT_DETAILS,
-  titleIcon: icons.ICON_HEADPHONES,
-  size: 'ModalExtraLarge',
-  url: 'portal/call/api.support.history',
   inputs: {
 
     [input.INPUT_TASK_ID]: {
       elementType: 'hidden',
-      value: '',
+      value: ''
     },
 
     [input.INPUT_TASK_ATTACHMENTS]: {
-      elementType: 'hidden',
-      value: [],
+      elementType: 'fileUpload',
+      label: trans.KEY_ATTACHMENT,
+      maxHeight: '200px',
+      value: []
     },
 
     [input.INPUT_TASK_LIST]: {
@@ -93,7 +91,6 @@ const formConfig = {
 
 
   },
-
   layout: {
     rows: [
       {
@@ -128,13 +125,31 @@ const formConfig = {
       {
         cols: [
           {
-            width: 'Flex100',
+            width: 'Flex50',
             rows: [
               {
                 inputs: [
-                  { id: input.INPUT_TASK_PRIORITY, width: 'Flex33' },
-                  { id: input.INPUT_TASK_PROJECT, width: 'Flex33' },
-                  { id: input.INPUT_TASK_STATUS, width: 'Flex34' }
+                  { id: input.INPUT_TASK_PRIORITY, width: 'Flex100' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_PROJECT, width: 'Flex100' }
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_STATUS, width: 'Flex100' }
+                ]
+              }
+            ],
+          },
+          {
+            width: 'Flex50',
+            rows: [
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_ATTACHMENTS, width: 'Flex100' }
                 ]
               }
             ]
@@ -156,7 +171,11 @@ const formConfig = {
         ]
       },
     ]
-  }
+  },
+  size: 'ModalExtraLarge',
+  title: trans.KEY_SUPPORT_DETAILS,
+  titleIcon: icons.ICON_HEADPHONES,
+  url: 'portal/call/api.support.task'
 };
 
 export default { ...baseConfig, ...formConfig };

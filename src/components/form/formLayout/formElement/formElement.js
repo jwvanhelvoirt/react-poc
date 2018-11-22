@@ -18,6 +18,7 @@ import * as trans from '../../../../libs/constTranslates';
 
 // Generic elements.
 import ElemCheckbox from './elemCheckbox/elemCheckbox';
+import ElemFileUpload from './elemFileUpload/elemFileUpload';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
 import ElemMultiAppend from './elemMultiAppend/elemMultiAppend';
@@ -71,6 +72,10 @@ class Input extends Component {
 
       case ('display'):
       inputElement = <ElemDisplay configInput={configInput} inputClasses={inputClasses} />;
+      break;
+
+      case ('fileUpload'):
+      inputElement = <ElemFileUpload configInput={configInput} inputId={inputId} changed={changed} inputClasses={inputClasses} data={data} />
       break;
 
       case ('formLink'):
@@ -150,7 +155,9 @@ class Input extends Component {
 
     // Not all input types require a label.
     // TODO: Als we straks het design van Frank gaan implementeren, kan het zijn dat het label naar de elem component gaat.
-    const labelPrint = (elementType !== 'formLink' && elementType !== 'singleCheckbox' && elementType !== 'componentCommunicationInfo') ?
+    // TODO: Array van maken en checken of waarde in array zit.
+    const labelPrint = (elementType !== 'formLink' && elementType !== 'singleCheckbox'
+      && elementType !== 'componentCommunicationInfo' && elementType !== 'fileUpload') ?
     <label className={classes.Label}>
       <Label labelKey={label} convertType={'propercase'} />
     </label> :
