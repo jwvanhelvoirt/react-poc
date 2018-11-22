@@ -28,7 +28,6 @@ class FileUpload extends Component {
 
     const { files } = this.state;
     const { changed, configInput, inputId } = this.props;
-    const value = null;
 
     switch (changeElement) {
 
@@ -97,7 +96,7 @@ class FileUpload extends Component {
 
   render = () => {
 
-    const { configInput, inputClasses } = this.props;
+    const { configInput } = this.props;
     const { files, filesUploading } = this.state;
 
     // All files.

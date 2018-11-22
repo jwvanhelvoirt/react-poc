@@ -117,8 +117,8 @@ class App extends Component {
     // Make a serve call to fetch user settings.
     const magic = localStorage.getItem('magic');
     const submitData = { MAGIC: magic };
-    callServer('put', 'portal/call/api.getMedewerkerInfo',
-    // callServer('put', 'call/api.getMedewerkerInfo',
+    callServer('put', 'call/api.getMedewerkerInfo',
+    // callServer('put', 'portal/call/api.getMedewerkerInfo',
       (response) => this.successHandlerGetUserInfo(response),
       (error) => this.errorHandlerGetUserInfo(error), submitData);
   };

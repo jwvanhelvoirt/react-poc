@@ -36,13 +36,15 @@ class ModSupportDetails extends Component {
   successGetSingleHandler = (response) => {
     const { naam, nr, id, reftaakprioriteit, refniveau5 } = response.data.taak;
 
+    const status = response.data.status.length === 1 ? response.data.status[0].id : '';
+
     this.setState({
       dataOriginal: response.data,
       loadedListItem: {
         [input.INPUT_TASK_NO]: nr,
         [input.INPUT_TASK_NAME]: naam,
         [input.INPUT_TASK_UPDATE_DESCRIPTION]: '',
-        [input.INPUT_TASK_STATUS]: '',
+        [input.INPUT_TASK_STATUS]: status,
         [input.INPUT_TASK_PROJECT]: refniveau5,
         [input.INPUT_TASK_PRIORITY]: reftaakprioriteit,
         [input.INPUT_TASK_ID]: id,

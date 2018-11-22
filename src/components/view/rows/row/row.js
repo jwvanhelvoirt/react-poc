@@ -11,6 +11,7 @@ import Aux from '../../../../hoc/auxiliary';
 import classes from '../../view.scss';
 
 const row = (props) => {
+
   const { viewConfig, _this, listItem } = props;
   const { row, routeView, multiSelect, columns, actions } = viewConfig;
   const { route, lookup } = _this.props;
@@ -47,105 +48,107 @@ const row = (props) => {
   if (row && row.selectable && !(route && route.length > 0 && routeView !== false)) {
     // Only if the row is selectable, we print the 'checkbox' to select/deselect a listItems or 'radio' to select an item.
     listItemsFixedSelect = <div className={classesCombinedSelected}></div>;
-    }
+  }
 
-    // Fixed columns menu.
-    let listItemsFixedMenu = <div className={classes.Fixed0}></div>;
-      let rightMouseClickMenu = null;
-      if (row && row.menu) {
-        const classesDropDown = [classes.Fixed2, classes.DropDownIcon].join(' ');
-        // Only if the row contains a click menu, we print a div in the row to align equally with the listItems.
-        listItemsFixedMenu = (
-          <div className={classesDropDown} onClick={(event) => _this.showRowMenu(event, listItem.id)}>
-            <FontAwesomeIcon icon={['far', icons.ICON_ANGLE_DOWN]} />
-          </div>
-        );
-        rightMouseClickMenu = (event) => _this.showRowMenu(event, listItem.id);
-      }
+  // Fixed columns menu.
+  let listItemsFixedMenu = <div className={classes.Fixed0}></div>;
+  let rightMouseClickMenu = null;
+  if (row && row.menu) {
+    const classesDropDown = [classes.Fixed2, classes.DropDownIcon].join(' ');
+    // Only if the row contains a click menu, we print a div in the row to align equally with the listItems.
+    listItemsFixedMenu = (
+      <div className={classesDropDown} onClick={(event) => _this.showRowMenu(event, listItem.id)}>
+        <FontAwesomeIcon icon={['far', icons.ICON_ANGLE_DOWN]} />
+      </div>
+    );
+    rightMouseClickMenu = (event) => _this.showRowMenu(event, listItem.id);
+  }
 
-      // Fixed columns overall.
-      const listItemsFixed = (
-        <div className={classes.Fixed}>
-          {listItemsFixedSelect}
-          {listItemsFixedMenu}
-        </div>
-      );
+  // Fixed columns overall.
+  const listItemsFixed = (
+    <div className={classes.Fixed}>
+      {listItemsFixedSelect}
+      {listItemsFixedMenu}
+    </div>
+  );
 
-      // Only onDoubleClick event in case of mulitple selection of rows and NOT a lookup context.
-      const doubleClick = (multiSelect && !lookup) ? () => _this.onClickItemHandler(listItem.id) : null;
+  // Only onDoubleClick event in case of mulitple selection of rows and NOT a lookup context.
+  const doubleClick = (multiSelect && !lookup) ? () => _this.onClickItemHandler(listItem.id) : null;
 
-      // Hover actions.
-      let actionsHoverOutput = null;
-      if (actions) {
-        const actionsHover = getViewActions(actions, 'showOnRowHover', selectedListItems, _this);
-        actionsHoverOutput = actionsHover.map((action, index) =>
-        <RowHoverIcon key={index} index={index.toString()} action={action} _this={_this} id={listItem.id} />);
-        }
+  // Hover actions.
+  let actionsHoverOutput = null;
+  if (actions) {
+    const actionsHover = getViewActions(actions, 'showOnRowHover', selectedListItems, _this);
+    actionsHoverOutput = actionsHover.map((action, index) =>
+    <RowHoverIcon key={index} index={index.toString()} action={action} _this={_this} id={listItem.id} />);
+  }
 
-        const listItemDiv = (
-          <div className={classesCombinedListItem}
-            onClick={(event) => _this.toggleRowHandler(listItem.id)}
-            onDoubleClick={doubleClick}
-            onContextMenu={rightMouseClickMenu}>
-            {listItemsFixed}
+  const listItemDiv = (
+    <div className={classesCombinedListItem}
+      onClick={(event) => _this.toggleRowHandler(listItem.id)}
+      onDoubleClick={doubleClick}
+      onContextMenu={rightMouseClickMenu}>
+      {listItemsFixed}
 
-            <div className={classes.Flex}>
-              <div className={classes.FlexRow}>
-                {
-                  columnsVisible.map((column, index) => {
+      <div className={classes.Flex}>
+        <div className={classes.FlexRow}>
+          {
+            columnsVisible.map((column, index) => {
 
-                    let listItemColumnContent = null;
+              let listItemColumnContent = null;
 
-                    switch (column.contentType) {
+              switch (column.contentType) {
 
-                      case 'avatar':
-                      listItemColumnContent = <Avatar size={column.size} foto={listItem[column.content]} name={listItem[column.avatarName]} />
-                      break;
+                case 'avatar':
+                listItemColumnContent = <Avatar size={column.size} foto={listItem[column.content]} name={listItem[column.avatarName]} />
+                break;
 
-                      case 'timespan':
-                      listItemColumnContent = (
-                        <Timespan size={column.size} start={listItem[column.data.start]}
-                          end={listItem[column.data.end]} totalDays={column.data.totalDays} />
-                      );
-                      break;
+                case 'timespan':
+                listItemColumnContent = (
+                  <Timespan size={column.size} start={listItem[column.data.start]}
+                    end={listItem[column.data.end]} totalDays={column.data.totalDays} />
+                );
+                break;
 
-                      case 'timespanTask':
-                      listItemColumnContent = (
-                        <TimespanTask size={column.size} totalDays={column.data.totalDays} listItem={listItem} />
-                      );
-                      break;
+                case 'timespanTask':
+                listItemColumnContent = (
+                  <TimespanTask size={column.size} totalDays={column.data.totalDays} listItem={listItem} />
+                );
+                break;
 
-                      default:
-                      listItemColumnContent = getContent(column.content, listItem, classes, column);
+                default:
+                listItemColumnContent = getContent(column.content, listItem, classes, column);
 
-                    };
+              };
 
-                    const columnClasses = getColumnClasses(column, [classes[column.size]], classes);
-                    return <div key={index} className={columnClasses}>{listItemColumnContent}</div>;
-                    })
-                  }
-                </div>
-                <div className={[classes.FlexRow, classes.RowHover].join(' ')}>
-                  {actionsHoverOutput}
-                </div>
-              </div>
-
-            </div>
-          );
-
-          let listItemPrint = <Aux>{listItemDiv}</Aux>;
-            // Check if we should display a new screen when clicking on a row.
-            if (route && route.length > 0 && routeView !== false) {
-              listItemPrint = (
-                <Link to={currentUrl + '/' + route + '/' + listItem.id}>
-                  {listItemDiv}
-                </Link>
-              );
-            }
-
-            return(
-              <Aux>{listItemPrint}</Aux>
-            );
+              const columnClasses = getColumnClasses(column, [classes[column.size]], classes);
+              return <div key={index} className={columnClasses}>{listItemColumnContent}</div>;
+            })
           }
+        </div>
+        <div className={[classes.FlexRow, classes.RowHover].join(' ')}>
+          {actionsHoverOutput}
+        </div>
+      </div>
 
-          export default row;
+    </div>
+  );
+
+  let listItemPrint = <Aux>{listItemDiv}</Aux>;
+
+  // Check if we should display a new screen when clicking on a row.
+  if (route && route.length > 0 && routeView !== false) {
+    listItemPrint = (
+      <Link to={currentUrl + '/' + route + '/' + listItem.id}>
+        {listItemDiv}
+      </Link>
+    );
+  }
+
+  return(
+    <Aux>{listItemPrint}</Aux>
+  );
+
+}
+
+export default row;

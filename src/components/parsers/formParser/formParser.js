@@ -451,9 +451,16 @@ class Form extends Component {
     let lookupModal = null;
     if (this.state.showModalLookup) {
       lookupModal = (
-        <MessageBox modalClass={modalClass} messageTitle={messageTitle} type={messageType}
-          messageContent={messageContent} buttons={messageButtons} focusButton={focusButton}
-          callBackOk={callBackOk} callBackCancel={callBackCancel} modal={true}
+        <MessageBox
+          buttons={messageButtons}
+          callBackCancel={callBackCancel}
+          callBackOk={callBackOk}
+          focusButton={focusButton}
+          messageContent={messageContent}
+          messageTitle={messageTitle}
+          modal={true}
+          modalClass={modalClass}
+          type={messageType}
         />
       );
     }
@@ -477,24 +484,25 @@ class Form extends Component {
     return (
       <Aux>
         <MessageBox
-          modalClass={size}
-          messageTitle={titleForm}
-          type='info'
-          titleIcon={titleIcon}
-          titleAlign={titleAlign}
-          messageContent={content}
           buttons={buttons}
           buttonsClass={buttonsClass}
-          okButtonLabel={okButtonLabel}
-          cancelButtonLabel={cancelButtonLabel}
-          formIsValid={this.state.isValidForm}
-          headerSize={headerSize}
-          modal={this.props.modal}
-          msgFailedSubmit={msgFailedSubmit}
-          callBackOk={this.submitHandler}
           callBackCancel={this.props.onCancel}
+          callBackOk={this.submitHandler}
+          cancelButtonLabel={cancelButtonLabel}
           contentExtraScrollZone={true}
+          formIsValid={this.state.isValidForm}
+          header={this.state.configForm.header}
+          headerSize={headerSize}
+          messageContent={content}
+          messageTitle={titleForm}
+          modal={this.props.modal}
+          modalClass={size}
+          msgFailedSubmit={msgFailedSubmit}
+          okButtonLabel={okButtonLabel}
+          titleAlign={titleAlign}
+          titleIcon={titleIcon}
           trapFocus={true}
+          type='info'
         />
         {lookupModal}
       </Aux>

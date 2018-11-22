@@ -1,9 +1,10 @@
 import React from 'react';
+import classes from './elemDisplay.scss';
 
 const display = (props) => {
 
   return (
-    <div className={props.inputClasses.join(' ')}>
+    <div className={classes.DisplayElement}>
       {props.configInput.value}
     </div>
   );

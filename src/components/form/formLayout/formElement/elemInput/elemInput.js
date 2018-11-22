@@ -9,7 +9,7 @@ const elemInput = (props) => {
       className={inputClasses.join(' ')}
       {...elementConfig}
       placeholder={placeholderInput}
-      value={value}
+      value={value || ''}
       autoFocus={autoFocus}
       autoComplete='off'
       onChange={changed}

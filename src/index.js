@@ -13,8 +13,8 @@ import './index.scss';
 // axios.defaults.baseURL = 'http://localhost:3050/api/';
 // axios.defaults.baseURL = 'http://172.16.18.167:3050/api/';
 
-axios.defaults.baseURL = 'https://ez2xs.ez2xs.com/';
-// axios.defaults.baseURL = 'https://dev-janwillem.ez2xs.com/';
+axios.defaults.baseURL = 'https://dev-janwillem.ez2xs.com/';
+// axios.defaults.baseURL = 'https://ez2xs.ez2xs.com/';
 
 // react-poc-ez2xs
 

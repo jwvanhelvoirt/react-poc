@@ -265,25 +265,30 @@ class _View extends Component {
    * @brief   Displays a form modal to add a new record to the database.
    */
   addItem = (formConfig, addToView) => {
-    console.log(formConfig);
 
-    this.localData.addRecordToView = addToView;
-
-    if (formConfig.newEntryFromServer) {
-      // In case of a new entry, we trigger an api call to the server.
-
-      this.getItemFromServer(-1);
-
+    if (this.props.route) {
+      this.props.history.push(this.props.match.url + '/' + this.props.route + '/-1');
     } else {
-      // In case of a new entry, we handle this fully on the client.
 
-      // Prepares the form data to add a new item by filling 'loadedListItem'.
-      const newPostData = {};
-      for (let inputId in formConfig.inputs) {
-        newPostData[inputId] = formConfig.inputs[inputId].value;
+      this.localData.addRecordToView = addToView;
+
+      if (formConfig.newEntryFromServer) {
+        // In case of a new entry, we trigger an api call to the server.
+
+        this.getItemFromServer(-1);
+
+      } else {
+        // In case of a new entry, we handle this fully on the client.
+
+        // Prepares the form data to add a new item by filling 'loadedListItem'.
+        const newPostData = {};
+        for (let inputId in formConfig.inputs) {
+          newPostData[inputId] = formConfig.inputs[inputId].value;
+        }
+
+        this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: cloneDeep(formConfig) });
+
       }
-
-      this.setState({ loadedListItem: newPostData, selectedListItemId: null, configForm: cloneDeep(formConfig) });
 
     }
 
@@ -617,6 +622,7 @@ class _View extends Component {
    * @brief   Renders the listView including all modals for form, filtering, sorting and column configuration.
    */
   render = () => {
+
     const { modalClass, messageButtons, focusButton, messageTitle, messageType, messageContent,
       callBackOk, callBackCancel} = this.localData;
     const { loadedListItem, configForm, selectedListItemId, showModalSort, showModalMessage, showMenu, subActions,

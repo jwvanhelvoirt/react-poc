@@ -9,26 +9,34 @@ import classes from './messageBox.scss';
 
 class MessageBox extends Component {
 
+  eventListener = false;
+
   render = () => {
+    console.log(this.props);
     const classesMb = this.props.contentExtraScrollZone ?
       [classes.Content, classes.ContentExtraScrollZone].join(' ') :
       classes.Content;
 
-    const header = this.props.header !== false ?
-    (
-      <ModalHeader
-        title={this.props.messageTitle}
-        type={this.props.type}
-        headerSize={this.props.headerSize}
-        titleIcon={this.props.titleIcon}
-        titleAlign={this.props.titleAlign}
-        modal={this.props.modal}
-      />
-    ) :
-    null;
+    const header = (
+      this.props.header !== false ?
+        <ModalHeader
+          title={this.props.messageTitle}
+          type={this.props.type}
+          headerSize={this.props.headerSize}
+          titleIcon={this.props.titleIcon}
+          titleAlign={this.props.titleAlign}
+          modal={this.props.modal}
+        /> :
+        null
+    );
 
-    const footer = this.props.footer !== false ?
-    (
+    const content = (
+      <div className={classesMb}>
+        {this.props.messageContent}
+      </div>
+    );
+
+    const footer = (
       <ModalFooter
         buttons={this.props.buttons}
         focusButton={this.props.focusButton}
@@ -39,22 +47,19 @@ class MessageBox extends Component {
         callBackOk={this.props.callBackOk}
         callBackCancel={this.props.callBackCancel}
       />
-    ) :
-    null;
+    );
 
     const messageBox = (
       <div className={classes.MessageBox} onKeyUp={(event) => this.onKeyUp(event, this.props.callBackCancel)}>
         {header}
         <UserInfo msgFailedSubmit={this.props.msgFailedSubmit} />
-        <div className={classesMb}>
-          {this.props.messageContent}
-        </div>
+        {content}
         {footer}
       </div>
     );
 
     const box = this.props.modal ?
-      <Modal show modalClass={this.props.modalClass} modalClosed={this.props.callBackCancel}>{messageBox}</Modal> :
+      <Modal show modalClass={this.props.modalClass} modalClosed={this.props.callBackCancel}>{content}</Modal> :
       <Aux>{messageBox}</Aux>;
 
     return(

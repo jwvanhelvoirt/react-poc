@@ -6,11 +6,11 @@ import baseConfig from './configFormBase';
 const formConfig = {
   id: 'supportDetails',
   defaultFocus: input.INPUT_TASK_NAME,
+  header: false,
   inputs: {
 
     [input.INPUT_TASK_ID]: {
-      elementType: 'hidden',
-      value: ''
+      elementType: 'hidden'
     },
 
     [input.INPUT_TASK_ATTACHMENTS]: {
