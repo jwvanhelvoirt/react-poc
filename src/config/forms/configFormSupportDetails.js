@@ -111,45 +111,36 @@ const formConfig = {
       {
         cols: [
           {
-            width: 'Flex100',
+            width: 'Flex30',
+            rows: [
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_PRIORITY, width: 'Flex100' },
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_PROJECT, width: 'Flex100' },
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_STATUS, width: 'Flex100' },
+                ]
+              },
+              {
+                inputs: [
+                  { id: input.INPUT_TASK_ATTACHMENTS, width: 'Flex100' },
+                ]
+              }
+            ]
+          },
+          {
+            width: 'Flex70',
             rows: [
               {
                 inputs: [
                   { id: input.INPUT_TASK_UPDATE_DESCRIPTION, width: 'Flex100' }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        cols: [
-          {
-            width: 'Flex50',
-            rows: [
-              {
-                inputs: [
-                  { id: input.INPUT_TASK_PRIORITY, width: 'Flex100' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_TASK_PROJECT, width: 'Flex100' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_TASK_STATUS, width: 'Flex100' }
-                ]
-              }
-            ],
-          },
-          {
-            width: 'Flex50',
-            rows: [
-              {
-                inputs: [
-                  { id: input.INPUT_TASK_ATTACHMENTS, width: 'Flex100' }
                 ]
               }
             ]
