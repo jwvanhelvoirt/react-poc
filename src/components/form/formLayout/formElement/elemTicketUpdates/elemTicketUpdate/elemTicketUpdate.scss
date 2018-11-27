@@ -2,6 +2,13 @@
   margin-bottom: 20px;
 }
 
+.UpdateWrapper :global .mce-edit-area,
+.UpdateWrapper :global .mce-panel,
+.UpdateWrapper :global body.mceContentBody {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
 .Update, .UpdateBySupport {
   background-color: #f2f0f0;
   padding: 10px;
