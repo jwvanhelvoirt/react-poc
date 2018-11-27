@@ -5,6 +5,7 @@ import cloneDeep from 'lodash/cloneDeep';
 // import _ from 'lodash';
 import * as icons from '../../../libs/constIcons';
 import * as trans from '../../../libs/constTranslates';
+import { storeDropdownHtml } from '../../../store/actions';
 import { getDisplayValue } from '../../../libs/generic';
 import { callServer } from '../../../api/api';
 import Backdrop from '../backdrop/backdrop';
@@ -150,13 +151,22 @@ class Dropdown extends Component {
         );
 
     return (
-      <div className={classes.Dropdown} style={{ width: dropdownInlineStyle, top: dropdownTop, left: dropdownLeft }}>
+      <div className={classes.Dropdown}
+        style={{ width: dropdownInlineStyle, top: dropdownTop, left: dropdownLeft }}
+        onKeyUp={(event) => this.onKeyUp(event)}>
         {search}
         <div className={classes.ValueWrapper} style={{ maxHeight: valueWrapperInlineStyle }}>
           {valuesOutput}
         </div>
       </div>
     );
+  };
+
+  onKeyUp = (event) => {
+    // If user presses ESCAPE, we should cancel the form.
+    if (event.keyCode === 27) {
+      this.props.storeDropdownHtml(null);
+    }
   };
 
   render = () => {
@@ -181,4 +191,10 @@ const mapStateToProps = state => {
   return { messageBox1, messageBox2, translates };
 };
 
-export default connect(mapStateToProps)(Dropdown);
+const mapDispatchToProps = dispatch => {
+  return {
+    storeDropdownHtml: (dropdownHtml) => dispatch(storeDropdownHtml(dropdownHtml))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
