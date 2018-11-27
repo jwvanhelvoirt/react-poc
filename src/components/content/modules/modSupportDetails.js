@@ -86,7 +86,6 @@ class ModSupportDetails extends Component {
 
     return (
       <Aux>
-        <div>
           <div className={classesScreen.PaneWrapper}>
             <div className={classesScreen.Pane}>
               <div>
@@ -95,7 +94,6 @@ class ModSupportDetails extends Component {
               </div>
             </div>
           </div>
-        </div>
         {this.props.dropdownHtml}
       </Aux>
     );

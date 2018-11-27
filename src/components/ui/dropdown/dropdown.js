@@ -104,6 +104,7 @@ class Dropdown extends Component {
     const searchWrapperInlineStyle = searchWrapperPadding + 'px';
     const searchInlineStyle = searchHeight + 'px';
     const valueWrapperInlineStyle = valueWrapperHeight + 'px';
+    // const valueWrapperInlineStyle = '100px';
 
     const search = searchBar ?
       (
@@ -151,7 +152,7 @@ class Dropdown extends Component {
     return (
       <div className={classes.Dropdown} style={{ width: dropdownInlineStyle, top: dropdownTop, left: dropdownLeft }}>
         {search}
-        <div className={classes.ValueWrapper} style={{ maxHeight: valueWrapperInlineStyle, minHeight: valueWrapperInlineStyle }}>
+        <div className={classes.ValueWrapper} style={{ maxHeight: valueWrapperInlineStyle }}>
           {valuesOutput}
         </div>
       </div>
