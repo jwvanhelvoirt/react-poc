@@ -112,6 +112,7 @@ const formConfig = {
       {
         cols: [
           {
+            columnClasses: ['ColEmphasize'],
             width: 'Flex30',
             rows: [
               {
