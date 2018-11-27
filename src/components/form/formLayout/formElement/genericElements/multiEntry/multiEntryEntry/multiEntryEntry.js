@@ -23,7 +23,7 @@ const multiEntryEntry = (props) => {
       <div className={classes.Inputs}>
         {entryInputOutput}
       </div>
-      <div>
+      <div className={classes.DeleteButton}>
         {deleteButton}
       </div>
     </div>

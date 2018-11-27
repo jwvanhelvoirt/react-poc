@@ -42,7 +42,7 @@ const ticketUpdate = (props) => {
           <div className={classes.UpdateDetailsDateTime}><Moment format="DD-MM-YYYY HH:mm">{datumtijd}</Moment></div>
         </div>
         <div className={classes.UpdateContent}>
-          <Editor init={{ menubar: false, toolbar: false}} disabled={true} value={description} />
+          <Editor init={{ menubar: false, toolbar: false }} disabled={true} value={description} />
         </div>
       </div>
       {attachmentsContainer}

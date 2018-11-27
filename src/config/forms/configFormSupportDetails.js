@@ -27,19 +27,19 @@ const formConfig = {
     },
 
     [input.INPUT_TASK_NO]: {
-      label: trans.KEY_TASK_NO,
+      label: trans.KEY_NR,
       elementType: 'display',
       value: '',
       save: false
     },
 
     [input.INPUT_TASK_NAME]: {
-      label: trans.KEY_TASK,
+      label: trans.KEY_TITLE,
       elementType: 'input',
       elementConfig: {
         type: 'text'
       },
-      placeholder: trans.KEY_TASK,
+      placeholder: trans.KEY_TITLE,
       value: '',
       validation: {
         required: true
@@ -49,6 +49,7 @@ const formConfig = {
     },
 
     [input.INPUT_TASK_UPDATE_DESCRIPTION]: {
+      label: trans.KEY_DESCRIPTION,
       elementType: 'tinyMce',
       value: ''
     },

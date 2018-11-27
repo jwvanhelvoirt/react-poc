@@ -93,7 +93,7 @@ export const KEY_SUPPORT = 'KEY support';
 export const KEY_SUPPORTEXT = 'KEY support';
 export const KEY_SUPPORT_DETAILS = 'KEY support details';
 export const KEY_TASK = 'KEY taak';
-export const KEY_TASK_NO = 'KEY taak nummer';
+export const KEY_TITLE = 'KEY titel';
 export const KEY_TYPE = 'KEY type';
 export const KEY_UNKNOWN = 'KEY onbekend';
 export const KEY_USERNAME = 'KEY gebruikersnaam';
@@ -123,6 +123,5 @@ export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
 - KEY koppel externe apparaten
 - KEY communicatie info
 - KEY support details
-- KEY taak nummer
 - KEY ticket toevoegen
 */
