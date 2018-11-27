@@ -224,6 +224,7 @@ class Form extends Component {
     event.preventDefault();
 
     const { inputs, urlSuffix, url } = this.state.configForm;
+    let value = '';
 
     // Final object we're gonna submit as payload on the submit url.
     const submitData = {};
@@ -242,7 +243,7 @@ class Form extends Component {
         if (id.indexOf('.', 0) >= 0) {
           // Data is not stored in a root attribute but nested in an object.
 
-          const value = inputs[id].value; // Value on the form.
+          value = typeof inputs[id].value === 'string' ? inputs[id].value.trim() : inputs[id].value; // Value on the form.
 
           // For values to be stored in nested object. These nested objects support more than one id in the object structure.
           // The actual id has been pushed to an array during rendering the input on the form and stored in the applicable input in the configForm.
@@ -300,7 +301,8 @@ class Form extends Component {
         } else {
           // Data is stored in a root attribute.
           // Add the value (a string) to the submit data.
-          submitData[id] = inputs[id].value;
+          value = typeof inputs[id].value === 'string' ? inputs[id].value.trim() : inputs[id].value;
+          submitData[id] = value;
         }
       }
 
