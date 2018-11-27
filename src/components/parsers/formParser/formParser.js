@@ -147,20 +147,20 @@ class Form extends Component {
     if (rules) {
       if (isArray) {
         if (rules.required) {
-          isValid = value && value.length > 0 && isValid;
+          isValid = value && value.length > 0 && isValid ? true : false;
         }
       } else {
         if (rules.required) {
-          isValid = value && value.trim() !== '' && isValid;
+          isValid = value && value.trim() !== '' && isValid ? true : false;
         }
       }
 
       if (rules.minLength) {
-        isValid = value && value.length >= rules.minLength && isValid;
+        isValid = value && value.length >= rules.minLength && isValid ? true : false;
       }
 
       if (rules.maxLength) {
-        isValid = value && value.length <= rules.maxLength && isValid;
+        isValid = value && value.length <= rules.maxLength && isValid ? true : false;
       }
     }
 
@@ -216,6 +216,7 @@ class Form extends Component {
         isValidForm = this.checkValidity(updatedFormInputs[id].value, updatedFormInputs[id].validation) && isValidForm;
       }
     }
+
     return isValidForm;
   };
 

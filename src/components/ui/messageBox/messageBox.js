@@ -10,51 +10,55 @@ import classes from './messageBox.scss';
 class MessageBox extends Component {
 
   render = () => {
-    const classesMb = this.props.contentExtraScrollZone ?
+    const { contentExtraScrollZone, header, messageTitle, type, headerSize, titleIcon, titleAlign, modal, footer,
+      buttons, focusButton, buttonsClass, formIsValid, okButtonLabel, cancelButtonLabel, callBackOk, callBackCancel,
+      msgFailedSubmit, messageContent, modalClass} = this.props;
+
+    const classesMb = contentExtraScrollZone ?
       [classes.Content, classes.ContentExtraScrollZone].join(' ') :
       classes.Content;
 
-    const header = this.props.header !== false ?
+    const headerDisplay = header !== false ?
     (
       <ModalHeader
-        title={this.props.messageTitle}
-        type={this.props.type}
-        headerSize={this.props.headerSize}
-        titleIcon={this.props.titleIcon}
-        titleAlign={this.props.titleAlign}
-        modal={this.props.modal}
+        title={messageTitle}
+        type={type}
+        headerSize={headerSize}
+        titleIcon={titleIcon}
+        titleAlign={titleAlign}
+        modal={modal}
       />
     ) :
     null;
 
-    const footer = this.props.footer !== false ?
+    const footerDisplay = footer !== false ?
     (
       <ModalFooter
-        buttons={this.props.buttons}
-        focusButton={this.props.focusButton}
-        buttonsClass={this.props.buttonsClass}
-        formIsValid={this.props.formIsValid}
-        okButtonLabel={this.props.okButtonLabel}
-        cancelButtonLabel={this.props.cancelButtonLabel}
-        callBackOk={this.props.callBackOk}
-        callBackCancel={this.props.callBackCancel}
+        buttons={buttons}
+        focusButton={focusButton}
+        buttonsClass={buttonsClass}
+        formIsValid={formIsValid}
+        okButtonLabel={okButtonLabel}
+        cancelButtonLabel={cancelButtonLabel}
+        callBackOk={callBackOk}
+        callBackCancel={callBackCancel}
       />
     ) :
     null;
 
     const messageBox = (
-      <div className={classes.MessageBox} onKeyUp={(event) => this.onKeyUp(event, this.props.callBackCancel)}>
-        {header}
-        <UserInfo msgFailedSubmit={this.props.msgFailedSubmit} />
+      <div className={classes.MessageBox} onKeyUp={(event) => this.onKeyUp(event, callBackCancel)}>
+        {headerDisplay}
+        <UserInfo msgFailedSubmit={msgFailedSubmit} />
         <div className={classesMb}>
-          {this.props.messageContent}
+          {messageContent}
         </div>
-        {footer}
+        {footerDisplay}
       </div>
     );
 
-    const box = this.props.modal ?
-      <Modal show modalClass={this.props.modalClass} modalClosed={this.props.callBackCancel}>{messageBox}</Modal> :
+    const box = modal ?
+      <Modal show modalClass={modalClass} modalClosed={callBackCancel}>{messageBox}</Modal> :
       <Aux>{messageBox}</Aux>;
 
     return(
