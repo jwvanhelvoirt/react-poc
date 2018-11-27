@@ -29,3 +29,11 @@
 .Entry:hover .DeleteButton {
   display: block;
 }
+
+.HiddenDeleteButton {
+  min-width: 30px;
+}
+
+.Entry:hover .HiddenDeleteButton {
+  display: none;
+}

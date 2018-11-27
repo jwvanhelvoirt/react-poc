@@ -26,6 +26,7 @@ const multiEntryEntry = (props) => {
       <div className={classes.DeleteButton}>
         {deleteButton}
       </div>
+      <div className={classes.HiddenDeleteButton} />
     </div>
   );
 }
