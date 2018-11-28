@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import cloneDeep from 'lodash/cloneDeep';
 import * as input from '../../../../../libs/constInputs';
+import { storeDropdownHtml } from '../../../../../store/actions';
 import Aux from '../../../../../hoc/auxiliary';
+import Select from '../../../../ui/select/select';
 import MultiEntryCombiInput from '../genericElements/multiEntry/multiEntryCombiInput/multiEntryCombiInput';
 import MultiEntryEntry from '../genericElements/multiEntry/multiEntryEntry/multiEntryEntry';
 import MultiEntryWrapper from '../genericElements/multiEntry/multiEntryWrapper/multiEntryWrapper';
@@ -43,10 +45,6 @@ class CommunicationInfo extends Component {
       value[id][communicationTypeValue] = event.target.value;
       break;
 
-      case communicationTypeRef:
-      value[id][communicationTypeRef] = event.target.value;
-      break;
-
       case 'delete':
       delete value[id];
       break;
@@ -78,6 +76,17 @@ class CommunicationInfo extends Component {
     return value;
   };
 
+  changeCommunicationTypeRef = (value, label, rowId) => {
+    this.props.storeDropdownHtml(null); // Remove the dropdown.
+
+    const { changed, configInput } = this.props;
+    let valueConfig = cloneDeep(configInput.value); // Value before the change, this is an object containing data for all entries.
+
+    valueConfig[rowId][communicationTypeRef] = value;
+
+    changed(null, input.INPUT_COMMUNICATION_INFO, valueConfig);
+  };
+
   render = () => {
     const { configInput } = this.props;
 
@@ -91,21 +100,32 @@ class CommunicationInfo extends Component {
         <input type='checkbox' checked={checked} onChange={(event) => this.onChange(event, item, communicationTypeDefault)} />
       );
 
+      // // Dropdown to select a particular communication type. The entire list of communication types is stored in the store and injected as a prop.
+      // const select = (
+      //   <select
+      //     className={classesFormElement.InputElement}
+      //     value={refteltype}
+      //     onChange={(event) => this.onChange(event, item, communicationTypeRef)}>
+      //     {this.props.communicationTypes.map(option => {
+      //       return (
+      //         <option key={option.id} value={option.id}>
+      //           {option.naam}
+      //         </option>
+      //       );
+      //     })}
+      //   </select>
+      // );
+
       // Dropdown to select a particular communication type. The entire list of communication types is stored in the store and injected as a prop.
       const select = (
-        <select
-          className={classesFormElement.InputElement}
+        <Select
+          inputChangeHandler={false}
           value={refteltype}
-          onChange={(event) => this.onChange(event, item, communicationTypeRef)}>
-          {this.props.communicationTypes.map(option => {
-            return (
-              <option key={option.id} value={option.id}>
-                {option.naam}
-              </option>
-            );
-          })}
-        </select>
+          onChange={this.changeCommunicationTypeRef}
+          options={this.props.communicationTypes} optionId={'id'} optionLabel={'naam'} rowId={item}>
+        </Select>
       );
+
 
       // We combine the select and the dropdown in one element.
       const communicationType = <MultiEntryCombiInput inputs={[checkbox, select]}/>;
@@ -155,4 +175,10 @@ const mapStateToProps = state => {
   return { communicationTypes };
 };
 
-export default connect(mapStateToProps)(CommunicationInfo);
+const mapDispatchToProps = dispatch => {
+  return {
+    storeDropdownHtml: (dropdownHtml) => dispatch(storeDropdownHtml(dropdownHtml))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommunicationInfo);

@@ -17,8 +17,8 @@ const formConfig = {
   title: trans.KEY_LOGIN,
   titleIcon: icons.ICON_SIGN_IN_ALT,
 
-  // url: 'portal/call/api.login',
   url: 'call/api.login',
+  // url: 'portal/call/api.login',
 
   urlSuffix: false,
   inputs: {

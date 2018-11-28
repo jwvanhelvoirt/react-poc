@@ -101,33 +101,29 @@ class CommunicationInfo extends Component {
   };
 
   onDropdownShowAddOrganization = (event) => {
-    this.toggleDropdownAddOrganization(true, event.clientX, event.clientY);
+
+    const dropdownAddOrganization = (
+      <Dropdown
+        searchBar={true}
+        searchType={'server'}
+        searchApi={{ api: 'call/api.relatiebeheer.zoekRelatie', entity: 'niveau4', id: 'id', label: 'naam' }}
+        onSelect={this.addOrganization}
+        show={true}
+        dropdownClosed={this.onDropdownCloseAddOrganization}
+        mousePosX={event.clientX}
+        mousePosY={event.clientY}
+      />
+    );
+
+    this.props.storeDropdownHtml(dropdownAddOrganization);
   }
 
   onDropdownCloseAddOrganization = () => {
-    this.toggleDropdownAddOrganization(false);
-  };
-
-  toggleDropdownAddOrganization = (show, mousePosX, mousePosY) => {
-
-    const dropdownAddOrganization = show ?
-    <Dropdown
-      searchBar={true}
-      searchType={'server'}
-      searchApi={{ api: 'call/api.relatiebeheer.zoekRelatie', entity: 'niveau4', id: 'id', label: 'naam' }}
-      onSelect={this.addOrganization}
-      show={show}
-      dropdownClosed={this.onDropdownCloseAddOrganization}
-      mousePosX={mousePosX}
-      mousePosY={mousePosY}
-    /> :
-    null;
-
-    this.props.storeDropdownHtml(dropdownAddOrganization);
+    this.props.storeDropdownHtml(null); // Remove the dropdown.
   };
 
   addOrganization = (id, name) => {
-    this.toggleDropdownAddOrganization(false); // Remove the dropdown.
+    this.props.storeDropdownHtml(null); // Remove the dropdown.
 
     const { changed, configInput } = this.props;
 
@@ -154,7 +150,7 @@ class CommunicationInfo extends Component {
   };
 
   changeFunctionCode = (value, label, rowId) => {
-    this.toggleDropdownAddOrganization(false); // Remove the dropdown. TODO: DIT MOET EIGENLIJK ANDERS!!!
+    this.props.storeDropdownHtml(null); // Remove the dropdown.
 
     const { changed, configInput } = this.props;
     let valueConfig = cloneDeep(configInput.value); // Value before the change, this is an object containing data for all entries.
