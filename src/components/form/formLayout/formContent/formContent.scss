@@ -5,9 +5,9 @@
 .Row {
   // border: 1px solid green;
   // padding: 10px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-grow: 1;
   width: 100%;
   box-sizing: border-box;
@@ -49,18 +49,25 @@
 }
 
 .Flex10 { width: 10%; }
+.Flex15 { width: 15%; }
 .Flex20 { width: 20%; }
 .Flex25 { width: 25%; }
 .Flex30 { width: 30%; }
 .Flex33 { width: 33%; }
 .Flex34 { width: 34%; }
+.Flex35 { width: 35%; }
 .Flex40 { width: 40%; }
+.Flex45 { width: 45%; }
 .Flex50 { width: 50%; }
+.Flex55 { width: 55%; }
 .Flex60 { width: 60%; }
+.Flex65 { width: 65%; }
 .Flex70 { width: 70%; }
 .Flex75 { width: 75%; }
 .Flex80 { width: 80%; }
+.Flex85 { width: 85%; }
 .Flex90 { width: 90%; }
+.Flex95 { width: 95%; }
 .Flex100 { width: 100% }
 
 @media(max-width: 767px) {

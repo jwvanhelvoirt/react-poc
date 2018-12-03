@@ -78,6 +78,13 @@ class Form extends Component {
           }
           break;
 
+          case 'componentContactInfo':
+          if (this.props.id) { // Only for existing entries.
+            attributes = ['naam', 'isbeheerde', 'refmedewerkers'];
+            inputValue = convertInitialDataFromArrayToObject(this.props.data, inputAttrib.INPUT_CONTACT_INFO, attributes);
+          }
+          break;
+
           case 'componentOrganizationInfo':
           if (this.props.id) { // Only for existing entries.
             attributes = ['naam', 'hoofd', 'functienaam', 'reffunctiecode', 'vertrokken', 'vertrokkenper', 'refniveau4',
@@ -178,7 +185,8 @@ class Form extends Component {
   };
 
   inputChangedHandler = (event, id, value) => {
-
+    console.log(id);
+    console.log(value);
     // Set the state 'formTouched' in the store to 'true'.
     this.props.touchedForm(true); // Info the onCloseHandler in the ViewParser (parent component) needs to know when closing the form.
 
@@ -189,7 +197,9 @@ class Form extends Component {
 
     // Update the value.
     if (value || value === '') {
+console.log(value);
       updatedFormElement.value = value;
+console.log(updatedFormElement);
     } else {
       updatedFormElement.value = event.target.type === 'checkbox' ?
         (event.target.checked ? 1 : 0) : // Backend doesn't understand boolean value (true/false), only a 1 for true and a 0 for false.
@@ -301,7 +311,9 @@ class Form extends Component {
         } else {
           // Data is stored in a root attribute.
           // Add the value (a string) to the submit data.
+          console.log(inputs[id].value);
           value = typeof inputs[id].value === 'string' ? inputs[id].value.trim() : inputs[id].value;
+          console.log(value);
           submitData[id] = value;
         }
       }
@@ -331,7 +343,7 @@ class Form extends Component {
     // this.props.storeFormSubmitData(params);
 
     const urlAddition = urlSuffix ? '.set' : '';
-// console.log(params);
+console.log(params);
     callServer('put', url + urlAddition, this.successSubmitHandler, this.errorSubmitHandler, params);
   };
 

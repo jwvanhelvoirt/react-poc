@@ -2,6 +2,9 @@
   display: block;
   margin-bottom: 0px;
   font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .InputElement {

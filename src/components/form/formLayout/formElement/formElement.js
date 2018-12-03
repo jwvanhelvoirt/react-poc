@@ -18,6 +18,8 @@ import * as trans from '../../../../libs/constTranslates';
 
 // Generic elements.
 import ElemCheckbox from './elemCheckbox/elemCheckbox';
+import ElemDatePicker from './elemDatePicker/elemDatePicker';
+import ElemDisplay from './elemDisplay/elemDisplay';
 import ElemFileUpload from './elemFileUpload/elemFileUpload';
 import ElemFormLink from './elemFormLink/elemFormLink';
 import ElemInput from './elemInput/elemInput';
@@ -27,13 +29,13 @@ import ElemSelect from './elemSelect/elemSelect';
 import ElemSingleCheckbox from './elemSingleCheckbox/elemSingleCheckbox';
 import ElemSinglePicture from './elemSinglePicture/elemSinglePicture';
 import ElemTextarea from './elemTextarea/elemTextarea';
-import ElemTinyMce from './elemTinyMce/elemTinyMce';
-import ElemDisplay from './elemDisplay/elemDisplay';
 import ElemTicketUpdates from './elemTicketUpdates/elemTicketUpdates';
+import ElemTinyMce from './elemTinyMce/elemTinyMce';
 
 // Custom elements.
-import ElemOrganizationInfo from './elemOrganizationInfo/elemOrganizationInfo';
 import ElemCommunicationInfo from './elemCommunicationInfo/elemCommunicationInfo';
+import ElemContactInfo from './elemContactInfo/elemContactInfo';
+import ElemOrganizationInfo from './elemOrganizationInfo/elemOrganizationInfo';
 
 import Aux from '../../../../hoc/auxiliary';
 import classes from './formElement.scss';
@@ -68,6 +70,10 @@ class Input extends Component {
       // *********** Start generic elements ************
       case ('checkbox'):
       inputElement = <ElemCheckbox configInput={configInput} inputId={inputId} changed={changed} />;
+      break;
+
+      case ('datePicker'):
+      inputElement = <ElemDatePicker configInput={configInput} inputId={inputId} changed={changed} />;
       break;
 
       case ('display'):
@@ -140,6 +146,12 @@ class Input extends Component {
       case ('componentCommunicationInfo'):
       inputElement = (
         <ElemCommunicationInfo configInput={configInput} changed={changed} />
+      );
+      break;
+
+      case ('componentContactInfo'):
+      inputElement = (
+        <ElemContactInfo configInput={configInput} changed={changed} />
       );
       break;
 

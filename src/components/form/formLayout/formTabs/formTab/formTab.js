@@ -1,4 +1,5 @@
 import React from 'react';
+import Label from '../../../../ui/label/label';
 import classes from './formTab.scss';
 
 const formTab = (props) => {
@@ -8,7 +9,9 @@ const formTab = (props) => {
 
   return (
     <div>
-      <button className={classTab} onClick={click}>{label}</button>
+      <button className={classTab} onClick={click}>
+        <Label labelKey={label} convertType={'propercase'} />
+      </button>
       <div className={classActive}></div>
     </div>
   );

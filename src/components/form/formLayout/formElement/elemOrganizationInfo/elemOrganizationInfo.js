@@ -277,6 +277,7 @@ class CommunicationInfo extends Component {
         {wrapper}
       </Aux>
     );
+
   };
 }
 

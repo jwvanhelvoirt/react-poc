@@ -5,6 +5,7 @@ export const KEY_2 = 'KEY 2';
 export const KEY_3 = 'KEY 3';
 export const KEY_ACQUISITION = 'KEY acquisitie';
 export const KEY_ADDRESS_NO = 'KEY nummer';
+export const KEY_ADDRESS_PRIVATE = 'KEY privéadres';
 export const KEY_ADDRESS_STREET = 'KEY adres';
 export const KEY_ADD_PERSON = 'KEY persoon toevoegen';
 export const KEY_ADD_TICKET = 'KEY ticket toevoegen';
@@ -16,6 +17,7 @@ export const KEY_CANCEL = 'KEY annuleren';
 export const KEY_CERTIFICATION = 'KEY certificering';
 export const KEY_CERTIFICATIONS = 'KEY certificeringen';
 export const KEY_CHANGE = 'KEY wijziging';
+export const KEY_CITY = 'KEY plaats';
 export const KEY_CLOSE = 'KEY sluiten';
 export const KEY_COMMUNICATION_INFO = 'KEY communicatie info';
 export const KEY_CONNECT_EXTERNAL_DEVICES = 'KEY koppel externe apparaten';
@@ -61,6 +63,7 @@ export const KEY_MENU = 'KEY menu';
 export const KEY_NAME = 'KEY naam';
 export const KEY_NEW = 'KEY nieuw';
 export const KEY_NO_RESULTS_FOUND = 'KEY geen resultaten gevonden';
+export const KEY_NOTE = 'KEY notitie';
 export const KEY_NR = 'KEY nummer';
 export const KEY_OF = 'KEY van';
 export const KEY_OK = 'KEY ok';
@@ -88,18 +91,44 @@ export const KEY_SETTINGS = 'KEY instellingen';
 export const KEY_SORT = 'KEY sorteren';
 export const KEY_SORT_ACTION = 'KEY sort view';
 export const KEY_STARTDATE = 'KEY startdatum';
+export const KEY_STATE = 'KEY provincie';
 export const KEY_STATUS = 'KEY status';
 export const KEY_SUPPORT = 'KEY support';
 export const KEY_SUPPORTEXT = 'KEY support';
 export const KEY_SUPPORT_DETAILS = 'KEY support details';
 export const KEY_TASK = 'KEY taak';
 export const KEY_TITLE = 'KEY titel';
+export const KEY_TITLE_SUFFIX = 'KEY achtertitel';
 export const KEY_TYPE = 'KEY type';
 export const KEY_UNKNOWN = 'KEY onbekend';
 export const KEY_USERNAME = 'KEY gebruikersnaam';
 export const KEY_VALID_VALUE = 'KEY valide waarde';
 export const KEY_WARNING_CLOSE_FORM = 'KEY wijzigingen niet opgeslagen, toch sluiten ?';
 export const KEY_WARNING_DELETE_DOCS = 'KEY selectie verwijderen?';
+export const KEY_ZIP = 'KEY postcode';
+
+
+export const KEY_ORGANISATIONS = 'KEY organisaties';
+export const KEY_EXTRA_DATA = 'KEY extra gegevens';
+export const KEY_CATEGORIES = 'KEY categorieën';
+export const KEY_SELECTION_MARKS = 'KEY selectiekenmerken';
+export const KEY_LINKEDIN = 'KEY LinkedIn';
+
+export const KEY_BIRTHDAY = 'KEY geboortedatum';
+export const KEY_CANDIDATE = 'KEY kandidaat';
+export const KEY_POST = 'KEY post';
+export const KEY_PASSED_AWAY = 'KEY overleden';
+
+export const KEY_ADDRESS_WORK = 'KEY zakelijk adres';
+
+export const KEY_BLACKLIST = 'KEY zwarte lijst';
+export const KEY_NO_RECRUITMENT = 'KEY geen W&S';
+
+export const KEY_PARTNER = 'KEY partner';
+export const KEY_TAX_NO = 'KEY BSN';
+export const KEY_DEBTOR_NO = 'KEY deb.nr.';
+export const KEY_ACCOUNT_NO = 'KEY IBAN';
+export const KEY_BIC = 'KEY BIC';
 
 /*
  Labels die niet in api.public.getTranslationTable zitten:

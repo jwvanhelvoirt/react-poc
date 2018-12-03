@@ -39,6 +39,26 @@ const formConfig = {
       touched: false
     },
 
+    [input.INPUT_TITLE]: {
+      label: trans.KEY_TITLE,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      placeholder: trans.KEY_TITLE,
+      value: ''
+    },
+
+    [input.INPUT_TITLE_SUFFIX]: {
+      label: trans.KEY_TITLE_SUFFIX,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      placeholder: trans.KEY_TITLE_SUFFIX,
+      value: ''
+    },
+
     [input.INPUT_INITIALS]: {
       label: trans.KEY_INITIALS,
       elementType: 'input',
@@ -47,6 +67,13 @@ const formConfig = {
       },
       placeholder: trans.KEY_INITIALS,
       value: ''
+    },
+
+    [input.INPUT_NOTE]: {
+      elementType: 'textarea',
+      elementConfig: {
+        rows: '4'
+      }
     },
 
     [input.INPUT_INSERTIONS]: {
@@ -87,6 +114,13 @@ const formConfig = {
       value: {}
     },
 
+    [input.INPUT_CONTACT_INFO]: {
+      // label: trans.KEY_COMMUNICATION_INFO,
+      elementType: 'componentContactInfo',
+      maxHeight: '200px',
+      value: {}
+    },
+
     [input.INPUT_PRIVATE_ADDRESS_STREET]: {
       label: trans.KEY_ADDRESS_STREET,
       elementType: 'input',
@@ -98,6 +132,33 @@ const formConfig = {
     },
     [input.INPUT_PRIVATE_ADDRESS_NO]: {
       label: trans.KEY_ADDRESS_NO,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: '',
+      ids: []
+    },
+    [input.INPUT_PRIVATE_ADDRESS_ZIP]: {
+      label: trans.KEY_ZIP,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: '',
+      ids: []
+    },
+    [input.INPUT_PRIVATE_ADDRESS_CITY]: {
+      label: trans.KEY_CITY,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: '',
+      ids: []
+    },
+    [input.INPUT_PRIVATE_ADDRESS_STATE]: {
+      label: trans.KEY_STATE,
       elementType: 'input',
       elementConfig: {
         type: 'text'
@@ -118,135 +179,237 @@ const formConfig = {
       ids: []
     },
 
+    [input.INPUT_POST]: {
+      label: trans.KEY_POST,
+      elementType: 'radio',
+      options: [
+        { displayValue: trans.KEY_ADDRESS_WORK, value: '0' },
+        { displayValue: trans.KEY_ADDRESS_PRIVATE, value: '1' }
+      ],
+      value: '0'
+    },
+
+    [input.INPUT_BIRTHDAY]: {
+      label: trans.KEY_BIRTHDAY,
+      // elementType: 'datePicker',
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: ''
+    },
+
+    [input.INPUT_CANDIDATE]: {
+      label: trans.KEY_CANDIDATE,
+      elementType: 'select',
+      elementConfig: {
+        options: [
+          { value: '0', displayValue: trans.KEY_NO_RECRUITMENT },
+          { value: '1', displayValue: trans.KEY_RECRUITMENT },
+          { value: '-1', displayValue: trans.KEY_BLACKLIST },
+        ]
+      },
+      translateDisplayValues: true,
+      convertDisplayValues: 'propercase',
+      value: '0'
+    },
+    [input.INPUT_PASSED_AWAY]: {
+      label: trans.KEY_PASSED_AWAY,
+      // elementType: 'datePicker',
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: ''
+    },
+
+    [input.INPUT_PARTNER]: {
+      label: trans.KEY_PARTNER,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: ''
+    },
+    [input.INPUT_TAX_NO]: {
+      label: trans.KEY_TAX_NO,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: ''
+    },
+    [input.INPUT_DEBTOR_NO]: {
+      label: trans.KEY_DEBTOR_NO,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: ''
+    },
+    [input.INPUT_ACCOUNT_NO]: {
+      label: trans.KEY_ACCOUNT_NO,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: ''
+    },
+    [input.INPUT_BIC]: {
+      label: trans.KEY_BIC,
+      elementType: 'input',
+      elementConfig: {
+        type: 'text'
+      },
+      value: ''
+    },
+
   },
   layout: {
     rows: [
       {
         cols: [
           {
-            width: 'Flex30',
+            width: 'Flex50',
             rows: [
               {
-                inputs: [
-                  { id: input.INPUT_FIRST_NAME, width: 'Flex70' },
-                  { id: input.INPUT_INITIALS, width: 'Flex30' }
+                cols: [
+                  {
+                    width: 'Flex15',
+                    rows: [
+                      {
+                        inputs: [
+                          { id: input.INPUT_FOTO, width: 'Flex100' }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    width: 'Flex85',
+                    rows: [
+                      {
+                        inputs: [
+                          { id: input.INPUT_GENDER, width: 'Flex40' },
+                          { id: input.INPUT_TITLE, width: 'Flex20' },
+                          { id: input.INPUT_FIRST_NAME, width: 'Flex40' }
+                        ]
+                      },
+                      {
+                        inputs: [
+                          { id: input.INPUT_INITIALS, width: 'Flex20' },
+                          { id: input.INPUT_INSERTIONS, width: 'Flex20' },
+                          { id: input.INPUT_LAST_NAME, width: 'Flex40' },
+                          { id: input.INPUT_TITLE_SUFFIX, width: 'Flex20' }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               },
               {
-                inputs: [
-                  { id: input.INPUT_GENDER, width: 'Flex100' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex80' },
-                  { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex20' }
-                ]
-              },
-              {
-                inputs: [
-                  { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex100' }
+                cols: [
+                  {
+                    width: 'Flex100',
+                    tabs: [
+                      {
+                        label: trans.KEY_NOTE,
+                        rows: [
+                          {
+                            cols: [
+                              {
+                                width: 'Flex100',
+                                rows: [
+                                  {
+                                    inputs: [
+                                      { id: input.INPUT_NOTE, width: 'Flex100' } //xxx
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        label: trans.KEY_CONTACT,
+                        rows: [
+                          {
+                            cols: [
+                              {
+                                width: 'Flex100',
+                                rows: [
+                                  {
+                                    inputs: [
+                                      { id: input.INPUT_CONTACT_INFO, width: 'Flex100' }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        label: trans.KEY_ADDRESS_PRIVATE,
+                        rows: [
+                          {
+                            cols: [
+                              {
+                                width: 'Flex100',
+                                rows: [
+                                  {
+                                    inputs: [
+                                      { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex100' },
+                                      { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex100' },
+                                      { id: input.INPUT_PRIVATE_ADDRESS_ZIP, width: 'Flex100' }
+                                    ]
+                                  },
+                                  {
+                                    inputs: [
+                                      { id: input.INPUT_PRIVATE_ADDRESS_CITY, width: 'Flex40' },
+                                      { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex30' },
+                                      { id: input.INPUT_PRIVATE_ADDRESS_STATE, width: 'Flex30' }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ]
           },
           {
             width: 'Flex50',
-            columnClasses: ['ColEmphasize'],
             rows: [
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
-              //     { id: input.INPUT_INITIALS, width: 'Flex25' },
-              //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
-              //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_FIRST_NAME, width: 'Flex25' },
-              //     { id: input.INPUT_INITIALS, width: 'Flex25' },
-              //     { id: input.INPUT_INSERTIONS, width: 'Flex25' },
-              //     { id: input.INPUT_LAST_NAME, width: 'Flex25' }
-              //   ]
-              // },
               {
                 inputs: [
                   { id: input.INPUT_COMMUNICATION_INFO, width: 'Flex100' }
                 ]
-              }
-            ]
-          },
-          {
-            width: 'Flex20',
-            rows: [
-              {
-                inputs: [
-                  { id: input.INPUT_FOTO, width: 'Flex100' }
-                ]
               },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_FIRST_NAME, width: 'Flex100' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_INITIALS, width: 'Flex100' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_INSERTIONS, width: 'Flex100' }
-              //   ]
-              // },
-              // {
-              //   inputs: [
-              //     { id: input.INPUT_LAST_NAME, width: 'Flex100' }
-              //   ]
-              // }
-            ]
-          }
-        ]
-      },
-      {
-        cols: [
-          {
-            width: 'Flex100',
-            rows: [
               {
                 inputs: [
-                  { id: input.INPUT_ORGANIZATION_INFO, width: 'Flex100' }
+                  { id: input.INPUT_POST, width: 'Flex35' },
+                  { id: input.INPUT_BIRTHDAY, width: 'Flex20' },
+                  { id: input.INPUT_CANDIDATE, width: 'Flex25' },
+                  { id: input.INPUT_PASSED_AWAY, width: 'Flex20' },
                 ]
               }
             ]
           }
         ]
       },
-      // {
-      //   cols: [
-      //     {
-      //       width: 'Flex100',
-      //       rows: [
-      //         {
-      //           inputs: [
-      //             { id: input.INPUT_FIRST_NAME, width: 'Flex40' },
-      //             { id: input.INPUT_INITIALS, width: 'Flex10' },
-      //             { id: input.INPUT_INSERTIONS, width: 'Flex10' },
-      //             { id: input.INPUT_LAST_NAME, width: 'Flex40' }
-      //           ]
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // },
       {
         cols: [
           {
             width: 'Flex100',
             tabs: [
               {
-                label: 'tab1',
+                label: trans.KEY_ORGANISATIONS,
                 rows: [
                   {
                     cols: [
@@ -255,7 +418,7 @@ const formConfig = {
                         rows: [
                           {
                             inputs: [
-                              { id: input.INPUT_INITIALS, width: 'Flex100' }
+                              { id: input.INPUT_ORGANIZATION_INFO, width: 'Flex100' }
                             ]
                           }
                         ]
@@ -265,7 +428,7 @@ const formConfig = {
                 ]
               },
               {
-                label: 'tab2',
+                label: trans.KEY_EXTRA_DATA,
                 rows: [
                   {
                     cols: [
@@ -274,8 +437,11 @@ const formConfig = {
                         rows: [
                           {
                             inputs: [
-                              { id: input.INPUT_INSERTIONS, width: 'Flex50' },
-                              { id: input.INPUT_LAST_NAME, width: 'Flex50' }
+                              { id: input.INPUT_PARTNER, width: 'Flex30' },
+                              { id: input.INPUT_TAX_NO, width: 'Flex15' },
+                              { id: input.INPUT_DEBTOR_NO, width: 'Flex15' },
+                              { id: input.INPUT_ACCOUNT_NO, width: 'Flex25' },
+                              { id: input.INPUT_BIC, width: 'Flex15' }
                             ]
                           }
                         ]
@@ -285,7 +451,7 @@ const formConfig = {
                 ]
               },
               {
-                label: 'Frank',
+                label: trans.KEY_CATEGORIES,
                 rows: [
                   {
                     cols: [
@@ -294,13 +460,72 @@ const formConfig = {
                         rows: [
                           {
                             inputs: [
-                              { id: input.INPUT_INITIALS, width: 'Flex100' }
+                              { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex100' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex100' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_ZIP, width: 'Flex100' }
                             ]
                           },
                           {
                             inputs: [
-                              { id: input.INPUT_INSERTIONS, width: 'Flex50' },
-                              { id: input.INPUT_LAST_NAME, width: 'Flex50' }
+                              { id: input.INPUT_PRIVATE_ADDRESS_CITY, width: 'Flex40' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex30' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_STATE, width: 'Flex30' }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: trans.KEY_SELECTION_MARKS,
+                rows: [
+                  {
+                    cols: [
+                      {
+                        width: 'Flex100',
+                        rows: [
+                          {
+                            inputs: [
+                              { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex100' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex100' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_ZIP, width: 'Flex100' }
+                            ]
+                          },
+                          {
+                            inputs: [
+                              { id: input.INPUT_PRIVATE_ADDRESS_CITY, width: 'Flex40' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex30' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_STATE, width: 'Flex30' }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: trans.KEY_LINKEDIN,
+                rows: [
+                  {
+                    cols: [
+                      {
+                        width: 'Flex100',
+                        rows: [
+                          {
+                            inputs: [
+                              { id: input.INPUT_PRIVATE_ADDRESS_STREET, width: 'Flex100' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_NO, width: 'Flex100' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_ZIP, width: 'Flex100' }
+                            ]
+                          },
+                          {
+                            inputs: [
+                              { id: input.INPUT_PRIVATE_ADDRESS_CITY, width: 'Flex40' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_COUNTRY, width: 'Flex30' },
+                              { id: input.INPUT_PRIVATE_ADDRESS_STATE, width: 'Flex30' }
                             ]
                           }
                         ]
